@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import {
   NoticeContainer,
-  StyledTaskBox,
+  StyledContainerBox,
   StyledNoticeItem,
   HeadingRow,
   LeftHeading,
+  NoticeContent,
 } from "./NoticeStyle";
+import envelope from "../../assets/envelope.svg";
+import envelopeOpen from "../../assets/envelopeOpen.svg";
 
 function Notice() {
   const [clickedIndices, setClickedIndices] = useState(new Set());
@@ -29,12 +32,18 @@ function Notice() {
   };
 
   const unReadCount = postContent.length - clickedIndices.size;
-  const noticeHeaderText =
-    unReadCount > 0 ? `${unReadCount} 건의 공지가 남았습니다.` : "읽지 않은 공지가 없습니다.";
+  const noticeHeaderText = unReadCount > 0 ? (
+    <>
+      읽지 않은 공지가 <span style={{ color: "blue" }}>{unReadCount}건</span> 있습니다.
+    </>
+  ) : (
+    "모든 공지를 읽었습니다."
+  );
 
+  
   return (
     <NoticeContainer>
-      <StyledTaskBox>
+      <StyledContainerBox>
         <HeadingRow>
           <LeftHeading>공지/과제</LeftHeading>
           <h2>{noticeHeaderText}</h2>
@@ -46,11 +55,14 @@ function Notice() {
               isClicked={clickedIndices.has(index)}
               onClick={() => handleOnClick(index)}
             >
-              {content}
+              <NoticeContent>
+                <img src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
+                {content}
+              </NoticeContent>
             </StyledNoticeItem>
           ))}
         </ul>
-      </StyledTaskBox>
+      </StyledContainerBox>
     </NoticeContainer>
   );
 }

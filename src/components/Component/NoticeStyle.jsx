@@ -5,12 +5,14 @@ export const NoticeContainer = styled.div`
   flex-direction: column;
 `;
 
-export const StyledTaskBox = styled.div`
-  height: auto;
+export const StyledContainerBox = styled.div`
+
+  width: 684px;
+  height: 400px;
+  flex-shrink: 0;
   border-radius: 8px;
-  background: #fff;
+  background: #FFF;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  padding: 18px;
 `;
 
 export const StyledNoticeItem = styled.li`
@@ -47,3 +49,9 @@ export const MainNoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const NoticeContent = styled.div`
+  display: flex; 
+  gap: 10px; 
+`;
+
