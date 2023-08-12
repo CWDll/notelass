@@ -27,8 +27,8 @@ const NavItemContainer = styled.div`
 
 const NavItems = styled.span`
   width: 100px;
-  color: #9EA4AA;
-  size: 20px
+  color: #9ea4aa;
+  size: 20px;
   font-weight: bold;
   height: 100%;
   color: ${(props) => (props.isSelected ? "#4849ff" : "#9EA4AA")};
@@ -56,7 +56,7 @@ const SignUnBtn = styled(SignInBtn)`
 
 export default function Nav() {
   const [show, setShow] = useState(false);
-  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(1);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
