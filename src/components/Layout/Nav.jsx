@@ -4,15 +4,17 @@ import styled from "styled-components";
 const NavContainer = styled.div`
   width: 1920px;
   height: 84px;
-  background-color: green;
+  background-color: #f5f5fc;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 20px 0px 20px;
 `;
 
 const Notelass = styled.h2`
-  color: purple;
-  size: 16px;
+  color: #4849ff;
+  size: 22px;
+  font-weight: bold;
 `;
 
 const NavItemContainer = styled.div`
@@ -22,9 +24,15 @@ const NavItemContainer = styled.div`
   width: auto;
 `;
 
-const NavItems = styled.div`
+const NavItems = styled.span`
   width: 100px;
-  background-color: skyblue;
+  color: #9EA4AA;
+  size: 20px
+  font-weight: bold;
+  height: 100%;
+  color: ${(props) => (props.isSelected ? "#4849ff" : "#9EA4AA")};
+  font-weight: ${(props) => (props.isSelected ? "bold" : "600")};
+  margin: 0px 20px 0px 20px;
 `;
 
 const SignBtnContainer = styled.div`
@@ -34,13 +42,20 @@ const SignBtnContainer = styled.div`
   width: auto;
 `;
 
-const SignBtn = styled.button`
+const SignInBtn = styled.span`
   width: auto;
-  background-color: yellow;
+  size: 16px;
+  color: #4849ff;
+  font-weight: bold;
+  margin: 0px 20px 0px 20px;
+`;
+const SignUnBtn = styled(SignInBtn)`
+  color: #9ea4aa;
 `;
 
 export default function Nav() {
   const [show, setShow] = useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -57,19 +72,48 @@ export default function Nav() {
     };
   }, []);
 
+  const handleNavItemClick = (index) => {
+    setSelectedItemIndex(index);
+  };
+
   return (
     <NavContainer>
       <Notelass>Note-lass</Notelass>
       <NavItemContainer>
-        <NavItems>소개</NavItems>
-        <NavItems>홈</NavItems>
-        <NavItems>그룹</NavItems>
-        <NavItems>노트</NavItems>
-        <NavItems>환경설정</NavItems>
+        <NavItems
+          isSelected={selectedItemIndex === 0}
+          onClick={() => handleNavItemClick(0)}
+        >
+          소개
+        </NavItems>
+        <NavItems
+          isSelected={selectedItemIndex === 1}
+          onClick={() => handleNavItemClick(1)}
+        >
+          홈
+        </NavItems>
+        <NavItems
+          isSelected={selectedItemIndex === 2}
+          onClick={() => handleNavItemClick(2)}
+        >
+          그룹
+        </NavItems>
+        <NavItems
+          isSelected={selectedItemIndex === 3}
+          onClick={() => handleNavItemClick(3)}
+        >
+          노트
+        </NavItems>
+        <NavItems
+          isSelected={selectedItemIndex === 4}
+          onClick={() => handleNavItemClick(4)}
+        >
+          환경설정
+        </NavItems>
       </NavItemContainer>
       <SignBtnContainer>
-        <SignBtn>로그인</SignBtn>
-        <SignBtn>회원가입</SignBtn>
+        <SignInBtn>로그인</SignInBtn>
+        <SignUnBtn>회원가입</SignUnBtn>
       </SignBtnContainer>
     </NavContainer>
   );
