@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Box from "../Component/Box";
+import CircularBar from "./CircularBar";
 
 
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ import {
 
 
 const StyledTaskBox = styled(Box)`
+  width: 327px;
   height: 84px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -26,10 +28,7 @@ const StyledTaskBox = styled(Box)`
   align-items: center;
   padding: 0 18px;
   position: relative;
-  .circular-bar {
-    position: absolute;
-    right: 18px;
-  }
+  
 `;
 
 
@@ -48,6 +47,7 @@ const Tasks = () => {
           <BoldText>과목 {i}</BoldText>
           <GrayText>과제 {i}</GrayText>
         </div>
+        <CircularBar />
       </StyledTaskBox>
     ));
   };

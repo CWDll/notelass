@@ -40,6 +40,8 @@ export const SubjectContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
+
+  
 `;
 
 
