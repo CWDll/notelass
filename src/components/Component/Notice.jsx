@@ -1,34 +1,11 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-
-const NoticeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledTaskBox = styled.div`
-  height: auto;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  padding: 18px;
-`;
-
-const StyledNoticeItem = styled.li`
-  list-style: none;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: ${({ isClicked }) => (isClicked ? "red" : "inherit")};
-`;
-
-const HeadingRow = styled.div`
-  display: flex;
-`;
-
-const LeftHeading = styled.h2`
-  margin-right: 15px;
-`;
+import {
+  NoticeContainer,
+  StyledTaskBox,
+  StyledNoticeItem,
+  HeadingRow,
+  LeftHeading,
+} from "./NoticeStyle";
 
 function Notice() {
   const [clickedIndices, setClickedIndices] = useState(new Set());
