@@ -7,6 +7,7 @@ import TailCalendar from "../Component/TailCalendar";
 import Groups from "../Component/Groups";
 import Notice from "../Component/Notice";
 import Tasks from "../Component/Tasks";
+import RecentNote from "../Component/RecentNote";
 
 
 const HomeContainer = styled.div`
@@ -42,6 +43,7 @@ const Home = () => {
       <HomeBody>
         <Notice />
         <Tasks />
+        <RecentNote />
       </HomeBody>
       <HomeBody>
         <Calendartwo />
