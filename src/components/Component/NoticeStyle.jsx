@@ -25,13 +25,27 @@ export const StyledNoticeItem = styled.li`
 
 export const HeadingRow = styled.div`
   display: flex;
-  font-weight: bold;
-  size: 20px;
 `;
 
-export const LeftHeading = styled.h2`
-  margin-right: 15px;
+export const LeftHeading = styled.p`
+  
   size: 15px;
+  padding-top: 32px; 
+  padding-left: 32px; 
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+export const MidHeading = styled.p`
+  size: 15px;
+  padding-top: 40px; 
+  padding-left: 12px; 
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 
@@ -50,8 +64,36 @@ export const MainNoticeContainer = styled.div`
   flex-direction: column;
 `;
 
+
+export const NoticeBody = styled.div`  
+  width: 684px;
+  height: 48px;
+  margin-top: 28px;
+  flex-shrink: 0;
+
+`;
+
 export const NoticeContent = styled.div`
   display: flex; 
-  gap: 10px; 
+  
+  
+  img {
+    padding-top: 12px;
+    padding-left: 32px;
+  }
 `;
+
+
+
+export const NoticeTitle = styled.div`
+
+  padding-top: 13px;
+  padding-left: 16px; 
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+
 

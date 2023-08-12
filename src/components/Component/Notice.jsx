@@ -6,6 +6,9 @@ import {
   HeadingRow,
   LeftHeading,
   NoticeContent,
+  MidHeading,
+  NoticeBody, 
+  NoticeTitle,  
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
@@ -46,9 +49,9 @@ function Notice() {
       <StyledContainerBox>
         <HeadingRow>
           <LeftHeading>공지/과제</LeftHeading>
-          <h2>{noticeHeaderText}</h2>
+          <MidHeading>{noticeHeaderText}</MidHeading>
         </HeadingRow>
-        <ul>
+        <NoticeBody>
           {postContent.map((content, index) => (
             <StyledNoticeItem
               key={index}
@@ -57,11 +60,11 @@ function Notice() {
             >
               <NoticeContent>
                 <img src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
-                {content}
+                <NoticeTitle>{content}</NoticeTitle>
               </NoticeContent>
             </StyledNoticeItem>
           ))}
-        </ul>
+        </NoticeBody>
       </StyledContainerBox>
     </NoticeContainer>
   );

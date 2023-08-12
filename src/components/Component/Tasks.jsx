@@ -13,6 +13,9 @@ import {
   GroupBody,
   SubjectContainer,
   TaskGrid,
+  Tasksubject,
+  TaskText,
+  Taskbody,
 } from "./TasksStyle";
 
 
@@ -43,10 +46,10 @@ const Tasks = () => {
   const renderTaskBoxes = () => {
     return [1, 2, 3, 4].map((i) => (
       <StyledTaskBox key={i}>
-        <div>
-          <BoldText>과목 {i}</BoldText>
-          <GrayText>과제 {i}</GrayText>
-        </div>
+        <Taskbody>
+          <Tasksubject>과목 {i}</Tasksubject>
+          <TaskText>과제 {i}</TaskText>
+        </Taskbody>
         <CircularBar />
       </StyledTaskBox>
     ));
