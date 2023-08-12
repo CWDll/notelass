@@ -49,8 +49,8 @@ export const GroupBody = styled.div`
 
 export const HandoutGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr); // 그리드의 열(column)을 6개로 설정하고 가로로 나열될 수 있도록 변경합니다.
-  grid-gap: 4px; // 그리드의 간격(gap)을 여백으로 설정합니다.
+  grid-template-columns: repeat(6, 1fr); 
+  grid-gap: 4px; 
 
 `;
 

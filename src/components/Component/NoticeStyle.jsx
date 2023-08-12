@@ -64,6 +64,7 @@ export const MainNoticeContainer = styled.div`
 `;
 
 
+
 export const NoticeBody = styled.div`  
   width: 684px;
   height: 48px;
@@ -74,6 +75,22 @@ export const NoticeBody = styled.div`
 
 export const NoticeContent = styled.div`
   display: flex; 
-  gap: 10px; 
+  
+  
+  img {
+    padding-top: 12px;
+    padding-left: 32px;
+  }
 `;
 
+
+
+export const NoticeTitle = styled.div`
+
+  padding-top: 13px;
+  padding-left: 16px; 
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
