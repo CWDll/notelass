@@ -2,7 +2,7 @@
 import React from "react";
 
 function Note() {
-  return <div>Introduce</div>;
+  return <div>Note</div>;
 }
 
 export default Note; // 'default' 키워드 확인

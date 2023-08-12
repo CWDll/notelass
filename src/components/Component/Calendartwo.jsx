@@ -58,7 +58,7 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   gap: 20px;
-  background-color: black;
+  background-color: grey;
 `;
 const DotBox = styled.div`
   width: 100%;
@@ -75,12 +75,18 @@ const CalendarDot = styled.div`
   background-color: #f87171;
 `;
 
+const CalendarBox = styled(Calendar)`
+  widtth: 480px;
+  height: 400px;
+  background-color: red;
+`;
+
 export default function Calendartwo({ user }) {
   const [value, onChange] = useState(new Date());
   const dateArr = ["2023. 08. 15.", "2023. 08. 17.", "2023. 09. 02."];
   return (
     <Container>
-      <Calendar
+      <CalendarBox
         onChange={onChange}
         value={value}
         formatDay={(locale, date) =>
@@ -109,13 +115,6 @@ export default function Calendartwo({ user }) {
           );
         }}
       />
-      <h1>
-        {new Date(value).toLocaleDateString("ko", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
-      </h1>
     </Container>
   );
 }
