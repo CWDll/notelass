@@ -28,12 +28,16 @@ function Notice() {
     });
   };
 
+  const unReadCount = postContent.length - clickedIndices.size;
+  const noticeHeaderText =
+    unReadCount > 0 ? `${unReadCount} 건의 공지가 남았습니다.` : "읽지 않은 공지가 없습니다.";
+
   return (
     <NoticeContainer>
       <StyledTaskBox>
         <HeadingRow>
           <LeftHeading>공지/과제</LeftHeading>
-          <h2>읽지 않은 공지가 있습니다</h2>
+          <h2>{noticeHeaderText}</h2>
         </HeadingRow>
         <ul>
           {postContent.map((content, index) => (

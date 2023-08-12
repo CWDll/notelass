@@ -9,13 +9,14 @@ import Introduce from "./components/MainPage/Introduce";
 import Note from "./components/MainPage/Note";
 import Setting from "./components/MainPage/Setting";
 import TasksDetail from "./components/Component/TasksDetail";
+import Nav from "./components/Layout/Nav";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/Groupdetail" element={<GroupDetail />} />
           <Route path="/Tasksdetail" element={<TasksDetail />} />

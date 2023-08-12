@@ -18,16 +18,20 @@ export const StyledNoticeItem = styled.li`
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
-  color: ${({ isClicked }) => (isClicked ? "red" : "inherit")};
+  color: ${({ isClicked }) => (isClicked ? "#9EA4AA" : "inherit")};
 `;
 
 export const HeadingRow = styled.div`
   display: flex;
+  font-weight: bold;
+  size: 20px;
 `;
 
 export const LeftHeading = styled.h2`
   margin-right: 15px;
+  size: 15px;
 `;
+
 
 export const GrayText = styled.p`
   color: gray;

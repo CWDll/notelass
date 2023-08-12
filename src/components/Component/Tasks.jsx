@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Box from "../Component/Box";
+
+
 import { useNavigate } from "react-router-dom";
 import {
   TasksContainer,
@@ -9,14 +11,9 @@ import {
   GroupHead,
   GroupBody,
   SubjectContainer,
+  TaskGrid,
 } from "./TasksStyle";
 
-
-const TaskGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 327px);
-  grid-gap: 30px;
-`;
 
 const StyledTaskBox = styled(Box)`
   height: 84px;
@@ -29,6 +26,10 @@ const StyledTaskBox = styled(Box)`
   align-items: center;
   padding: 0 18px;
   position: relative;
+  .circular-bar {
+    position: absolute;
+    right: 18px;
+  }
 `;
 
 
@@ -63,7 +64,9 @@ const Tasks = () => {
       </GroupHead>
       <GroupBody>
         <SubjectContainer>
-          <TaskGrid>{renderTaskBoxes()}</TaskGrid>
+          <TaskGrid>
+            {renderTaskBoxes()}
+          </TaskGrid>
         </SubjectContainer>
       </GroupBody>
     </TasksContainer>

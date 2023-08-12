@@ -42,10 +42,11 @@ export const SubjectContainer = styled.div`
   margin-left: 10px;
 `;
 
-export const InfoBox = styled.div`
-  background-color: red;
-  padding: 5px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+
+export const TaskGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 327px);
+  grid-gap: 30px;
 `;
+
 
