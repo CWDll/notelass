@@ -58,6 +58,8 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   gap: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
 `;
 const DotBox = styled.div`
   width: 100%;

@@ -1,8 +1,17 @@
-// Introduce.jsx 파일 내부
+import styled from "styled-components";
 import React from "react";
 
+const NotelassImage = styled.img`
+  width: 1920px;
+  height: 1080px;
+`;
+
 function Introduce() {
-  return <div>Introduce</div>;
+  return (
+    <div>
+      <NotelassImage src="img/notelassimg.png" alt="Not a lass" />
+    </div>
+  );
 }
 
-export default Introduce; // 'default' 키워드 확인
+export default Introduce;
