@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const NavContainer = styled.div`
@@ -76,37 +77,66 @@ export default function Nav() {
     setSelectedItemIndex(index);
   };
 
+  //페이지 이동시키는 navigate
+  const navigate = useNavigate();
+
+  const navigateToHome = () => {
+    navigate("/");
+  };
+  const navigateToIntroduce = () => {
+    navigate("/introduce");
+  };
+  const navigateToGroupDetail = () => {
+    navigate("/Groupdetail");
+  };
+  const navigateToNote = () => {
+    navigate("/note");
+  };
+  const navigateTosetting = () => {
+    navigate("/setting");
+  };
+
   return (
     <NavContainer>
       <Notelass>Note-lass</Notelass>
       <NavItemContainer>
         <NavItems
           isSelected={selectedItemIndex === 0}
-          onClick={() => handleNavItemClick(0)}
+          onClick={() => {
+            handleNavItemClick(0), navigateToIntroduce();
+          }}
         >
           소개
         </NavItems>
         <NavItems
           isSelected={selectedItemIndex === 1}
-          onClick={() => handleNavItemClick(1)}
+          onClick={() => {
+            handleNavItemClick(1), navigateToHome();
+          }}
         >
           홈
         </NavItems>
         <NavItems
           isSelected={selectedItemIndex === 2}
-          onClick={() => handleNavItemClick(2)}
+          onClick={() => {
+            handleNavItemClick(2), navigateToGroupDetail();
+          }}
         >
           그룹
         </NavItems>
         <NavItems
           isSelected={selectedItemIndex === 3}
-          onClick={() => handleNavItemClick(3)}
+          onClick={() => {
+            handleNavItemClick(3), navigateToNote();
+          }}
         >
           노트
         </NavItems>
         <NavItems
           isSelected={selectedItemIndex === 4}
-          onClick={() => handleNavItemClick(4)}
+          onClick={() => {
+            handleNavItemClick(4), navigateTosetting();
+          }}
         >
           환경설정
         </NavItems>
