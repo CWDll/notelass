@@ -7,6 +7,7 @@ export const GroupContainer = styled.div`
   flex-direction: column;
   background-color: white;
   color: black;
+  border-radius: 8px;
 `;
 // bold 텍스트
 export const BoldText = styled.p`
