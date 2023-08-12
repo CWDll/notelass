@@ -5,7 +5,7 @@ import styled from "styled-components";
 const NavContainer = styled.div`
   width: 1920px;
   height: 84px;
-  background-color: #f5f5fc;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;

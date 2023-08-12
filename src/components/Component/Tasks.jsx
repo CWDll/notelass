@@ -1,7 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Box from "../Component/Box";
-import List from "../Component/List";
+import { useNavigate } from "react-router-dom";
+import {
+  TasksContainer,
+  BoldText,
+  GrayText,
+  GroupHead,
+  GroupBody,
+  SubjectContainer,
+} from "./TasksStyle";
 
 
 const TaskGrid = styled.div`
@@ -23,35 +31,42 @@ const StyledTaskBox = styled(Box)`
   position: relative;
 `;
 
+
 const Tasks = () => {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/detail");
+  };
+
+
+  
   const renderTaskBoxes = () => {
-    return Array.from({ length: 4 }, (_, index) => (
-      <StyledTaskBox key={index}>Task Board {index + 1}</StyledTaskBox>
+    return [1, 2, 3, 4].map((i) => (
+      <StyledTaskBox key={i}>
+        <div>
+          <BoldText>과목 {i}</BoldText>
+          <GrayText>과제 {i}</GrayText>
+        </div>
+      </StyledTaskBox>
     ));
   };
 
-  const renderPosts = () => {
-    const postContent = [
-      "Notice 1",
-      "Notice 2",
-      "Notice 3",
-      "Notice 4",
-      "Notice 5",
-    ];
 
-    return postContent.map((content) => (
-      <List key={content} content={content} />
-    ));
-  };
 
   return (
-    <Container>
-      <StyledNoticeBox>
-        <h3>Notice</h3>
-        {renderPosts()}
-      </StyledNoticeBox>
-      <TaskGrid>{renderTaskBoxes()}</TaskGrid>
-    </Container>
+    <TasksContainer>
+      <GroupHead>
+        <BoldText>과제</BoldText>
+        <GrayText style={{ "text-decoration": "underline" }} onClick={onClick}>
+          더보기
+        </GrayText>
+      </GroupHead>
+      <GroupBody>
+        <SubjectContainer>
+          <TaskGrid>{renderTaskBoxes()}</TaskGrid>
+        </SubjectContainer>
+      </GroupBody>
+    </TasksContainer>
   );
 };
 

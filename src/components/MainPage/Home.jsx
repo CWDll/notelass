@@ -8,6 +8,7 @@ import Groups from "../Component/Groups";
 import Notice from "../Component/Notice";
 import Tasks from "../Component/Tasks";
 
+
 const HomeContainer = styled.div`
   width: 70%;
   margin-left: 15%;
@@ -27,13 +28,21 @@ const HomeBody = styled.div`
   flex-direction: column;
   /* flex-wrap: wrap; */
   width: auto;
-  background-color: yellow;
+
+  margin-right: 1.5rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 const Home = () => {
   return (
     <HomeContainer>
-      <Tasks />
+      <HomeBody>
+        <Notice />
+        <Tasks />
+      </HomeBody>
       <HomeBody>
         <Calendartwo />
         <Groups />

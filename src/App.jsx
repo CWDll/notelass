@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css"
 import React from "react";
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
@@ -7,6 +8,7 @@ import GroupDetail from "./components/Component/GroupDetail";
 import Introduce from "./components/MainPage/Introduce";
 import Note from "./components/MainPage/Note";
 import Setting from "./components/MainPage/Setting";
+import TasksDetail from "./components/Component/TasksDetail";
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/Groupdetail" element={<GroupDetail />} />
+          <Route path="/Tasksdetail" element={<TasksDetail />} />
           <Route path="/note" element={<Note />} />
           <Route path="/setting" element={<Setting />} />
         </Route>
