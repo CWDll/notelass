@@ -2,7 +2,7 @@ import styled from "styled-components";
 // 그룹 컴포넌트 컨테이너
 export const GroupContainer = styled.div`
   display: flex;
-  width: 30%;
+  width: 100%;
   height: 250px;
   flex-direction: column;
   background-color: white;

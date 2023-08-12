@@ -52,13 +52,13 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const Container = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
   justify-content: center;
   position: relative;
   gap: 20px;
-  background-color: grey;
+  background-color: orange; */
 `;
 const DotBox = styled.div`
   width: 100%;
@@ -78,7 +78,7 @@ const CalendarDot = styled.div`
 const CalendarBox = styled(Calendar)`
   widtth: 480px;
   height: 400px;
-  background-color: red;
+  background-color: black;
 `;
 
 export default function Calendartwo({ user }) {

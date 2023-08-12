@@ -1,13 +1,12 @@
+import React from "react";
+import styled from "styled-components";
 import Box from "../Component/Box";
 import List from "../Component/List";
-
-import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 156px;
-  margin-left: 363px;
+  margin-right: 100px;
 `;
 
 const StyledNoticeBox = styled(Box)`

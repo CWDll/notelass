@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+//컴포넌트 import
 import Calendartwo from "../Component/Calendartwo";
 import TailCalendar from "../Component/TailCalendar";
 import Groups from "../Component/Groups";
 import Notice from "../Component/Notice";
-import styled from "styled-components";
 import Tasks from "../Component/Tasks";
 
 const HomeContainer = styled.div`
@@ -13,20 +14,30 @@ const HomeContainer = styled.div`
   margin-right: 30%;
   height: 90%;
   margin-top: 3%;
-  /* background-color: brown; */
+  padding: 0;
+  /* border: 1px solid white; */
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  justifycontent: "space-between";
+`;
+
+const HomeBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  width: auto;
+  background-color: yellow;
 `;
 
 const Home = () => {
   return (
     <HomeContainer>
-      {/* <Notice /> */}
       <Tasks />
-      {/* <CustomDateRangePickerDay /> */}
-      <Calendartwo />
-      {/* <TailCalendar /> */}
-      <Groups />
+      <HomeBody>
+        <Calendartwo />
+        <Groups />
+      </HomeBody>
     </HomeContainer>
   );
 };
