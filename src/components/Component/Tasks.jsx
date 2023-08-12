@@ -3,21 +3,6 @@ import styled from "styled-components";
 import Box from "../Component/Box";
 import List from "../Component/List";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 100px;
-`;
-
-const StyledNoticeBox = styled(Box)`
-  width: 684px;
-  height: 400px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  margin-bottom: 40px;
-`;
 
 const TaskGrid = styled.div`
   display: grid;
