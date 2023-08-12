@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css"
+import "./App.css";
 import React from "react";
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <Routes>
-          <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/Groupdetail" element={<GroupDetail />} />

@@ -3,15 +3,15 @@ import styled from "styled-components";
 export const NoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
+  color: black;
 `;
 
 export const StyledContainerBox = styled.div`
-
   width: 684px;
   height: 400px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
 `;
 
@@ -34,7 +34,6 @@ export const LeftHeading = styled.h2`
   size: 15px;
 `;
 
-
 export const GrayText = styled.p`
   color: gray;
   font-size: 10px;
@@ -51,7 +50,6 @@ export const MainNoticeContainer = styled.div`
 `;
 
 export const NoticeContent = styled.div`
-  display: flex; 
-  gap: 10px; 
+  display: flex;
+  gap: 10px;
 `;
-
