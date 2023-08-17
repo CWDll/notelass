@@ -50,7 +50,7 @@ export const GroupBody = styled.div`
 export const HandoutGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr); 
-  grid-gap: 4px; 
+  grid-gap: 0px; 
 
 `;
 
@@ -73,4 +73,18 @@ export const TextGroup = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const DetailText = styled.p`
+  
+  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+  position: absolute;
+  left: 612px;
+  top: 32px;
 `;

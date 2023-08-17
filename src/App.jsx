@@ -19,8 +19,8 @@ function App() {
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/Groupdetail" element={<GroupDetail />} />
           <Route path="/Tasksdetail" element={<TasksDetail />} />
-          <Route path="/note" element={<Note />} />
-          <Route path="/setting" element={<Setting />} />
+          <Route path="/Note" element={<Note />} />
+          <Route path="/Setting" element={<Setting />} />
         </Route>
       </Routes>
     </Router>

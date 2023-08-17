@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import paper from "../../assets/paper.svg";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,7 +10,10 @@ import {
     HandoutGrid,
     HandoutContainer,
     TextGroup,
+    DetailText, 
   } from "./RecentNoteStyle";
+
+
 
   const handout = () => {
     return [1, 2, 3, 4, 5, 6].map((i) => (
@@ -26,9 +29,21 @@ import {
 
 
 function RecentNote() {
+
+
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/Note");
+  };
+
+
+
     return (
     <RecentNoteContainer>
         <Title>최근에 열어본 노트</Title>
+        <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
+          더보기
+        </DetailText>
         <GroupBody>
           <HandoutGrid>
             {handout()} 

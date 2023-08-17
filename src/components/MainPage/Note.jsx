@@ -1,8 +1,16 @@
-// Introduce.jsx 파일 내부
+
 import React from "react";
+import NoteDetail from "../Component/NoteDetail";
+import NoteDetailSubject from "../Component/NoteDetailSubject";
 
 function Note() {
-  return <div>Note</div>;
+  return (
+
+    <div>
+    <NoteDetail />
+    <NoteDetailSubject />
+    </div>
+  );
 }
 
-export default Note; // 'default' 키워드 확인
+export default Note;

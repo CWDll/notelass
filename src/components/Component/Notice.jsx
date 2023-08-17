@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   NoticeContainer,
   StyledContainerBox,
@@ -9,11 +10,18 @@ import {
   MidHeading,
   NoticeBody, 
   NoticeTitle,  
+  DetailText,
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 
 function Notice() {
+
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/NoticeDetail");
+  };
+
   const [clickedIndices, setClickedIndices] = useState(new Set());
 
   const postContent = [
@@ -45,11 +53,14 @@ function Notice() {
 
   
   return (
-    <NoticeContainer>
+   
       <StyledContainerBox>
         <HeadingRow>
           <LeftHeading>공지/과제</LeftHeading>
           <MidHeading>{noticeHeaderText}</MidHeading>
+          <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
+          더보기
+        </DetailText>
         </HeadingRow>
         <NoticeBody>
           {postContent.map((content, index) => (
@@ -66,7 +77,6 @@ function Notice() {
           ))}
         </NoticeBody>
       </StyledContainerBox>
-    </NoticeContainer>
   );
 }
 

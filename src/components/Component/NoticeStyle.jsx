@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const NoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  color: black;
 `;
 
 export const StyledContainerBox = styled.div`
@@ -13,6 +12,7 @@ export const StyledContainerBox = styled.div`
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  
 `;
 
 export const StyledNoticeItem = styled.li`
@@ -93,4 +93,18 @@ export const NoticeTitle = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+`;
+
+export const DetailText = styled.p`
+  
+  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+  position: absolute;
+  padding-left: 612px;
+  padding-top: 37px;
 `;

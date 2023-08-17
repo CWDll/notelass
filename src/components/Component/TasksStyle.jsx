@@ -7,17 +7,18 @@ export const TasksContainer = styled.div`
   width: 684px;
   flex-direction: column;
   background-color: #F5F5FC;
-  color: black;
+  margin-right: 363px;
+  margin-top: 30px;
 `;
 
 // bold 텍스트
 export const BoldText = styled.p`
+  display: flex;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-top: 30px;
-  margin-left: 32px;
+  padding-left: 32px;
 `;
 // 회색 텍스트
 export const GrayText = styled.p`
@@ -29,14 +30,14 @@ export const GrayText = styled.p`
 export const GroupHead = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 15px;
 `;
 // 그룹 컴포넌트 바디
 export const GroupBody = styled.div`
-  margin: 15px;
+  
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  padding-top: 30px;
 `;
 
 
@@ -44,7 +45,6 @@ export const GroupBody = styled.div`
 export const SubjectContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
 
   
 `;
@@ -75,5 +75,5 @@ export const TaskText = styled.p`
 export const Taskbody = styled.div`
   display: flex;  
   flex-direction: column;
-  padding-left: 32px;
+  padding-left: 17px;
 `;
