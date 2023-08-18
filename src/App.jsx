@@ -9,6 +9,8 @@ import Introduce from "./components/MainPage/Introduce";
 import Note from "./components/MainPage/Note";
 import Setting from "./components/MainPage/Setting";
 import TasksDetail from "./components/Component/TasksDetail";
+import NoteDetail from "./components/Component/NoteDetail";
+import NoteDetailSubject from "./components/Component/NoteDetailSubject";
 
 function App() {
   return (
@@ -16,10 +18,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/introduce" element={<Introduce />} />
-          <Route path="/Groupdetail" element={<GroupDetail />} />
-          <Route path="/Tasksdetail" element={<TasksDetail />} />
+          <Route path="/Introduce" element={<Introduce />} />
+          <Route path="/GroupDetail" element={<GroupDetail />} />
+          <Route path="/TasksDetail" element={<TasksDetail />} />
           <Route path="/Note" element={<Note />} />
+            <Route path="/Note" element={<NoteDetail />} />
+            <Route path="/NoteDetailSubject" element={<NoteDetailSubject />} />
           <Route path="/Setting" element={<Setting />} />
         </Route>
       </Routes>

@@ -23,7 +23,6 @@ const MakeNoteBody = styled.div`
     width: 1194px;
     height: 72px;
     flex-shrink: 0;
-    background: yellow;
     margin-top: 32px;
     display: flex;
 `;
@@ -38,7 +37,7 @@ const AddNote = styled.div`
     border-radius: 2px;
     border: 1.5px dashed #4849FF;
     margin-left: 32px;
-    margin-top: 4px;
+    margin-top: 36px;
 
 `;
 
@@ -59,7 +58,7 @@ const Title = styled.p`
     font-weight: 600;
     line-height: normal;
     padding-left: 26px;
-    padding-top: 27px;
+    padding-top: 59px;
    
 `;
 

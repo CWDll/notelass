@@ -38,7 +38,7 @@ const StyledTaskBox = styled(Box)`
 const Tasks = () => {
   const navigate = useNavigate();
   const onClick = () => {
-    navigate("/detail");
+    navigate("/TasksDetail");
   };
 
 

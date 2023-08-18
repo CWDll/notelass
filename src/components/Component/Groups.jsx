@@ -16,7 +16,7 @@ import {
 export default function Groups() {
   const navigate = useNavigate();
   const onClick = () => {
-    navigate("/detail");
+  navigate("/GroupDetail");
   };
 
   // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
