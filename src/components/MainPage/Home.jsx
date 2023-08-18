@@ -9,7 +9,6 @@ import Notice from "../Component/Notice";
 import Tasks from "../Component/Tasks";
 import RecentNote from "../Component/RecentNote";
 
-
 const HomeContainer = styled.div`
   width: 70%;
   margin-left: 15%;
@@ -35,6 +34,7 @@ const HomeBody = styled.div`
   &:last-child {
     margin-right: 0;
   }
+  color: black;
 `;
 
 const Home = () => {
