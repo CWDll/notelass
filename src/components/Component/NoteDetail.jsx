@@ -85,7 +85,7 @@ const PurpleText = styled.p`
 const BoldText = styled.p`
     color: var(--cool-grayscale-title, #26282B);
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
