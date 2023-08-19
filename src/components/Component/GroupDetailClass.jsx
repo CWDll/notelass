@@ -7,6 +7,7 @@ import person from "../../assets/person.svg";
 import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
+import book from "../../assets/book.svg";
 
 const Header = styled.header`
   display: flex;
@@ -72,7 +73,7 @@ const ManagementContainer = styled.div`
     position: relative;
 `;
 
-export const Title = styled.p`
+const Title = styled.p`
     
     color: var(--cool-grayscale-title, #26282B);
     font-family: Pretendard;
@@ -84,7 +85,7 @@ export const Title = styled.p`
     padding-left: 32px; 
 `;
 
-export const DetailText = styled.p`
+const DetailText = styled.p`
   
   color: var(--cool-grayscale-placeholder, #9EA4AA);
   text-align: right;
@@ -123,8 +124,8 @@ const NoticeContent = styled.div`
 `;
 
 const NoticeImg = styled.div`
-    margin-top: 12px;
-    margin-left: 32px;
+    padding-top: 12px;
+    padding-left: 32px;
     width: 24px;
     height: 24px;
     flex-shrink: 0;
@@ -140,6 +141,42 @@ const NoticeTitle = styled.div`
     padding-top: 14px;  
     padding-bottom: 14px;
 `;
+
+const StudentBook = styled.div`
+    width: 60px;
+    height: 118px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #4849FF;
+    box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.20);
+    margin-left: 32px;
+    margin-top: 56px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+`;
+
+const BookImg = styled.img`
+    margin-top: 24px;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+`;
+
+const Text = styled.p`
+    margin-top: 8px;
+    margin-left: 13px;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    
+    
+`;
+
 
 function GroupDetailClass() {
     
@@ -220,9 +257,14 @@ function GroupDetailClass() {
         </LeftSectionContainer>
 
         <ManagementContainer>
-            MANAGEMENT
+            <Title>생기부 관리</Title>
 
         </ManagementContainer>
+
+        <StudentBook>
+            <BookImg src={book} alt="book" />
+            <Text>학생 수첩</Text>
+        </StudentBook>
       </MainContainer>
     </div>
   );
