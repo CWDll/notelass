@@ -20,12 +20,7 @@ export const BoldText = styled.p`
   line-height: normal;
   padding-left: 32px;
 `;
-// 회색 텍스트
-export const GrayText = styled.p`
-  color: gray;
-  size: 10px;
-  /* text-decoration: underline; */
-`;
+
 // 그룹 컴포넌트 헤드
 export const GroupHead = styled.div`
   display: flex;
@@ -76,4 +71,16 @@ export const Taskbody = styled.div`
   display: flex;  
   flex-direction: column;
   padding-left: 17px;
+`;
+
+export const DetailText = styled.p`
+  
+  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+  margin-right: 32px;
 `;

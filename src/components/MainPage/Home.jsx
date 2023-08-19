@@ -23,30 +23,34 @@ const HomeContainer = styled.div`
   justifycontent: "space-between";
 `;
 
-const HomeBody = styled.div`
+const LeftHomeBody = styled.div`
   display: flex;
   flex-direction: column;
   /* flex-wrap: wrap; */
-  margin-right: 1.5rem;
 
-  &:last-child {
-    margin-right: 0;
-  }
-  color: black;
+
+`;
+
+const RightHomeBody = styled.div`
+  display: flex;
+
+  flex-direction: column;
+
+  position: relative;
 `;
 
 const Home = () => {
   return (
     <HomeContainer>
-      <HomeBody>
+      <LeftHomeBody>
         <Notice />
         <Tasks />
         <RecentNote />
-      </HomeBody>
-      <HomeBody>
+      </LeftHomeBody>
+      <RightHomeBody>
         <Calendartwo />
         <Groups />
-      </HomeBody>
+      </RightHomeBody>
     </HomeContainer>
   );
 };

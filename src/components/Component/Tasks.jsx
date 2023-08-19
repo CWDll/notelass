@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import {
   TasksContainer,
   BoldText,
-  GrayText,
   GroupHead,
   GroupBody,
   SubjectContainer,
@@ -16,6 +15,8 @@ import {
   Tasksubject,
   TaskText,
   Taskbody,
+  DetailText,
+
 } from "./TasksStyle";
 
 
@@ -61,9 +62,9 @@ const Tasks = () => {
     <TasksContainer>
       <GroupHead>
         <BoldText>과제</BoldText>
-        <GrayText style={{ "text-decoration": "underline" }} onClick={onClick}>
+        <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
           더보기
-        </GrayText>
+        </DetailText>
       </GroupHead>
       <GroupBody>
         <SubjectContainer>
