@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import chevron_left from "../../assets/chevron_left.svg";
 import plus_lg from "../../assets/plus_lg.svg";
+import paper from "../../assets/paper.svg";
+import chevron_down from "../../assets/chevron_down.svg";
+import star from "../../assets/star.svg";
+import FilledStar from "../../assets/FilledStar.svg";
 
 const Header = styled.header`
   display: flex;
@@ -14,7 +18,7 @@ const Img = styled.img`
   margin-top: 72px;
 `;
 
-const BoldText = styled.p`
+const BoldTitle = styled.p`
     color: var(--cool-grayscale-title, #26282B);
     font-size: 20px;
     font-style: normal;
@@ -80,20 +84,94 @@ const Title = styled.p`
    
 `;
 
+const PaperImg = styled.img`
+    width: 48px;
+    height: 64px;
+    flex-shrink: 0;
+    margin-left: 32px;
+    margin-top: 4px;
+`;
 
+const ChevronDownImg = styled.img`
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-left: 884px;
+    align-self: center;
+`;
+
+
+const StarImg = styled.img`
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    align-self: center;
+    margin-left: 24px;
+`;
+
+
+
+
+const BoldText = styled.p`
+    color: var(--cool-grayscale-title, #26282B);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+`;
+
+const GrayText = styled.p`
+    color: var(--cool-grayscale-placeholder, #9EA4AA);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 4px;
+
+`;
+
+const SubjectBody = styled.div`
+    display: flex;
+
+    width: 1194px;
+    height: 72px;
+    flex-shrink: 0;
+    margin-top: 16px;  
+
+`;
+
+const SubjectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+    margin-top: 16px;
+`;
+
+const SubjectBodyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+`;
 
 
 
 
 
 function NoteDetailSubject() {
+   
+    const [isStarred, setIsStarred] = useState(false);
+
+    function handleStarClick() {
+      setIsStarred(!isStarred);
+    }
 
    return (
     <div>
     <Header>
      
     <Img src={chevron_left} alt="chevron_left" /> 
-    <BoldText>과제별 성적 열람</BoldText>
+    <BoldTitle>과제별 성적 열람</BoldTitle>
     </Header>
     
    
@@ -104,7 +182,35 @@ function NoteDetailSubject() {
       </AddNote>
       <Title>신규 노트 만들기</Title>
     </MakeNoteBody>
-    <h2>학습지</h2>
+    <SubjectBodyWrapper> 
+            <SubjectBody >
+                <PaperImg src={paper} alt="paper" />
+                <SubjectContainer>
+                  <BoldText>문학퀴즈</BoldText>
+                  <GrayText>2023.04.27 오후 9:00</GrayText>
+                </SubjectContainer>
+                <ChevronDownImg src={chevron_down} alt="chevron_down"/>
+                <StarImg onClick={handleStarClick} src={isStarred ? FilledStar : star} alt="star"/>
+            </SubjectBody>
+            <SubjectBody >
+                <PaperImg src={paper} alt="paper" />    
+                <SubjectContainer>
+                  <BoldText>문학퀴즈</BoldText>
+                  <GrayText>2023.04.27 오후 9:00</GrayText>
+                </SubjectContainer>
+                <ChevronDownImg src={chevron_down} alt="chevron_down"/>
+                <StarImg onClick={handleStarClick} src={isStarred ? FilledStar : star} alt="star"/>
+            </SubjectBody>
+            <SubjectBody >
+                <PaperImg src={paper} alt="paper" />
+                <SubjectContainer>
+                  <BoldText>문학퀴즈</BoldText>
+                  <GrayText>2023.04.27 오후 9:00</GrayText>
+                </SubjectContainer>
+                <ChevronDownImg src={chevron_down} alt="chevron_down"/>
+                <StarImg onClick={handleStarClick} src={isStarred ? FilledStar : star} alt="star"/>
+            </SubjectBody>
+        </SubjectBodyWrapper> 
     </NoteContainer>
     
     </div>
