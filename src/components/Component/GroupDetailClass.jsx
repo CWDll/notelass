@@ -105,7 +105,7 @@ const SubjectContainer = styled.div`
     width: 684px;
     height: 48px;
     flex-shrink: 0;
-    background-color: yellow;
+    /*background-color: yellow;*/
     flex-direction: column;
     margin-top: 24px;
 
@@ -132,13 +132,13 @@ const NoticeImg = styled.img`
     flex-shrink: 0;
 `;
 
-
+//디자인 위치 다시 수정해야함. 임시로 배치
 const NoticeTitle = styled.div`
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    margin-left: 16px; 
+    margin-left: 24px; 
     margin-top: 14px;
     margin-bottom: 15px;
     
@@ -179,12 +179,25 @@ const Text = styled.p`
     
 `;
 
+const SudentNum = styled.p`
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-left: 24px; 
+    margin-top: 14px;
+    margin-bottom: 15px;
+`;
+
 function GroupDetailClass() {
     
     const navigate = useNavigate();
     const onClick = () => {
       navigate("/detail");
     };
+    const GroupDetailWrite = () => {
+        navigate("/GroupDetailWrite");
+      };
 
     const [clickedIndices, setClickedIndices] = useState(new Set());
 
@@ -193,7 +206,6 @@ function GroupDetailClass() {
     "Notice 2",
     "Notice 3",
     "Notice 4",
-    "Notice 5",
   ];
 
   const handleOnClick = (index) => {
@@ -245,7 +257,25 @@ function GroupDetailClass() {
                 <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
                 더보기
                 </DetailText>
-                GROUP DETAIL CLASS
+                <SubjectContainer >
+                    <NoticeContent>
+                            <NoticeImg src={file} alt="file" />
+                            <NoticeTitle>과제</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={file} alt="file" />
+                            <NoticeTitle>과제2</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={file} alt="file" />
+                            <NoticeTitle>과제3</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={file} alt="file" />
+                            <NoticeTitle>과제4</NoticeTitle>
+                    </NoticeContent>
+
+                </SubjectContainer> 
           </GroupContainer>
 
           <GroupContainer>
@@ -253,13 +283,58 @@ function GroupDetailClass() {
                 <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
                 더보기
                 </DetailText>
-                GROUP DETAIL CLASS
+                <SubjectContainer >
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>1</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>2</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>3</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                  
+                </SubjectContainer> 
           </GroupContainer>
         </LeftSectionContainer>
 
         <ManagementContainer>
             <Title>생기부 관리</Title>
+            <SubjectContainer >
+                    <NoticeContent onClick={GroupDetailWrite}>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>1</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>2</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>3</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>4</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                            <NoticeImg src={person} alt="person" />
+                            <SudentNum>5</SudentNum>
+                            <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                   
 
+                </SubjectContainer> 
         </ManagementContainer>
 
         <StudentBook>

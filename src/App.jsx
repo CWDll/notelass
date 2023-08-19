@@ -12,6 +12,7 @@ import TasksDetail from "./components/Component/TasksDetail";
 import NoteDetail from "./components/Component/NoteDetail";
 import NoteDetailSubject from "./components/Component/NoteDetailSubject";
 import GroupDetailClass from "./components/Component/GroupDetailClass";
+import GroupDetailWrite from "./components/Component/GroupDetailWrite";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Introduce" element={<Introduce />} />
           <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+            <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
 
           <Route path="/TasksDetail" element={<TasksDetail />} />
           <Route path="/Note" element={<Note />} />
