@@ -44,6 +44,7 @@ const NoticeContainer = styled.div`
     margin-left: 363px;
     margin-top: 48px;
     position: relative;
+    align-items: center; 
 `;
 
 
@@ -123,13 +124,12 @@ const NoticeContent = styled.div`
   display: flex; 
 `;
 
-const NoticeImg = styled.div`
-    padding-top: 12px;
-    padding-left: 32px;
+const NoticeImg = styled.img`
+    margin-top: 13px;
+    margin-left: 32px;
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-
 `;
 
 
@@ -138,8 +138,10 @@ const NoticeTitle = styled.div`
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    padding-top: 14px;  
-    padding-bottom: 14px;
+    margin-left: 16px; 
+    margin-top: 14px;
+    margin-bottom: 15px;
+    
 `;
 
 const StudentBook = styled.div`
@@ -176,7 +178,6 @@ const Text = styled.p`
     
     
 `;
-
 
 function GroupDetailClass() {
     
