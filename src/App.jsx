@@ -11,6 +11,7 @@ import Setting from "./components/MainPage/Setting";
 import TasksDetail from "./components/Component/TasksDetail";
 import NoteDetail from "./components/Component/NoteDetail";
 import NoteDetailSubject from "./components/Component/NoteDetailSubject";
+import GroupDetailClass from "./components/Component/GroupDetailClass";
 
 function App() {
   return (
