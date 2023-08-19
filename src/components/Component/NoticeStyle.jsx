@@ -13,6 +13,7 @@ export const StyledContainerBox = styled.div`
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   
+  
 `;
 
 export const StyledNoticeItem = styled.li`

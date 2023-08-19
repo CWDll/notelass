@@ -27,8 +27,6 @@ const HomeBody = styled.div`
   display: flex;
   flex-direction: column;
   /* flex-wrap: wrap; */
-  width: auto;
-
   margin-right: 1.5rem;
 
   &:last-child {

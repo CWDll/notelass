@@ -8,6 +8,7 @@ export const RecentNoteContainer = styled.div`
     background: #FFF;
     box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
     position: relative; 
+    margin-top: 30px;
 `;
 
 export const Title = styled.p`
@@ -53,7 +54,6 @@ export const HandoutGrid = styled.div`
   grid-gap: 0px; 
 
 `;
-
 export const HandoutContainer = styled.div`
   display: flex;
   flex-direction: column;
