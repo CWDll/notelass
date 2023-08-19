@@ -20,6 +20,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/Introduce" element={<Introduce />} />
           <Route path="/GroupDetail" element={<GroupDetail />} />
+            <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+
           <Route path="/TasksDetail" element={<TasksDetail />} />
           <Route path="/Note" element={<Note />} />
             <Route path="/Note" element={<NoteDetail />} />
