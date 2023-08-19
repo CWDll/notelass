@@ -1,5 +1,6 @@
 import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css'; 
 import styled from 'styled-components';
 
 const CircularBarContainer = styled.div`
@@ -15,14 +16,18 @@ const CircularBar = () => {
     <CircularBarContainer>
       <CircularProgressbar
         value={percentage}
+        text={"D-3"} // 글자를 원하는 내용으로 변경
         styles={buildStyles({
+          textSize: '25px', // fontSize 수정
+          textColor: '#F78', // 글씨의 색깔 수정
+          textAnchor: 'middle', // 글자의 중앙 위치로 수정
+          fontWeight: 600, // 텍스트 굵기 직접 설정
+
           rotation: 0,
           strokeLinecap: 'butt',
-          textSize: '30px',
           pathTransitionDuration: 0.5,
-          pathColor: `rgba(255, 0,0, 1, ${percentage / 100})`, // 실행된 부분은 빨간색으로 표현
-          textColor: '#000',
-          trailColor: 'rgba(255, 255, 0, 0.3)', // 기본 줄은 노란색으로 표현
+          pathColor: `#F78`, // 실행된 부분은 주어진 색으로 표현
+          trailColor: 'rgba(255, 119, 136, .30)', // 기본 줄은 주어진 색으로 표현
         })}
       />
     </CircularBarContainer>
