@@ -128,16 +128,44 @@ const ScoreResult = styled.span`
     display: inline; 
 `;
 
-
 const WritingBox = styled.div`
     width: 620px;
     height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     flex-shrink: 0;
     border-radius: 8px;
     border: 1.5px solid rgba(201, 205, 210, 0.50);
     background: #FFF;
     margin-left: 32px;
     margin-top: 24px;
+    padding-bottom: 20px;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 200px;
+  border: none;
+  resize: none;
+  padding: 16px;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+`;
+
+const ByteCounting = styled.p`
+    color: var(--cool-grayscale-placeholder, #9EA4AA);
+    text-align: right;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-right: 24px;
+    margin-bottom: -5px;
 `;
 
 const SuggestWordContainer = styled.div`
@@ -211,12 +239,35 @@ const GuidelineText = styled.p`
     padding: 24px 24px 24px 24px;
 `;
 
+
+
+
+const calculateByteCount = (text) => {
+    let byteCount = 0;
+  
+    for (let i = 0; i < text.length; i++) {
+      const charCode = text.charCodeAt(i);
+  
+      if (charCode <= 0x7F) {
+        byteCount += 1;
+      } else if (charCode <= 0x7FF) {
+        byteCount += 2;
+      } else if (charCode <= 0xFFFF) {
+        byteCount += 3;
+      } else {
+        byteCount += 4;
+      }
+    }
+  
+    return byteCount;
+  };
+
 function GroupDetailWrite() {
-  return (
-
-    
-
-
+    const [byteCount, setByteCount] = useState(0);
+    const [inputText, setInputText] = useState("");
+  
+  
+    return (
 
     <div>
     <Header>
@@ -243,7 +294,17 @@ function GroupDetailWrite() {
                 <ScoreResult>3등 </ScoreResult>
                 </div>
             </ScoreList>
-            <WritingBox></WritingBox>
+            <WritingBox>
+            <Textarea
+              value={inputText}
+              onChange={(e) => {
+                const text = e.target.value;
+                setInputText(text);
+                setByteCount(calculateByteCount(text));
+              }}
+            />
+            <ByteCounting>{byteCount}/1500 byte</ByteCounting>
+            </WritingBox>
             <SuggestWordContainer>
                 <SuggestWord>보기</SuggestWord>
                 <SuggestWord>본보기</SuggestWord>
