@@ -10,6 +10,10 @@ import {
   FooterDescContainer,
   FooterDescRights,
 } from "./Styled.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faInstagram } from "@fortawesome/free-solid-svg-icons";
+// import { faFacebook } from "@fortawesome/free-solid-svg-icons";
+import { faDrum } from "@fortawesome/free-solid-svg-icons";
 
 const FooterLeftContent = styled.div`
   display: flex;
@@ -73,7 +77,11 @@ export default function Footer() {
       <FooterIconContent>
         <Notelass>Note-lass</Notelass>
         <Icons>
-          <BoldText>insta</BoldText>
+          {/* <FontAwesomeIcon icon={faInstagram} />
+          <FontAwesomeIcon icon={faFacebook} /> */}
+          {/* 같은 코드로 drum 아이콘은 넣었는데, 인스타 페북 아이콘은 안 들어가는 상태. 나중에 다시 할 것. */}
+          <BoldText>Instagram</BoldText>
+          <FontAwesomeIcon icon={faDrum} />
           <BoldText>facebook</BoldText>
           <BoldText>github</BoldText>
         </Icons>
