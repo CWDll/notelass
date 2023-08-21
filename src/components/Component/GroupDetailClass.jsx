@@ -19,7 +19,7 @@ const Img = styled.img`
 `;
 
 const BoldTitle = styled.p`
-  color: #26282B;
+  color: #26282b;
   font-size: 20px;
   font-weight: 700;
   margin-left: 24px;
@@ -36,59 +36,54 @@ const MainContainer = styled.div`
 `;
 
 const NoticeContainer = styled.div`
-    width: 684px;
-    height: 360px;
-    border-radius: 8px;
-    background: #FFF;
-    box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-    margin-left: 363px;
-    margin-top: 48px;
-    position: relative;
-    align-items: center; 
+  width: 684px;
+  height: 360px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  margin-left: 363px;
+  margin-top: 48px;
+  position: relative;
+  align-items: center;
 `;
 
-
-
-
 const GroupContainer = styled.div`
-    width: 684px;
-    height: 312px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: #FFF;
-    box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-    margin-left: 363px;
-    margin-top: 30px;
-    position: relative;
+  width: 684px;
+  height: 312px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  margin-left: 363px;
+  margin-top: 30px;
+  position: relative;
 `;
 
 const ManagementContainer = styled.div`
-    width: 480px;
-    height: 1044px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: #FFF;
-    box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-    margin-left: 30px;
-    margin-top: 48px;
-    position: relative;
+  width: 480px;
+  height: 1044px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  margin-left: 30px;
+  margin-top: 48px;
+  position: relative;
 `;
 
 const Title = styled.p`
-    
-    color: var(--cool-grayscale-title, #26282B);
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding-top: 32px; 
-    padding-left: 32px; 
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-top: 32px;
+  padding-left: 32px;
 `;
 
 const DetailText = styled.p`
-  
-  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
   text-align: right;
   font-size: 14px;
   font-style: normal;
@@ -101,16 +96,13 @@ const DetailText = styled.p`
 `;
 
 const SubjectContainer = styled.div`
-    display: flex;
-    width: 684px;
-    height: 48px;
-    flex-shrink: 0;
-    /*background-color: yellow;*/
-    flex-direction: column;
-    margin-top: 24px;
-
-
-
+  display: flex;
+  width: 684px;
+  height: 48px;
+  flex-shrink: 0;
+  /*background-color: yellow;*/
+  flex-direction: column;
+  margin-top: 24px;
 `;
 
 const StyledNoticeItem = styled.li`
@@ -121,92 +113,83 @@ const StyledNoticeItem = styled.li`
 `;
 
 const NoticeContent = styled.div`
-  display: flex; 
+  display: flex;
 `;
 
 const NoticeImg = styled.img`
-    margin-top: 13px;
-    margin-left: 32px;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+  margin-top: 13px;
+  margin-left: 32px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 `;
 
 //디자인 위치 다시 수정해야함. 임시로 배치
 const NoticeTitle = styled.div`
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin-left: 24px; 
-    margin-top: 14px;
-    margin-bottom: 15px;
-    
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 24px;
+  margin-top: 14px;
+  margin-bottom: 15px;
 `;
 
 const StudentBook = styled.div`
-    width: 60px;
-    height: 118px;
-    flex-shrink: 0;
-    border-radius: 30px;
-    background: #4849FF;
-    box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.20);
-    margin-left: 32px;
-    margin-top: 56px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
+  width: 60px;
+  height: 118px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: #4849ff;
+  box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
+  margin-left: 32px;
+  margin-top: 56px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const BookImg = styled.img`
-    margin-top: 24px;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+  margin-top: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 `;
 
 const Text = styled.p`
-    margin-top: 8px;
-    margin-left: 13px;
-    color: #FFF;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    
-    
+  margin-top: 8px;
+  margin-left: 13px;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const SudentNum = styled.p`
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin-left: 24px; 
-    margin-top: 14px;
-    margin-bottom: 15px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 24px;
+  margin-top: 14px;
+  margin-bottom: 15px;
 `;
 
 function GroupDetailClass() {
-    
-    const navigate = useNavigate();
-    const onClick = () => {
-      navigate("/detail");
-    };
-    const GroupDetailWrite = () => {
-        navigate("/GroupDetailWrite");
-      };
+  const navigate = useNavigate();
+  const onClick = () => {
+    // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
+    navigate("/GroupDetailClass/AssignmentDetail");
+  };
+  const GroupDetailWrite = () => {
+    navigate("/GroupDetailWrite");
+  };
 
-    const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [clickedIndices, setClickedIndices] = useState(new Set());
 
-  const postContent = [
-    "Notice 1",
-    "Notice 2",
-    "Notice 3",
-    "Notice 4",
-  ];
+  const postContent = ["Notice 1", "Notice 2", "Notice 3", "Notice 4"];
 
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
@@ -218,8 +201,6 @@ function GroupDetailClass() {
     });
   };
 
-
-
   return (
     <div>
       <Header>
@@ -228,118 +209,124 @@ function GroupDetailClass() {
       </Header>
       <MainContainer>
         <LeftSectionContainer>
-
           <NoticeContainer>
             <Title>공지/과제</Title>
-            <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
-            더보기
+            <DetailText
+              style={{ "text-decoration": "underline" }}
+              onClick={onClick}
+            >
+              더보기
             </DetailText>
 
             <SubjectContainer>
-                {postContent.map((content, index) => (
+              {postContent.map((content, index) => (
                 <StyledNoticeItem
-                    key={index}
-                    isClicked={clickedIndices.has(index)}
-                    onClick={() => handleOnClick(index)}
-                    >
-                    <NoticeContent>
-                        <NoticeImg src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
-                        <NoticeTitle>{content}</NoticeTitle>
-                    </NoticeContent>
+                  key={index}
+                  isClicked={clickedIndices.has(index)}
+                  onClick={() => handleOnClick(index)}
+                >
+                  <NoticeContent>
+                    <NoticeImg
+                      src={clickedIndices.has(index) ? envelopeOpen : envelope}
+                      alt="envelope"
+                    />
+                    <NoticeTitle>{content}</NoticeTitle>
+                  </NoticeContent>
                 </StyledNoticeItem>
-            ))}
+              ))}
             </SubjectContainer>
-            
           </NoticeContainer>
 
           <GroupContainer>
             <Title>과제별 성적 열람</Title>
-                <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
-                더보기
-                </DetailText>
-                <SubjectContainer >
-                    <NoticeContent>
-                            <NoticeImg src={file} alt="file" />
-                            <NoticeTitle>과제</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={file} alt="file" />
-                            <NoticeTitle>과제2</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={file} alt="file" />
-                            <NoticeTitle>과제3</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={file} alt="file" />
-                            <NoticeTitle>과제4</NoticeTitle>
-                    </NoticeContent>
-
-                </SubjectContainer> 
+            <DetailText
+              style={{ "text-decoration": "underline" }}
+              onClick={onClick}
+            >
+              더보기
+            </DetailText>
+            <SubjectContainer>
+              <NoticeContent>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle>과제</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle>과제2</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle>과제3</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle>과제4</NoticeTitle>
+              </NoticeContent>
+            </SubjectContainer>
           </GroupContainer>
 
           <GroupContainer>
             <Title>학생별 성적 열람</Title>
-                <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
-                더보기
-                </DetailText>
-                <SubjectContainer >
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>1</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>2</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>3</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                  
-                </SubjectContainer> 
+            <DetailText
+              style={{ "text-decoration": "underline" }}
+              onClick={onClick}
+            >
+              더보기
+            </DetailText>
+            <SubjectContainer>
+              <NoticeContent>
+                <NoticeImg src={person} alt="person" />
+                <SudentNum>1</SudentNum>
+                <NoticeTitle>김민수</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={person} alt="person" />
+                <SudentNum>2</SudentNum>
+                <NoticeTitle>김민수</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={person} alt="person" />
+                <SudentNum>3</SudentNum>
+                <NoticeTitle>김민수</NoticeTitle>
+              </NoticeContent>
+            </SubjectContainer>
           </GroupContainer>
         </LeftSectionContainer>
 
         <ManagementContainer>
-            <Title>생기부 관리</Title>
-            <SubjectContainer >
-                    <NoticeContent onClick={GroupDetailWrite}>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>1</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>2</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>3</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>4</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                    <NoticeContent>
-                            <NoticeImg src={person} alt="person" />
-                            <SudentNum>5</SudentNum>
-                            <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
-                   
-
-                </SubjectContainer> 
+          <Title>생기부 관리</Title>
+          <SubjectContainer>
+            <NoticeContent onClick={GroupDetailWrite}>
+              <NoticeImg src={person} alt="person" />
+              <SudentNum>1</SudentNum>
+              <NoticeTitle>김민수</NoticeTitle>
+            </NoticeContent>
+            <NoticeContent>
+              <NoticeImg src={person} alt="person" />
+              <SudentNum>2</SudentNum>
+              <NoticeTitle>김민수</NoticeTitle>
+            </NoticeContent>
+            <NoticeContent>
+              <NoticeImg src={person} alt="person" />
+              <SudentNum>3</SudentNum>
+              <NoticeTitle>김민수</NoticeTitle>
+            </NoticeContent>
+            <NoticeContent>
+              <NoticeImg src={person} alt="person" />
+              <SudentNum>4</SudentNum>
+              <NoticeTitle>김민수</NoticeTitle>
+            </NoticeContent>
+            <NoticeContent>
+              <NoticeImg src={person} alt="person" />
+              <SudentNum>5</SudentNum>
+              <NoticeTitle>김민수</NoticeTitle>
+            </NoticeContent>
+          </SubjectContainer>
         </ManagementContainer>
 
         <StudentBook>
-            <BookImg src={book} alt="book" />
-            <Text>학생 수첩</Text>
+          <BookImg src={book} alt="book" />
+          <Text>학생 수첩</Text>
         </StudentBook>
       </MainContainer>
     </div>
