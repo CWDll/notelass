@@ -257,51 +257,65 @@ const SavedText = styled.pre`
   white-space: pre-wrap; /* 줄 바꿈 */
   word-wrap: break-word; /* 단어 바꿈 */
   margin-bottom: 16px;
-  padding: 16px;
+  padding: 16px 16px 16px 16px;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 32px;
+  margin-top: 16px;
+`;
+
+const TimeText = styled.p`
+  color: #9EA4AA;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const EditButton = styled.button`
-    height: 17px;
-    flex-shrink: 0;
-    color: var(--cool-grayscale-placeholder, #9EA4AA);
-    text-align: center;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    text-decoration-line: underline;
-    margin-left: 412px;
-    margin-top: -24px;
-    background-color: transparent;
+  flex-shrink: 0;
+  color: #9EA4AA;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration-line: underline;
+  background: none;
   border: none;
+  margin-left: 380px;
+  margin-right: 16px;
+  padding: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const CopyButton = styled.button`
-height: 17px;
 flex-shrink: 0;
-color: var(--cool-grayscale-placeholder, #9EA4AA);
+color: #9EA4AA;
 text-align: center;
 font-size: 14px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
 text-decoration-line: underline;
-margin-left: 16px;
-margin-top: -24px;
-background-color: transparent;
-  border: none;
+background: none;
+border: none;
+margin-right: 16px;
+padding: 0;
+cursor: pointer;
+
+&:focus {
+  outline: none;
+}
 `;
 
-const TimeText = styled.p`
-
-    margin-left: 32px;
-    margin-top: 24px;
-    color: #9EA4AA;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-`;
 
 
 const calculateByteCount = (text) => {
@@ -419,9 +433,11 @@ function GroupDetailWrite() {
 
                  {isTextSaved && (
                 <div>
-                <TimeText> 2023년 8월 21일</TimeText>
+                <InfoContainer> 
+                <TimeText>2023년 1학기-1</TimeText>
                 <EditButton onClick={handleTextEdit}>수정하기</EditButton>
                 <CopyButton onClick={handleCopyButtonClick}>복사하기</CopyButton>
+                </InfoContainer>
                 <SavedTextContainer>
                     
                     <SavedText>{savedText}</SavedText>
