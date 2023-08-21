@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   /* display: flex; */
 `;
 
+// Left Body 시작
 const Header = styled.header`
   display: flex;
   justify-content: center;
@@ -29,7 +30,7 @@ const Foot = styled.div`
   /* margin-bottom: auto; */
   position: absolute;
   margin-left: 450px;
-  margin-top: 200px;
+  margin-top: 130px;
 `;
 
 const Img = styled.img`
@@ -45,11 +46,16 @@ const BigTitle = styled.p`
   margin-top: 72px; */
 `;
 
+const CreateTitle = styled(BigTitle)`
+  margin-left: 45px;
+  margin-top: 32px;
+`;
+
 const SmallTitle = styled.p`
   color: #26282b;
   font-size: 16px;
   font-weight: 700;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   /* height: 54px; */
 `;
 
@@ -57,12 +63,15 @@ const AssigmentCreateForm = styled.div`
   width: 684px;
   height: 800px;
   background-color: white;
+  /* 밑에 두 style은 지울 것. */
+  border: 1px dotted red;
+  margin-right: 30px;
 `;
 
 const AssignmentSettingForm = styled.div`
   width: 480px;
   height: 800px;
-  background-color: skyblue;
+  background-color: white;
 `;
 
 const HeadInput = styled.div`
@@ -76,12 +85,14 @@ const HeadInput = styled.div`
 `;
 
 const BodyInput = styled.div`
-  display: flex;
+  display: block;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: auto;
+  margin-left: 29.5px;
+  margin-top: 25px;
 `;
 
 const LegInput = styled(HeadInput)`
@@ -90,7 +101,7 @@ const LegInput = styled(HeadInput)`
 `;
 
 const InputTitle = styled.input.attrs({
-  placeholder: "Title입니다.",
+  placeholder: "과제 제목을 입력하세요.",
   placeholdertextcolor: "red",
 })`
   width: 496px;
@@ -99,6 +110,7 @@ const InputTitle = styled.input.attrs({
   border-radius: 8px;
   border: 1px solid #c9cdd2;
 `;
+
 const InputDesc = styled.textarea.attrs({
   placeholder: "과제 설명을 입력하세요.",
   placeholdertextcolor: "red",
@@ -109,12 +121,7 @@ const InputDesc = styled.textarea.attrs({
   border-radius: 8px;
   resize: none;
   border: 1px solid #c9cdd2;
-`;
-
-const fileBtn = styled.button`
-  width: 180px;
-  height: 40px;
-  background-color: #c9cdd2;
+  margin-top: 10px;
 `;
 
 const CancelBtn = styled.button`
@@ -135,6 +142,20 @@ const SubmitBtn = styled.button`
   font-size: 14px;
   font-weight: 600;
 `;
+// Left Body 끝
+// Right Body 시작
+const SettingBox = styled.div`
+  margin-top: 20px;
+  margin-left: 45px;
+  width: 80%;
+  height: 60px;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+`;
+
+// Right Body 끝
 
 function AssignmentDetail() {
   const [assignmentName, setAssignmentName] = useState("");
@@ -168,7 +189,7 @@ function AssignmentDetail() {
       </Header>
       <Body>
         <AssigmentCreateForm>
-          <BigTitle>공지/과제 생성</BigTitle>
+          <CreateTitle>공지/과제 생성</CreateTitle>
           <HeadInput>
             <SmallTitle>과제 제목</SmallTitle>
             <InputTitle
@@ -204,7 +225,29 @@ function AssignmentDetail() {
             <CancelBtn type="submit">취소</CancelBtn>
           </Foot>
         </AssigmentCreateForm>
-        <AssignmentSettingForm></AssignmentSettingForm>
+        <AssignmentSettingForm>
+          <CreateTitle>과제 설정</CreateTitle>
+          <SettingBox>
+            <SmallTitle>과제 제목</SmallTitle>
+            <div>20.05.01, 12:00 AM</div>
+          </SettingBox>
+          <SettingBox>
+            <SmallTitle>과제 종류</SmallTitle>
+            <div>수행평가</div>
+          </SettingBox>
+          <SettingBox>
+            <SmallTitle>허용된 시도</SmallTitle>
+            <div>2회</div>
+          </SettingBox>
+          <SettingBox>
+            <SmallTitle>배점</SmallTitle>
+            <div>100점</div>
+          </SettingBox>
+          <SettingBox>
+            <SmallTitle>할당된 그룹</SmallTitle>
+            <div>노트고등학교 3학년 1반 문학</div>
+          </SettingBox>
+        </AssignmentSettingForm>
       </Body>
     </Wrapper>
   );
