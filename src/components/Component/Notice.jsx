@@ -8,15 +8,14 @@ import {
   LeftHeading,
   NoticeContent,
   MidHeading,
-  NoticeBody, 
-  NoticeTitle,  
+  NoticeBody,
+  NoticeTitle,
   DetailText,
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 
 function Notice() {
-
   const navigate = useNavigate();
   const onClick = () => {
     navigate("/NoticeDetail");
@@ -43,40 +42,46 @@ function Notice() {
   };
 
   const unReadCount = postContent.length - clickedIndices.size;
-  const noticeHeaderText = unReadCount > 0 ? (
-    <>
-      읽지 않은 공지가 <span style={{ color: "blue" }}>{unReadCount}건</span> 있습니다.
-    </>
-  ) : (
-    "모든 공지를 읽었습니다."
-  );
+  const noticeHeaderText =
+    unReadCount > 0 ? (
+      <>
+        읽지 않은 공지가 <span style={{ color: "blue" }}>{unReadCount}건</span>{" "}
+        있습니다.
+      </>
+    ) : (
+      "모든 공지를 읽었습니다."
+    );
 
-  
   return (
-   
-      <StyledContainerBox>
-        <HeadingRow>
-          <LeftHeading>공지/과제</LeftHeading>
-          <MidHeading>{noticeHeaderText}</MidHeading>
-          <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
+    <StyledContainerBox>
+      <HeadingRow>
+        <LeftHeading>공지/과제</LeftHeading>
+        <MidHeading>{noticeHeaderText}</MidHeading>
+        <DetailText
+          style={{ "text-decoration": "underline" }}
+          onClick={onClick}
+        >
           더보기
         </DetailText>
-        </HeadingRow>
-        <NoticeBody>
-          {postContent.map((content, index) => (
-            <StyledNoticeItem
-              key={index}
-              isClicked={clickedIndices.has(index)}
-              onClick={() => handleOnClick(index)}
-            >
-              <NoticeContent>
-                <img src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
-                <NoticeTitle>{content}</NoticeTitle>
-              </NoticeContent>
-            </StyledNoticeItem>
-          ))}
-        </NoticeBody>
-      </StyledContainerBox>
+      </HeadingRow>
+      <NoticeBody>
+        {postContent.map((content, index) => (
+          <StyledNoticeItem
+            key={index}
+            isClicked={clickedIndices.has(index)}
+            onClick={() => handleOnClick(index)}
+          >
+            <NoticeContent>
+              <img
+                src={clickedIndices.has(index) ? envelopeOpen : envelope}
+                alt="envelope"
+              />
+              <NoticeTitle>{content}</NoticeTitle>
+            </NoticeContent>
+          </StyledNoticeItem>
+        ))}
+      </NoticeBody>
+    </StyledContainerBox>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import plus_lg from "../../assets/plus_lg.svg";
 import paper from "../../assets/paper.svg";
@@ -17,7 +18,7 @@ const Img = styled.img`
 `;
 
 const BoldTitle = styled.p`
-  color: #26282B;
+  color: #26282b;
   font-size: 20px;
   font-weight: 700;
   margin-left: 24px;
@@ -28,7 +29,7 @@ const NoteContainer = styled.div`
   width: 1194px;
   height: 728px;
   border-radius: 8px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 370px;
   margin-top: 48px;
@@ -46,7 +47,7 @@ const AddNote = styled.div`
   width: 48px;
   height: 64px;
   border-radius: 2px;
-  border: 1.5px dashed #4849FF;
+  border: 1.5px dashed #4849ff;
   margin-left: 32px;
   margin-top: 36px;
 `;
@@ -59,7 +60,7 @@ const PlusImg = styled.img`
 `;
 
 const Title = styled.p`
-  color: #4849FF;
+  color: #4849ff;
   font-size: 16px;
   font-weight: 600;
   padding-left: 26px;
@@ -88,13 +89,13 @@ const StarImg = styled.img`
 `;
 
 const BoldText = styled.p`
-  color: #26282B;
+  color: #26282b;
   font-size: 16px;
   font-weight: 600;
 `;
 
 const GrayText = styled.p`
-  color: #9EA4AA;
+  color: #9ea4aa;
   font-size: 12px;
   font-weight: 600;
   margin-top: 4px;
@@ -121,10 +122,16 @@ const SubjectBodyWrapper = styled.div`
 `;
 
 function NoteDetailSubject() {
+  const navigate = useNavigate();
   const [isStarred, setIsStarred] = useState(false);
 
   function handleStarClick() {
     setIsStarred(!isStarred);
+  }
+
+  function handleTitleClick() {
+    // Title 클릭 시 PDF 뷰어 페이지로 이동
+    navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
   }
 
   return (
@@ -138,7 +145,7 @@ function NoteDetailSubject() {
           <AddNote>
             <PlusImg src={plus_lg} alt="plus_lg" />
           </AddNote>
-          <Title>신규 노트 만들기</Title>
+          <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
         </MakeNoteBody>
         <SubjectBodyWrapper>
           <SubjectBody>
