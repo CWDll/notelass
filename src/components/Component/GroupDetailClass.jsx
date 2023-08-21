@@ -197,7 +197,7 @@ function GroupDetailClass() {
     };
     const GroupDetailWrite = () => {
         navigate("/GroupDetailWrite");
-      };
+    };
 
     const [clickedIndices, setClickedIndices] = useState(new Set());
 
