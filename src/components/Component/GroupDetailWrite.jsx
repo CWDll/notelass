@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import arrow_repeat from "../../assets/arrow_repeat.svg";
 
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+
 
 const Header = styled.header`
   display: flex;
@@ -356,9 +359,11 @@ function GroupDetailWrite() {
           setIsTextSaved(true);
           setButtonText("엑셀 출력");
         } else {
-          // 엑셀로 출력하는 기능을 여기에 추가할 수 있습니다.
+            exportToExcel(savedText);
         }
       };
+
+    
 
     const handleTextEdit = () => {
         setIsTextSaved(false);
@@ -370,7 +375,29 @@ function GroupDetailWrite() {
         alert("복사되었습니다.");
         };
 
+
+    const exportToExcel = (text) => {
+        const fileType =
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        const fileExtension = ".xlsx";
+        const fileName = "활동기록 총 정리";
+        const ws = XLSX.utils.aoa_to_sheet([[text]]);
+        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const data = new Blob([excelBuffer], { type: fileType });
+        FileSaver.saveAs(data, fileName + fileExtension);
+    };
   
+/*
+    const exportToExcel = (text) => {
+        const ws = XLSX.utils.json_to_sheet([{ savedText: text }]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      
+        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const data = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
+        FileSaver.saveAs(data, "saved_text.xlsx");
+      };*/
     return (
 
     <div>
