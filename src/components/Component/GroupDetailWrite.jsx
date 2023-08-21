@@ -60,22 +60,22 @@ const LeftContainer = styled.div`
 `;
 
 const SaveButton = styled.button`
-    width: 73px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 6px;
-    background: var(--primary-cobalt, #4849FF);
-    margin-left: 579px;
-    margin-top: -24px;
+  width: 73px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--primary-cobalt, #4849FF);
+  margin-left: 579px;
+  margin-top: -24px;
 
-    /*저장하기 글씨*/
-    color: #ffffff;
-    font-size: 14px;
-    padding: 12px; 
-    white-space: nowrap;
-    display: flex; 
-    justify-content: center;
-    align-items: center; 
+  /* 저장하기, 엑셀로 출력 글씨 */
+  color: #ffffff;
+  font-size: 14px;
+  padding: 12px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RightContainer = styled.div`
@@ -238,8 +238,70 @@ const GuidelineText = styled.p`
     line-height: 24px; /* 150% */
     padding: 24px 24px 24px 24px;
 `;
+const SavedTextContainer = styled.div`
+    width: 620px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1.5px solid rgba(201, 205, 210, 0.50);
+    background: #FFF;
+    margin-left: 32px;
+    margin-top: 16px;
+`;
 
+const SavedText = styled.pre`
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  white-space: pre-wrap; /* 줄 바꿈 */
+  word-wrap: break-word; /* 단어 바꿈 */
+  margin-bottom: 16px;
+  padding: 16px;
+`;
 
+const EditButton = styled.button`
+    height: 17px;
+    flex-shrink: 0;
+    color: var(--cool-grayscale-placeholder, #9EA4AA);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+    margin-left: 412px;
+    margin-top: -24px;
+    background-color: transparent;
+  border: none;
+`;
+
+const CopyButton = styled.button`
+height: 17px;
+flex-shrink: 0;
+color: var(--cool-grayscale-placeholder, #9EA4AA);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-decoration-line: underline;
+margin-left: 16px;
+margin-top: -24px;
+background-color: transparent;
+  border: none;
+`;
+
+const TimeText = styled.p`
+
+    margin-left: 32px;
+    margin-top: 24px;
+    color: #9EA4AA;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`;
 
 
 const calculateByteCount = (text) => {
@@ -265,13 +327,41 @@ const calculateByteCount = (text) => {
 function GroupDetailWrite() {
     const [byteCount, setByteCount] = useState(0);
     const [inputText, setInputText] = useState("");
+    const [savedText, setSavedText] = useState("");
+    const [isTextSaved, setIsTextSaved] = useState(false);
+    const [buttonText, setButtonText] = useState("저장하기");
   
+    const navigate = useNavigate();
+    const BackButton = () => {
+        navigate("/GroupDetailClass");
+    };
+
+    const handleSaveButtonClick = () => {
+        if (!isTextSaved) {
+          setSavedText(inputText);
+          setIsTextSaved(true);
+          setButtonText("엑셀 출력");
+        } else {
+          // 엑셀로 출력하는 기능을 여기에 추가할 수 있습니다.
+        }
+      };
+
+    const handleTextEdit = () => {
+        setIsTextSaved(false);
+        setButtonText("저장하기")
+    };
+
+    const handleCopyButtonClick = () => {
+        navigator.clipboard.writeText(savedText);
+        alert("복사되었습니다.");
+        };
+
   
     return (
 
     <div>
     <Header>
-        <Img src={chevron_left} alt="chevron_left" />
+        <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect />
@@ -279,7 +369,7 @@ function GroupDetailWrite() {
     <MainContainer>
         <LeftContainer>
             <Title>활동기록 총 정리</Title>
-            <SaveButton>저장하기</SaveButton>
+            <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
             <ScoreList>
                 <ScoreTitle>태도 점수: </ScoreTitle>
                 <ScoreResult>5점 </ScoreResult>
@@ -294,27 +384,29 @@ function GroupDetailWrite() {
                 <ScoreResult>3등 </ScoreResult>
                 </div>
             </ScoreList>
-            <WritingBox>
-            <Textarea
-              value={inputText}
-              onChange={(e) => {
-                const text = e.target.value;
-                setInputText(text);
-                setByteCount(calculateByteCount(text));
-              }}
-            />
-            <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-            </WritingBox>
-            <SuggestWordContainer>
-                <SuggestWord>보기</SuggestWord>
-                <SuggestWord>본보기</SuggestWord>
-                <SuggestWord>사례</SuggestWord>
-            </SuggestWordContainer>
-            <GuidelineContainer>
-                <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
-            </GuidelineContainer>
-            <GuidelineBox>
+            {!isTextSaved ? (
+                <>
+                <WritingBox>
+                <Textarea
+                    value={inputText}
+                    onChange={(e) => {
+                    const text = e.target.value;
+                    setInputText(text);
+                    setByteCount(calculateByteCount(text));
+                    }}
+                />
+                <ByteCounting>{byteCount}/1500 byte</ByteCounting>
+                </WritingBox>
+                <SuggestWordContainer>
+                    <SuggestWord>보기</SuggestWord>
+                    <SuggestWord>본보기</SuggestWord>
+                    <SuggestWord>사례</SuggestWord>
+                </SuggestWordContainer>
+                <GuidelineContainer>
+                    <GuidelineTitle>가이드라인 문장</GuidelineTitle>
+                    <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
+                </GuidelineContainer>
+                <GuidelineBox>
                 <GuidelineText>
                     시를 읽고 분석하는 과정에서 시의 아름다움에 대해 느껴 
                     애송시 소개 글쓰기에 적극적으로 참여하고 학습함. 
@@ -322,6 +414,25 @@ function GroupDetailWrite() {
                     보이며 시를 보다 창의적이고 거시적인 관점으로 이해하는 계기가 됨.
                 </GuidelineText>
             </GuidelineBox>
+                </>
+                 ) : null}
+
+                 {isTextSaved && (
+                <div>
+                <TimeText> 2023년 8월 21일</TimeText>
+                <EditButton onClick={handleTextEdit}>수정하기</EditButton>
+                <CopyButton onClick={handleCopyButtonClick}>복사하기</CopyButton>
+                <SavedTextContainer>
+                    
+                    <SavedText>{savedText}</SavedText>
+                
+                    
+                </SavedTextContainer>
+                </div>
+    )}
+            
+            
+          
         </LeftContainer>
 
 
