@@ -2,8 +2,9 @@ import styled, { keyframes } from "styled-components";
 
 export const FooterContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  /* align-items: center; */
+  flex-direction: column;
   padding: 40px 0;
   border-top: 1px solid rgb(25, 25, 25);
   width: 100%;
@@ -16,10 +17,22 @@ export const FooterContainer = styled.div`
   }
 `;
 
-export const FooterContent = styled.div``;
+export const FooterTextContent = styled.div`
+  width: 500px;
+  display: flex;
+  flex-dicretion: row;
+  justify-content: "space-between";
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
 
 export const FooterLinkContainer = styled.div`
   width: 500px;
+  display: flex;
+  flex-dicretion: row;
+  justify-content: "space-between";
 
   @media (max-width: 768px) {
     width: 100%;
@@ -29,6 +42,7 @@ export const FooterLinkContainer = styled.div`
 export const FooterLinkTitle = styled.h1`
   color: gray;
   font-size: 17px;
+  width: 500px;
 `;
 
 export const FooterLinkContent = styled.div`

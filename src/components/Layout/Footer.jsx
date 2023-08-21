@@ -1,7 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import {
   FooterContainer,
-  FooterContent,
+  FooterTextContent,
   FooterLinkContainer,
   FooterLinkTitle,
   FooterLinkContent,
@@ -10,43 +11,111 @@ import {
   FooterDescRights,
 } from "./Styled.jsx";
 
+const FooterLeftContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 300px;
+  margin-right: 600px;
+`;
+
+const FooterRightContent = styled(FooterLeftContent)`
+  flex-direction: row;
+`;
+
+const FooterIconContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const BoldText = styled.p`
+  font-weight: bold;
+  width: 200px;
+`;
+
+const Notelass = styled.p`
+  color: #4849ff;
+  font-weight: bold;
+  font-size: 30px;
+`;
+
+const Icons = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+const Hr = styled.hr`
+  width: 100%;
+  color: #4849ff;
+`;
+
+const NameBox = styled.p`
+  width: 1000px;
+  display: inline-flex;
+`;
+
+const Name = styled.div`
+  width: 80px;
+`;
+
+const CCBox = styled.div`
+  width: 300px;
+`;
+
+const SmallCCBox = styled(CCBox)`
+  width: 150px;
+`;
+
 export default function Footer() {
   return (
     <FooterContainer>
-      <FooterContent>
-        <FooterLinkContainer>
-          <FooterLinkTitle>넷플릭스 대한민국</FooterLinkTitle>
-          <FooterLinkContent>
-            <FooterLink href="https://help.netflix.com/ko/node/412">
-              넷플릭스 소개
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko">
-              고객 센터
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko/">
-              미디어 센터
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko/">
-              이용 약관
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko/node/412">
-              자막 및 설정
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko">
-              음성 지원
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko/">
-              기프트카드
-            </FooterLink>
-            <FooterLink href="https://help.netflix.com/ko/">
-              쿠키 설정
-            </FooterLink>
-          </FooterLinkContent>
-          <FooterDescContainer>
-            <FooterDescRights>Netflix Rights Reserved.</FooterDescRights>
-          </FooterDescContainer>
-        </FooterLinkContainer>
-      </FooterContent>
+      <FooterIconContent>
+        <Notelass>Note-lass</Notelass>
+        <Icons>
+          <BoldText>insta</BoldText>
+          <BoldText>facebook</BoldText>
+          <BoldText>github</BoldText>
+        </Icons>
+      </FooterIconContent>
+      <Hr></Hr>
+      <FooterTextContent>
+        <FooterLeftContent>
+          <FooterLinkTitle>
+            Copyright ⓒNote-lass. All Rights Reserved.
+          </FooterLinkTitle>
+          <BoldText>개인정보 보호 정책</BoldText>
+          <BoldText>오류 제보 및 만족도 평가</BoldText>
+        </FooterLeftContent>
+        <FooterRightContent>
+          <CCBox>
+            <BoldText>Developer</BoldText>
+            <NameBox>
+              <Name>백민석</Name>
+              <Name>강하현</Name>
+              <Name>이창준</Name>
+            </NameBox>
+            <NameBox>
+              <Name>조나애</Name>
+              <Name>신수민</Name>
+              <Name>전승석</Name>
+            </NameBox>
+          </CCBox>
+          <SmallCCBox>
+            <BoldText>Designer</BoldText>
+            <NameBox>기혜림</NameBox>
+            <NameBox>유주하</NameBox>
+          </SmallCCBox>
+          <SmallCCBox>
+            <BoldText>Sales</BoldText>
+            <NameBox>이상윤</NameBox>
+          </SmallCCBox>
+          <CCBox>
+            <BoldText>대표자: 조창익</BoldText>
+            <NameBox>E-mail: whckddlr00@ajou.ac.kr</NameBox>
+          </CCBox>
+        </FooterRightContent>
+      </FooterTextContent>
     </FooterContainer>
   );
 }
