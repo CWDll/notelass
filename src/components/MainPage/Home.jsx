@@ -11,8 +11,8 @@ import RecentNote from "../Component/RecentNote";
 
 const HomeContainer = styled.div`
   width: 70%;
-  margin-left: 15%;
-  margin-right: 30%;
+  margin-left: auto;
+  margin-right: auto;
   height: 90%;
   margin-top: 3%;
   padding: 0;
@@ -20,22 +20,21 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: row;
   /* flex-wrap: wrap; */
-  justifycontent: "space-between";
+  justifycontent: "center";
 `;
 
 const LeftHomeBody = styled.div`
   display: flex;
   flex-direction: column;
   /* flex-wrap: wrap; */
-
-
+  width: 55%;
 `;
 
 const RightHomeBody = styled.div`
   display: flex;
 
   flex-direction: column;
-
+  margin-right: 0;
   position: relative;
 `;
 
