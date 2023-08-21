@@ -12,6 +12,9 @@ const Wrapper = styled.div`
 
 const Header = styled.header`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 `;
 
 const Body = styled.div`
@@ -30,16 +33,16 @@ const Foot = styled.div`
 `;
 
 const Img = styled.img`
-  margin-left: 363px;
-  margin-top: 72px;
+  /* margin-left: 363px;
+  margin-top: 72px; */
 `;
 
 const BigTitle = styled.p`
   color: #26282b;
   font-size: 20px;
   font-weight: bold;
-  margin-left: 24px;
-  margin-top: 72px;
+  /* margin-left: 24px;
+  margin-top: 72px; */
 `;
 
 const SmallTitle = styled.p`
@@ -136,6 +139,13 @@ const SubmitBtn = styled.button`
 function AssignmentDetail() {
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
+  const navigate = useNavigate();
+
+  // Header를 클릭할 때 실행할 핸들러
+  const handleHeaderClick = () => {
+    // 원하는 경로로 이동
+    navigate("/GroupDetailClass");
+  };
 
   const onChangeName = (e) => {
     setAssignmentName(e.target.value);
@@ -152,7 +162,7 @@ function AssignmentDetail() {
   };
   return (
     <Wrapper>
-      <Header>
+      <Header onClick={handleHeaderClick}>
         <Img src={chevron_left} alt="chevron_left" />
         <BigTitle>노트고등학교 3학년 1반 문학</BigTitle>
       </Header>

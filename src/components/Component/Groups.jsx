@@ -16,7 +16,7 @@ import {
 export default function Groups() {
   const navigate = useNavigate();
   const onClick = () => {
-  navigate("/GroupDetail");
+    navigate("/GroupDetail");
   };
 
   // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
@@ -40,7 +40,7 @@ export default function Groups() {
         </CircleText>
         <SubjectContainer>
           <BoldText>{subjectInfo}</BoldText>
-          <GrayText>김태연 선생님</GrayText>
+          {/* <GrayText>1반</GrayText> */}
         </SubjectContainer>
       </GroupBody>
     </GroupContainer>
