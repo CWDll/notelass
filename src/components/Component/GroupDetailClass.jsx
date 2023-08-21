@@ -187,6 +187,9 @@ function GroupDetailClass() {
     navigate("/GroupDetailWrite");
   };
 
+    
+ 
+
   const [clickedIndices, setClickedIndices] = useState(new Set());
 
   const postContent = ["Notice 1", "Notice 2", "Notice 3", "Notice 4"];

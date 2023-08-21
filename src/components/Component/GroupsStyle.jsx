@@ -54,3 +54,8 @@ export const SubjectContainer = styled.div`
   flex-direction: column;
   margin-left: 10px;
 `;
+
+
+
+
+
