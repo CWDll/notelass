@@ -43,7 +43,15 @@ const StudentSelect = styled.select`
     background: #FFF;
     margin-left: 32px;
     margin-top: 60px;
-`;
+
+    /* 학생 선택 글씨 */
+    color: var(--cool-grayscale-title, #26282B);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-left: 16px;
+    `;
 
 const MainContainer = styled.div`
     display: flex;
@@ -319,6 +327,12 @@ cursor: pointer;
 }
 `;
 
+const students = [
+    { id: 1, name: "1번 김민수" },
+    { id: 2, name: "2번 김민수" },
+    { id: 3, name: "3번 김민수" },
+    { id: 4, name: "4번 김민수" },
+];
 
 
 const calculateByteCount = (text) => {
@@ -347,6 +361,11 @@ function GroupDetailWrite() {
     const [savedText, setSavedText] = useState("");
     const [isTextSaved, setIsTextSaved] = useState(false);
     const [buttonText, setButtonText] = useState("저장하기");
+    const [selectedStudent, setSelectedStudent] = useState();
+
+    const handleStudentChange = (e) => {
+    setSelectedStudent(e.target.value);
+    };
   
     const navigate = useNavigate();
     const BackButton = () => {
@@ -405,7 +424,14 @@ function GroupDetailWrite() {
         <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
-        <StudentSelect />
+        <StudentSelect onChange={handleStudentChange}>
+            <option value=""></option>
+            {students.map((student) => (
+            <option key={student.id} value={student.id}>
+            {student.name}
+             </option>
+        ))}
+</StudentSelect>
     </Header>
     <MainContainer>
         <LeftContainer>
