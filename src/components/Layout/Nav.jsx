@@ -29,24 +29,21 @@ const NavItemContainer = styled.div`
   align-items: center;
   width: auto;
   margin-left: 358px;
-  
 `;
 
 const NavItems = styled.span`
   width: 100px;
   color: #9ea4aa;
- 
+
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 
-
   height: 100%;
   color: ${(props) => (props.isSelected ? "#4849ff" : "#9EA4AA")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "600")};
   margin: 0px 20px 0px 20px;
-
 `;
 
 const SignBtnContainer = styled.div`
@@ -76,7 +73,7 @@ const Imgbox = styled.div`
   height: 28px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: var(--primary-cobalt, #4849FF);
+  background: var(--primary-cobalt, #4849ff);
   margin-left: 48px;
 `;
 
@@ -87,9 +84,6 @@ const LogoImg = styled.img`
   height: 18px;
   flex-shrink: 0;
 `;
-
-
-
 
 export default function Nav() {
   const [show, setShow] = useState(false);
@@ -135,7 +129,10 @@ export default function Nav() {
 
   return (
     <NavContainer>
-      <Imgbox> <LogoImg src={logo} alt="logo" /> </Imgbox>
+      <Imgbox>
+        {" "}
+        <LogoImg src={logo} alt="logo" />{" "}
+      </Imgbox>
       <Notelass> Note-lass</Notelass>
       <NavItemContainer>
         <NavItems
