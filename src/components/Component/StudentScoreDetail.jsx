@@ -74,6 +74,7 @@ const NoticeTitle = styled.p`
     font-weight: 700;
     line-height: normal;
     margin-left: 16px;
+    cursor: pointer;
 `;
 
 const Score = styled.p`
@@ -95,11 +96,11 @@ const Score = styled.p`
 `;
 
 const XlsxButton = styled.button`
-display: flex;
-height: 40px;
-flex-shrink: 0;
-border-radius: 6px;
-background: var(--primary-cobalt, #4849FF);
+    display: flex;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: var(--primary-cobalt, #4849FF);
     margin-left: 1068px;
     margin-top: -24px;
 
@@ -132,6 +133,12 @@ function StudentScoreDetail(){
     const navigate = useNavigate();
     const BackButton = () => {
         navigate("/GroupDetailWrite");
+    };
+
+    const TaskClick = (noticeTitle) => {
+      if (noticeTitle === "과제4") {
+        navigate("/StudentTaskDetail");
+      }
     };
 
 
@@ -186,7 +193,9 @@ function StudentScoreDetail(){
                 {student.assignments.map((assignment, idx) => (
                 <NoticeContent key={`assignment-${idx}`}>
                     <NoticeImg src={file} alt="file" />
-                    <NoticeTitle>{assignment.noticeTitle}</NoticeTitle>
+                    <NoticeTitle onClick={() => TaskClick(assignment.noticeTitle)}>
+                      {assignment.noticeTitle}
+                    </NoticeTitle>
                     <Score score={assignment.score}>{assignment.score}</Score>
                 </NoticeContent>
                 ))}
