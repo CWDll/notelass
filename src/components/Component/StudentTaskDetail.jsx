@@ -140,6 +140,56 @@ const DivideLine = styled.div`
   margin-top: 16px;
 `;
 
+const ModifyButton = styled.button`
+
+height: 40px;
+flex-shrink: 0;
+border-radius: 6px;
+border: 1.5px solid var(--primary-cobalt, #4849FF);
+background: #FFF;
+    margin-left: 275px;
+    margin-bottom: 32px;
+
+    color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+
+`;
+
+const CheckButton = styled.button`
+
+
+
+height: 40px;
+flex-shrink: 0;
+    border-radius: 6px;
+background: var(--primary-cobalt, #4849FF);
+
+    margin-left: 16px;
+    margin-bottom: 32px;
+
+
+    color: #FFF;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`;
+
+const Button = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-top: 490px;
+    
+`;
+
 
 
 
@@ -180,7 +230,10 @@ function StudentTaskDetail() {
             <SmallTitle>피드백</SmallTitle>
             <BlueText>피드백을 작성하세요.</BlueText>
           </SettingBox>
-            
+          <Button>
+            <ModifyButton>채점 수정</ModifyButton>
+            <CheckButton>확인</CheckButton>
+          </Button>
         </RightContainer>
     </MainContainer>
 
