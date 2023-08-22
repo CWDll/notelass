@@ -39,7 +39,6 @@ const MainContainer = styled.div`
     border-radius: 8px;
     background: #FFF;
     box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-
 `;
 
 const Title = styled.p`
@@ -49,8 +48,8 @@ const Title = styled.p`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    Padding-top: 32px;
-    padding-left: 32px;
+    padding-top: 32px;
+    margin-left: 32px;
 `;
 
 
@@ -95,17 +94,18 @@ const Score = styled.p`
   line-height: normal;
 `;
 
-const ElsxButton = styled.button`
-    width: 100px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: var(--primary-green, #00BAB3);
-    margin-left: 600px;
-    margin-top: 72px;
+const XlsxButton = styled.button`
+display: flex;
+height: 40px;
+flex-shrink: 0;
+border-radius: 6px;
+background: var(--primary-cobalt, #4849FF);
+    margin-left: 1068px;
+    margin-top: -24px;
+
 
     /*엑셀 출력 글씨*/
-    color: #fff;
+    color: #FFF;
     text-align: center;
     font-family: Pretendard;
     font-size: 14px;
@@ -176,12 +176,13 @@ function StudentScoreDetail(){
         <Header>
                 <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
                 <BoldTitle>학생별 성적 열람</BoldTitle>
-                <ElsxButton onClick={exportToCSV}>엑셀 출력</ElsxButton>
         </Header>
         <MainContainer>
             {studentScores.map((student, idx) => (
             <>
                 <Title key={`student-${idx}`}>{student.title}</Title>
+                
+                <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
                 {student.assignments.map((assignment, idx) => (
                 <NoticeContent key={`assignment-${idx}`}>
                     <NoticeImg src={file} alt="file" />
