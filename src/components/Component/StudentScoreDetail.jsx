@@ -116,90 +116,89 @@ const XlsxButton = styled.button`
 `;
 
 
-
 //점수 색깔을 결정하는 함수
 function getScoreColor(scoreString) {
-    const actualScore = parseInt(scoreString.split("/")[0]);
-    if (actualScore >= 7) {
-      return "var(--primary-green, #00BAB3)";
-    } else if (actualScore >= 5) {
-      return "var(--primary-yellow, #FDD26E)";
-    } else {
-      return "var(--primary-pink, #F78)";
-    }
+  const actualScore = parseInt(scoreString.split("/")[0]);
+  if (actualScore >= 7) {
+    return "var(--primary-green, #00BAB3)";
+  } else if (actualScore >= 5) {
+    return "var(--primary-yellow, #FDD26E)";
+  } else {
+    return "var(--primary-pink, #F78)";
   }
+}
 
 
 function StudentScoreDetail(){
 
-    const navigate = useNavigate();
-    const BackButton = () => {
-        navigate("/GroupDetailWrite");
+  const navigate = useNavigate();
+  const BackButton = () => {
+      navigate("/GroupDetailWrite");
+  };
+
+  const TaskClick = (noticeTitle) => {
+    if (noticeTitle === "과제1") {
+      navigate("/StudentTaskDetail");
+    }
+  };
+
+
+  const studentScores = [
+      {
+        title: "1번 김민수",
+        assignments: [
+          { noticeTitle: "과제4", score: "6/10" },
+          { noticeTitle: "과제3", score: "9/10" },
+          { noticeTitle: "과제2", score: "3/10" },
+          { noticeTitle: "과제1", score: "8/10" },
+        ],
+      },
+    ];
+
+    const exportToCSV = () => {
+      const csvData = studentScores.flatMap((student) => {
+        return student.assignments.map((assignment) => ({
+          이름: student.title,
+          과제: assignment.noticeTitle,
+          점수: assignment.score,
+        }));
+      });
+
+  
+      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      const fileExtension = ".xlsx";
+      const fileName = "학생별 성적";
+      const ws = XLSX.utils.json_to_sheet(csvData);
+      const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const data = new Blob([excelBuffer], {type: fileType});
+      FileSaver.saveAs(data, fileName + fileExtension);
+
+  
+
     };
 
-    const TaskClick = (noticeTitle) => {
-      if (noticeTitle === "과제1") {
-        navigate("/StudentTaskDetail");
-      }
-    };
 
-
-    const studentScores = [
-        {
-          title: "1번 김민수",
-          assignments: [
-            { noticeTitle: "과제4", score: "6/10" },
-            { noticeTitle: "과제3", score: "9/10" },
-            { noticeTitle: "과제2", score: "3/10" },
-            { noticeTitle: "과제1", score: "8/10" },
-          ],
-        },
-      ];
-
-      const exportToCSV = () => {
-        const csvData = studentScores.flatMap((student) => {
-          return student.assignments.map((assignment) => ({
-            이름: student.title,
-            과제: assignment.noticeTitle,
-            점수: assignment.score,
-          }));
-        });
-
-    
-        const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-        const fileExtension = ".xlsx";
-        const fileName = "학생별 성적";
-        const ws = XLSX.utils.json_to_sheet(csvData);
-        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const data = new Blob([excelBuffer], {type: fileType});
-        FileSaver.saveAs(data, fileName + fileExtension);
-
-    
-
-      };
-
-
-    return(
-        <div>
-        <Header>
-                <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
-                <BoldTitle>학생별 성적 열람</BoldTitle>
-        </Header>
-        <MainContainer>
-            {studentScores.map((student, idx) => (
-            <>
-                <Title key={`student-${idx}`}>{student.title}</Title>
-                
-                <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
-                {student.assignments.map((assignment, idx) => (
-                <NoticeContent key={`assignment-${idx}`}>
-                    <NoticeImg src={file} alt="file" />
-                    <NoticeTitle onClick={() => TaskClick(assignment.noticeTitle)}>
-                      {assignment.noticeTitle}
-                    </NoticeTitle>
-                    <Score score={assignment.score}>{assignment.score}</Score>
-                </NoticeContent>
+  return(
+      <div>
+      <Header>
+              <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
+              <BoldTitle>학생별 성적 열람</BoldTitle>
+      </Header>
+      <MainContainer>
+          {studentScores.map((student, idx) => (
+          <>
+              <Title key={`student-${idx}`}>{student.title}</Title>
+              
+              <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
+              {student.assignments.map((assignment, idx) => (
+              <NoticeContent key={`assignment-${idx}`}>
+                  <NoticeImg src={file} alt="file" />
+                  <NoticeTitle onClick={() => TaskClick(assignment.noticeTitle)}>
+                    {assignment.noticeTitle}
+                  </NoticeTitle>
+                  <Score score={assignment.score}>{assignment.score}</Score>
+              </NoticeContent>
                 ))}
             </>
             ))}

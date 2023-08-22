@@ -193,6 +193,9 @@ function GroupDetailClass() {
   const StudentScoreDetail = () => {
     navigate("/StudentScoreDetail");
   };
+  const TaskClick = () => {
+      navigate("/GroupScoreDetail");
+  };
 
     
  
@@ -258,11 +261,7 @@ function GroupDetailClass() {
             <SubjectContainer>
               <NoticeContent>
                 <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제2</NoticeTitle>
+                <NoticeTitle>과제4</NoticeTitle>
               </NoticeContent>
               <NoticeContent>
                 <NoticeImg src={file} alt="file" />
@@ -270,7 +269,11 @@ function GroupDetailClass() {
               </NoticeContent>
               <NoticeContent>
                 <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제4</NoticeTitle>
+                <NoticeTitle>과제2</NoticeTitle>
+              </NoticeContent>
+              <NoticeContent>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
               </NoticeContent>
             </SubjectContainer>
           </GroupContainer>
