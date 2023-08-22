@@ -91,6 +91,57 @@ flex-shrink: 0;
     margin-top: 230px;
 `;
 
+const Title = styled.p`
+    color: var(--cool-grayscale-title, #26282B);
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-left: 32px;
+    margin-top: 32px;
+`;
+
+const SettingBox = styled.div`
+  margin-top: 24px;
+  margin-left: 32px;
+  width: 80%;
+  height: 60px;
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+`;
+
+const SmallTitle = styled.p`
+
+  color: var(--cool-grayscale-title, #26282B);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`;
+
+const BlueText = styled.p`
+    color: var(--primary-cobalt, #4849FF);
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 8px;
+`;
+
+const DivideLine = styled.div`
+  width: 416px;
+  flex-shrink: 0;
+  margin-left: 32px;
+  border-top: 1.5px solid var(--primary-light-cobalt, #EDEDFF);
+  margin-top: 16px;
+`;
+
+
+
 
 function StudentTaskDetail() {
     const navigate = useNavigate();     
@@ -119,6 +170,16 @@ function StudentTaskDetail() {
 
 
         <RightContainer>
+            <Title>점수</Title>
+            <SettingBox>
+            <SmallTitle>80점</SmallTitle>
+            <BlueText>틀린 문제: 2번, 18번</BlueText>
+          </SettingBox>
+          <DivideLine />
+          <SettingBox>
+            <SmallTitle>피드백</SmallTitle>
+            <BlueText>피드백을 작성하세요.</BlueText>
+          </SettingBox>
             
         </RightContainer>
     </MainContainer>
