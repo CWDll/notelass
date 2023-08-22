@@ -204,7 +204,7 @@ function StudentTaskDetail() {
     <div>
     <Header>
         <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
-        <BoldTitle>과제 4</BoldTitle>
+        <BoldTitle>과제 1</BoldTitle>
         
     </Header>
     <MainContainer>

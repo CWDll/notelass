@@ -115,6 +115,8 @@ const XlsxButton = styled.button`
     line-height: normal;
 `;
 
+
+
 //점수 색깔을 결정하는 함수
 function getScoreColor(scoreString) {
     const actualScore = parseInt(scoreString.split("/")[0]);
@@ -136,7 +138,7 @@ function StudentScoreDetail(){
     };
 
     const TaskClick = (noticeTitle) => {
-      if (noticeTitle === "과제4") {
+      if (noticeTitle === "과제1") {
         navigate("/StudentTaskDetail");
       }
     };
