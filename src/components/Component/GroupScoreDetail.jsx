@@ -8,6 +8,7 @@ import person from "../../assets/person.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
+import { SubjectContainer } from "./GroupsStyle";
 
 
 const Header = styled.header`
@@ -40,6 +41,8 @@ const MainContainer = styled.div`
     border-radius: 8px;
     background: #FFF;
     box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+
+
 `;
 
 const Title = styled.p`
@@ -53,18 +56,29 @@ const Title = styled.p`
     margin-left: 32px;
 `;
 
+const NoticeContentWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 352px);
+  grid-auto-rows: 56px;
+  grid-gap: 16px;
+  justify-content: center;
+`;
 
 
 const NoticeContent = styled.div`
     display: flex;
     flex-direction: row;
-    margin-top: 32px;
-    margin-left: 32px;
+    width: 320px;
+    height: 48px;
+    margin-top: 16px;
+    align-items: center;
+
 `;
 
 const NoticeImg = styled.img`
     width: 24px;
     height: 24px;
+    margin-left: 32px;
 `;
 
 const NoticeTitle = styled.p`
@@ -168,35 +182,33 @@ function GroupScoreDetail(){
       };
 
 
-    return(
+      return (
         <div>
-        <Header>
-                <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
-                <BoldTitle>학생별 성적 열람</BoldTitle>
-        </Header>
-        <MainContainer>
+          <Header>
+            <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
+            <BoldTitle>학생별 성적 열람</BoldTitle>
+          </Header>
+          <MainContainer>
             {studentScores.map((student, idx) => (
-            <>
+              <>
                 <Title key={`student-${idx}`}>{student.title}</Title>
-                
                 <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
-                {student.assignments.map((assignment, idx) => (
-                <NoticeContent key={`assignment-${idx}`}>
-                    <NoticeImg src={person} alt="person" />
-                    <SudentNum>{assignment.SudentNum}</SudentNum>
-                    <NoticeTitle > {assignment.noticeTitle}</NoticeTitle>
-                    <Score>{assignment.score}</Score>
-
-                </NoticeContent>
-
-
-                ))}
-            </>
+                <NoticeContentWrapper>
+                  {student.assignments.map((assignment, idx) => (
+                    <NoticeContent key={`assignment-${idx}`}>
+                      <NoticeImg src={person} alt="person" />
+                      <SudentNum>{assignment.SudentNum}</SudentNum>
+                      <NoticeTitle>{assignment.noticeTitle}</NoticeTitle>
+                      <Score>{assignment.score}</Score>
+                    </NoticeContent>
+                  ))}
+                </NoticeContentWrapper>
+              </>
             ))}
-        </MainContainer>
-        </div>  
+          </MainContainer>
+        </div>
+      );
 
-    );
 }
 
 export default GroupScoreDetail;
