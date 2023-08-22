@@ -65,7 +65,7 @@ const NoticeContentWrapper = styled.div`
 `;
 
 
-const NoticeContent = styled.div`
+const StudentContent = styled.div`
     display: flex;
     flex-direction: row;
     width: 320px;
@@ -75,13 +75,13 @@ const NoticeContent = styled.div`
 
 `;
 
-const NoticeImg = styled.img`
+const PersonImg = styled.img`
     width: 24px;
     height: 24px;
     margin-left: 32px;
 `;
 
-const NoticeTitle = styled.p`
+const StudentName = styled.p`
     color: var(--cool-grayscale-title, #26282B);
     font-family: Pretendard;
     font-size: 16px;
@@ -149,10 +149,10 @@ function GroupScoreDetail(){
         {
           title: "과제 1",
           assignments: [
-            { SudentNum: "1", noticeTitle: "김민수", score: "10점" },
-            { SudentNum: "2", noticeTitle: "김민수", score: "10점" },
-            { SudentNum: "3", noticeTitle: "김민수", score: "10점" },
-            { SudentNum: "4", noticeTitle: "김민수", score: "10점" },
+            { SudentNum: "1", StudentName: "김민수", score: "10점" },
+            { SudentNum: "2", StudentName: "김민수", score: "10점" },
+            { SudentNum: "3", StudentName: "김민수", score: "10점" },
+            { SudentNum: "4", StudentName: "김민수", score: "10점" },
           ],
         },
       ];
@@ -162,7 +162,7 @@ function GroupScoreDetail(){
               return student.assignments.map((assignment) => ({
                 과제목록: student.title,
                 출석번호: assignment.SudentNum,
-                이름: assignment.noticeTitle,
+                이름: assignment.StudentName,
                 점수: assignment.score,
               }));
             });
@@ -195,12 +195,12 @@ function GroupScoreDetail(){
                 <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
                 <NoticeContentWrapper>
                   {student.assignments.map((assignment, idx) => (
-                    <NoticeContent key={`assignment-${idx}`}>
-                      <NoticeImg src={person} alt="person" />
+                    <StudentContent key={`assignment-${idx}`}>
+                      <PersonImg src={person} alt="person" />
                       <SudentNum>{assignment.SudentNum}</SudentNum>
-                      <NoticeTitle>{assignment.noticeTitle}</NoticeTitle>
+                      <StudentName>{assignment.StudentName}</StudentName>
                       <Score>{assignment.score}</Score>
-                    </NoticeContent>
+                    </StudentContent>
                   ))}
                 </NoticeContentWrapper>
               </>
