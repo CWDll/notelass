@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
+import test from "../../assets/test.png";
+import Test_Correct from "../../assets/Test_Correct.svg";
+import Test_Wrong from "../../assets/Test_Wrong.svg";
+
 
 
 const Header = styled.header`
@@ -53,6 +57,39 @@ const RightContainer = styled.div`
     position: relative;
 `;
 
+const TestImg = styled.img`
+    width: 340px;
+    height: 600px;
+    flex-shrink: 0;
+    margin-left: 36px;
+    margin-top: 36px;
+`;
+
+const CorrectImg1 = styled.img`
+
+width: 56px;
+height: 56px;
+flex-shrink: 0;
+    margin-left: 26px;
+    margin-top: -610px;
+`;
+
+const WrongImg = styled.img`
+width: 56px;
+height: 56px;
+flex-shrink: 0;
+    margin-left: 26px;
+    margin-top: 185px;
+`;
+
+const CorrectImg2 = styled.img`
+
+width: 56px;
+height: 56px;
+flex-shrink: 0;
+    margin-left: 26px;
+    margin-top: 230px;
+`;
 
 
 function StudentTaskDetail() {
@@ -71,7 +108,11 @@ function StudentTaskDetail() {
     </Header>
     <MainContainer>
         <LeftContainer>
-          
+          <TestImg src={test} alt="test" />
+          <CorrectImg1 src={Test_Correct} alt="Test_Correct" />
+          <WrongImg src={Test_Wrong} alt="Test_Wrong" />
+          <CorrectImg2 src={Test_Correct} alt="Test_Correct" />
+
           
         </LeftContainer>
 
