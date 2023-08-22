@@ -189,7 +189,10 @@ function GroupDetailClass() {
 
   const BackButton = () => {
     navigate("/GroupDetail");
-};
+  };
+  const StudentScoreDetail = () => {
+    navigate("/StudentScoreDetail");
+  };
 
     
  
@@ -281,7 +284,7 @@ function GroupDetailClass() {
               더보기
             </DetailText>
             <SubjectContainer>
-              <NoticeContent>
+              <NoticeContent onClick={StudentScoreDetail}>
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>1</SudentNum>
                 <NoticeTitle>김민수</NoticeTitle>

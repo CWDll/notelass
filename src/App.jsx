@@ -15,6 +15,7 @@ import GroupDetailClass from "./components/Component/GroupDetailClass";
 import GroupDetailWrite from "./components/Component/GroupDetailWrite";
 import PdfViewer from "./components/Component/PdfViewer";
 import AssignmentDetail from "./components/Component/AssignmentDetail";
+import StudentScoreDetail from "./components/Component/StudentScoreDetail";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             path="/GroupDetailClass/AssignmentDetail"
             element={<AssignmentDetail />}
           />
+          <Route path="/StudentScoreDetail" element={<StudentScoreDetail />} />
           <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
 
           <Route path="/TasksDetail" element={<TasksDetail />} />
