@@ -95,6 +95,25 @@ const Score = styled.p`
   line-height: normal;
 `;
 
+const ElsxButton = styled.button`
+    width: 100px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--primary-green, #00BAB3);
+    margin-left: 600px;
+    margin-top: 72px;
+
+    /*엑셀 출력 글씨*/
+    color: #fff;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`;
+
 //점수 색깔을 결정하는 함수
 function getScoreColor(scoreString) {
     const actualScore = parseInt(scoreString.split("/")[0]);
@@ -116,35 +135,62 @@ function StudentScoreDetail(){
     };
 
 
+    const studentScores = [
+        {
+          title: "1번 김민수",
+          assignments: [
+            { noticeTitle: "과제4", score: "6/10" },
+            { noticeTitle: "과제3", score: "9/10" },
+            { noticeTitle: "과제2", score: "3/10" },
+            { noticeTitle: "과제1", score: "8/10" },
+          ],
+        },
+      ];
+
+      const exportToCSV = () => {
+        const csvData = studentScores.flatMap((student) => {
+          return student.assignments.map((assignment) => ({
+            title: student.title,
+            noticeTitle: assignment.noticeTitle,
+            score: assignment.score,
+          }));
+        });
+
+    
+        const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        const fileExtension = ".xlsx";
+        const fileName = "학생별 성적";
+        const ws = XLSX.utils.json_to_sheet(csvData);
+        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], {type: fileType});
+        FileSaver.saveAs(data, fileName + fileExtension);
+
+    
+
+      };
+
+
     return(
         <div>
         <Header>
                 <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
                 <BoldTitle>학생별 성적 열람</BoldTitle>
-             
+                <ElsxButton onClick={exportToCSV}>엑셀 출력</ElsxButton>
         </Header>
         <MainContainer>
-            <Title>1번 김민수</Title>
-                <NoticeContent>
+            {studentScores.map((student, idx) => (
+            <>
+                <Title key={`student-${idx}`}>{student.title}</Title>
+                {student.assignments.map((assignment, idx) => (
+                <NoticeContent key={`assignment-${idx}`}>
                     <NoticeImg src={file} alt="file" />
-                    <NoticeTitle>과제4</NoticeTitle>
-                    <Score  score="6/10">6/10</Score>
+                    <NoticeTitle>{assignment.noticeTitle}</NoticeTitle>
+                    <Score score={assignment.score}>{assignment.score}</Score>
                 </NoticeContent>
-                <NoticeContent>
-                    <NoticeImg src={file} alt="file" />
-                    <NoticeTitle>과제3</NoticeTitle>
-                    <Score score="9/10">9/10</Score>
-                </NoticeContent>
-                <NoticeContent>
-                    <NoticeImg src={file} alt="file" />
-                    <NoticeTitle>과제2</NoticeTitle>
-                    <Score score="3/10">3/10</Score>
-                </NoticeContent>
-                <NoticeContent>
-                    <NoticeImg src={file} alt="file" />
-                    <NoticeTitle>과제1</NoticeTitle>
-                    <Score score="8/10">8/10</Score>
-                </NoticeContent>
+                ))}
+            </>
+            ))}
         </MainContainer>
         </div>  
 
