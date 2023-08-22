@@ -150,9 +150,9 @@ function StudentScoreDetail(){
       const exportToCSV = () => {
         const csvData = studentScores.flatMap((student) => {
           return student.assignments.map((assignment) => ({
-            title: student.title,
-            noticeTitle: assignment.noticeTitle,
-            score: assignment.score,
+            이름: student.title,
+            과제: assignment.noticeTitle,
+            점수: assignment.score,
           }));
         });
 
