@@ -41,23 +41,83 @@ const Text = styled.p`
 
 // 추가: 작은 컨테이너 스타일
 const SmallContainer = styled.div`
-    width: 200px;
-    height: 200px;
+    width: 500px;
+    height: 400px;
     background-color: #fff;
+    box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
     border-radius: 30px;
-    position: absolute;
-    top: 0;
-    left: 0;
- 
+    position: fixed;
+margin-left :-1000px;
+margin-top : 150px;
 
-   
-   
-   
   
 `;
 
+const StudentSelect = styled.select`
+    width: 264px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1.5px solid rgba(201, 205, 210, 0.50);
+    background: #FFF;
+    margin-left: 32px;
+    margin-top: 60px;
+
+    /* 학생 선택 글씨 */
+    color: var(--cool-grayscale-title, #26282B);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-left: 16px;
+`;
+
+const GroupSelect = styled.select`
+    width: 264px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1.5px solid rgba(201, 205, 210, 0.50);
+    background: #FFF;
+    margin-left: 32px;
+    margin-top: 60px;
+
+    /* 학생 선택 글씨 */
+    color: var(--cool-grayscale-title, #26282B);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-left: 16px;
+`;
+
+const groups = [
+    { id: 1, group: "1반" },
+    { id: 2, group: "2반" },
+    { id: 3, group: "3반" },
+    { id: 4, group: "4반" },
+];
+const students = [
+    { id: 1, name: "1번 김민수" },
+    { id: 2, name: "2번 김민수" },
+    { id: 3, name: "3번 김민수" },
+    { id: 4, name: "4번 김민수" },
+];
+
 function StudentBook() {
     const [showSmallContainer, setShowSmallContainer] = useState(false); // 추가
+    const [selectedStudent, setSelectedStudent] = useState();
+    const [selectedGroup, setSelectedGroup] = useState();
+
+    const handleStudentChange = (e) => {
+        e.stopPropagation();
+        setSelectedStudent(e.target.value);
+    };
+
+    const handleGroupChange = (e) => {
+        e.stopPropagation();
+        setSelectedGroup(e.target.value);
+    };
 
     return (
       <StudentBookContainer onClick={() => setShowSmallContainer(!showSmallContainer)}>
@@ -66,10 +126,28 @@ function StudentBook() {
         
         {/* 추가 */}
         {showSmallContainer && (
-          <SmallContainer>
-            내용을 여기에 입력하세요.
-          </SmallContainer>
+        <SmallContainer onClick={(e) => e.stopPropagation()}>
+            <GroupSelect onChange={handleGroupChange}>
+            <option value=""></option>
+            {groups.map((group) => (
+                <option key={group.id} value={group.id}>
+                {group.group}
+                </option>
+            ))}  
+            </GroupSelect>
+
+            <StudentSelect onChange={handleStudentChange}>
+                학생 선택
+            <option value=""></option>
+            {students.map((student) => (
+                <option key={student.id} value={student.id}>
+                {student.name}
+                </option>
+            ))}
+            </StudentSelect>
+        </SmallContainer>
         )}
+        
       </StudentBookContainer>
     );
 }
