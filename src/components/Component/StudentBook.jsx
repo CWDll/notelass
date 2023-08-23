@@ -172,14 +172,25 @@ function StudentBook() {
     const [selectedGroup, setSelectedGroup] = useState();
     const [inputText, setInputText] = useState("");
     const [speechCount, setSpeechCount] = useState(0);
+    const [attitudeCount, setAttitudeCount] = useState(0);
 
-    const increaseCount = () => {
+    const speechUpCount = () => {
         setSpeechCount(speechCount + 1);
       };
       
-      const decreaseCount = () => {
+      const speechDownCount = () => {
         if (speechCount > 0) {
           setSpeechCount(speechCount - 1);
+        }
+      };
+
+      const attitudeUpCount = () => {
+        setAttitudeCount(attitudeCount + 1);
+      };
+      
+      const attitudeDownCount = () => {
+        if (attitudeCount > 0) {
+            setAttitudeCount(attitudeCount - 1);
         }
       };
 
@@ -230,14 +241,14 @@ function StudentBook() {
              />
              <ButtonContainer>
              <p>발표 횟수</p>
-             <Button onClick={decreaseCount}>-</Button>
+             <Button onClick={speechDownCount}>-</Button>
              {speechCount}
-             <Button onClick={increaseCount}>+</Button>
+             <Button onClick={speechUpCount}>+</Button>
              
              <p>태도 점수</p>
-             <Button onClick={decreaseCount}>-</Button>
-             {speechCount}
-             <Button onClick={increaseCount}>+</Button>
+             <Button onClick={attitudeDownCount}>-</Button>
+             {attitudeCount}
+             <Button onClick={attitudeUpCount}>+</Button>
              </ButtonContainer>
              
              
