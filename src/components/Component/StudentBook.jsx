@@ -36,12 +36,35 @@ const Text = styled.p`
   line-height: normal;
 `;
 
+// 추가: 작은 컨테이너 스타일
+const SmallContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ 
 
-function StudentBook (){
-    return(
-      <StudentBookContainer>
+   
+   
+   
+  
+`;
+
+function StudentBook() {
+    const [showSmallContainer, setShowSmallContainer] = useState(false); // 추가
+
+    return (
+      <StudentBookContainer onClick={() => setShowSmallContainer(!showSmallContainer)}>
         <BookImg src={book} alt="book" />
         <Text>학생 수첩</Text>
+        
+        {/* 추가 */}
+        {showSmallContainer && (
+          <SmallContainer>
+            내용을 여기에 입력하세요.
+          </SmallContainer>
+        )}
       </StudentBookContainer>
     );
 }

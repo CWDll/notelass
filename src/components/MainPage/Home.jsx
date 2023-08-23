@@ -10,32 +10,30 @@ import Tasks from "../Component/Tasks";
 import RecentNote from "../Component/RecentNote";
 
 const HomeContainer = styled.div`
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 90%;
-  margin-top: 3%;
+  
+  margin-left: 363px;
+  margin-right: 363px;
+  margin-top: 70px;
   padding: 0;
   /* border: 1px solid white; */
   display: flex;
   flex-direction: row;
   /* flex-wrap: wrap; */
-  justifycontent: "center";
+  /*justifycontent: "center";*/
 `;
 
 const LeftHomeBody = styled.div`
   display: flex;
   flex-direction: column;
   /* flex-wrap: wrap; */
-  width: 55%;
+  
 `;
 
 const RightHomeBody = styled.div`
   display: flex;
-
   flex-direction: column;
-  margin-right: 0;
-  position: relative;
+  margin-left: -330px;
+  
 `;
 
 const Home = () => {
