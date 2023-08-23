@@ -52,6 +52,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const Container = styled.div`
+
   display: flex;
   flex-direction: column;
   height: auto;

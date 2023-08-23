@@ -11,12 +11,15 @@ const StudentBookContainer = styled.div`
   border-radius: 30px;
   background: #4849ff;
   box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
-  margin-left: 32px;
-  margin-top: 56px;
+ 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position : fixed; 
+  margin-top :236px; 
+  margin-left :1589px;
 `;
 
 const BookImg = styled.img`
@@ -38,11 +41,13 @@ const Text = styled.p`
 
 // 추가: 작은 컨테이너 스타일
 const SmallContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
  
 
    

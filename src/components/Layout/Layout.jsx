@@ -8,8 +8,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  margin: 0;1
+  margin: 0;
+
+  position:relative;
 `;
+
+
 
 
 export default function Layout() {
