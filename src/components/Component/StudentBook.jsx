@@ -39,16 +39,16 @@ const Text = styled.p`
   line-height: normal;
 `;
 
-// 추가: 작은 컨테이너 스타일
+
 const SmallContainer = styled.div`
-    width: 500px;
-    height: 400px;
+    width: 700px;
+    height: 600px;
     background-color: #fff;
     box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
     border-radius: 30px;
     position: fixed;
-margin-left :-1000px;
-margin-top : 150px;
+    margin-left :-1000px;
+    margin-top : 100px;
 
   
 `;
@@ -91,6 +91,68 @@ const GroupSelect = styled.select`
     padding-left: 16px;
 `;
 
+const Textarea = styled.textarea`
+    width: 600px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1.5px solid rgba(201, 205, 210, 0.50);
+    background: #FFF;
+    margin-left: 32px;
+    margin-top: 60px;
+    resize: none;
+    padding: 16px;
+    font-size: 16px;
+    font-style: normal;
+    outline : none; 
+`;
+
+const ExitButton = styled.button`
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #FFF;
+    margin-left: 10px;
+    margin-top: 60px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #26282B;
+    outline : none;
+    align-items: center;
+`;
+
+const Button = styled.button`
+  
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: gray;
+    margin-left: 32px;
+    margin-top: 60px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #FFF;
+    outline : none;
+    align-items: center;
+
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 60px;
+    margin-left: 10px;
+    margin-bottom: 60px;
+`;
+
+
+
+
 const groups = [
     { id: 1, group: "1반" },
     { id: 2, group: "2반" },
@@ -105,9 +167,21 @@ const students = [
 ];
 
 function StudentBook() {
-    const [showSmallContainer, setShowSmallContainer] = useState(false); // 추가
+    const [showSmallContainer, setShowSmallContainer] = useState(false); 
     const [selectedStudent, setSelectedStudent] = useState();
     const [selectedGroup, setSelectedGroup] = useState();
+    const [inputText, setInputText] = useState("");
+    const [speechCount, setSpeechCount] = useState(0);
+
+    const increaseCount = () => {
+        setSpeechCount(speechCount + 1);
+      };
+      
+      const decreaseCount = () => {
+        if (speechCount > 0) {
+          setSpeechCount(speechCount - 1);
+        }
+      };
 
     const handleStudentChange = (e) => {
         e.stopPropagation();
@@ -118,6 +192,7 @@ function StudentBook() {
         e.stopPropagation();
         setSelectedGroup(e.target.value);
     };
+
 
     return (
       <StudentBookContainer onClick={() => setShowSmallContainer(!showSmallContainer)}>
@@ -135,9 +210,8 @@ function StudentBook() {
                 </option>
             ))}  
             </GroupSelect>
-
+            
             <StudentSelect onChange={handleStudentChange}>
-                학생 선택
             <option value=""></option>
             {students.map((student) => (
                 <option key={student.id} value={student.id}>
@@ -145,6 +219,29 @@ function StudentBook() {
                 </option>
             ))}
             </StudentSelect>
+            <ExitButton onClick={() => setShowSmallContainer(false)}>X</ExitButton>
+            <Textarea
+                    value={inputText}
+                    onChange={(e) => {
+                    const text = e.target.value;
+                    setInputText(text);
+                    setByteCount(calculateByteCount(text));
+                    }}
+             />
+             <ButtonContainer>
+             <p>발표 횟수</p>
+             <Button onClick={decreaseCount}>-</Button>
+             {speechCount}
+             <Button onClick={increaseCount}>+</Button>
+             
+             <p>태도 점수</p>
+             <Button onClick={decreaseCount}>-</Button>
+             {speechCount}
+             <Button onClick={increaseCount}>+</Button>
+             </ButtonContainer>
+             
+             
+             
         </SmallContainer>
         )}
         
