@@ -11,8 +11,12 @@ export const GroupContainer = styled.div`
 `;
 // bold 텍스트
 export const BoldText = styled.p`
-  font-weight: bold;
-  size: 50px;
+  color: var(--cool-grayscale-title, #26282B);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 // 회색 텍스트
 export const GrayText = styled.p`

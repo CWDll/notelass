@@ -22,16 +22,18 @@ const CircleText = styled.div`
     height: 48px;
     flex-shrink: 0;
     border-radius: 50%;
-    background: var(--primary-cobalt, #4849FF);
+    background-color: var(--primary-light-cobalt, #EDEDFF);
+    border-width: 1.5px;
+    border-color: var(--primary-cobalt, #4849FF);
+    border-style: solid;
     margin-left: 32px;
     margin-top: 12px;
     display: flex;
     justify-content: center;
-
 `;
 
 const PurpleText = styled.p`
-    color: #FFF;
+    color: #4849FF;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

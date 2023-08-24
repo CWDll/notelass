@@ -121,24 +121,27 @@ const SubjectBodyWrapper = styled.div`
   margin-top: 30px;
 `;
 
-
+//노트 목록
 const starItems = [
   { key: "item1", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
   { key: "item2", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
   { key: "item3", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-  { key: "item4", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
 ];
 
 function NoteDetailSubject() {
   const navigate = useNavigate();
   const [starredItems, setStarredItems] = useState({});
 
+  //노트별 즐겨 찾기 기능
   function handleStarClick(itemKey) {
     setStarredItems((prev) => ({
       ...prev,
       [itemKey]: !prev[itemKey],
     }));
   }
+
+
+
   function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
     navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
@@ -157,6 +160,8 @@ function NoteDetailSubject() {
           </AddNote>
           <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
         </MakeNoteBody>
+
+        
         <SubjectBodyWrapper>
           {starItems.map((item) => (
             <SubjectBody key={item.key}>
@@ -174,6 +179,8 @@ function NoteDetailSubject() {
             </SubjectBody>
           ))}
         </SubjectBodyWrapper>
+
+
       </NoteContainer>
     </div>
   );
