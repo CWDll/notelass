@@ -121,14 +121,24 @@ const SubjectBodyWrapper = styled.div`
   margin-top: 30px;
 `;
 
+
+const starItems = [
+  { key: "item1", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
+  { key: "item2", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
+  { key: "item3", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
+  { key: "item4", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
+];
+
 function NoteDetailSubject() {
   const navigate = useNavigate();
-  const [isStarred, setIsStarred] = useState(false);
+  const [starredItems, setStarredItems] = useState({});
 
-  function handleStarClick() {
-    setIsStarred(!isStarred);
+  function handleStarClick(itemKey) {
+    setStarredItems((prev) => ({
+      ...prev,
+      [itemKey]: !prev[itemKey],
+    }));
   }
-
   function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
     navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
@@ -148,45 +158,21 @@ function NoteDetailSubject() {
           <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
         </MakeNoteBody>
         <SubjectBodyWrapper>
-          <SubjectBody>
-            <PaperImg src={paper} alt="paper" />
-            <SubjectContainer>
-              <BoldText>문학퀴즈</BoldText>
-              <GrayText>2023.04.27 오후 9:00</GrayText>
-            </SubjectContainer>
-            <ChevronDownImg src={chevron_down} alt="chevron_down" />
-            <StarImg
-              onClick={handleStarClick}
-              src={isStarred ? FilledStar : star}
-              alt="star"
-            />
-          </SubjectBody>
-          <SubjectBody>
-            <PaperImg src={paper} alt="paper" />
-            <SubjectContainer>
-              <BoldText>문학퀴즈</BoldText>
-              <GrayText>2023.04.27 오후 9:00</GrayText>
-            </SubjectContainer>
-            <ChevronDownImg src={chevron_down} alt="chevron_down" />
-            <StarImg
-              onClick={handleStarClick}
-              src={isStarred ? FilledStar : star}
-              alt="star"
-            />
-          </SubjectBody>
-          <SubjectBody>
-            <PaperImg src={paper} alt="paper" />
-            <SubjectContainer>
-              <BoldText>문학퀴즈</BoldText>
-              <GrayText>2023.04.27 오후 9:00</GrayText>
-            </SubjectContainer>
-            <ChevronDownImg src={chevron_down} alt="chevron_down" />
-            <StarImg
-              onClick={handleStarClick}
-              src={isStarred ? FilledStar : star}
-              alt="star"
-            />
-          </SubjectBody>
+          {starItems.map((item) => (
+            <SubjectBody key={item.key}>
+              <PaperImg src={paper} alt="paper" />
+              <SubjectContainer>
+                <BoldText>{item.title}</BoldText>
+                <GrayText>{item.date}</GrayText>
+              </SubjectContainer>
+              <ChevronDownImg src={chevron_down} alt="chevron_down" />
+              <StarImg
+                onClick={() => handleStarClick(item.key)}
+                src={starredItems[item.key] ? FilledStar : star}
+                alt="star"
+              />
+            </SubjectBody>
+          ))}
         </SubjectBodyWrapper>
       </NoteContainer>
     </div>
