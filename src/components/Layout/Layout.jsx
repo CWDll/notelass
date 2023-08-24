@@ -20,9 +20,10 @@ export const Container = styled.div`
 export default function Layout() {
 
 
-  
+  //pdf-viewer에서는 학생수첩이 안보이게 하기 위한 코드
   const location = useLocation();
   const shouldRenderStudentBook = location.pathname !== '/NoteDetailSubject/pdf-viewer';
+  const shouldRenderFooter = location.pathname !== '/NoteDetailSubject/pdf-viewer';
 
 
   return (
@@ -30,8 +31,8 @@ export default function Layout() {
     <Container>
       <Nav />
       <Outlet />
-      <Footer />
-        {shouldRenderStudentBook && <StudentBook />}
+      {shouldRenderFooter && <Footer />}
+      {shouldRenderStudentBook && <StudentBook />}
     </Container>
     
         
