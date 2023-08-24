@@ -1,8 +1,9 @@
 import Nav from "./Nav";
 import Footer from "./Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 import StudentBook from "../Component/StudentBook";
+
 
 export const Container = styled.div`
   display: flex;
@@ -17,13 +18,20 @@ export const Container = styled.div`
 
 
 export default function Layout() {
+
+
+  
+  const location = useLocation();
+  const shouldRenderStudentBook = location.pathname !== '/NoteDetailSubject/pdf-viewer';
+
+
   return (
     
     <Container>
       <Nav />
       <Outlet />
       <Footer />
-      <StudentBook />
+        {shouldRenderStudentBook && <StudentBook />}
     </Container>
     
         

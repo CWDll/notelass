@@ -145,9 +145,42 @@ const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 60px;
+    margin-top: 10px;
     margin-left: 10px;
-    margin-bottom: 60px;
+`;
+
+const CancleButton = styled.button`
+    width: 100px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: lightgray;
+    margin-left: 400px;
+    margin-top: 30px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #26282B;
+    outline : none;
+    align-items: center;
+`;
+
+const BlueButton = styled.button`
+    width: 100px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #4849FF;
+    margin-left: 32px;
+    margin-top: 30px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #FFF;
+    outline : none;
+    align-items: center;
 `;
 
 
@@ -174,6 +207,7 @@ function StudentBook() {
     const [speechCount, setSpeechCount] = useState(0);
     const [attitudeCount, setAttitudeCount] = useState(0);
 
+    //발표 점수 계산
     const speechUpCount = () => {
         setSpeechCount(speechCount + 1);
       };
@@ -184,6 +218,7 @@ function StudentBook() {
         }
       };
 
+      //태도 점수 계산
       const attitudeUpCount = () => {
         setAttitudeCount(attitudeCount + 1);
       };
@@ -194,23 +229,31 @@ function StudentBook() {
         }
       };
 
+     //학생 선택 
     const handleStudentChange = (e) => {
         e.stopPropagation();
         setSelectedStudent(e.target.value);
     };
 
+    //반 선택 
     const handleGroupChange = (e) => {
         e.stopPropagation();
         setSelectedGroup(e.target.value);
     };
 
+    const handleSave = () => {
+        setShowSmallContainer(false);
+        onSave(inputText); 
+      }
+
+      
 
     return (
       <StudentBookContainer onClick={() => setShowSmallContainer(!showSmallContainer)}>
         <BookImg src={book} alt="book" />
         <Text>학생 수첩</Text>
         
-        {/* 추가 */}
+        
         {showSmallContainer && (
         <SmallContainer onClick={(e) => e.stopPropagation()}>
             <GroupSelect onChange={handleGroupChange}>
@@ -250,6 +293,8 @@ function StudentBook() {
              {attitudeCount}
              <Button onClick={attitudeUpCount}>+</Button>
              </ButtonContainer>
+             <CancleButton onClick={() => setShowSmallContainer(false)}>취소</CancleButton>
+             <BlueButton onClick={handleSave}>저장</BlueButton>
              
              
              

@@ -355,13 +355,17 @@ const calculateByteCount = (text) => {
     return byteCount;
   };
 
-function GroupDetailWrite() {
+  function GroupDetailWrite({ savedText }) {
     const [byteCount, setByteCount] = useState(0);
     const [inputText, setInputText] = useState("");
-    const [savedText, setSavedText] = useState("");
-    const [isTextSaved, setIsTextSaved] = useState(false);
+    const [savedLifeText, setSavedLifeText] = useState("");
+    const [isLifeTextSaved, setIsLifeTextSaved] = useState(false);
     const [buttonText, setButtonText] = useState("저장하기");
     const [selectedStudent, setSelectedStudent] = useState();
+
+  const handleSaveFromStudentBook = (text) => {
+    setSavedTextFromStudentBook(text);
+  };
 
     const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -373,24 +377,24 @@ function GroupDetailWrite() {
     };
 
     const handleSaveButtonClick = () => {
-        if (!isTextSaved) {
-          setSavedText(inputText);
-          setIsTextSaved(true);
+        if (!isLifeTextSaved) {
+          setSavedLifeText(inputText);
+          setIsLifeTextSaved(true);
           setButtonText("엑셀 출력");
         } else {
-            exportToExcel(savedText);
+            exportToExcel(savedLifeText);
         }
       };
 
     
 
     const handleTextEdit = () => {
-        setIsTextSaved(false);
+        setIsLifeTextSaved(false);
         setButtonText("저장하기")
     };
 
     const handleCopyButtonClick = () => {
-        navigator.clipboard.writeText(savedText);
+        navigator.clipboard.writeText(savedLifeText);
         alert("복사되었습니다.");
         };
 
@@ -407,16 +411,7 @@ function GroupDetailWrite() {
         FileSaver.saveAs(data, fileName + fileExtension);
     };
   
-/*
-    const exportToExcel = (text) => {
-        const ws = XLSX.utils.json_to_sheet([{ savedText: text }]);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-      
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        const data = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
-        FileSaver.saveAs(data, "saved_text.xlsx");
-      };*/
+
     return (
 
     <div>
@@ -431,7 +426,7 @@ function GroupDetailWrite() {
             {student.name}
              </option>
         ))}
-</StudentSelect>
+        </StudentSelect>
     </Header>
     <MainContainer>
         <LeftContainer>
@@ -451,7 +446,7 @@ function GroupDetailWrite() {
                 <ScoreResult>3등 </ScoreResult>
                 </div>
             </ScoreList>
-            {!isTextSaved ? (
+            {!isLifeTextSaved ? (
                 <>
                 <WritingBox>
                 <Textarea
@@ -484,7 +479,7 @@ function GroupDetailWrite() {
                 </>
                  ) : null}
 
-                 {isTextSaved && (
+                 {isLifeTextSaved && (
                 <div>
                 <InfoContainer> 
                 <TimeText>2023년 1학기-1</TimeText>
@@ -493,7 +488,7 @@ function GroupDetailWrite() {
                 </InfoContainer>
                 <SavedTextContainer>
                     
-                    <SavedText>{savedText}</SavedText>
+                    <SavedText>{savedLifeText}</SavedText>
                 
                     
                 </SavedTextContainer>
@@ -507,8 +502,11 @@ function GroupDetailWrite() {
 
 
         <RightContainer>
-            <Title>학생수첩</Title>
-        </RightContainer>
+        <Title>학생수첩</Title>
+        {savedText && (
+          <SavedText>{savedText}</SavedText> 
+        )}
+      </RightContainer>
     </MainContainer>
 
     </div>

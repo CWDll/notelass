@@ -55,7 +55,9 @@ const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  height: auto;
+  width: 480px;
+  height: 400px;
+  flex-shrink: 0;
   justify-content: center;
   position: relative;
   gap: 20px;
