@@ -128,14 +128,12 @@ const Button = styled.button`
   
     flex-shrink: 0;
     border-radius: 8px;
-    background: gray;
     margin-left: 32px;
-    margin-top: 60px;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    color: #FFF;
+    color: black;
     outline : none;
     align-items: center;
 
@@ -146,7 +144,6 @@ const ButtonContainer = styled.div`
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
-    margin-left: 10px;
 `;
 
 const CancleButton = styled.button`
@@ -166,7 +163,7 @@ const CancleButton = styled.button`
     align-items: center;
 `;
 
-const BlueButton = styled.button`
+const SaveButton = styled.button`
     width: 100px;
     height: 48px;
     flex-shrink: 0;
@@ -182,6 +179,17 @@ const BlueButton = styled.button`
     outline : none;
     align-items: center;
 `;
+
+const CountContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8px;
+    margin-left: 32px;
+    border: 1.5px solid rgba(201, 205, 210, 0.50);
+    padding: 5px;
+`;
+
 
 
 
@@ -283,18 +291,22 @@ function StudentBook() {
                     }}
              />
              <ButtonContainer>
-             <p>발표 횟수</p>
-             <Button onClick={speechDownCount}>-</Button>
-             {speechCount}
-             <Button onClick={speechUpCount}>+</Button>
-             
-             <p>태도 점수</p>
-             <Button onClick={attitudeDownCount}>-</Button>
-             {attitudeCount}
-             <Button onClick={attitudeUpCount}>+</Button>
+                <p>발표 횟수</p>
+                <CountContainer>
+                    <Button onClick={speechDownCount}>-</Button>
+                    {speechCount}
+                    <Button onClick={speechUpCount}>+</Button>
+                </CountContainer>
+                
+                <p>태도 점수</p>
+                <CountContainer>
+                    <Button onClick={attitudeDownCount}>-</Button>
+                    {attitudeCount}
+                    <Button onClick={attitudeUpCount}>+</Button>
+                </CountContainer>
              </ButtonContainer>
              <CancleButton onClick={() => setShowSmallContainer(false)}>취소</CancleButton>
-             <BlueButton onClick={handleSave}>저장</BlueButton>
+             <SaveButton onClick={handleSave}>저장</SaveButton>
              
              
              
