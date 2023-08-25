@@ -181,7 +181,7 @@ function StudentTaskDetail() {
   };
   // 텍스트 수정을 위한 상태 변수들
   const [scoreText, setScoreText] = useState("80점");
-  const [feedbackText, setFeedbackText] = useState("틀린 문제: 2번, 18번");
+  const [feedbackText, setFeedbackText] = useState("2번, 18번");
   const [isEditing, setIsEditing] = useState(false);
   // 수정 중인 내용을 저장하기 위한 상태 변수
   const [newScoreText, setNewScoreText] = useState(scoreText);
@@ -233,16 +233,23 @@ function StudentTaskDetail() {
               <textarea
                 value={newFeedbackText}
                 onChange={(e) => setNewFeedbackText(e.target.value)}
+                style={{
+                  resize: "none",
+                  backgroundColor: "lightgray",
+                  borderRadius: "5px",
+                }}
               />
             ) : (
-              <BlueText>{feedbackText}</BlueText>
+              <BlueText>틀린 문제 : {feedbackText}</BlueText>
             )}
           </SettingBox>
           <Button>
             {isEditing ? (
-              <button onClick={handleSaveButtonClick}>저장</button>
+              <ModifyButton onClick={handleSaveButtonClick}>저장</ModifyButton>
             ) : (
-              <button onClick={handleEditButtonClick}>채점 수정</button>
+              <ModifyButton onClick={handleEditButtonClick}>
+                채점 수정
+              </ModifyButton>
             )}
             <CheckButton onClick={BackButton}>확인</CheckButton>
           </Button>
