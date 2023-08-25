@@ -7,19 +7,25 @@ import chevron_left from "../../assets/chevron_left.svg";
 const Wrapper = styled.div`
   width: 1920px;
   height: 1080px;
-  /* display: flex; */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
 `;
 
 // Left Body 시작
 const Header = styled.header`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  margin-bottom: 50px;
+  /* justify-content: center; */
+  /* margin: 70px 0 55px 357px; */
+  /* align-items: center; */
+  /* flex-direction: row; */
 `;
 
 const Body = styled.div`
   display: flex;
+  justify-content: center;
   width: 100%;
 `;
 
@@ -34,8 +40,8 @@ const Foot = styled.div`
 `;
 
 const Img = styled.img`
-  /* margin-left: 363px;
-  margin-top: 72px; */
+  margin-left: 363px;
+  margin-top: 72px;
 `;
 
 const BigTitle = styled.p`
@@ -44,6 +50,14 @@ const BigTitle = styled.p`
   font-weight: bold;
   /* margin-left: 24px;
   margin-top: 72px; */
+`;
+
+const BoldTitle = styled.p`
+  color: #26282b;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 24px;
+  margin-top: 72px;
 `;
 
 const CreateTitle = styled(BigTitle)`
@@ -63,8 +77,6 @@ const AssigmentCreateForm = styled.div`
   width: 684px;
   height: 800px;
   background-color: white;
-  /* 밑에 두 style은 지울 것. */
-  border: 1px dotted red;
   margin-right: 30px;
 `;
 
@@ -185,7 +197,7 @@ function AssignmentDetail() {
     <Wrapper>
       <Header onClick={handleHeaderClick}>
         <Img src={chevron_left} alt="chevron_left" />
-        <BigTitle>노트고등학교 3학년 1반 문학</BigTitle>
+        <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
       </Header>
       <Body>
         <AssigmentCreateForm>
@@ -216,7 +228,7 @@ function AssignmentDetail() {
               style={{ display: "none" }}
               ref={imageInput}
             />
-            <button onClick={onCickImageUpload}>
+            <button onClick={onCickImageUpload} style={{ marginLeft: "15px" }}>
               라이브러리에서 파일 탐색
             </button>
           </LegInput>
