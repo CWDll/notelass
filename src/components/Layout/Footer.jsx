@@ -14,6 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faInstagram } from "@fortawesome/free-solid-svg-icons";
 // import { faFacebook } from "@fortawesome/free-solid-svg-icons";
 import { faDrum } from "@fortawesome/free-solid-svg-icons";
+import instagram from "../../assets/instagram.svg";
+import facebook from "../../assets/facebook.svg";
+import github from "../../assets/github.svg";
 
 const FooterLeftContent = styled.div`
   display: flex;
@@ -35,6 +38,13 @@ const FooterIconContent = styled.div`
 const BoldText = styled.p`
   font-weight: bold;
   width: 200px;
+`;
+
+const Img = styled.img`
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+
 `;
 
 const Notelass = styled.p`
@@ -80,10 +90,11 @@ export default function Footer() {
           {/* <FontAwesomeIcon icon={faInstagram} />
           <FontAwesomeIcon icon={faFacebook} /> */}
           {/* 같은 코드로 drum 아이콘은 넣었는데, 인스타 페북 아이콘은 안 들어가는 상태. 나중에 다시 할 것. */}
-          <BoldText>Instagram</BoldText>
+          
+          <Img src={instagram} />
           <FontAwesomeIcon icon={faDrum} />
-          <BoldText>facebook</BoldText>
-          <BoldText>github</BoldText>
+          <Img src={facebook} />
+          <Img src={github} />
         </Icons>
       </FooterIconContent>
       <Hr></Hr>
