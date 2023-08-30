@@ -9,10 +9,9 @@ import {
   FooterLink,
   FooterDescContainer,
   FooterDescRights,
+
 } from "./Styled.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faInstagram } from "@fortawesome/free-solid-svg-icons";
-// import { faFacebook } from "@fortawesome/free-solid-svg-icons";
 import { faDrum } from "@fortawesome/free-solid-svg-icons";
 import instagram from "../../assets/instagram.svg";
 import facebook from "../../assets/facebook.svg";
@@ -60,8 +59,9 @@ const Icons = styled.div`
 `;
 
 const Hr = styled.hr`
-  width: 100%;
-  color: #4849ff;
+  border: none;
+  height: 1.5px;
+  background-color: var(--primary-cobalt, #4849FF);
 `;
 
 const NameBox = styled.p`
