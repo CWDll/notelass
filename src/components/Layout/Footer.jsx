@@ -9,7 +9,6 @@ import {
   FooterLink,
   FooterDescContainer,
   FooterDescRights,
-
 } from "./Styled.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDrum } from "@fortawesome/free-solid-svg-icons";
@@ -20,8 +19,9 @@ import github from "../../assets/github.svg";
 const FooterLeftContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 300px;
+  height: 90px;
   margin-right: 600px;
 `;
 
@@ -32,6 +32,7 @@ const FooterRightContent = styled(FooterLeftContent)`
 const FooterIconContent = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-bottom: 10px;
 `;
 
 const BoldText = styled.p`
@@ -40,10 +41,10 @@ const BoldText = styled.p`
 `;
 
 const Img = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
-
+  margin-left: 10px;
 `;
 
 const Notelass = styled.p`
@@ -61,7 +62,7 @@ const Icons = styled.div`
 const Hr = styled.hr`
   border: none;
   height: 1.5px;
-  background-color: var(--primary-cobalt, #4849FF);
+  background-color: var(--primary-cobalt, #4849ff);
 `;
 
 const NameBox = styled.p`
@@ -74,11 +75,19 @@ const Name = styled.div`
 `;
 
 const CCBox = styled.div`
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const CCBox2 = styled.div`
   width: 300px;
 `;
 
 const SmallCCBox = styled(CCBox)`
   width: 150px;
+  display: block;
 `;
 
 export default function Footer() {
@@ -90,9 +99,8 @@ export default function Footer() {
           {/* <FontAwesomeIcon icon={faInstagram} />
           <FontAwesomeIcon icon={faFacebook} /> */}
           {/* 같은 코드로 drum 아이콘은 넣었는데, 인스타 페북 아이콘은 안 들어가는 상태. 나중에 다시 할 것. */}
-          
+
           <Img src={instagram} />
-          <FontAwesomeIcon icon={faDrum} />
           <Img src={facebook} />
           <Img src={github} />
         </Icons>
@@ -120,19 +128,25 @@ export default function Footer() {
               <Name>전승석</Name>
             </NameBox>
           </CCBox>
+
           <SmallCCBox>
             <BoldText>Designer</BoldText>
-            <NameBox>기혜림</NameBox>
-            <NameBox>유주하</NameBox>
+            <NameBox>
+              <Name>기혜림</Name>
+            </NameBox>
+            <NameBox>
+              <Name>유주하</Name>
+            </NameBox>
           </SmallCCBox>
+
           <SmallCCBox>
             <BoldText>Sales</BoldText>
             <NameBox>이상윤</NameBox>
           </SmallCCBox>
-          <CCBox>
+          <CCBox2>
             <BoldText>대표자: 조창익</BoldText>
             <NameBox>E-mail: whckddlr00@ajou.ac.kr</NameBox>
-          </CCBox>
+          </CCBox2>
         </FooterRightContent>
       </FooterTextContent>
     </FooterContainer>

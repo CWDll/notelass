@@ -7,10 +7,10 @@ export const FooterContainer = styled.div`
   flex-direction: column;
   padding: 40px 0;
   border-top: 1px solid rgb(25, 25, 25);
-  width: 100%;
+  width: 1920px;
   position: relative;
   z-index: 100;
-
+  padding: 20px 0 10px 0px;
   @media (max-width: 769px) {
     padding: 20px 20px;
     padding-bottom: 30px;
@@ -22,6 +22,7 @@ export const FooterTextContent = styled.div`
   display: flex;
   flex-dicretion: row;
   justify-content: "space-between";
+  padding-top: 10px;
 
   @media (max-width: 768px) {
     width: 100%;
