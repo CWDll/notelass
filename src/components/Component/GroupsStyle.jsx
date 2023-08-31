@@ -39,19 +39,29 @@ export const GroupBody = styled.div`
 `;
 // 보라색 원
 export const CircleText = styled.div`
-  border: 2px solid purple;
-  background-color: #cbc3e3;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
   border-radius: 50%;
+  background-color: var(--primary-light-cobalt, #EDEDFF);
+  border-width: 1.5px;
+  border-color: var(--primary-cobalt, #4849FF);
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 // 원 안에 텍스트
 export const PurpleText = styled(BoldText)`
-  color: purple;
+  color: #4849FF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: 12px;
 `;
+
+
+
+
 // 과목 명, 선생님 성함 담는 container
 export const SubjectContainer = styled.div`
   display: flex;
