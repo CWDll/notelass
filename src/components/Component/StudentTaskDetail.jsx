@@ -223,7 +223,10 @@ function StudentTaskDetail() {
                 onChange={(e) => setNewScoreText(e.target.value)}
               />
             ) : (
-              <SmallTitle>{scoreText}</SmallTitle>
+              <>
+                <SmallTitle>{scoreText}</SmallTitle>
+                <BlueText>틀린 문제 : {feedbackText}</BlueText>
+              </>
             )}
           </SettingBox>
           <DivideLine />
