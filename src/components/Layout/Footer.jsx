@@ -22,11 +22,11 @@ const FooterLeftContent = styled.div`
   justify-content: space-between;
   width: 300px;
   height: 90px;
-  margin-right: 600px;
 `;
 
 const FooterRightContent = styled(FooterLeftContent)`
   flex-direction: row;
+  justify-content: space-between;
 `;
 
 const FooterIconContent = styled.div`
@@ -37,27 +37,35 @@ const FooterIconContent = styled.div`
 `;
 
 const BoldText = styled.p`
-  font-weight: bold;
-  width: 200px;
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 `;
 
 const Img = styled.img`
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
-  margin-left: 10px;
+  margin-left: 12px;
 `;
 
 const Notelass = styled.p`
-  color: #4849ff;
-  font-weight: bold;
-  font-size: 30px;
+  color: var(--primary-cobalt, #4849FF);
+  font-family: SF Pro Rounded;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 const Icons = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
+
 `;
 
 const Hr = styled.hr`
@@ -81,6 +89,7 @@ const CCBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
 `;
 
 const CCBox2 = styled.div`

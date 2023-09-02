@@ -44,9 +44,12 @@ export const FooterLinkContainer = styled.div`
 `;
 
 export const FooterLinkTitle = styled.h1`
-  color: gray;
-  font-size: 17px;
-  width: 500px;
+  color: var(--cool-grayscale-title, #26282B);
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 `;
 
 export const FooterLinkContent = styled.div`
