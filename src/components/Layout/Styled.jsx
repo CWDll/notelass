@@ -15,6 +15,9 @@ export const FooterContainer = styled.div`
     padding: 20px 20px;
     padding-bottom: 30px;
   }
+
+  margin-top: 136px;
+  margin-left: 363px
 `;
 
 export const FooterTextContent = styled.div`

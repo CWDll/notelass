@@ -33,6 +33,7 @@ const FooterIconContent = styled.div`
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
+  width: 1194px;
 `;
 
 const BoldText = styled.p`
@@ -63,6 +64,7 @@ const Hr = styled.hr`
   border: none;
   height: 1.5px;
   background-color: var(--primary-cobalt, #4849ff);
+  width: 1194px;
 `;
 
 const NameBox = styled.p`
