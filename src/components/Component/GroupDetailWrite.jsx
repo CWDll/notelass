@@ -249,6 +249,7 @@ const GuidelineText = styled.p`
     line-height: 24px; /* 150% */
     padding: 24px 24px 24px 24px;
 `;
+
 const SavedTextContainer = styled.div`
     width: 620px;
     flex-shrink: 0;
@@ -327,6 +328,17 @@ cursor: pointer;
 }
 `;
 
+const StudentBookText = styled.div`
+width: 416px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1.5px solid rgba(201, 205, 210, 0.50);
+background: #FFF;
+margin-left: 32px;
+margin-top: 8px;
+`;
+
 const students = [
     { id: 1, name: "1번 김민수" },
     { id: 2, name: "2번 김민수" },
@@ -355,13 +367,14 @@ const calculateByteCount = (text) => {
     return byteCount;
   };
 
-  function GroupDetailWrite({ savedText }) {
+function GroupDetailWrite() {
     const [byteCount, setByteCount] = useState(0);
     const [inputText, setInputText] = useState("");
-    const [savedLifeText, setSavedLifeText] = useState("");
-    const [isLifeTextSaved, setIsLifeTextSaved] = useState(false);
+    const [savedText, setSavedText] = useState("");
+    const [isTextSaved, setIsTextSaved] = useState(false);
     const [buttonText, setButtonText] = useState("저장하기");
     const [selectedStudent, setSelectedStudent] = useState();
+    const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
 
   const handleSaveFromStudentBook = (text) => {
     setSavedTextFromStudentBook(text);
@@ -377,24 +390,24 @@ const calculateByteCount = (text) => {
     };
 
     const handleSaveButtonClick = () => {
-        if (!isLifeTextSaved) {
-          setSavedLifeText(inputText);
-          setIsLifeTextSaved(true);
+        if (!isTextSaved) {
+          setSavedText(inputText);
+          setIsTextSaved(true);
           setButtonText("엑셀 출력");
         } else {
-            exportToExcel(savedLifeText);
+            exportToExcel(savedText);
         }
       };
 
     
 
     const handleTextEdit = () => {
-        setIsLifeTextSaved(false);
+        setIsTextSaved(false);
         setButtonText("저장하기")
     };
 
     const handleCopyButtonClick = () => {
-        navigator.clipboard.writeText(savedLifeText);
+        navigator.clipboard.writeText(savedText);
         alert("복사되었습니다.");
         };
 
@@ -446,7 +459,7 @@ const calculateByteCount = (text) => {
                 <ScoreResult>3등 </ScoreResult>
                 </div>
             </ScoreList>
-            {!isLifeTextSaved ? (
+            {!isTextSaved ? (
                 <>
                 <WritingBox>
                 <Textarea
@@ -479,7 +492,7 @@ const calculateByteCount = (text) => {
                 </>
                  ) : null}
 
-                 {isLifeTextSaved && (
+                 {isTextSaved && (
                 <div>
                 <InfoContainer> 
                 <TimeText>2023년 1학기-1</TimeText>
@@ -488,7 +501,7 @@ const calculateByteCount = (text) => {
                 </InfoContainer>
                 <SavedTextContainer>
                     
-                    <SavedText>{savedLifeText}</SavedText>
+                    <SavedText>{savedText}</SavedText>
                 
                     
                 </SavedTextContainer>
@@ -502,11 +515,14 @@ const calculateByteCount = (text) => {
 
 
         <RightContainer>
-        <Title>학생수첩</Title>
-        {savedText && (
-          <SavedText>{savedText}</SavedText> 
-        )}
-      </RightContainer>
+            <Title>학생수첩</Title>
+            <InfoContainer> 
+                <TimeText>2023년 1학기-1</TimeText>
+            </InfoContainer>
+            <StudentBookText>
+                    <SavedText>자발적으로 수업을 위한 준비물을 옮기는데 도움을 줌</SavedText>
+            </StudentBookText>     
+        </RightContainer>
     </MainContainer>
 
     </div>
