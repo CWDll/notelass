@@ -197,7 +197,7 @@ function GroupDetailClass() {
               style={{ "text-decoration": "underline" }}
               onClick={onClick}
             >
-              더보기
+              생성하기
             </DetailText>
 
             <SubjectContainer>
