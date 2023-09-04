@@ -237,7 +237,7 @@ function GroupDetailClass() {
                       alt="envelope"
                     />
                     <NoticeTitle>{content}</NoticeTitle>
-                    <NoticeDate>23.05.01 예약 완료</NoticeDate>
+                    {!clickedIndices.has(index) && <NoticeDate>23.05.01 예약 완료</NoticeDate>}
                   </NoticeContent>
                 </StyledNoticeItem>
               ))}
