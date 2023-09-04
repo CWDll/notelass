@@ -208,7 +208,7 @@ function GroupDetailClass() {
 
 
   return (
-    <div>
+    <>
       <Header>
         <Img src={chevron_left} alt="chevron_left"  onClick={BackButton}/>
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
@@ -225,7 +225,10 @@ function GroupDetailClass() {
             </DetailText>
 
             <SubjectContainer>
-              {postContent.map((content, index) => (
+            {postContent
+              .map((content, index) => ({ content, index, isClicked: clickedIndices.has(index) })) 
+              .sort((a, b) => a.isClicked - b.isClicked) 
+              .map(({ content, index, isClicked }) => ( 
                 <StyledNoticeItem
                   key={index}
                   isClicked={clickedIndices.has(index)}
@@ -333,7 +336,7 @@ function GroupDetailClass() {
 
         
       </MainContainer>
-    </div>
+    </>
   );
 }
 
