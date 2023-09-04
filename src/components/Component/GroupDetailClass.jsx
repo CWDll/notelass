@@ -146,6 +146,29 @@ const SudentNum = styled.p`
   margin-bottom: 15px;
 `;
 
+const NoticeDate = styled.div`
+  width: 132px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: var(--primary-light-cobalt, #EDEDFF);
+  margin-left: 16px;
+  margin-top: 14px;
+
+  color: var(--primary-cobalt, #4849FF);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+
+`;
+
+
+
+
+
 function GroupDetailClass() {
   const navigate = useNavigate();
   const onClick = () => {
@@ -183,6 +206,7 @@ function GroupDetailClass() {
     });
   };
 
+
   return (
     <div>
       <Header>
@@ -213,6 +237,7 @@ function GroupDetailClass() {
                       alt="envelope"
                     />
                     <NoticeTitle>{content}</NoticeTitle>
+                    <NoticeDate>23.05.01 예약 완료</NoticeDate>
                   </NoticeContent>
                 </StyledNoticeItem>
               ))}
