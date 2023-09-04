@@ -73,6 +73,17 @@ const SmallTitle = styled.p`
   /* height: 54px; */
 `;
 
+const SubText = styled.p`
+  color: var(--primary-cobalt, #4849FF);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration-line: underline;
+  margin-top: 5px;
+`;
+
 const AssigmentCreateForm = styled.div`
   width: 684px;
   height: 800px;
@@ -193,6 +204,9 @@ function AssignmentDetail() {
   const onCickImageUpload = () => {
     imageInput.current.click();
   };
+
+
+  
   return (
     <Wrapper>
       <Header onClick={handleHeaderClick}>
@@ -241,23 +255,23 @@ function AssignmentDetail() {
           <CreateTitle>과제 설정</CreateTitle>
           <SettingBox>
             <SmallTitle>과제 제목</SmallTitle>
-            <div>20.05.01, 12:00 AM</div>
+            <SubText>20.05.01, 12:00 AM</SubText>
           </SettingBox>
           <SettingBox>
             <SmallTitle>과제 종류</SmallTitle>
-            <div>수행평가</div>
+            <SubText>수행평가</SubText>
           </SettingBox>
           <SettingBox>
             <SmallTitle>허용된 시도</SmallTitle>
-            <div>2회</div>
+            <SubText>2회</SubText>
           </SettingBox>
           <SettingBox>
             <SmallTitle>배점</SmallTitle>
-            <div>100점</div>
+            <SubText>100점</SubText>
           </SettingBox>
           <SettingBox>
             <SmallTitle>할당된 그룹</SmallTitle>
-            <div>노트고등학교 3학년 1반 문학</div>
+            <SubText>노트고등학교 3학년 1반 문학</SubText>
           </SettingBox>
         </AssignmentSettingForm>
       </Body>
