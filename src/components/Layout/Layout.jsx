@@ -20,7 +20,7 @@ export const Container = styled.div`
 export default function Layout() {
 
 
-  //pdf-viewer에서는 학생수첩이 안보이게 하기 위한 코드
+  //pdf-viewer에서는 학생수첩과 Footer가 보이지 않게 함
   const location = useLocation();
   const shouldRenderStudentBook = location.pathname !== '/NoteDetailSubject/pdf-viewer';
   const shouldRenderFooter = location.pathname !== '/NoteDetailSubject/pdf-viewer';

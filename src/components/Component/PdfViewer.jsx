@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
 import printer from "../../assets/printer.svg";
+import textarea from "../../assets/textarea.svg";
+import searching from "../../assets/searching.svg";
 
 // pdfjs.GlobalWorkerOptions.workerSrc = `./pdf.worker.js`;
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -99,9 +101,9 @@ const PdfView = () => {
   }
 
   // 업로드된 파일을 출력하는 함수
+  // 보안과 환경 이슈로 인해 새 창에서 출력하는 방법으로 일단 구현
   async function handlePrint() {
     if (!file) return; // 파일이 없으면 출력 불가
-    console.log("작동확인");
 
     const printWindow = window.open();
     const objectUrl = URL.createObjectURL(file);
@@ -137,7 +139,9 @@ const PdfView = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>검색</button>
+        <button onClick={handleSearch}>
+        <img src={searching} alt="searching" />
+        </button>
         <p>페이지 이동 버튼</p>
         <PageNavigateBtn
           onClick={() => {
@@ -161,6 +165,7 @@ const PdfView = () => {
         <PrintButton>
           <img src={printer} alt="printer" onClick={handlePrint} />
         </PrintButton>
+        <img src={textarea} alt="textarea" />
 
         </PdfBar>
         {/* pdf 크기가 1280 * 720이 넘는 경우, overflow 처리 */}

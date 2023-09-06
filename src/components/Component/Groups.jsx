@@ -12,7 +12,6 @@ import {
   PurpleText,
   SubjectContainer,
 } from "./GroupsStyle";
-import StudentBook from "./StudentBook";
 
 export default function Groups() {
   const navigate = useNavigate();
