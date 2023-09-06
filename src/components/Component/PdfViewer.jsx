@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
+import printer from "../../assets/printer.svg";
 
 // pdfjs.GlobalWorkerOptions.workerSrc = `./pdf.worker.js`;
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -19,6 +20,24 @@ const PdfBody = styled.div`
 
 const PageNavigateBtn = styled.button`
   color: white;
+
+  font-color: black;
+`;
+
+const PdfBar = styled.div`
+  width: 1920px;
+  height: 64px;
+  flex-shrink: 0;
+  background-color: pink;
+  display: flex;
+`;
+
+const PrintButton = styled.div`
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  margin-left: 32px;
+  margin-top: 8px;
 `;
 
 // PDF 텍스트 추출 함수
@@ -55,6 +74,7 @@ const PdfView = () => {
   const [file, setFile] = useState(null); // 업로드한 파일을 저장하는 상태
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [print, setPrint] = useState(false);// 프린트 버튼
 
   function onDocumentLoadSuccess({ numPages }) {
     console.log(`numPages ${numPages}`);
@@ -78,9 +98,37 @@ const PdfView = () => {
     setSearchResults(results);
   }
 
+  // 업로드된 파일을 출력하는 함수
+  async function handlePrint() {
+    if (!file) return; // 파일이 없으면 출력 불가
+    console.log("작동확인");
+
+    const printWindow = window.open();
+    const objectUrl = URL.createObjectURL(file);
+
+    printWindow.document.write('<html><head><title>Print</title></head><body>');
+    printWindow.document.write('<embed width="100%" height="100%" src="' + objectUrl + '" type="application/pdf" />');
+    printWindow.document.write('</body></html>');
+    
+
+    printWindow.onload = () => {
+      printWindow.focus(); 
+      setTimeout(() => {  
+        printWindow.print();
+        printWindow.close();
+      }, 250);
+      
+      URL.revokeObjectURL(objectUrl);  
+   };
+}
+
+
+
+
   return (
     <>
       <PdfContainer>
+        <PdfBar>
         {/* 파일 업로드 input */}
         <input type="file" accept=".pdf" onChange={handleFileUpload} />
         <input
@@ -110,6 +158,11 @@ const PdfView = () => {
           -
         </PageNavigateBtn>
 
+        <PrintButton>
+          <img src={printer} alt="printer" onClick={handlePrint} />
+        </PrintButton>
+
+        </PdfBar>
         {/* pdf 크기가 1280 * 720이 넘는 경우, overflow 처리 */}
         <PdfBody>
           {file && (
@@ -157,6 +210,7 @@ const PdfView = () => {
             <p key={index}>{result}</p>
           ))}
         </div>
+        
       </PdfContainer>
     </>
   );
