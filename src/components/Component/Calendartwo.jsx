@@ -131,6 +131,9 @@ export default function Calendartwo({ user }) {
         }}
         prev2Label={null}
         next2Label={null}
+        minDetail="day"
+        // minDetail="day"
+        maxDetail="month"
       />
     </Container>
   );
