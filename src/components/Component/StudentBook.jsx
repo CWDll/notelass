@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
+import exit from "../../assets/exit.svg";
+import caret_up from "../../assets/caret_up.svg";
+import caret_down from "../../assets/caret_down.svg";
 
 
 const StudentBookContainer = styled.div`
@@ -41,11 +44,13 @@ const Text = styled.p`
 
 
 const SmallContainer = styled.div`
-    width: 700px;
-    height: 600px;
-    background-color: #fff;
-    box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
-    border-radius: 30px;
+    width: 720px;
+    height: 480px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
+
     position: fixed;
     margin-left :-1000px;
     margin-top : 100px;
@@ -60,8 +65,8 @@ const StudentSelect = styled.select`
     border-radius: 8px;
     border: 1.5px solid rgba(201, 205, 210, 0.50);
     background: #FFF;
-    margin-left: 32px;
-    margin-top: 60px;
+    margin-left: 24px;
+    margin-top: 24px;
 
     /* 학생 선택 글씨 */
     color: var(--cool-grayscale-title, #26282B);
@@ -79,8 +84,8 @@ const GroupSelect = styled.select`
     border-radius: 8px;
     border: 1.5px solid rgba(201, 205, 210, 0.50);
     background: #FFF;
-    margin-left: 32px;
-    margin-top: 60px;
+    margin-left: 24px;
+    margin-top: 24px;
 
     /* 학생 선택 글씨 */
     color: var(--cool-grayscale-title, #26282B);
@@ -91,15 +96,25 @@ const GroupSelect = styled.select`
     padding-left: 16px;
 `;
 
+const ExitImg = styled.img`
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    
+    margin-top: -50px;
+    margin-left: 672px;
+`;
+
+
 const Textarea = styled.textarea`
-    width: 600px;
-    height: 200px;
+    width: 672px;
+    height: 240px;
     flex-shrink: 0;
     border-radius: 8px;
     border: 1.5px solid rgba(201, 205, 210, 0.50);
     background: #FFF;
-    margin-left: 32px;
-    margin-top: 60px;
+    margin-left: 24px;
+    margin-top: 48px;
     resize: none;
     padding: 16px;
     font-size: 16px;
@@ -107,75 +122,67 @@ const Textarea = styled.textarea`
     outline : none; 
 `;
 
-const ExitButton = styled.button`
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: #FFF;
-    margin-left: 10px;
-    margin-top: 60px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    color: #26282B;
-    outline : none;
-    align-items: center;
-`;
+
 
 const Button = styled.button`
-  
-    flex-shrink: 0;
-    border-radius: 8px;
-    margin-left: 32px;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    color: black;
+width: 12px;
+height: 20px;
+flex-shrink: 0;
+border-radius: 4px;
+background: rgba(201, 205, 210, 0.50);
     outline : none;
     align-items: center;
 
+
+
+`;
+
+const Img = styled.img`
+width: 12px;
+height: 20px;
+flex-shrink: 0;
 `;
 
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 24px;
 `;
 
 const CancleButton = styled.button`
-    width: 100px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: lightgray;
-    margin-left: 400px;
-    margin-top: 30px;
-    font-size: 16px;
+height: 40px;
+flex-shrink: 0;
+border-radius: 6px;
+background: var(--cool-grayscale-inactive, #E6E8EE);
+
+    margin-left: 558px;
+    margin-top: 24px;
+    color: var(--cool-grayscale-placeholder, #9EA4AA);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    color: #26282B;
     outline : none;
-    align-items: center;
 `;
 
 const SaveButton = styled.button`
-    width: 100px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    background: #4849FF;
-    margin-left: 32px;
-    margin-top: 30px;
-    font-size: 16px;
+height: 40px;
+flex-shrink: 0;
+border-radius: 6px;
+background: var(--primary-cobalt, #4849FF);
+    margin-left: 16px;
+    margin-right: 24px;
+    margin-top: 24px;
+    color: #FFF;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    color: #FFF;
     outline : none;
     align-items: center;
 `;
@@ -264,6 +271,7 @@ function StudentBook() {
         
         {showSmallContainer && (
         <SmallContainer onClick={(e) => e.stopPropagation()}>
+            
             <GroupSelect onChange={handleGroupChange}>
             <option value=""></option>
             {groups.map((group) => (
@@ -281,7 +289,7 @@ function StudentBook() {
                 </option>
             ))}
             </StudentSelect>
-            <ExitButton onClick={() => setShowSmallContainer(false)}>X</ExitButton>
+            <ExitImg  src={exit} alt="exit"  onClick={() => setShowSmallContainer(false)}></ExitImg>
             <Textarea
                     value={inputText}
                     onChange={(e) => {
@@ -293,20 +301,29 @@ function StudentBook() {
              <ButtonContainer>
                 <p>발표 횟수</p>
                 <CountContainer>
-                    <Button onClick={speechDownCount}>-</Button>
+                    <Button  onClick={speechDownCount}>
+                        <Img src={caret_down} alt="caret_down" />
+                    </Button>
                     {speechCount}
-                    <Button onClick={speechUpCount}>+</Button>
+                    <Button onClick={speechUpCount}>
+                        <Img src={caret_up} alt="caret_up" />
+                    </Button>
                 </CountContainer>
                 
                 <p>태도 점수</p>
                 <CountContainer>
-                    <Button onClick={attitudeDownCount}>-</Button>
-                    {attitudeCount}
-                    <Button onClick={attitudeUpCount}>+</Button>
+                    <Button  onClick={speechDownCount}>
+                        <Img src={caret_down} alt="caret_down" />
+                    </Button>
+                    {speechCount}
+                    <Button onClick={speechUpCount}>
+                        <Img src={caret_up} alt="caret_up" />
+                    </Button>
                 </CountContainer>
-             </ButtonContainer>
+
+             
              <CancleButton onClick={() => setShowSmallContainer(false)}>취소</CancleButton>
-             <SaveButton onClick={handleSave}>저장</SaveButton>
+             <SaveButton onClick={handleSave}>저장하기</SaveButton>
              
              
              
