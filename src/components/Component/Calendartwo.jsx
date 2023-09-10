@@ -63,6 +63,7 @@ const Container = styled.div`
   margin-bottom: 30px;
   border-radius: 8px;
 `;
+
 const DotBox = styled.div`
   width: 100%;
   height: 10px;
@@ -70,6 +71,7 @@ const DotBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const CalendarDot = styled.div`
   margin-top: 5px;
   width: 10px;
@@ -78,7 +80,7 @@ const CalendarDot = styled.div`
   background-color: #f87171;
 `;
 
-const CalendarBox = styled(Calendar)`
+const CustomCalendar = styled(Calendar)`
   width: 478px;
   height: 400px;
   background-color: white;
@@ -91,6 +93,9 @@ const CalendarBox = styled(Calendar)`
     font-weight: bold;
   }
   padding: 20px;
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: white;
+  }
 `;
 
 export default function Calendartwo({ user }) {
@@ -98,17 +103,15 @@ export default function Calendartwo({ user }) {
   const dateArr = ["2023. 08. 15.", "2023. 08. 17.", "2023. 09. 02."];
   return (
     <Container>
-      <CalendarBox
+      <CustomCalendar
         onChange={onChange}
         value={value}
         formatDay={(locale, date) =>
-          //xx일 -> xx 으로 format 변경
           new Date(date).toLocaleDateString("en-us", {
             day: "2-digit",
           })
         }
         tileContent={({ date, view }) => {
-          //
           const exist = dateArr.find(
             (oneDate) =>
               oneDate ===
@@ -126,6 +129,7 @@ export default function Calendartwo({ user }) {
             </>
           );
         }}
+        minDetail="month" // 이 부분을 추가
       />
     </Container>
   );
