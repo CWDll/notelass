@@ -87,7 +87,7 @@ const CustomCalendar = styled(Calendar)`
   color: black;
   border: 0;
   .react-calendar__tile--active {
-    background-color: #dedeff !important;
+    /* background-color: #dedeff !important; */
     color: #4849ff !important;
     border-radius: 48%;
     font-weight: bold;
@@ -131,8 +131,8 @@ export default function Calendartwo({ user }) {
         }}
         prev2Label={null}
         next2Label={null}
-        minDetail="day"
-        // minDetail="day"
+        // nnnn년 m월 까지로 간편이동 제한(연월 텍스트 클릭해서 이동기능)
+        minDetail="year"
         maxDetail="month"
       />
     </Container>
