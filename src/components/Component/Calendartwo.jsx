@@ -89,7 +89,7 @@ const CustomCalendar = styled(Calendar)`
   .react-calendar__tile--active {
     background-color: #dedeff !important;
     color: #4849ff !important;
-    border-radius: 50%;
+    border-radius: 48%;
     font-weight: bold;
   }
   padding: 20px;
@@ -129,7 +129,8 @@ export default function Calendartwo({ user }) {
             </>
           );
         }}
-        minDetail="month" // 이 부분을 추가
+        prev2Label={null}
+        next2Label={null}
       />
     </Container>
   );
