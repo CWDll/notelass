@@ -312,14 +312,11 @@ function StudentBook() {
                 
                 <p>태도 점수</p>
                 <CountContainer>
-                    <Button  onClick={speechDownCount}>
-                        <Img src={caret_down} alt="caret_down" />
-                    </Button>
-                    {speechCount}
-                    <Button onClick={speechUpCount}>
-                        <Img src={caret_up} alt="caret_up" />
-                    </Button>
+                    <Button onClick={attitudeDownCount}>-</Button>
+                    {attitudeCount}
+                    <Button onClick={attitudeUpCount}>+</Button>
                 </CountContainer>
+             </ButtonContainer>
 
              
              <CancleButton onClick={() => setShowSmallContainer(false)}>취소</CancleButton>
