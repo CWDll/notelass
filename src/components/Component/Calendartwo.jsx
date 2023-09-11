@@ -52,7 +52,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const Container = styled.div`
-
   display: flex;
   flex-direction: column;
   width: 480px;
@@ -64,6 +63,7 @@ const Container = styled.div`
   margin-bottom: 30px;
   border-radius: 8px;
 `;
+
 const DotBox = styled.div`
   width: 100%;
   height: 10px;
@@ -71,6 +71,7 @@ const DotBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const CalendarDot = styled.div`
   margin-top: 5px;
   width: 10px;
@@ -79,17 +80,21 @@ const CalendarDot = styled.div`
   background-color: #f87171;
 `;
 
-const CalendarBox = styled(Calendar)`
-  widtth: 480px;
+const CustomCalendar = styled(Calendar)`
+  width: 478px;
   height: 400px;
   background-color: white;
   color: black;
   border: 0;
   .react-calendar__tile--active {
-    background-color: #dedeff !important;
+    /* background-color: #dedeff !important; */
     color: #4849ff !important;
-    border-radius: 50%;
+    border-radius: 48%;
     font-weight: bold;
+  }
+  padding: 20px;
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: white;
   }
 `;
 
@@ -98,17 +103,15 @@ export default function Calendartwo({ user }) {
   const dateArr = ["2023. 08. 15.", "2023. 08. 17.", "2023. 09. 02."];
   return (
     <Container>
-      <CalendarBox
+      <CustomCalendar
         onChange={onChange}
         value={value}
         formatDay={(locale, date) =>
-          //xx일 -> xx 으로 format 변경
           new Date(date).toLocaleDateString("en-us", {
             day: "2-digit",
           })
         }
         tileContent={({ date, view }) => {
-          //
           const exist = dateArr.find(
             (oneDate) =>
               oneDate ===
@@ -126,6 +129,11 @@ export default function Calendartwo({ user }) {
             </>
           );
         }}
+        prev2Label={null}
+        next2Label={null}
+        // nnnn년 m월 까지로 간편이동 제한(연월 텍스트 클릭해서 이동기능)
+        minDetail="year"
+        maxDetail="month"
       />
     </Container>
   );
