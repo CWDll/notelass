@@ -59,7 +59,10 @@ async function extractTextFromPDF(pdfFile) {
       const page = await pdfData.getPage(i);
       const pageText = await page.getTextContent();
       const pageString = pageText.items.map((item) => item.str).join(" ");
-      textContent.push(pageString);
+      
+      console.log(`Page ${i}:`, pageString);
+      
+      textContent.push({ text: pageString, page: i });
     }
 
     return textContent;
@@ -77,6 +80,8 @@ const PdfView = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const [print, setPrint] = useState(false);// 프린트 버튼
+  const [result, setResult] = useState([]);// 검색 결과
+  
 
   function onDocumentLoadSuccess({ numPages }) {
     console.log(`numPages ${numPages}`);
@@ -96,8 +101,17 @@ const PdfView = () => {
 
     const textContent = await extractTextFromPDF(file);
     console.log(textContent);
-    const results = textContent.filter((text) => text.includes(searchTerm));
-    setSearchResults(results);
+    const results = textContent.filter((content) => content.text.includes(searchTerm));
+    //검색한 페이지 번호를 저장
+    
+    setSearchResults(results.map((result) => result.page)); 
+      if (results.length > 0) {
+        setPageNumber(results[0].page); 
+      } else {
+        console.log('검색 결과가 없습니다.');
+        console.log(`검색어: ${searchTerm}`);
+        console.log(`PDF 내용:`, textContent);
+      }
   }
 
   // 업로드된 파일을 출력하는 함수
@@ -140,7 +154,7 @@ const PdfView = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>
-        <img src={searching} alt="searching" />
+          <img src={searching} alt="searching" />
         </button>
         <p>페이지 이동 버튼</p>
         <PageNavigateBtn
