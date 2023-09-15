@@ -18,6 +18,8 @@ import AssignmentDetail from "./components/Component/AssignmentDetail";
 import StudentScoreDetail from "./components/Component/StudentScoreDetail";
 import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./components/Component/GroupScoreDetail";
+// 로그인페이지
+import LoginPage from "./components/LogInPage/Login";
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
 
           <Route path="/Setting" element={<Setting />} />
         </Route>
+        {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
+        <Route path="/Login" element={<LoginPage />} />
       </Routes>
     </Router>
   );
