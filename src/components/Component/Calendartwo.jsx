@@ -96,6 +96,12 @@ const CustomCalendar = styled(Calendar)`
   .react-calendar__month-view__days__day--neighboringMonth {
     color: white;
   }
+
+  /* 요일 텍스트 아래에 있는 밑줄 제거 */
+  .react-calendar__month-view__weekdays__weekday {
+    text-decoration: none !important;
+    /* border: 1px solid black; */
+  }
 `;
 
 export default function Calendartwo({ user }) {
