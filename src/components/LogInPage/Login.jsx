@@ -14,24 +14,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -50,6 +32,21 @@ const GridContainer = styled(Grid)`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+`;
+
+const Notelass = styled.h1`
+  color: #4849ff;
+  size: 30px;
+
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 12px;
+`;
+
+const NotelassIntro = styled(Notelass)`
+  font-size: 20px;
 `;
 
 export default function Login() {
@@ -77,12 +74,12 @@ export default function Login() {
           {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar> */}
-          <Typography component="h1" variant="h5">
-            태블릿 속 또다른 강의실
-          </Typography>
-          <Typography component="h1" variant="h2">
-            Note-lass
-          </Typography>
+          {/* <Typography component="h1" variant="h5"> */}
+          <NotelassIntro>태블릿 속 또다른 강의실</NotelassIntro>
+          {/* </Typography> */}
+          {/* <Typography component="h1" variant="h2"> */}
+          <Notelass>Note-lass</Notelass>
+          {/* </Typography> */}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -116,7 +113,12 @@ export default function Login() {
 
             <GridContainer>
               <Grid>
-                <Link href="#" variant="body2" underline="none">
+                <Link
+                  href="#"
+                  variant="body2"
+                  underline="none"
+                  style={{ marginLeft: "40px" }}
+                >
                   회원가입
                 </Link>
               </Grid>
@@ -128,7 +130,12 @@ export default function Login() {
               </Grid>
               <p>|</p>
               <Grid>
-                <Link href="#" underline="none" color={"gray"}>
+                <Link
+                  href="#"
+                  underline="none"
+                  color={"gray"}
+                  style={{ marginRight: "30px" }}
+                >
                   비밀번호 찾기
                 </Link>
               </Grid>
