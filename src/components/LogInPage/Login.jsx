@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -35,6 +36,22 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+const ContainerBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1920px;
+  height: 1080px;
+`;
+
+const GridContainer = styled(Grid)`
+  /* background-color: blue; */
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
 export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -47,7 +64,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <ContainerBox>
         <CssBaseline />
         <Box
           sx={{
@@ -57,11 +74,14 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Typography component="h1" variant="h5">
-            Sign in
+            태블릿 속 또다른 강의실
+          </Typography>
+          <Typography component="h1" variant="h2">
+            Note-lass
           </Typography>
           <Box
             component="form"
@@ -74,7 +94,7 @@ export default function Login() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="이메일을 입력해주세요"
               name="email"
               autoComplete="email"
               autoFocus
@@ -84,39 +104,46 @@ export default function Login() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호를 입력해주세요"
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
+
+            <GridContainer>
+              <Grid>
+                <Link href="#" variant="body2" underline="none">
+                  회원가입
+                </Link>
+              </Grid>
+              <p>|</p>
+              <Grid>
+                <Link href="#" underline="none" color={"gray"}>
+                  아이디 찾기
+                </Link>
+              </Grid>
+              <p>|</p>
+              <Grid>
+                <Link href="#" underline="none" color={"gray"}>
+                  비밀번호 찾기
+                </Link>
+              </Grid>
+            </GridContainer>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              로그인
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+      </ContainerBox>
     </ThemeProvider>
   );
 }
