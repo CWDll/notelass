@@ -7,6 +7,12 @@ import RadioGroup from "@mui/material/RadioGroup";
 // 학교 검색
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+// 입학 년도
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
@@ -41,6 +47,12 @@ export default function SelectSchool() {
   const handleChange = (event) => {
     setSelectedValue(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
   };
+
+  const [age, setAge] = React.useState("");
+
+  const handleAgeChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <ContainerWidth_1920>
       <Container>
@@ -54,6 +66,25 @@ export default function SelectSchool() {
           renderInput={(params) => <TextField {...params} label="학교 이름" />}
         />
         <TitleText>입학 년도</TitleText>
+        <Box sx>
+          <FormControl sx={{ width: 300 }}>
+            <InputLabel id="demo-simple-select-label">입학 년도</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="admission"
+              onChange={handleAgeChange}
+            >
+              <MenuItem value={2018}>2018년</MenuItem>
+              <MenuItem value={2019}>2019년</MenuItem>
+              <MenuItem value={2020}>2020년</MenuItem>
+              <MenuItem value={2021}>2021년</MenuItem>
+              <MenuItem value={2022}>2022년</MenuItem>
+              <MenuItem value={2023}>2023년</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <TitleText>신분 선택</TitleText>
         <RadioGroup value={selectedValue} onChange={handleChange}>
           <FormControlLabel
