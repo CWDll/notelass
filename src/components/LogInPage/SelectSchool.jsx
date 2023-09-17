@@ -41,15 +41,36 @@ const TitleText = styled.p`
   font-size: 30px;
 `;
 
+const FlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export default function SelectSchool() {
   const [selectedValue, setSelectedValue] = useState(""); // 선택된 값을 저장하는 상태 변수
-  const [age, setAge] = React.useState("");
+  const [admissionAge, setAdmissionAge] = useState(""); //입학년도
+  const [schoolGrade, setSchoolGrade] = useState(""); //학년
+  const [schoolClass, setschoolClass] = useState(""); //반
+  const [schoolNumber, setschoolNumber] = useState(""); //번호
   const [showCopyright, setShowCopyright] = useState(false);
   const handleChange = (event) => {
     setSelectedValue(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
   };
+  //입학년도 바꾸기
   const handleAgeChange = (event) => {
-    setAge(event.target.value);
+    setAdmissionAge(event.target.value);
+  };
+  //학년 바꾸기
+  const handleGradeChange = (event) => {
+    setSchoolGrade(event.target.value);
+  };
+  //반 바꾸기
+  const handleClassChange = (event) => {
+    setschoolClass(event.target.value);
+  };
+  //번호 바꾸기
+  const handleNumberChange = (event) => {
+    setschoolNumber(event.target.value);
   };
   // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
   useEffect(() => {
@@ -60,8 +81,71 @@ export default function SelectSchool() {
     }
   }, [selectedValue]);
 
-  function Copyright() {
-    return <div>학생 관련 정보 기입할 칸</div>;
+  function StudentInfo() {
+    return (
+      <div>
+        <TitleText>반, 번호 입력</TitleText>
+        <FlexRow>
+          <FormControl sx={{ width: 80 }}>
+            <InputLabel id="demo-simple-select-label">학년</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={schoolGrade}
+              label="admission"
+              onChange={handleGradeChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </FormControl>
+          <p>학년</p>
+
+          <FormControl sx={{ width: 80 }}>
+            <InputLabel id="demo-simple-select-label">반</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={schoolClass}
+              label="admission"
+              onChange={handleClassChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+            </Select>
+          </FormControl>
+          <p>반</p>
+
+          <FormControl sx={{ width: 80 }}>
+            <InputLabel id="demo-simple-select-label">번호</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={schoolNumber}
+              label="admission"
+              onChange={handleNumberChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+            </Select>
+          </FormControl>
+          <p>번호</p>
+        </FlexRow>
+      </div>
+    );
   }
 
   return (
@@ -83,7 +167,7 @@ export default function SelectSchool() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
+              value={admissionAge}
               label="admission"
               onChange={handleAgeChange}
             >
@@ -107,7 +191,7 @@ export default function SelectSchool() {
         </RadioGroup>
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
-        {showCopyright && <Copyright align="center"></Copyright>}
+        {showCopyright && <StudentInfo align="center"></StudentInfo>}
       </Container>
     </ContainerWidth_1920>
   );
