@@ -37,7 +37,6 @@ const GridContainer = styled(Grid)`
 const Notelass = styled.h1`
   color: #4849ff;
   size: 30px;
-
   font-size: 50px;
   font-style: normal;
   font-weight: 700;
