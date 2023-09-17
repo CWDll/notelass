@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 // 신분 선택
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -43,16 +43,27 @@ const TitleText = styled.p`
 
 export default function SelectSchool() {
   const [selectedValue, setSelectedValue] = useState(""); // 선택된 값을 저장하는 상태 변수
-
+  const [age, setAge] = React.useState("");
+  const [showCopyright, setShowCopyright] = useState(false);
   const handleChange = (event) => {
     setSelectedValue(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
   };
-
-  const [age, setAge] = React.useState("");
-
   const handleAgeChange = (event) => {
     setAge(event.target.value);
   };
+  // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
+  useEffect(() => {
+    if (selectedValue === "student") {
+      setShowCopyright(true);
+    } else {
+      setShowCopyright(false);
+    }
+  }, [selectedValue]);
+
+  function Copyright() {
+    return <div>학생 관련 정보 기입할 칸</div>;
+  }
+
   return (
     <ContainerWidth_1920>
       <Container>
@@ -66,7 +77,7 @@ export default function SelectSchool() {
           renderInput={(params) => <TextField {...params} label="학교 이름" />}
         />
         <TitleText>입학 년도</TitleText>
-        <Box sx>
+        <Box>
           <FormControl sx={{ width: 300 }}>
             <InputLabel id="demo-simple-select-label">입학 년도</InputLabel>
             <Select
@@ -94,6 +105,9 @@ export default function SelectSchool() {
           />
           <FormControlLabel value="student" control={<Radio />} label="학생" />
         </RadioGroup>
+
+        {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
+        {showCopyright && <Copyright align="center"></Copyright>}
       </Container>
     </ContainerWidth_1920>
   );
