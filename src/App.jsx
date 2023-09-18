@@ -21,6 +21,7 @@ import GroupScoreDetail from "./components/Component/GroupScoreDetail";
 // 로그인페이지
 import Login from "./components/LogInPage/Login";
 import SelectSchool from "./components/LogInPage/SelectSchool";
+import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificationAndPassword";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
         {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
         <Route path="/Login" element={<Login />} />
         <Route path="/SelectSchool" element={<SelectSchool />} />
+        <Route
+          path="/EmailVerificationAndPassword"
+          element={<EmailVerificationAndPassword />}
+        />
       </Routes>
     </Router>
   );
