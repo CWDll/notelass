@@ -13,6 +13,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+// 다음 버튼
+import Button from "@mui/material/Button";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
@@ -44,6 +46,10 @@ const TitleText = styled.p`
 const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const NextButton = styled(Button)`
+  width: 400px;
 `;
 
 export default function SelectSchool() {
@@ -192,6 +198,9 @@ export default function SelectSchool() {
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
+        <NextButton type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          다음
+        </NextButton>
       </Container>
     </ContainerWidth_1920>
   );
