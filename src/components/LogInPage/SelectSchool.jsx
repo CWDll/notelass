@@ -27,6 +27,12 @@ const Container = styled.div`
   width: 800px;
 `;
 
+const InnerContainer = styled.div`
+  width: 100%;
+  /* height: 100%; */
+  margin: 20px 0 10px 10px;
+`;
+
 const Notelass = styled.h1`
   color: #4849ff;
   size: 30px;
@@ -50,6 +56,10 @@ const FlexRow = styled.div`
 
 const NextButton = styled(Button)`
   width: 400px;
+`;
+
+const StudentInfoFormControl = styled(FormControl)`
+  margin: 5px 10px 0 10px;
 `;
 
 export default function SelectSchool() {
@@ -89,10 +99,10 @@ export default function SelectSchool() {
 
   function StudentInfo() {
     return (
-      <div>
+      <InnerContainer>
         <TitleText>반, 번호 입력</TitleText>
         <FlexRow>
-          <FormControl sx={{ width: 80 }}>
+          <FormControl sx={{ width: 100 }}>
             <InputLabel id="demo-simple-select-label">학년</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -106,9 +116,9 @@ export default function SelectSchool() {
               <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
-          <p>학년</p>
+          {/* <p>학년</p> */}
 
-          <FormControl sx={{ width: 80 }}>
+          <FormControl sx={{ width: 100 }}>
             <InputLabel id="demo-simple-select-label">반</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -127,9 +137,9 @@ export default function SelectSchool() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          <p>반</p>
+          {/* <p>반</p> */}
 
-          <FormControl sx={{ width: 80 }}>
+          <FormControl sx={{ width: 100, margin: 30 }}>
             <InputLabel id="demo-simple-select-label">번호</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -148,9 +158,9 @@ export default function SelectSchool() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          <p>번호</p>
+          {/* <p>번호</p> */}
         </FlexRow>
-      </div>
+      </InnerContainer>
     );
   }
 
@@ -158,49 +168,57 @@ export default function SelectSchool() {
     <ContainerWidth_1920>
       <Container>
         <Notelass>학교 정보 입력</Notelass>
-        <TitleText>학교 검색</TitleText>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={schoolName}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="학교 이름" />}
-        />
-        <TitleText>입학 년도</TitleText>
-        <Box>
-          <FormControl sx={{ width: 300 }}>
-            <InputLabel id="demo-simple-select-label">입학 년도</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={admissionAge}
-              label="admission"
-              onChange={handleAgeChange}
-            >
-              <MenuItem value={2018}>2018년</MenuItem>
-              <MenuItem value={2019}>2019년</MenuItem>
-              <MenuItem value={2020}>2020년</MenuItem>
-              <MenuItem value={2021}>2021년</MenuItem>
-              <MenuItem value={2022}>2022년</MenuItem>
-              <MenuItem value={2023}>2023년</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <TitleText>신분 선택</TitleText>
-        <RadioGroup value={selectedValue} onChange={handleChange}>
-          <FlexRow>
-            <FormControlLabel
-              value="teacher"
-              control={<Radio />}
-              label="선생님"
-            />
-            <FormControlLabel
-              value="student"
-              control={<Radio />}
-              label="학생"
-            />
-          </FlexRow>
-        </RadioGroup>
+        <InnerContainer>
+          <TitleText>학교 검색</TitleText>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={schoolName}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="학교 이름" />
+            )}
+          />
+        </InnerContainer>
+        <InnerContainer>
+          <TitleText>입학 년도</TitleText>
+          <Box>
+            <FormControl sx={{ width: 300 }}>
+              <InputLabel id="demo-simple-select-label">입학 년도</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={admissionAge}
+                label="admission"
+                onChange={handleAgeChange}
+              >
+                <MenuItem value={2018}>2018년</MenuItem>
+                <MenuItem value={2019}>2019년</MenuItem>
+                <MenuItem value={2020}>2020년</MenuItem>
+                <MenuItem value={2021}>2021년</MenuItem>
+                <MenuItem value={2022}>2022년</MenuItem>
+                <MenuItem value={2023}>2023년</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </InnerContainer>
+        <InnerContainer>
+          <TitleText>신분 선택</TitleText>
+          <RadioGroup value={selectedValue} onChange={handleChange}>
+            <FlexRow>
+              <FormControlLabel
+                value="teacher"
+                control={<Radio />}
+                label="선생님"
+              />
+              <FormControlLabel
+                value="student"
+                control={<Radio />}
+                label="학생"
+              />
+            </FlexRow>
+          </RadioGroup>
+        </InnerContainer>
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
