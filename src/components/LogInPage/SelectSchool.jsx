@@ -188,12 +188,18 @@ export default function SelectSchool() {
         </Box>
         <TitleText>신분 선택</TitleText>
         <RadioGroup value={selectedValue} onChange={handleChange}>
-          <FormControlLabel
-            value="teacher"
-            control={<Radio />}
-            label="선생님"
-          />
-          <FormControlLabel value="student" control={<Radio />} label="학생" />
+          <FlexRow>
+            <FormControlLabel
+              value="teacher"
+              control={<Radio />}
+              label="선생님"
+            />
+            <FormControlLabel
+              value="student"
+              control={<Radio />}
+              label="학생"
+            />
+          </FlexRow>
         </RadioGroup>
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
