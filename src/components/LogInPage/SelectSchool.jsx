@@ -212,11 +212,17 @@ export default function SelectSchool() {
                 value="teacher"
                 control={<Radio />}
                 label="선생님"
+                style={{
+                  color: selectedValue === "teacher" ? "black" : "gray",
+                }}
               />
               <FormControlLabel
                 value="student"
                 control={<Radio />}
                 label="학생"
+                style={{
+                  color: selectedValue === "student" ? "black" : "gray",
+                }}
               />
             </FlexRow>
           </RadioGroup>
