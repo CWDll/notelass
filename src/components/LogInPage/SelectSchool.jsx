@@ -176,7 +176,7 @@ export default function SelectSchool() {
             options={schoolName}
             sx={{ width: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="학교 이름" />
+              <TextField {...params} label="학교 이름을 입력해주세요" />
             )}
           />
         </InnerContainer>
@@ -184,7 +184,9 @@ export default function SelectSchool() {
           <TitleText>입학 년도</TitleText>
           <Box>
             <FormControl sx={{ width: 300 }}>
-              <InputLabel id="demo-simple-select-label">입학 년도</InputLabel>
+              <InputLabel id="demo-simple-select-label">
+                입학 년도를 선택해주세요
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
