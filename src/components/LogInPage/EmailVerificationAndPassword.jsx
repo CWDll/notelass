@@ -21,7 +21,7 @@ const ContainerWidth_1920 = styled.div`
 `;
 
 const Container = styled.div`
-  width: 800px;
+  width: 500px;
   display: flex;
   flex-direction: column;
 `;
@@ -73,9 +73,13 @@ export default function EmailVerificationAndPassword() {
         <FlexRow>
           <TextField
             id="standard-basic"
-            //   label="Standard"
+            // label="Standard"
             variant="standard"
             placeholder="example@notelass.com"
+            error="true"
+            // FormHelperTextProps="에러 메시지"
+            helperText="Incorrect entry."
+            fullWidth={true}
           />
           <Button variant="outlined">전송</Button>
         </FlexRow>
