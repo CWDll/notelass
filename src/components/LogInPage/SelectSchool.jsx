@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 // 신분 선택
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -21,10 +23,11 @@ const ContainerWidth_1920 = styled.div`
   height: inherit;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
-  width: 800px;
+  width: 500px;
 `;
 
 const InnerContainer = styled.div`
@@ -45,13 +48,18 @@ const Notelass = styled.h1`
 `;
 
 const TitleText = styled.p`
+  display: flex;
+  flex-direction: row;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
+  align-items: center;
+  margin-bottom: 10px;
 `;
 
 const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
+  /* margin-boto: 0px; */
 `;
 
 const NextButton = styled(Button)`
@@ -102,8 +110,8 @@ export default function SelectSchool() {
       <InnerContainer>
         <TitleText>반, 번호 입력</TitleText>
         <FlexRow>
-          <FormControl sx={{ width: 100 }}>
-            <InputLabel id="demo-simple-select-label">학년</InputLabel>
+          <FormControl sx={{ width: 120, marginRight: 1 }}>
+            <InputLabel id="demo-simple-select-label">학년 선택</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -116,10 +124,10 @@ export default function SelectSchool() {
               <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
-          {/* <p>학년</p> */}
+          <TitleText>학년</TitleText>
 
-          <FormControl sx={{ width: 100 }}>
-            <InputLabel id="demo-simple-select-label">반</InputLabel>
+          <FormControl sx={{ width: 100, marginLeft: 1.5, marginRight: 1 }}>
+            <InputLabel id="demo-simple-select-label">반 선택</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -137,10 +145,10 @@ export default function SelectSchool() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          {/* <p>반</p> */}
+          <TitleText>반</TitleText>
 
-          <FormControl sx={{ width: 100, margin: 30 }}>
-            <InputLabel id="demo-simple-select-label">번호</InputLabel>
+          <FormControl sx={{ width: 120, marginLeft: 1.5, marginRight: 1 }}>
+            <InputLabel id="demo-simple-select-label">번호 선택</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -148,6 +156,9 @@ export default function SelectSchool() {
               label="admission"
               onChange={handleNumberChange}
             >
+              <MenuItem value="" disabled>
+                1
+              </MenuItem>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
@@ -158,7 +169,7 @@ export default function SelectSchool() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          {/* <p>번호</p> */}
+          <TitleText>번호</TitleText>
         </FlexRow>
       </InnerContainer>
     );
@@ -184,7 +195,7 @@ export default function SelectSchool() {
           <TitleText>입학 년도</TitleText>
           <Box>
             <FormControl sx={{ width: 300 }}>
-              <InputLabel id="demo-simple-select-label">
+              <InputLabel id="demo-simple-select-label" size="normal">
                 입학 년도를 선택해주세요
               </InputLabel>
               <Select
