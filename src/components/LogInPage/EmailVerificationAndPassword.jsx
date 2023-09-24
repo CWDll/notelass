@@ -15,13 +15,14 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
-  height: inherit;
+  /* height: 1080px; */
   display: flex;
   justify-content: center;
 `;
 
 const Container = styled.div`
-  width: 500px;
+  width: 400px;
+  heigth: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -40,6 +41,8 @@ const Notelass = styled.h1`
 const TitleText = styled.p`
   font-weight: bold;
   font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
 
 const FlexRow = styled.div`
@@ -54,6 +57,9 @@ const FlexCol = styled.div`
 
 const NextButton = styled(Button)`
   width: 400px;
+  height: 50px;
+  margin-top: 600px;
+  /* padding-top: 600px; */
 `;
 
 export default function EmailVerificationAndPassword() {
@@ -78,10 +84,15 @@ export default function EmailVerificationAndPassword() {
             placeholder="example@notelass.com"
             error="true"
             // FormHelperTextProps="에러 메시지"
-            helperText="Incorrect entry."
+            helperText="이메일 입력 양식 오류"
             fullWidth={true}
           />
-          <Button variant="outlined">전송</Button>
+          <Button
+            variant="outlined"
+            sx={{ width: "100px", height: "40px", marginLeft: `20px` }}
+          >
+            전송
+          </Button>
         </FlexRow>
         <TitleText>인증번호</TitleText>
         <TextField
@@ -89,10 +100,11 @@ export default function EmailVerificationAndPassword() {
           //   label="Standard"
           variant="standard"
           placeholder="인증번호 6자리를 입력해 주세요"
+          fullWidth={false}
         />
 
         <TitleText>비밀번호 입력</TitleText>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+        <FormControl variant="standard" fullWidth={true}>
           {/* <InputLabel htmlFor="standard-adornment-password">
             Password
           </InputLabel> */}
@@ -111,6 +123,7 @@ export default function EmailVerificationAndPassword() {
                 </IconButton>
               </InputAdornment>
             }
+            fullWidth={true}
           />
         </FormControl>
 
@@ -120,9 +133,14 @@ export default function EmailVerificationAndPassword() {
           //   label="Standard"
           variant="standard"
           placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
+          // sx={{ marginBottom: "100px" }}
         />
 
-        <NextButton type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <NextButton
+          type="submit"
+          variant="contained"
+          sx={{ mt: 3, mb: 2, marginTop: "100px" }}
+        >
           회원가입
         </NextButton>
       </Container>
