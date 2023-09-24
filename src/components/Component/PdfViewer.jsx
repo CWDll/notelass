@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
 import printer from "../../assets/printer.svg";
-import textarea from "../../assets/textarea.svg";
 import searching from "../../assets/searching.svg";
 
-// pdfjs.GlobalWorkerOptions.workerSrc = `./pdf.worker.js`;
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PdfContainer = styled.div`
@@ -22,7 +20,6 @@ const PdfBody = styled.div`
 
 const PageNavigateBtn = styled.button`
   color: white;
-
   font-color: black;
 `;
 
@@ -30,7 +27,7 @@ const PdfBar = styled.div`
   width: 1920px;
   height: 64px;
   flex-shrink: 0;
-  background-color: pink;
+  background: var(--cool-grayscale-off-white, #FCFCFC);
   display: flex;
 `;
 
@@ -42,82 +39,91 @@ const PrintButton = styled.div`
   margin-top: 8px;
 `;
 
-// PDF 텍스트 추출 함수
 async function extractTextFromPDF(pdfFile) {
   if (!pdfFile) {
     console.error("PDF 파일이 없습니다.");
     return [];
   }
-  console.log("PDF파일은 존재한다.");
-
+  
+  // File 객체를 ArrayBuffer로 변환
+  const fileReader = new FileReader();
+  const readFileAsArrayBuffer = new Promise((resolve, reject) => {
+    fileReader.onload = () => resolve(fileReader.result);
+    fileReader.onerror = (error) => reject(error);
+    fileReader.readAsArrayBuffer(pdfFile);
+  });
+  
+  let arrayBuffer;
+  
   try {
-    const pdfData = await pdfjs.getDocument(pdfFile).promise;
-    const numPages = pdfData.numPages;
-    const textContent = [];
+    arrayBuffer = await readFileAsArrayBuffer;
+    
+    const pdfData = await pdfjs.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
 
-    for (let i = 1; i <= numPages; i++) {
+   const numPages = pdfData.numPages;
+   const textContent = [];
+
+   for (let i = 1; i <= numPages; i++) {
       const page = await pdfData.getPage(i);
       const pageText = await page.getTextContent();
       const pageString = pageText.items.map((item) => item.str).join(" ");
-      
-      console.log(`Page ${i}:`, pageString);
-      
-      textContent.push({ text: pageString, page: i });
-    }
 
-    return textContent;
-  } catch (error) {
-    console.error("PDF 파일을 처리하는 동안 오류가 발생했습니다.", error);
-    return [];
-  }
+      console.log(`Page ${i}:`, pageString);
+
+      textContent.push({ text: pageString, page: i });
+   }
+
+   return textContent;
+ } catch (error) {
+     console.error("PDF 파일을 처리하는 동안 오류가 발생했습니다.", error);
+     return [];
+ }
 }
 
 const PdfView = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageScale, setPageScale] = useState(1);
-  const [file, setFile] = useState(null); // 업로드한 파일을 저장하는 상태
-  const [searchTerm, setSearchTerm] = useState(""); // 검색어
-  const [searchResults, setSearchResults] = useState([]); // 검색 결과
-  const [print, setPrint] = useState(false);// 프린트 버튼
-  const [result, setResult] = useState([]);// 검색 결과
-  
+  const [file, setFile] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   function onDocumentLoadSuccess({ numPages }) {
     console.log(`numPages ${numPages}`);
     setNumPages(numPages);
   }
 
-  // 파일 업로드 핸들러
   function handleFileUpload(event) {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
   }
 
-  // PDF 텍스트 검색 함수
   async function handleSearch() {
-    if (!file) return; // 파일이 없으면 검색 불가
-    console.log("작동확인");
-
+    if (!file) return;
+  
     const textContent = await extractTextFromPDF(file);
     console.log(textContent);
-    const results = textContent.filter((content) => content.text.includes(searchTerm));
-    //검색한 페이지 번호를 저장
-    
-    setSearchResults(results.map((result) => result.page)); 
-      if (results.length > 0) {
-        setPageNumber(results[0].page); 
-      } else {
-        console.log('검색 결과가 없습니다.');
-        console.log(`검색어: ${searchTerm}`);
-        console.log(`PDF 내용:`, textContent);
-      }
+  
+    const results = textContent.filter((content) =>
+      content.text.includes(searchTerm)
+    );
+  
+    if (results.length > 0) {
+      const firstResult = results[0]; 
+      setPageNumber(firstResult.page);
+      setSearchResults(results.map((result) => result.page));
+    } else {
+      console.log("검색 결과가 없습니다.");
+      console.log(`검색어: ${searchTerm}`);
+      console.log(`PDF 내용:`, textContent);
+  
+      setPageNumber(1);
+      setSearchResults([]);
+    }
   }
 
-  // 업로드된 파일을 출력하는 함수
-  // 보안과 환경 이슈로 인해 새 창에서 출력하는 방법으로 일단 구현
   async function handlePrint() {
-    if (!file) return; // 파일이 없으면 출력 불가
+    if (!file) return;
 
     const printWindow = window.open();
     const objectUrl = URL.createObjectURL(file);
@@ -125,68 +131,60 @@ const PdfView = () => {
     printWindow.document.write('<html><head><title>Print</title></head><body>');
     printWindow.document.write('<embed width="100%" height="100%" src="' + objectUrl + '" type="application/pdf" />');
     printWindow.document.write('</body></html>');
-    
 
     printWindow.onload = () => {
-      printWindow.focus(); 
-      setTimeout(() => {  
+      printWindow.focus();
+      setTimeout(() => {
         printWindow.print();
         printWindow.close();
       }, 250);
-      
-      URL.revokeObjectURL(objectUrl);  
-   };
-}
 
-
-
+      URL.revokeObjectURL(objectUrl);
+    };
+  }
 
   return (
     <>
       <PdfContainer>
         <PdfBar>
-        {/* 파일 업로드 input */}
-        <input type="file" accept=".pdf" onChange={handleFileUpload} />
-        <input
-          type="text"
-          placeholder="검색어 입력"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>
-          <img src={searching} alt="searching" />
-        </button>
-        <p>페이지 이동 버튼</p>
-        <PageNavigateBtn
-          onClick={() => {
-            setPageNumber(
-              numPages === pageNumber ? pageNumber : pageNumber + 1
-            );
-          }}
-        >
-          {" "}
-          +
-        </PageNavigateBtn>
-        <PageNavigateBtn
-          onClick={() => {
-            setPageNumber(pageNumber === 1 ? pageNumber : pageNumber - 1);
-          }}
-        >
-          {" "}
-          -
-        </PageNavigateBtn>
+          <input type="file" accept=".pdf" onChange={handleFileUpload} />
+          <input
+            type="text"
+            placeholder="검색어 입력"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>
+            <img src={searching} alt="searching" />
+          </button>
+          <p>페이지 이동 버튼</p>
+          <PageNavigateBtn
+            onClick={() => {
+              setPageNumber(
+                numPages === pageNumber ? pageNumber : pageNumber + 1
+              );
+            }}
+          >
+            {" "}
+            +
+          </PageNavigateBtn>
+          <PageNavigateBtn
+            onClick={() => {
+              setPageNumber(pageNumber === 1 ? pageNumber : pageNumber - 1);
+            }}
+          >
+            {" "}
+            -
+          </PageNavigateBtn>
 
-        <PrintButton>
-          <img src={printer} alt="printer" onClick={handlePrint} />
-        </PrintButton>
-        <img src={textarea} alt="textarea" />
-
+          <PrintButton>
+            <img src={printer} alt="printer" onClick={handlePrint} />
+          </PrintButton>
         </PdfBar>
-        {/* pdf 크기가 1280 * 720이 넘는 경우, overflow 처리 */}
         <PdfBody>
           {file && (
             <Document
-              file={file} // 선택한 파일을 사용
+              file={file}
               onLoadSuccess={onDocumentLoadSuccess}
             >
               <Page
@@ -221,15 +219,12 @@ const PdfView = () => {
             -
           </button>
         </div>
-
-        {/* 검색 결과 표시 */}
         <div>
           <h2>검색 결과</h2>
           {searchResults.map((result, index) => (
             <p key={index}>{result}</p>
           ))}
         </div>
-        
       </PdfContainer>
     </>
   );
