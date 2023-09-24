@@ -69,6 +69,7 @@ const FindWord = styled.input`
   margin-left: 708px;
   margin-right: 1px;
   border-radius: 5px;
+  padding: 10px; 
   
   &:focus {
     outline-color: lightgray; 
