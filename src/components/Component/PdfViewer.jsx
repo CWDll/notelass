@@ -3,6 +3,10 @@ import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
 import printer from "../../assets/printer.svg";
 import searching from "../../assets/searching.svg";
+import plus from "../../assets/plus.svg";
+import dash from "../../assets/dash.svg";
+import Vector1 from "../../assets/Vector1.svg";
+import Vector2 from "../../assets/Vector2.svg";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -18,9 +22,22 @@ const PdfBody = styled.div`
   background-color: green;
 `;
 
-const PageNavigateBtn = styled.button`
-  color: white;
-  font-color: black;
+const Button = styled.button`
+  background: var(--cool-grayscale-off-white, #FCFCFC);
+  outline: none;
+  border: none;
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+ 
+`;
+
+const ButtonList = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left:400px;
+
 `;
 
 const PdfBar = styled.div`
@@ -31,13 +48,44 @@ const PdfBar = styled.div`
   display: flex;
 `;
 
-const PrintButton = styled.div`
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  margin-left: 32px;
-  margin-top: 8px;
+const PageNum = styled.p`
+  margin-top: 20px;
+  margin-left: 20px;
 `;
+  
+const PrintImg = styled.img`
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  //margin-left: 32px;
+  //margin-right: 48px;
+`;
+
+const Line = styled.div`
+  width: 1.5px;
+  height: 40px;
+  background: rgba(201, 205, 210, 0.50);
+  margin-top: 12px;
+
+`;
+
+const FindWord = styled.input`
+  width: 150px;
+  height: 42px;
+  margin-top: 12px;
+  margin-left: 600px;
+  margin-right: 1px;
+  border-radius: 5px;
+  padding: 10px; 
+  
+  &:focus {
+    outline-color: lightgray; 
+    outline-style: solid; 
+    outline-width: thin; 
+  }
+
+`;
+
 
 async function extractTextFromPDF(pdfFile) {
   if (!pdfFile) {
@@ -45,7 +93,6 @@ async function extractTextFromPDF(pdfFile) {
     return [];
   }
   
-  // File 객체를 ArrayBuffer로 변환
   const fileReader = new FileReader();
   const readFileAsArrayBuffer = new Promise((resolve, reject) => {
     fileReader.onload = () => resolve(fileReader.result);
@@ -87,6 +134,7 @@ const PdfView = () => {
   const [file, setFile] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [currentResultIndex, setCurrentResultIndex] = useState(0);
 
   function onDocumentLoadSuccess({ numPages }) {
     console.log(`numPages ${numPages}`);
@@ -107,11 +155,13 @@ const PdfView = () => {
     const results = textContent.filter((content) =>
       content.text.includes(searchTerm)
     );
-  
+    
+
     if (results.length > 0) {
       const firstResult = results[0]; 
       setPageNumber(firstResult.page);
       setSearchResults(results.map((result) => result.page));
+      setCurrentResultIndex(0); 
     } else {
       console.log("검색 결과가 없습니다.");
       console.log(`검색어: ${searchTerm}`);
@@ -148,38 +198,75 @@ const PdfView = () => {
       <PdfContainer>
         <PdfBar>
           <input type="file" accept=".pdf" onChange={handleFileUpload} />
-          <input
-            type="text"
-            placeholder="검색어 입력"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button onClick={handleSearch}>
-            <img src={searching} alt="searching" />
-          </button>
-          <p>페이지 이동 버튼</p>
-          <PageNavigateBtn
+          
+          <ButtonList>
+          <>
+          <Button
             onClick={() => {
-              setPageNumber(
-                numPages === pageNumber ? pageNumber : pageNumber + 1
-              );
+              setPageScale(pageScale === 3 ? 3 : pageScale + 0.1);
             }}
           >
             {" "}
-            +
-          </PageNavigateBtn>
-          <PageNavigateBtn
+            <img src={plus} alt="plus" />
+          </Button>
+
+          <Button
+            onClick={() => {
+              setPageScale(pageScale - 1 < 1 ? 1 : pageScale - 1);
+            }}
+          >
+            {" "}
+            <img src={dash} alt="dash" />
+          </Button>
+          </>
+          <Line />
+
+        
+          
+          <Button
             onClick={() => {
               setPageNumber(pageNumber === 1 ? pageNumber : pageNumber - 1);
             }}
           >
             {" "}
-            -
-          </PageNavigateBtn>
+            <img src={Vector1} alt="Vector1" />
+          </Button>
+          <PageNum>
+          {file && `${pageNumber} 의 ${numPages}`}
+          </PageNum> 
+          <Button
+            onClick={() => {
+              if (searchResults.length > 0) { 
+                const nextIndex = (currentResultIndex + 1) % searchResults.length;
+                setPageNumber(searchResults[nextIndex]);
+                setCurrentResultIndex(nextIndex);
+              } else { 
+                setPageNumber(numPages === pageNumber ? pageNumber : pageNumber + 1);
+              }
+            }}
+          >
+            {" "}
+            <img src={Vector2} alt="Vector2" />
+          </Button>
+          <Line />
 
-          <PrintButton>
-            <img src={printer} alt="printer" onClick={handlePrint} />
-          </PrintButton>
+
+
+          <FindWord
+            type="text"
+            placeholder=" 검색어 입력"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          
+          <Button onClick={handleSearch}>
+            <img src={searching} alt="searching" />
+          </Button>
+
+          <Button>
+            <PrintImg src={printer} alt="printer" onClick={handlePrint} />
+          </Button>
+          </ButtonList>
         </PdfBar>
         <PdfBody>
           {file && (
@@ -196,31 +283,8 @@ const PdfView = () => {
             </Document>
           )}
         </PdfBody>
+        
         <div>
-          <p>
-            Page {pageNumber} of {numPages}
-          </p>
-
-          <p>페이지 스케일</p>
-          <button
-            onClick={() => {
-              setPageScale(pageScale === 3 ? 3 : pageScale + 0.1);
-            }}
-          >
-            {" "}
-            +
-          </button>
-          <button
-            onClick={() => {
-              setPageScale(pageScale - 1 < 1 ? 1 : pageScale - 1);
-            }}
-          >
-            {" "}
-            -
-          </button>
-        </div>
-        <div>
-          <h2>검색 결과</h2>
           {searchResults.map((result, index) => (
             <p key={index}>{result}</p>
           ))}
