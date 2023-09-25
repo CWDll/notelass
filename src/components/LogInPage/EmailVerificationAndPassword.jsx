@@ -31,7 +31,7 @@ const Notelass = styled.h1`
   color: #4849ff;
   size: 30px;
 
-  font-size: 50px;
+  font-size: 45px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -63,13 +63,52 @@ const NextButton = styled(Button)`
 `;
 
 export default function EmailVerificationAndPassword() {
+  // 이메일 인증번호 전송 및 유효성 검사 관련
+  const nodemailer = require("nodemailer");
+
+  async function sendEmail(email) {
+    const transporter = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "fc1a23ad3ed354", // Mailtrap에서 제공하는 사용자 이름
+        pass: "7d35dac49c8cbc", // Mailtrap에서 제공하는 비밀번호
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: '"Notelass" <noreply@notelass.com>',
+      to: email,
+      subject: "인증번호",
+      text: "당신의 인증번호는 123456입니다.", // 실제 애플리케이션에서는 동적으로 생성해야 합니다.
+      html: "<p>당신의 인증번호는 <strong>123456</strong>입니다.</p>",
+    });
+
+    console.log("Message sent: %s", info.messageId);
+  }
+
+  function isValidEmail(email) {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  }
+
+  function handleSendEmail() {
+    // const email = document.getElementById("standard-basic").value;
+    const email = "814e0a5286-cfc840@inbox.mailtrap.io";
+    if (isValidEmail(email)) {
+      sendEmail(email);
+    } else {
+      console.error("이메일 주소가 유효하지 않습니다.");
+    }
+  }
+
+  // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   return (
     <ContainerWidth_1920>
       <Container>
@@ -88,8 +127,15 @@ export default function EmailVerificationAndPassword() {
             fullWidth={true}
           />
           <Button
+            onClick={handleSendEmail}
             variant="outlined"
-            sx={{ width: "100px", height: "40px", marginLeft: `20px` }}
+            sx={{
+              width: "100px",
+              height: "40px",
+              marginLeft: `20px`,
+              color: "red",
+              borderColor: "orange",
+            }}
           >
             전송
           </Button>
@@ -101,6 +147,7 @@ export default function EmailVerificationAndPassword() {
           variant="standard"
           placeholder="인증번호 6자리를 입력해 주세요"
           fullWidth={false}
+          sx={{ input: { color: "purple" } }}
         />
 
         <TitleText>비밀번호 입력</TitleText>

@@ -21,6 +21,7 @@
     "dayjs": "^1.11.9",
     "file-saver": "^2.0.5",
     "moment": "^2.29.4",
+    "nodemailer": "^6.9.5",
     "pdfjs-dist": "^3.9.179",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",
