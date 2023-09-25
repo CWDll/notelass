@@ -30,6 +30,13 @@ const Button = styled.button`
   &:focus {
     outline: none;
   }
+ 
+`;
+
+const ButtonList = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left:400px;
 
 `;
 
@@ -66,7 +73,7 @@ const FindWord = styled.input`
   width: 150px;
   height: 42px;
   margin-top: 12px;
-  margin-left: 708px;
+  margin-left: 600px;
   margin-right: 1px;
   border-radius: 5px;
   padding: 10px; 
@@ -192,6 +199,7 @@ const PdfView = () => {
         <PdfBar>
           <input type="file" accept=".pdf" onChange={handleFileUpload} />
           
+          <ButtonList>
           <>
           <Button
             onClick={() => {
@@ -210,8 +218,8 @@ const PdfView = () => {
             {" "}
             <img src={dash} alt="dash" />
           </Button>
-        </>
-        <Line />
+          </>
+          <Line />
 
         
           
@@ -258,6 +266,7 @@ const PdfView = () => {
           <Button>
             <PrintImg src={printer} alt="printer" onClick={handlePrint} />
           </Button>
+          </ButtonList>
         </PdfBar>
         <PdfBody>
           {file && (
