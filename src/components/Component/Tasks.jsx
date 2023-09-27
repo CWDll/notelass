@@ -63,7 +63,7 @@ const Tasks = () => {
       <GroupHead>
         <BoldText>과제</BoldText>
         <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
-          더보기
+          전체보기
         </DetailText>
       </GroupHead>
       <GroupBody>

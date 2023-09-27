@@ -42,7 +42,7 @@ function RecentNote() {
     <RecentNoteContainer>
         <Title>최근에 열어본 노트</Title>
         <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
-          더보기
+          전체보기
         </DetailText>
         <GroupBody>
           <HandoutGrid>

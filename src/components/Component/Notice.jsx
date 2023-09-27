@@ -60,7 +60,7 @@ function Notice() {
           style={{ "text-decoration": "underline" }}
           onClick={onClick}
         >
-          더보기
+          전체보기
         </DetailText>
       </HeadingRow>
       <NoticeBody>
