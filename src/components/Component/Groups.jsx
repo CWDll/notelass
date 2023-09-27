@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import chevron_right from "../../assets/chevron_right.svg";
 import {
   GroupContainer,
   BoldText,
@@ -11,6 +12,9 @@ import {
   CircleText,
   PurpleText,
   SubjectContainer,
+  Teacher,
+  SubjectText,
+  Img,
 } from "./GroupsStyle";
 
 export default function Groups() {
@@ -31,17 +35,32 @@ export default function Groups() {
       <GroupHead>
         <BoldText>내가 속한 그룹</BoldText>
         <GrayText style={{ "text-decoration": "underline" }} onClick={onClick}>
-          더보기
+          전체보기 
+          
         </GrayText>
+        <Img src={chevron_right} alt="chevron_right" />
       </GroupHead>
       <GroupBody>
         <CircleText>
           <PurpleText>{letter}</PurpleText>
         </CircleText>
         <SubjectContainer>
-          <BoldText>{subjectInfo}</BoldText>
+          <SubjectText>{subjectInfo}</SubjectText>
+          <Teacher>김태연 선생님</Teacher>
           {/* <GrayText>1반</GrayText> */}
         </SubjectContainer>
+      </GroupBody>
+
+      <GroupBody>
+        <CircleText>
+          <PurpleText>영</PurpleText>
+        </CircleText>
+        <SubjectContainer>
+          <SubjectText>노트고등학교 3학년 1반 영어</SubjectText>
+          <Teacher>티파니 선생님</Teacher>
+          {/* <GrayText>1반</GrayText> */}
+        </SubjectContainer>
+
       </GroupBody>
     </GroupContainer>
       
