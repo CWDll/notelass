@@ -105,7 +105,9 @@ export default function EmailVerificationAndPassword() {
 */
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -154,8 +156,8 @@ export default function EmailVerificationAndPassword() {
         <TitleText>비밀번호 입력</TitleText>
         <FormControl variant="standard" fullWidth={true}>
           {/* <InputLabel htmlFor="standard-adornment-password">
-              Password
-            </InputLabel> */}
+            Password
+          </InputLabel> */}
           <Input
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
