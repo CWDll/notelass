@@ -76,11 +76,19 @@ export const Taskbody = styled.div`
 export const DetailText = styled.p`
   
   color: var(--cool-grayscale-placeholder, #9EA4AA);
-  text-align: right;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-decoration-line: underline;
+  margin-left: 505px;
+  margin-top: -5px;
+`;
+
+export const Img = styled.img`
+  width: 12px;
+  height: 12px;
+
+  margin-left: 2px;
   margin-right: 32px;
 `;

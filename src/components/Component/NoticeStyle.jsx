@@ -95,6 +95,14 @@ export const DetailText = styled.p`
   line-height: normal;
   text-decoration-line: underline;
   position: absolute;
-  padding-left: 612px;
-  padding-top: 37px;
+  margin-left: 585px;
+  margin-top: 36px;
+`;
+
+export const Img = styled.img`
+  width: 12px;
+  height: 12px;
+
+  margin-top: 39px;
+  margin-left: 340px;
 `;

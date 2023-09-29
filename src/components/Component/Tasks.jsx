@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Box from "../Component/Box";
 import CircularBar from "./CircularBar";
+import chevron_right from "../../assets/chevron_right.svg";
 
 
 import { useNavigate } from "react-router-dom";
@@ -16,7 +17,7 @@ import {
   TaskText,
   Taskbody,
   DetailText,
-
+  Img,
 } from "./TasksStyle";
 
 
@@ -65,6 +66,7 @@ const Tasks = () => {
         <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
           전체보기
         </DetailText>
+        <Img src={chevron_right} alt="chevron_right" />
       </GroupHead>
       <GroupBody>
         <SubjectContainer>

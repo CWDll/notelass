@@ -10,9 +10,11 @@ import {
   NoticeBody,
   NoticeTitle,
   DetailText,
+  Img,
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
+import chevron_right from "../../assets/chevron_right.svg";
 
 function Notice() {
   const navigate = useNavigate();
@@ -58,10 +60,10 @@ function Notice() {
         <MidHeading>{noticeHeaderText}</MidHeading>
         <DetailText
           style={{ "text-decoration": "underline" }}
-          onClick={onClick}
-        >
+          onClick={onClick} >
           전체보기
         </DetailText>
+        <Img src={chevron_right} alt="chevron_right" />
       </HeadingRow>
       <NoticeBody>
         {postContent.map((content, index) => (
