@@ -68,9 +68,9 @@ const StyledTextField = styled(TextField)`
       props.error ? "1px solid red" : "1px solid blue"};
   }
 
-  & .MuiInput-underline:hover:not(.Mui-disabled):before {
+  /* & .MuiInput-underline:hover:not(.Mui-disabled):before {
     border-bottom: 2px solid blue;
-  }
+  } */
 `;
 export default function EmailVerificationAndPassword() {
   /*
@@ -143,6 +143,24 @@ export default function EmailVerificationAndPassword() {
       setCertifiNumError(true);
     }
   };
+  // 비밀번호 입력/확인 관련
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 비밀번호 일치 여부
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    checkPasswordsMatch(e.target.value, confirmPassword);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    checkPasswordsMatch(password, e.target.value);
+  };
+
+  const checkPasswordsMatch = (pwd, confirmPwd) => {
+    setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
+  };
 
   return (
     <ContainerWidth_1920>
@@ -203,6 +221,9 @@ export default function EmailVerificationAndPassword() {
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
             placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
+            value={password}
+            onChange={handlePasswordChange}
+            style={isPasswordMatch ? { borderBottom: "1px solid #4849FF" } : {}}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -220,11 +241,17 @@ export default function EmailVerificationAndPassword() {
 
         <TitleText>비밀번호 확인</TitleText>
         <TextField
-          id="standard-basic"
-          //   label="Standard"
+          id="confirm-password-input"
           variant="standard"
           placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
-          // sx={{ marginBottom: "100px" }}
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+          error={!isPasswordMatch && confirmPassword !== ""} // 에러 스타일 적용 조건
+          helperText={
+            !isPasswordMatch && confirmPassword !== ""
+              ? "비밀번호가 다릅니다"
+              : ""
+          } // 문구 설정 조건
         />
         <NextButton
           type="submit"
