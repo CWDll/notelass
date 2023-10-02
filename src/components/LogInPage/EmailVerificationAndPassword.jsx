@@ -109,6 +109,18 @@ export default function EmailVerificationAndPassword() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  // 이메일 정규식
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  const validateEmail = (inputEmail) => {
+    if (emailRegex.test(inputEmail)) {
+      setEmailError(false);
+    } else {
+      setEmailError(true);
+    }
+  };
 
   return (
     <ContainerWidth_1920>
@@ -118,14 +130,18 @@ export default function EmailVerificationAndPassword() {
         <TitleText>이메일 주소 입력</TitleText>
         <FlexRow>
           <TextField
-            id="standard-basic"
-            // label="Standard"
+            id="email-input"
             variant="standard"
             placeholder="example@notelass.com"
-            error={true}
-            // FormHelperTextProps="에러 메시지"
-            helperText="이메일 입력 양식 오류"
+            error={emailError}
+            helperText={emailError ? "이메일 입력 양식 오류" : ""}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              validateEmail(e.target.value);
+            }}
             fullWidth={true}
+            InputProps={emailError ? {} : { style: { color: "#4849FF" } }}
           />
           <Button
             // onClick={handleSendEmail}
