@@ -189,8 +189,8 @@ export default function EmailVerificationAndPassword() {
               width: "100px",
               height: "40px",
               marginLeft: `20px`,
-              color: "red",
-              borderColor: "orange",
+              color: "#4849FF",
+              borderColor: "#4849FF",
             }}
           >
             전송
