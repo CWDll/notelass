@@ -62,6 +62,16 @@ const NextButton = styled(Button)`
   /* padding-top: 600px; */
 `;
 
+const StyledTextField = styled(TextField)`
+  & .MuiInput-underline:before {
+    border-bottom: ${(props) =>
+      props.error ? "1px solid red" : "1px solid blue"};
+  }
+
+  & .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 2px solid blue;
+  }
+`;
 export default function EmailVerificationAndPassword() {
   /*
     // 이메일 인증번호 전송 및 유효성 검사 관련
@@ -105,7 +115,6 @@ export default function EmailVerificationAndPassword() {
 */
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -123,6 +132,17 @@ export default function EmailVerificationAndPassword() {
       setEmailError(true);
     }
   };
+  // 인증번호 관련
+  const [certifiNumber, setCertifiNumber] = useState("");
+  const [certifiNumError, setCertifiNumError] = useState(true); // 기본적으로 true로 설정
+  const validCertifiNumber = (inputCertifiNum) => {
+    const regex = /^[0-9]{6}$/; // 정확히 6자리의 숫자인지 확인하는 정규식
+    if (regex.test(inputCertifiNum)) {
+      setCertifiNumError(false);
+    } else {
+      setCertifiNumError(true);
+    }
+  };
 
   return (
     <ContainerWidth_1920>
@@ -131,7 +151,7 @@ export default function EmailVerificationAndPassword() {
 
         <TitleText>이메일 주소 입력</TitleText>
         <FlexRow>
-          <TextField
+          <StyledTextField
             id="email-input"
             variant="standard"
             placeholder="example@notelass.com"
@@ -143,7 +163,6 @@ export default function EmailVerificationAndPassword() {
               validateEmail(e.target.value);
             }}
             fullWidth={true}
-            InputProps={emailError ? {} : { style: { color: "#4849FF" } }}
           />
           <Button
             // onClick={handleSendEmail}
@@ -160,13 +179,19 @@ export default function EmailVerificationAndPassword() {
           </Button>
         </FlexRow>
         <TitleText>인증번호</TitleText>
-        <TextField
+        <StyledTextField
           id="standard-basic"
           //   label="Standard"
           variant="standard"
           placeholder="인증번호 6자리를 입력해 주세요"
+          value={certifiNumber}
+          error={certifiNumError}
           fullWidth={false}
-          sx={{ input: { color: "purple" } }}
+          // sx={{ input: { color: "#4849FF" } }}
+          onChange={(e) => {
+            setCertifiNumber(e.target.value);
+            validCertifiNumber(e.target.value);
+          }}
         />
 
         <TitleText>비밀번호 입력</TitleText>
@@ -201,7 +226,6 @@ export default function EmailVerificationAndPassword() {
           placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
           // sx={{ marginBottom: "100px" }}
         />
-
         <NextButton
           type="submit"
           variant="contained"
