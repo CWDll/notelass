@@ -107,10 +107,6 @@ export default function Footer() {
       <FooterIconContent>
         <Notelass>Note-lass</Notelass>
         <Icons>
-          {/* <FontAwesomeIcon icon={faInstagram} />
-          <FontAwesomeIcon icon={faFacebook} /> */}
-          {/* 같은 코드로 drum 아이콘은 넣었는데, 인스타 페북 아이콘은 안 들어가는 상태. 나중에 다시 할 것. */}
-
           <Img src={instagram} />
           <Img src={facebook} />
           <Img src={github} />
