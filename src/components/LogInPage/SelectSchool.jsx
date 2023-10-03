@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+// import { setUserInput } from "../actions/userInputActions";
+import { setUserInput } from "../../action/userInputActions";
 // 신분 선택
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
@@ -71,14 +74,24 @@ const StudentInfoFormControl = styled(FormControl)`
 `;
 
 export default function SelectSchool() {
-  const [selectedValue, setSelectedValue] = useState(""); // 선택된 값을 저장하는 상태 변수
+  // redux 사용
+  const dispatch = useDispatch();
+  const userInput = useSelector((state) => state.userInput);
+  const [role, setRole] = useState(""); // 선택된 값을 저장하는 상태 변수
   const [admissionAge, setAdmissionAge] = useState(""); //입학년도
   const [schoolGrade, setSchoolGrade] = useState(""); //학년
   const [schoolClass, setschoolClass] = useState(""); //반
   const [schoolNumber, setschoolNumber] = useState(""); //번호
   const [showCopyright, setShowCopyright] = useState(false);
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
+
+  const reduxInput = (e) => {
+    const { name, value } = e.target;
+    dispatch(setUserInput(name, value));
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
+    reduxInput(event); // StudentInfo() 실행을 위해 setRole 이후 reduxInput 실행
   };
   //입학년도 바꾸기
   const handleAgeChange = (event) => {
@@ -98,12 +111,12 @@ export default function SelectSchool() {
   };
   // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
   useEffect(() => {
-    if (selectedValue === "student") {
+    if (role === "student") {
       setShowCopyright(true);
     } else {
       setShowCopyright(false);
     }
-  }, [selectedValue]);
+  }, [role]);
 
   function StudentInfo() {
     return (
@@ -117,7 +130,8 @@ export default function SelectSchool() {
               id="demo-simple-select"
               value={schoolGrade}
               label="admission"
-              onChange={handleGradeChange}
+              onChange={reduxInput}
+              name="admissionYear"
             >
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
@@ -187,7 +201,12 @@ export default function SelectSchool() {
             options={schoolName}
             sx={{ width: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="학교 이름을 입력해주세요" />
+              <TextField
+                {...params}
+                label="학교 이름을 입력해주세요"
+                onChange={reduxInput}
+                name="school"
+              />
             )}
           />
         </InnerContainer>
@@ -217,14 +236,14 @@ export default function SelectSchool() {
         </InnerContainer>
         <InnerContainer>
           <TitleText>신분 선택</TitleText>
-          <RadioGroup value={selectedValue} onChange={handleChange}>
+          <RadioGroup value={role} onChange={handleRoleChange} name="role">
             <FlexRow>
               <FormControlLabel
                 value="teacher"
                 control={<Radio />}
                 label="선생님"
                 style={{
-                  color: selectedValue === "teacher" ? "black" : "gray",
+                  color: role === "teacher" ? "black" : "gray",
                 }}
               />
               <FormControlLabel
@@ -232,7 +251,7 @@ export default function SelectSchool() {
                 control={<Radio />}
                 label="학생"
                 style={{
-                  color: selectedValue === "student" ? "black" : "gray",
+                  color: role === "student" ? "black" : "gray",
                 }}
               />
             </FlexRow>

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import React from "react";
+import { Provider } from "react-redux";
+import store from "./store";
+
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -25,41 +28,49 @@ import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificati
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/Introduce" element={<Introduce />} />
-          <Route path="/GroupDetail" element={<GroupDetail />} />
-          <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/Introduce" element={<Introduce />} />
+            <Route path="/GroupDetail" element={<GroupDetail />} />
+            <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+            <Route
+              path="/GroupDetailClass/AssignmentDetail"
+              element={<AssignmentDetail />}
+            />
+            <Route
+              path="/StudentScoreDetail"
+              element={<StudentScoreDetail />}
+            />
+            <Route path="/StudentTaskDetail" element={<StudentTaskDetail />} />
+            <Route path="/GroupScoreDetail" element={<GroupScoreDetail />} />
+            <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
+
+            <Route path="/TasksDetail" element={<TasksDetail />} />
+            <Route path="/Note" element={<Note />} />
+            <Route path="/Note" element={<NoteDetail />} />
+
+            {/* "/pdf-viewer" 경로를 "/NoteDetailSubject" 경로의 하위 경로로 정의 */}
+            <Route path="/NoteDetailSubject" element={<NoteDetailSubject />} />
+            <Route
+              path="/NoteDetailSubject/pdf-viewer"
+              element={<PdfViewer />}
+            />
+
+            <Route path="/Setting" element={<Setting />} />
+          </Route>
+          {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
+          <Route path="/Login" element={<Login />} />
+          <Route path="/SelectSchool" element={<SelectSchool />} />
           <Route
-            path="/GroupDetailClass/AssignmentDetail"
-            element={<AssignmentDetail />}
+            path="/EmailVerificationAndPassword"
+            element={<EmailVerificationAndPassword />}
           />
-          <Route path="/StudentScoreDetail" element={<StudentScoreDetail />} />
-          <Route path="/StudentTaskDetail" element={<StudentTaskDetail />} />
-          <Route path="/GroupScoreDetail" element={<GroupScoreDetail />} />
-          <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
-
-          <Route path="/TasksDetail" element={<TasksDetail />} />
-          <Route path="/Note" element={<Note />} />
-          <Route path="/Note" element={<NoteDetail />} />
-
-          {/* "/pdf-viewer" 경로를 "/NoteDetailSubject" 경로의 하위 경로로 정의 */}
-          <Route path="/NoteDetailSubject" element={<NoteDetailSubject />} />
-          <Route path="/NoteDetailSubject/pdf-viewer" element={<PdfViewer />} />
-
-          <Route path="/Setting" element={<Setting />} />
-        </Route>
-        {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
-        <Route path="/Login" element={<Login />} />
-        <Route path="/SelectSchool" element={<SelectSchool />} />
-        <Route
-          path="/EmailVerificationAndPassword"
-          element={<EmailVerificationAndPassword />}
-        />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 

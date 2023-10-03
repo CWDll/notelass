@@ -1,4 +1,4 @@
-import { SET_USER_INPUT } from "../actions/userInputActions";
+import { SET_USER_INPUT } from "../action/userInputActions";
 
 const initialState = {
   email: "",
