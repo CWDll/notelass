@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from "redux";
+import { legacy_createStore as createStore, combineReducers } from "redux";
 import userInputReducer from "./reducers/userInputReducer";
 
 const rootReducer = combineReducers({
