@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "../../assets/api/axios";
 // 다음 버튼
 import Button from "@mui/material/Button";
 // 입력창
@@ -67,52 +68,14 @@ const StyledTextField = styled(TextField)`
     border-bottom: ${(props) =>
       props.error ? "1px solid red" : "1px solid blue"};
   }
-
   /* & .MuiInput-underline:hover:not(.Mui-disabled):before {
     border-bottom: 2px solid blue;
   } */
 `;
+
 export default function EmailVerificationAndPassword() {
-  /*
-    // 이메일 인증번호 전송 및 유효성 검사 관련
-    const nodemailer = require("nodemailer");
+  const [user, setUser] = useStaet({});
 
-    async function sendEmail(email) {
-      const transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-          user: "fc1a23ad3ed354", // Mailtrap에서 제공하는 사용자 이름
-          pass: "7d35dac49c8cbc", // Mailtrap에서 제공하는 비밀번호
-        },
-      });
-
-      const info = await transporter.sendMail({
-        from: '"Notelass" <noreply@notelass.com>',
-        to: email,
-        subject: "인증번호",
-        text: "당신의 인증번호는 123456입니다.", // 실제 애플리케이션에서는 동적으로 생성해야 합니다.
-        html: "<p>당신의 인증번호는 <strong>123456</strong>입니다.</p>",
-      });
-
-      console.log("Message sent: %s", info.messageId);
-    }
-
-    function isValidEmail(email) {
-      const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-      return regex.test(email);
-    }
-
-    function handleSendEmail() {
-      // const email = document.getElementById("standard-basic").value;
-      const email = "814e0a5286-cfc840@inbox.mailtrap.io";
-      if (isValidEmail(email)) {
-        sendEmail(email);
-      } else {
-        console.error("이메일 주소가 유효하지 않습니다.");
-      }
-    }
-*/
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
