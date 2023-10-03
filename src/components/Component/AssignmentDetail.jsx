@@ -61,16 +61,17 @@ const BoldTitle = styled.p`
 `;
 
 const CreateTitle = styled(BigTitle)`
-  margin-left: 45px;
+  margin-left: 32px;
   margin-top: 32px;
 `;
 
 const SmallTitle = styled.p`
-  color: #26282b;
-  font-size: 16px;
-  font-weight: 700;
-  /* margin-left: 20px; */
-  /* height: 54px; */
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 `;
 
 const SubText = styled.p`
@@ -132,6 +133,7 @@ const InputTitle = styled.input.attrs({
   /* background-color: yellow; */
   border-radius: 8px;
   border: 1px solid #c9cdd2;
+  padding: 10px;
 `;
 
 const InputDesc = styled.textarea.attrs({
@@ -145,6 +147,7 @@ const InputDesc = styled.textarea.attrs({
   resize: none;
   border: 1px solid #c9cdd2;
   margin-top: 10px;
+  padding: 10px;
 `;
 
 const CancelBtn = styled.button`
@@ -176,6 +179,28 @@ const SettingBox = styled.div`
   display: flex;
   justify-items: center;
   flex-direction: column;
+`;
+
+const LibraryButton = styled.button`
+display: inline-flex;
+height: 40px;
+padding: 10px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0; 
+border-radius: 8px;
+border: 1.5px solid rgba(201, 205, 210, 0.50);
+background: #FFF;
+
+color: var(--cool-grayscale-placeholder, #9EA4AA);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+
 `;
 
 // Right Body 끝
@@ -242,9 +267,9 @@ function AssignmentDetail() {
               style={{ display: "none" }}
               ref={imageInput}
             />
-            <button onClick={onCickImageUpload} style={{ marginLeft: "15px" }}>
+            <LibraryButton onClick={onCickImageUpload} style={{ marginLeft: "15px" }}>
               라이브러리에서 파일 탐색
-            </button>
+            </LibraryButton>
           </LegInput>
           <Foot>
             <SubmitBtn type="submit">생성하기</SubmitBtn>
