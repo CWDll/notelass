@@ -139,6 +139,19 @@ export default function EmailVerificationAndPassword() {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
   };
 
+  /*********   통신 관련 로직   *********/
+  // 이메일 중복 확인을 위해 getExistEmail
+  const [emails, setEmails] = useState([]);
+  const getExistEmails = async () => {
+    const existEmails = await axios.get("/api/auth/validation");
+    //
+    setEmails(existEmails.data);
+  };
+  // 시작하자마자 이메일들 다 받아오기 !
+  useEffect(() => {
+    getExistEmails();
+  }, []);
+
   // UserInput이 다 채워져 있는지 확인
   const isDataComplete = () => {
     for (let key in userInput) {
