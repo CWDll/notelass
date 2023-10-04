@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import axios from "../../assets/api/axios";
+import { setUserInput } from "../../action/userInputActions";
 // 다음 버튼
 import Button from "@mui/material/Button";
 // 입력창
@@ -74,7 +76,10 @@ const StyledTextField = styled(TextField)`
 `;
 
 export default function EmailVerificationAndPassword() {
-  const [user, setUser] = useStaet({});
+  // redux 관련
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const userInput = useSelector((state) => state.userInput);
 
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
@@ -119,10 +124,32 @@ export default function EmailVerificationAndPassword() {
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
     checkPasswordsMatch(password, e.target.value);
+    if (isPasswordMatch == true) {
+      reduxInput(e); // 비밀번호 == 비밀번호체크 라면, reduxInput으로 pwd dispatch하기
+    }
   };
 
   const checkPasswordsMatch = (pwd, confirmPwd) => {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
+  };
+
+  const reduxInput = (e) => {
+    const { name, value } = e.target;
+    dispatch(setUserInput(name, value));
+  };
+
+  //POST 코드 수정 전
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("/endpoint", userInput);
+      console.log(response.data);
+      // Further logic upon successful post...
+    } catch (error) {
+      console.error("An error occurred while sending data:", error);
+      // Further logic upon error...
+    }
   };
 
   return (
@@ -218,6 +245,7 @@ export default function EmailVerificationAndPassword() {
         />
         <NextButton
           type="submit"
+          onSubmit={handleSubmit}
           variant="contained"
           sx={{ mt: 3, mb: 2, marginTop: "100px" }}
         >

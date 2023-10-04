@@ -97,19 +97,24 @@ export default function SelectSchool() {
   //입학년도 바꾸기
   const handleAgeChange = (event) => {
     setAdmissionAge(event.target.value);
+    reduxInput(event);
   };
   //학년 바꾸기
   const handleGradeChange = (event) => {
     setSchoolGrade(event.target.value);
+    reduxInput(event);
   };
   //반 바꾸기
   const handleClassChange = (event) => {
     setschoolClass(event.target.value);
+    reduxInput(event);
   };
   //번호 바꾸기
   const handleNumberChange = (event) => {
     setschoolNumber(event.target.value);
+    reduxInput(event);
   };
+  // 학교 이름 바꾸기
   const handleSchoolNameChange = (event) => {
     setSchoolName(event.target.value);
     reduxInput(event);
@@ -136,7 +141,7 @@ export default function SelectSchool() {
               id="demo-simple-select"
               value={schoolGrade}
               label="admission"
-              onChange={reduxInput}
+              onChange={handleGradeChange}
               name="admissionYear"
             >
               <MenuItem value={1}>1</MenuItem>
