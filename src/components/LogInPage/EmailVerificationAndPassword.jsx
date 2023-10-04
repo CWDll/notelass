@@ -158,11 +158,17 @@ export default function EmailVerificationAndPassword() {
     }
 
     try {
-      const response = await axios.post("/endpoint", userInput);
-      console.log(response.data);
-      // Further logic upon successful post...
+      const response = await axios.post("/api/auth/signup", userInput);
+
+      if (response.status === 201) {
+        //회원가입 성공
+        alert("회원가입이 완료되었습니다.");
+        navigate("/");
+      } else {
+        alert("회원가입에 실패했습니다.");
+      }
     } catch (error) {
-      console.error("An error occurred while sending data:", error);
+      console.error("회원가입 오류:", error);
       // Further logic upon error...
     }
   };
