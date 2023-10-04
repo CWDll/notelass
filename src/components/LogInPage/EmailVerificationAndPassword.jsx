@@ -81,6 +81,11 @@ export default function EmailVerificationAndPassword() {
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
 
+  const reduxInput = (e) => {
+    const { name, value } = e.target;
+    dispatch(setUserInput(name, value));
+  };
+
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -111,6 +116,7 @@ export default function EmailVerificationAndPassword() {
       setCertifiNumError(true);
     }
   };
+
   // 비밀번호 입력/확인 관련
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -128,19 +134,28 @@ export default function EmailVerificationAndPassword() {
       reduxInput(e); // 비밀번호 == 비밀번호체크 라면, reduxInput으로 pwd dispatch하기
     }
   };
-
+  // 비밀번호 == 비밀번호체크 확인로직
   const checkPasswordsMatch = (pwd, confirmPwd) => {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
   };
 
-  const reduxInput = (e) => {
-    const { name, value } = e.target;
-    dispatch(setUserInput(name, value));
+  // UserInput이 다 채워져 있는지 확인
+  const isDataComplete = () => {
+    for (let key in userInput) {
+      if (userInput[key] === "") {
+        return false;
+      }
+    }
+    return true;
   };
 
-  //POST 코드 수정 전
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isDataComplete()) {
+      console.log("All fields are not filled.");
+      return;
+    }
 
     try {
       const response = await axios.post("/endpoint", userInput);
