@@ -78,10 +78,11 @@ export default function SelectSchool() {
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
   const [role, setRole] = useState(""); // 선택된 값을 저장하는 상태 변수
-  const [admissionAge, setAdmissionAge] = useState(""); //입학년도
-  const [schoolGrade, setSchoolGrade] = useState(""); //학년
-  const [schoolClass, setschoolClass] = useState(""); //반
-  const [schoolNumber, setschoolNumber] = useState(""); //번호
+  const [admissionAge, setAdmissionAge] = useState(""); // 입학년도
+  const [schoolGrade, setSchoolGrade] = useState(""); // 학년
+  const [schoolClass, setschoolClass] = useState(""); // 반
+  const [schoolNumber, setschoolNumber] = useState(""); // 번호
+  const [schoolName, setSchoolName] = useState(""); // 학교 이름
   const [showCopyright, setShowCopyright] = useState(false);
 
   const reduxInput = (e) => {
@@ -109,6 +110,11 @@ export default function SelectSchool() {
   const handleNumberChange = (event) => {
     setschoolNumber(event.target.value);
   };
+  const handleSchoolNameChange = (event) => {
+    setSchoolName(event.target.value);
+    reduxInput(event);
+  };
+
   // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
   useEffect(() => {
     if (role === "student") {
@@ -198,14 +204,20 @@ export default function SelectSchool() {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={schoolName}
+            options={
+              schoolName
+                ? schoolList
+                : [{ label: "등록한 학교 이름만 나옵니다" }]
+            } // school name이 있을 때만 options 출력
+            getOptionLabel={(option) => option.label}
             sx={{ width: 300 }}
+            onInputChange={handleSchoolNameChange} // 입력 값이 변경될 때 마다 handleSchoolNameChange 함수 호출
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="학교 이름을 입력해주세요"
-                onChange={reduxInput}
-                name="school"
+                // onChange={reduxInput}
+                // name="school"
               />
             )}
           />
@@ -269,7 +281,7 @@ export default function SelectSchool() {
 }
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const schoolName = [
+const schoolList = [
   { label: "강남중학교", year: 2000 },
   { label: "남서울중학교", year: 2000 },
   { label: "노원중학교", year: 2000 },
