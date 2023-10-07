@@ -11,6 +11,8 @@ import {
   NoticeTitle,
   DetailText,
   Img,
+  SelectButton,
+  Mid,
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
@@ -56,8 +58,9 @@ function Notice() {
   return (
     <StyledContainerBox>
       <HeadingRow>
-        <LeftHeading>공지/과제</LeftHeading>
-        <MidHeading>{noticeHeaderText}</MidHeading>
+        <SelectButton>학교 주요 공지</SelectButton>
+        <SelectButton>시간표</SelectButton>
+        <SelectButton>오늘의 급식</SelectButton>
         <DetailText
           style={{ "text-decoration": "underline" }}
           onClick={onClick} >
@@ -65,6 +68,10 @@ function Notice() {
         </DetailText>
         <Img src={chevron_right} alt="chevron_right" />
       </HeadingRow>
+      <Mid>
+        <LeftHeading>공지/과제</LeftHeading>
+        <MidHeading>{noticeHeaderText}</MidHeading>
+      </Mid>
       <NoticeBody>
         {postContent.map((content, index) => (
           <StyledNoticeItem

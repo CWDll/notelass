@@ -95,7 +95,7 @@ export const DetailText = styled.p`
   line-height: normal;
   text-decoration-line: underline;
   position: absolute;
-  margin-left: 585px;
+  margin-left: 582px;
   margin-top: 36px;
 `;
 
@@ -104,5 +104,36 @@ export const Img = styled.img`
   height: 12px;
 
   margin-top: 39px;
-  margin-left: 340px;
+  margin-left: 295px;
+`;
+
+export  const SelectButton = styled.button`
+  display: flex;
+  height: 24px;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  background: var(--primary-light-cobalt, #EDEDFF);
+  margin-left: 37px;
+  margin-top: 27px;
+
+  &:focus {
+    outline: none;
+  }
+
+  color: var(--primary-cobalt, #4849FF);
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+
+`;
+
+export const Mid = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
