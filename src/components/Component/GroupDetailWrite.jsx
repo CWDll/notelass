@@ -377,7 +377,8 @@ function GroupDetailWrite() {
     const [buttonText, setButtonText] = useState("저장하기");
     const [selectedStudent, setSelectedStudent] = useState();
     const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
-
+   
+  
   const handleSaveFromStudentBook = (text) => {
     setSavedTextFromStudentBook(text);
   };
