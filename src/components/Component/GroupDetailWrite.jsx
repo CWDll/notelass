@@ -8,6 +8,8 @@ import arrow_repeat from "../../assets/arrow_repeat.svg";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
+import axios from "../../assets/api/axios";
+
 
 const Header = styled.header`
   display: flex;
@@ -394,6 +396,8 @@ function GroupDetailWrite() {
           setSavedText(inputText);
           setIsTextSaved(true);
           setButtonText("엑셀 출력");
+
+          sendRecord(groupId, selectedStudent, inputText);
         } else {
             exportToExcel(savedText);
         }
@@ -422,6 +426,19 @@ function GroupDetailWrite() {
         const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
         const data = new Blob([excelBuffer], { type: fileType });
         FileSaver.saveAs(data, fileName + fileExtension);
+    };
+
+    /***  통신  ***/
+    //생기부 작성
+    const sendRecord = async (groupId, userId, content) => {
+      try {
+        const response = await axios.post(`/api/record/${groupId}/${userId}`, { content });
+        if (response.status === 201) {
+          alert('생활기록부 작성이 완료되었습니다.');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     };
   
 
