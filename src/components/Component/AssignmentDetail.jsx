@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import chevron_left from "../../assets/chevron_left.svg";
+import axios from "../../assets/api/axios";
 
 const Wrapper = styled.div`
   width: 1920px;
@@ -230,7 +230,20 @@ function AssignmentDetail() {
     imageInput.current.click();
   };
 
-
+  const onSubmitNotice = () => {
+    axios.post('/api/notice/{groupId}', {
+      title: assignmentName,
+      content: assignmentDesc
+    })
+    .then(response => {
+      alert('공지 생성이 완료되었습니다.');
+      // 공지 생성 후 원하는 경로로 이동
+      navigate("/GroupDetailClass");
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+    });
+  };
   
   return (
     <Wrapper>
@@ -272,7 +285,7 @@ function AssignmentDetail() {
             </LibraryButton>
           </LegInput>
           <Foot>
-            <SubmitBtn type="submit">생성하기</SubmitBtn>
+            <SubmitBtn type="submit" onClick={onSubmitNotice}>생성하기</SubmitBtn>
             <CancelBtn type="submit">취소</CancelBtn>
           </Foot>
         </AssigmentCreateForm>
