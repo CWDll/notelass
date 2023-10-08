@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,9 @@ import person from "../../assets/person.svg";
 import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
-import book from "../../assets/book.svg";
+
+import axios from "../../assets/api/axios";
+import { useParams } from 'react-router-dom';
 
 const Header = styled.header`
   display: flex;
@@ -170,6 +172,8 @@ const NoticeDate = styled.div`
 
 
 function GroupDetailClass() {
+
+  const { groupId } = useParams();
   const navigate = useNavigate();
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
@@ -194,7 +198,7 @@ function GroupDetailClass() {
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
 
-  const postContent = ["Notice 1", "Notice 2", "Notice 3", "Notice 4"];
+
 
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
@@ -205,6 +209,20 @@ function GroupDetailClass() {
       return newIndices;
     });
   };
+
+  const [notices, setNotices] = useState([]);
+
+  /*** 통신  ***/
+  //그룹 별 공지 목록 조회
+  useEffect(() => {
+  axios.get(`/api/notice/${groupId}`)
+    .then(response => {
+      setNotices(response.data);
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+    });
+  }, [groupId]);
 
 
   return (
@@ -224,27 +242,18 @@ function GroupDetailClass() {
               생성하기
             </DetailText>
 
+            {/* 그룹별 공지사항 목록 조회*/}
             <SubjectContainer>
-            {postContent
-              .map((content, index) => ({ content, index, isClicked: clickedIndices.has(index) })) 
-              .sort((a, b) => a.isClicked - b.isClicked) 
-              .map(({ content, index, isClicked }) => ( 
-                <StyledNoticeItem
-                  key={index}
-                  isClicked={clickedIndices.has(index)}
-                  onClick={() => handleOnClick(index)}
-                >
-                  <NoticeContent>
-                    <NoticeImg
-                      src={clickedIndices.has(index) ? envelopeOpen : envelope}
-                      alt="envelope"
-                    />
-                    <NoticeTitle>{content}</NoticeTitle>
-                    {!clickedIndices.has(index) && <NoticeDate>23.05.01 예약 완료</NoticeDate>}
-                  </NoticeContent>
-                </StyledNoticeItem>
-              ))}
-            </SubjectContainer>
+            {notices.map((notice, index) => (
+              <StyledNoticeItem key={notice.id} onClick={() => handleOnClick(index)}>
+                <NoticeContent>
+                  <NoticeImg src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
+                  <NoticeTitle>{notice.title}</NoticeTitle>
+                  {!clickedIndices.has(index) && <NoticeDate>{new Date(notice.createdDate).toLocaleDateString()}</NoticeDate>}
+                </NoticeContent>
+              </StyledNoticeItem>
+            ))}
+          </SubjectContainer>
           </NoticeContainer>
 
           <GroupContainer>
