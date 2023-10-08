@@ -28,23 +28,15 @@ export const HeadingRow = styled.div`
 
 export const LeftHeading = styled.p`
   size: 15px;
-  padding-top: 32px;
-  padding-left: 32px;
+  margin-top: 16px;
+  margin-left: 32px;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 `;
 
-export const MidHeading = styled.p`
-  size: 15px;
-  padding-top: 40px;
-  padding-left: 12px;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
+
 
 export const GrayText = styled.p`
   color: gray;
@@ -104,7 +96,7 @@ export const Img = styled.img`
   height: 12px;
 
   margin-top: 39px;
-  margin-left: 295px;
+  margin-left: 360px;
 `;
 
 export  const SelectButton = styled.button`
@@ -116,8 +108,8 @@ export  const SelectButton = styled.button`
   gap: 10px;
   border-radius: 12px;
   background: var(--primary-light-cobalt, #EDEDFF);
-  margin-left: 37px;
-  margin-top: 27px;
+  margin-left:${props => props.isFirst ? '27' : '8'}px;
+  margin-top: 37px;
 
   &:focus {
     outline: none;
@@ -131,9 +123,4 @@ export  const SelectButton = styled.button`
   line-height: normal;
   white-space: nowrap;
 
-`;
-
-export const Mid = styled.div`
-  display: flex;
-  flex-direction: row;
 `;

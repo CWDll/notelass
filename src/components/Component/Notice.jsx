@@ -6,13 +6,11 @@ import {
   HeadingRow,
   LeftHeading,
   NoticeContent,
-  MidHeading,
   NoticeBody,
   NoticeTitle,
   DetailText,
   Img,
   SelectButton,
-  Mid,
 } from "./NoticeStyle";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
@@ -44,21 +42,12 @@ function Notice() {
     });
   };
 
-  const unReadCount = postContent.length - clickedIndices.size;
-  const noticeHeaderText =
-    unReadCount > 0 ? (
-      <>
-        읽지 않은 공지가 <span style={{ color: "blue" }}>{unReadCount}건</span>{" "}
-        있습니다.
-      </>
-    ) : (
-      "모든 공지를 읽었습니다."
-    );
+
 
   return (
     <StyledContainerBox>
       <HeadingRow>
-        <SelectButton>학교 주요 공지</SelectButton>
+        <SelectButton isFirst>학교 주요 공지</SelectButton>
         <SelectButton>시간표</SelectButton>
         <SelectButton>오늘의 급식</SelectButton>
         <DetailText
@@ -68,10 +57,9 @@ function Notice() {
         </DetailText>
         <Img src={chevron_right} alt="chevron_right" />
       </HeadingRow>
-      <Mid>
-        <LeftHeading>공지/과제</LeftHeading>
-        <MidHeading>{noticeHeaderText}</MidHeading>
-      </Mid>
+      
+        <LeftHeading>내가 올린 공지/과제/강의자료</LeftHeading>
+      
       <NoticeBody>
         {postContent.map((content, index) => (
           <StyledNoticeItem
