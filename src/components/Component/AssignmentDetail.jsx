@@ -230,11 +230,13 @@ function AssignmentDetail() {
     imageInput.current.click();
   };
 
+  /*** 통신 ***/
+  // 공지 생성
   const onSubmitNotice = () => {
-    axios.post('/api/notice/{groupId}', {
+    axios.post(`/api/notice/${groupId}`, {
       title: assignmentName,
       content: assignmentDesc
-    })
+})
     .then(response => {
       alert('공지 생성이 완료되었습니다.');
       // 공지 생성 후 원하는 경로로 이동
