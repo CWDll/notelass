@@ -108,7 +108,7 @@ export  const SelectButton = styled.button`
   gap: 10px;
   border-radius: 12px;
   background: var(--primary-light-cobalt, #EDEDFF);
-  margin-left:${props => props.isFirst ? '27' : '8'}px;
+  margin-left:${props => props.$isFirst ? '27' : '8'}px;
   margin-top: 37px;
 
   &:focus {

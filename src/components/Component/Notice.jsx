@@ -54,7 +54,7 @@ function Notice() {
   return (
     <StyledContainerBox>
       <HeadingRow>
-        <SelectButton isFirst>학교 주요 공지</SelectButton>
+        <SelectButton $isFirst>학교 주요 공지</SelectButton>
         <SelectButton onClick={timetable} >시간표</SelectButton>
         <SelectButton onClick={mealtable}>오늘의 급식</SelectButton>
         <DetailText
