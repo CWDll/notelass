@@ -21,8 +21,11 @@ function Notice() {
   const onClick = () => {
     navigate("/NoticeDetail");
   };
-  const onClick2 = () => {
+  const timetable = () => {
     navigate("/TimeTable");
+  };
+  const mealtable = () => {
+    navigate("/MealTable");
   };
   
 
@@ -52,8 +55,8 @@ function Notice() {
     <StyledContainerBox>
       <HeadingRow>
         <SelectButton isFirst>학교 주요 공지</SelectButton>
-        <SelectButton onClick={onClick2} >시간표</SelectButton>
-        <SelectButton>오늘의 급식</SelectButton>
+        <SelectButton onClick={timetable} >시간표</SelectButton>
+        <SelectButton onClick={mealtable}>오늘의 급식</SelectButton>
         <DetailText
           style={{ "text-decoration": "underline" }}
           onClick={onClick} >

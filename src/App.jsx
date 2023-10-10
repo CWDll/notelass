@@ -8,6 +8,7 @@ import store from "./store";
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
 import TimeTable from "./components/Component/TimeTable";
+import MealTable from "./components/Component/MealTable";
 import GroupDetail from "./components/Component/GroupDetail";
 import Introduce from "./components/MainPage/Introduce";
 import Note from "./components/MainPage/Note";
@@ -34,8 +35,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* Home의 공지 부분의 시간표 */}
+            {/* Home의 공지 부분의 시간표,급식표 */}
             <Route path="/TimeTable" element={<TimeTable />} /> 
+            <Route path="/MealTable" element={<MealTable />} />
+            
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
