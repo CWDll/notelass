@@ -2,11 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import React from "react";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import store from "./store";
 
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import TimeTable from "./components/Component/TimeTable";
 import GroupDetail from "./components/Component/GroupDetail";
 import Introduce from "./components/MainPage/Introduce";
 import Note from "./components/MainPage/Note";
@@ -33,6 +34,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            {/* Home의 공지 부분의 시간표 */}
+            <Route path="/TimeTable" element={<TimeTable />} /> 
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route path="/GroupDetailClass" element={<GroupDetailClass />} />

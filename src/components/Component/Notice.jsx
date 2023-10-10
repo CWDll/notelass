@@ -21,6 +21,10 @@ function Notice() {
   const onClick = () => {
     navigate("/NoticeDetail");
   };
+  const onClick2 = () => {
+    navigate("/TimeTable");
+  };
+  
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
 
@@ -48,7 +52,7 @@ function Notice() {
     <StyledContainerBox>
       <HeadingRow>
         <SelectButton isFirst>학교 주요 공지</SelectButton>
-        <SelectButton>시간표</SelectButton>
+        <SelectButton onClick={onClick2} >시간표</SelectButton>
         <SelectButton>오늘의 급식</SelectButton>
         <DetailText
           style={{ "text-decoration": "underline" }}

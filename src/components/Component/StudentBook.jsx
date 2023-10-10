@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
 import exit from "../../assets/exit.svg";
 import caret_up from "../../assets/caret_up.svg";
-import caret_down from "../../assets/caret_down.svg";
 
 const StudentBookContainer = styled.div`
   width: 60px;
