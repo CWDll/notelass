@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -44,6 +46,12 @@ const NotelassIntro = styled(Notelass)`
 `;
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const navagateSignup = () => {
+    navigate("/selectSchool");
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -65,15 +73,8 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
-          {/* <Typography component="h1" variant="h5"> */}
           <NotelassIntro>태블릿 속 또다른 강의실</NotelassIntro>
-          {/* </Typography> */}
-          {/* <Typography component="h1" variant="h2"> */}
           <Notelass>Note-lass</Notelass>
-          {/* </Typography> */}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -108,10 +109,10 @@ export default function Login() {
             <GridContainer>
               <Grid>
                 <Link
-                  href="#"
                   variant="body2"
                   underline="none"
                   style={{ marginLeft: "40px" }}
+                  onClick={navagateSignup}
                 >
                   회원가입
                 </Link>

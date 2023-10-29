@@ -129,6 +129,9 @@ export default function Nav() {
   const navigateLogin = () => {
     navigate("/login");
   };
+  const navigateSignup = () => {
+    navigate("/selectSchool");
+  };
 
   return (
     <NavContainer>
@@ -181,7 +184,7 @@ export default function Nav() {
       </NavItemContainer>
       <SignBtnContainer>
         <SignInBtn onClick={navigateLogin}>로그인</SignInBtn>
-        <SignUnBtn>회원가입</SignUnBtn>
+        <SignUnBtn onClick={navigateSignup}>회원가입</SignUnBtn>
       </SignBtnContainer>
     </NavContainer>
   );
