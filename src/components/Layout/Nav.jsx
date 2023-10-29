@@ -126,6 +126,9 @@ export default function Nav() {
   const navigateTosetting = () => {
     navigate("/setting");
   };
+  const navigateLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <NavContainer>
@@ -177,7 +180,7 @@ export default function Nav() {
         </NavItems>
       </NavItemContainer>
       <SignBtnContainer>
-        <SignInBtn>로그인</SignInBtn>
+        <SignInBtn onClick={navigateLogin}>로그인</SignInBtn>
         <SignUnBtn>회원가입</SignUnBtn>
       </SignBtnContainer>
     </NavContainer>

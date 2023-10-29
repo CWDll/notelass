@@ -36,9 +36,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             {/* Home의 공지 부분의 시간표,급식표 */}
-            <Route path="/TimeTable" element={<TimeTable />} /> 
+            <Route path="/TimeTable" element={<TimeTable />} />
             <Route path="/MealTable" element={<MealTable />} />
-            
+
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route path="/GroupDetailClass" element={<GroupDetailClass />} />

@@ -1,12 +1,15 @@
 import { SET_USER_INPUT } from "../action/userInputActions";
 
 const initialState = {
-  email: "",
-  password: "",
-  name: "",
-  admissionYear: "",
-  school: "",
-  role: "",
+  email: "", // EmailVerificationAndPassword page
+  password: "", // EmailVerificationAndPassword page
+  grade: "", // selectSchool page
+  classNum: "", // selectSchool page
+  number: "", // selectSchool page
+  name: "", // EmailVerificationAndPassword page
+  admissionYear: "", // EmailVerificationAndPassword page
+  school: "", // selectSchool page
+  role: "", // selectSchool page
 };
 
 const userInputReducer = (state = initialState, action) => {
