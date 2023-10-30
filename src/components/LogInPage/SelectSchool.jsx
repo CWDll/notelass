@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { setUserInput } from "../actions/userInputActions";
 import { setUserInput } from "../../action/userInputActions";
@@ -74,6 +75,7 @@ const StudentInfoFormControl = styled(FormControl)`
 `;
 
 export default function SelectSchool() {
+  const navigate = useNavigate();
   // redux 사용
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
@@ -120,6 +122,10 @@ export default function SelectSchool() {
     reduxInput(event);
   };
 
+  const handleSubmit = () => {
+    navigate("/EmailVerificationAndPassword");
+  };
+
   // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
   useEffect(() => {
     if (role === "student") {
@@ -129,6 +135,7 @@ export default function SelectSchool() {
     }
   }, [role]);
 
+  // 학생에게만 나오는 UI
   function StudentInfo() {
     return (
       <InnerContainer>
@@ -277,7 +284,12 @@ export default function SelectSchool() {
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
-        <NextButton type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <NextButton
+          type="submit"
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleSubmit}
+        >
           다음
         </NextButton>
       </Container>
@@ -285,7 +297,6 @@ export default function SelectSchool() {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const schoolList = [
   { label: "강남중학교", year: 2000 },
   { label: "남서울중학교", year: 2000 },

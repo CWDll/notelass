@@ -122,16 +122,26 @@ export default function EmailVerificationAndPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 비밀번호 일치 여부
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    validateEmail(e.target.value);
+    dispatch(setUserInput({ email: e.target.value }));
+  };
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     checkPasswordsMatch(e.target.value, confirmPassword);
+    dispatch(setUserInput({ password: e.target.value }));
   };
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
     checkPasswordsMatch(password, e.target.value);
-    if (isPasswordMatch == true) {
-      reduxInput(e); // 비밀번호 == 비밀번호체크 라면, reduxInput으로 pwd dispatch하기
+    // if (isPasswordMatch == true) {
+    //   reduxInput(e); // 비밀번호 == 비밀번호체크 라면, reduxInput으로 pwd dispatch하기
+    // }
+    if (isPasswordMatch) {
+      dispatch(setUserInput({ confirmPassword: e.target.value }));
     }
   };
   // 비밀번호 == 비밀번호체크 확인로직
@@ -200,10 +210,7 @@ export default function EmailVerificationAndPassword() {
             error={emailError}
             helperText={emailError ? "이메일 입력 양식 오류" : ""}
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              validateEmail(e.target.value);
-            }}
+            onChange={handleEmailChange}
             fullWidth={true}
           />
           <Button
