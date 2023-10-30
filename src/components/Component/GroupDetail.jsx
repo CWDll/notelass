@@ -87,7 +87,14 @@ function GroupDetail() {
       navigate("/GroupDetailClass");
     };
 
+    const createGroup = () => {
+      navigate("/CreateGroup");
+    }
+
+
    return (
+    <>
+    <button onClick={createGroup}>그룹생성</button>
     <NoteContainer>
    
     <SubjectBodyWrapper> 
@@ -112,6 +119,7 @@ function GroupDetail() {
         </SubjectBodyWrapper> 
   </NoteContainer>
 
+    </>
 
 
   );
