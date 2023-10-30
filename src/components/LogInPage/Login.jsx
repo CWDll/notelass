@@ -11,8 +11,6 @@ import Box from "@mui/material/Box";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 const ContainerBox = styled.div`
