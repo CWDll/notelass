@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField";
 // 비밀번호 숨김/공개 입력창
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
@@ -153,18 +152,30 @@ export default function EmailVerificationAndPassword() {
   // 이메일 중복 확인을 위해 getExistEmail
   const [emails, setEmails] = useState([]);
   const getExistEmails = async () => {
-    const existEmails = await axios.get("/api/auth/validation");
-    //
-    setEmails(existEmails.data);
+    try {
+      const existEmails = await axios.get(
+        `${
+          import.meta.env.VITE_APP_SERVER_HOST
+        }/api/auth/validation?email=${email}`
+      );
+
+      if (existEmails.status === 200) {
+        //중복확인 완료
+        alert("이메일 중복 확인이 완료되었습니다.");
+        setEmails(existEmails.data);
+      } else {
+        alert("이메일 중복 확인에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("이메일 중복 확인 오류:", error);
+      // Further logic upon error...
+    }
   };
-  // 시작하자마자 이메일들 다 받아오기 !
-  useEffect(() => {
-    getExistEmails();
-  }, []);
 
   // UserInput이 다 채워져 있는지 확인
   const isDataComplete = () => {
     for (let key in userInput) {
+      console.log(userInput[key]);
       if (userInput[key] === "") {
         return false;
       }
@@ -177,11 +188,15 @@ export default function EmailVerificationAndPassword() {
 
     if (!isDataComplete()) {
       console.log("All fields are not filled.");
+      alert("All fields are not filled.");
       return;
     }
 
     try {
-      const response = await axios.post("/api/auth/signup", userInput);
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_SERVER_HOST}/api/auth/signup`,
+        userInput
+      );
 
       if (response.status === 201) {
         //회원가입 성공
@@ -216,6 +231,7 @@ export default function EmailVerificationAndPassword() {
           <Button
             // onClick={handleSendEmail}
             variant="outlined"
+            onClick={getExistEmails}
             sx={{
               width: "100px",
               height: "40px",
@@ -286,7 +302,7 @@ export default function EmailVerificationAndPassword() {
         />
         <NextButton
           type="submit"
-          onSubmit={handleSubmit}
+          onClick={handleSubmit}
           variant="contained"
           sx={{ mt: 3, mb: 2, marginTop: "100px" }}
         >
