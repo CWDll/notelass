@@ -1,9 +1,14 @@
-import { useState } from "react";
 import "./App.css";
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  useRoutes,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import store from "./store";
+import { routes } from "./routes";
 
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
@@ -29,6 +34,8 @@ import SelectSchool from "./components/LogInPage/SelectSchool";
 import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificationAndPassword";
 
 function App() {
+  // const elem = useRoutes(routes);
+
   return (
     <Provider store={store}>
       <Router>
@@ -81,3 +88,16 @@ function App() {
 }
 
 export default App;
+
+/*
+// router 따로 빼는건데, error fix하고 수정할 예정..
+function App() {
+  const elem = useRoutes(routes);
+
+  return (
+    <Router>
+      <Provider store={store}>{elem}</Provider>
+    </Router>
+  );
+}
+*/

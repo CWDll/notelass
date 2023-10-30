@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // import { setUserInput } from "../actions/userInputActions";
 import { setUserInput } from "../../action/userInputActions";
 // 신분 선택
@@ -75,7 +74,6 @@ const StudentInfoFormControl = styled(FormControl)`
 `;
 
 export default function SelectSchool() {
-  const navigate = useNavigate();
   // redux 사용
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
@@ -90,10 +88,6 @@ export default function SelectSchool() {
   const reduxInput = (e) => {
     const { name, value } = e.target;
     dispatch(setUserInput(name, value));
-  };
-
-  const navagateSignup = () => {
-    navigate("/selectSchool");
   };
 
   const handleRoleChange = (event) => {
