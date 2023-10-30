@@ -3,9 +3,9 @@ import { SET_USER_INPUT } from "../action/userInputActions";
 const initialState = {
   email: "", // EmailVerificationAndPassword page
   password: "", // EmailVerificationAndPassword page
-  grade: "", // selectSchool page
-  classNum: "", // selectSchool page
-  number: "", // selectSchool page
+  grade: 0, // selectSchool page
+  classNum: 0, // selectSchool page
+  number: 0, // selectSchool page
   name: "", // EmailVerificationAndPassword page
   admissionYear: "", // EmailVerificationAndPassword page
   school: "", // selectSchool page
