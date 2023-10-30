@@ -85,6 +85,7 @@ export default function SelectSchool() {
   const [schoolClass, setschoolClass] = useState(""); // 반
   const [schoolNumber, setschoolNumber] = useState(""); // 번호
   const [schoolName, setSchoolName] = useState(""); // 학교 이름
+  const [name, setName] = useState("");
   const [showCopyright, setShowCopyright] = useState(false);
 
   const reduxInput = (e) => {
@@ -119,6 +120,10 @@ export default function SelectSchool() {
   // 학교 이름 바꾸기
   const handleSchoolNameChange = (event) => {
     setSchoolName(event.target.value);
+    reduxInput(event);
+  };
+  const handleNameChange = (event) => {
+    setName(event.target.value);
     reduxInput(event);
   };
 
@@ -280,6 +285,16 @@ export default function SelectSchool() {
               />
             </FlexRow>
           </RadioGroup>
+        </InnerContainer>
+        <InnerContainer>
+          <TitleText>이름 입력</TitleText>
+          <TextField
+            id="name-input"
+            variant="standard"
+            placeholder="이름을 입력하세요"
+            value={name}
+            onChange={handleNameChange}
+          />
         </InnerContainer>
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
