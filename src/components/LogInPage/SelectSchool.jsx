@@ -87,7 +87,8 @@ export default function SelectSchool() {
   const [schoolName, setSchoolName] = useState(""); // 학교 이름
   const [name, setName] = useState("");
   const [showCopyright, setShowCopyright] = useState(false);
-
+  
+  
   const reduxInput = (e) => {
     const { name, value } = e.target;
     dispatch(setUserInput(name, value));

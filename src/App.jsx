@@ -8,7 +8,6 @@ import {
   Routes,
 } from "react-router-dom";
 import store from "./store";
-import { routes } from "./routes";
 
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";

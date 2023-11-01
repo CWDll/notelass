@@ -13,7 +13,7 @@ const NoteContainer = styled.div`
     box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
     position: relative;
     margin-left: 363px;
-    margin-top: 72px;
+    margin-top: 16px;
 `;
 
 
@@ -64,13 +64,52 @@ const SubjectBody = styled.div`
 
 `;
 
+const Button = styled.button`
+width: 144px;
+height: 54px;
+flex-shrink: 0;
+border-radius: 6px;
+border: 2px dashed #4849FF;
+background: #EDEDFF;
+margin-TOP: 74px;
+margin-left: 1413px;
 
+color: #4849FF;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+
+
+`
 
 const SubjectBodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 16px;
 `;
+
+const SmallContainer = styled.div`
+  width: 500px;
+  height: 500px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: pink;
+
+  position: fixed; 
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+
 
   // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
   const subjectInfo = "노트고등학교 3학년 1반 문학";
@@ -87,14 +126,34 @@ function GroupDetail() {
       navigate("/GroupDetailClass");
     };
 
-    const createGroup = () => {
-      navigate("/CreateGroup");
-    }
+    const [showSmallContainer, setShowSmallContainer] = useState(false);
+
+
 
 
    return (
     <>
-    <button onClick={createGroup}>그룹생성</button>
+    
+    <Button onClick={ () => setShowSmallContainer(!showSmallContainer)}>그룹생성</Button>
+  
+      
+    {showSmallContainer && (
+        <SmallContainer>
+          <p>대상 학년 선택</p>
+          <input type="text" placeholder="학년을 입력하세요"></input>
+          <p>대상 반 선택</p>
+          <input type="text" placeholder="반을 입력하세요"></input>
+          <p>과목 선택</p>
+          <input type="text" placeholder="과목을 입력하세요"></input>
+
+          <button>다음</button>
+
+
+        </SmallContainer>
+      )}
+
+
+
     <NoteContainer>
    
     <SubjectBodyWrapper> 
