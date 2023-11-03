@@ -92,11 +92,12 @@ const SubjectBodyWrapper = styled.div`
 `;
 
 const SmallContainer = styled.div`
-  width: 500px;
-  height: 500px;
+  width: 480px;
+  height: 544px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: pink;
+  background: #FFF;
+  box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed; 
   top: 50%;
@@ -107,6 +108,43 @@ const SmallContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Title = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 40px;
+margin-left:40px;
+display: flex;
+`;
+
+const TextBox = styled.input`
+display: flex;
+width: 400px;
+height: 56px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+margin-top: 16px;
+
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1.5px solid rgba(201, 205, 210, 0.50);
+background: #FFF;
+
+color: var(--cool-grayscale-line, #C9CDD2);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+padding-left: 16px;
 `;
 
 
@@ -141,12 +179,12 @@ function GroupDetail() {
         <SmallContainer>
           <button onClick={ () => setShowSmallContainer(!showSmallContainer)}>X</button>
           
-          <p>대상 학년 선택</p>
-          <input type="text" placeholder="학년을 입력하세요"></input>
-          <p>대상 반 선택</p>
-          <input type="text" placeholder="반을 입력하세요"></input>
-          <p>과목 선택</p>
-          <input type="text" placeholder="과목을 입력하세요"></input>
+          <Title>대상 학년 선택</Title>
+          <TextBox type="text" placeholder="학년을 입력하세요"></TextBox>
+          <Title>대상 반 선택</Title>
+          <TextBox type="text" placeholder="반을 입력하세요"></TextBox>
+          <Title>과목 선택</Title>
+          <TextBox type="text" placeholder="과목을 입력하세요"></TextBox>
 
           <button>다음</button>
 
