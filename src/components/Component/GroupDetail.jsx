@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import exit from "../../assets/exit.svg";
 
 
 
@@ -107,7 +108,6 @@ const SmallContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 const Title = styled.p`
@@ -117,9 +117,10 @@ font-size: 20px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
-margin-top: 40px;
-margin-left:40px;
-display: flex;
+margin-left: 40px;
+text-align: left;
+
+flex-shrink: 0;
 `;
 
 const TextBox = styled.input`
@@ -130,6 +131,8 @@ justify-content: center;
 align-items: center;
 flex-shrink: 0;
 margin-top: 16px;
+margin-bottom: 32px;
+margin-left: 40px;
 
 width: 400px;
 height: 56px;
@@ -147,6 +150,59 @@ line-height: normal;
 padding-left: 16px;
 `;
 
+const Button2 = styled.button`
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+background: var(--primary-cobalt, #4849FF);
+margin-left: 40px;
+
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 15px;
+`;
+
+const Exit = styled.img`
+margin-top: 24px;
+margin-right: 24px;
+margin-left: 432px;
+width: 24px;
+
+`;
+
+const Code = styled.p`
+color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 48px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+justify-content: center;
+margin-top: 32px;
+margin-left: 20px;
+margin-bottom: 140px;
+`;
+
+const Title2 = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top:126px;
+margin-left:184px;
+
+flex-shrink: 0;
+`;
+
 
 
   // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
@@ -158,13 +214,29 @@ padding-left: 16px;
 
 function GroupDetail() {
 
+    const [showSmallContainer, setShowSmallContainer] = useState(false);
+    const [content, setContent] = useState('form');
+    const [groupCode, setGroupCode] = useState("");
+    const [grade, setGrade] = useState("");
+    const [classNumber, setClassNumber] = useState("");
+    const [subject, setSubject] = useState("");
+
+
 
     const navigate = useNavigate();
     const onClick = () => {
       navigate("/GroupDetailClass");
     };
 
-    const [showSmallContainer, setShowSmallContainer] = useState(false);
+    const generateGroupCode = () => {
+      let code = "";
+      for(let i=0; i<6; i++) {
+          code += Math.floor(Math.random() * 10);
+      }
+      setGroupCode(code);
+  }
+
+
 
 
 
@@ -177,17 +249,24 @@ function GroupDetail() {
       
     {showSmallContainer && (
         <SmallContainer>
-          <button onClick={ () => setShowSmallContainer(!showSmallContainer)}>X</button>
-          
-          <Title>대상 학년 선택</Title>
-          <TextBox type="text" placeholder="학년을 입력하세요"></TextBox>
-          <Title>대상 반 선택</Title>
-          <TextBox type="text" placeholder="반을 입력하세요"></TextBox>
-          <Title>과목 선택</Title>
-          <TextBox type="text" placeholder="과목을 입력하세요"></TextBox>
-
-          <button>다음</button>
-
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+              {content === 'form' ? (
+              <>
+                  <Title>대상 학년 선택</Title>
+                  <TextBox type="text" placeholder="대상 학년을 입력해 주세요" onChange={e => setGrade(e.target.value)}></TextBox>
+                  <Title>대상 반 선택</Title>
+                  <TextBox type="text" placeholder="대상 반을 입력해 주세요" onChange={e => setClassNumber(e.target.value)}></TextBox>
+                  <Title>과목 선택</Title>
+                  <TextBox type="text" placeholder="담당하시는 과목을 입력해 주세요" onChange={e => setSubject(e.target.value)}></TextBox>
+                  <Button2 onClick={() => {generateGroupCode(); setContent('code');}}>다음</Button2>
+              </>
+          ) : (
+                  <>
+                  <Title2>그룹 입장 코드</Title2>
+                  <Code>{groupCode}</Code>
+                  <Button2 onClick={() => navigate("/GroupDetailClass", { state: { grade, classNumber, subject, groupCode } })}>완료</Button2>
+                  </>
+              )}
 
         </SmallContainer>
       )}
