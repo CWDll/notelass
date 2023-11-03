@@ -139,6 +139,8 @@ function GroupDetail() {
       
     {showSmallContainer && (
         <SmallContainer>
+          <button onClick={ () => setShowSmallContainer(!showSmallContainer)}>X</button>
+          
           <p>대상 학년 선택</p>
           <input type="text" placeholder="학년을 입력하세요"></input>
           <p>대상 반 선택</p>
