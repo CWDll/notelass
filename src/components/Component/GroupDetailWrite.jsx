@@ -477,6 +477,37 @@ margin-top: 60px;
   line-height: normal;
 `;
 
+const Percent = styled.input`
+display: flex;
+width: 56px;
+height: 25px;
+padding: 4px 12px 4px 31px;
+justify-content: flex-end;
+align-items: center;
+flex-shrink: 0;
+border-radius: 6px;
+background: #EDEDFF;
+margin-right: 8px;
+margin-left: 8px;
+
+/* % 글씨 */
+color: var(--primary-cobalt, #4849FF);
+text-align: right;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-decoration-line: underline;
+padding-left:12px;
+`;
+
+const PercentBody = styled.div`
+display: flex;
+align-items: column;
+`;
+
+
 
 const students = [
     { id: 1, name: "1번 김민수" },
@@ -630,12 +661,14 @@ function GroupDetailWrite() {
                 <ScoreResult>5회(상위 1%) </ScoreResult>
                 <ScoreTitle>과제 종합등수: </ScoreTitle>
                 <ScoreResult>3등 </ScoreResult>
-                <div>
-                <ScoreTitle>자작시 경진대회: </ScoreTitle>
-                <ScoreResult>1등 </ScoreResult>
-                <ScoreTitle>수학 경진대회: </ScoreTitle>
-                <ScoreResult>3등 </ScoreResult>
-                </div>
+                <PercentBody>
+                  <ScoreTitle>기준 퍼센테이지</ScoreTitle>
+                  <Percent type="text"  onChange={() => {}}> 80 </Percent>
+                  <ScoreTitle>:</ScoreTitle>
+                </PercentBody>
+                
+
+                
             </ScoreList>
             {!isTextSaved ? (
                 <>
