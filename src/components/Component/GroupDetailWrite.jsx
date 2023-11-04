@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import arrow_repeat from "../../assets/arrow_repeat.svg";
+import chevron_right_Blue from "../../assets/chevron_right_Blue.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -178,7 +179,7 @@ const ByteCounting = styled.p`
     font-weight: 600;
     line-height: normal;
     margin-right: 24px;
-    margin-bottom: -5px;
+    margin-bottom: 5px;
 `;
 
 const SuggestWordContainer = styled.div`
@@ -341,6 +342,29 @@ margin-left: 32px;
 margin-top: 8px;
 `;
 
+const HancelButton = styled.button`
+display: inline-flex;
+width: 163px;
+height: 25px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 6px;
+background: #EDEDFF;
+margin-right: 24px;
+margin-left : 438px;
+
+
+color: var(--primary-cobalt, #4849FF);
+text-align: right;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
+
 const students = [
     { id: 1, name: "1번 김민수" },
     { id: 2, name: "2번 김민수" },
@@ -489,6 +513,9 @@ function GroupDetailWrite() {
                     }}
                 />
                 <ByteCounting>{byteCount}/1500 byte</ByteCounting>
+                <HancelButton>한셀에서 가져오기
+                  <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+                </HancelButton>
                 </WritingBox>
                 <SuggestWordContainer>
                     <SuggestWord>보기</SuggestWord>
