@@ -507,6 +507,41 @@ display: flex;
 align-items: column;
 `;
 
+const Print = styled.button`
+display: inline-flex;
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+background: var(--primary-cobalt, #4849FF);
+margin-left: 40px;
+margin-top: 56px;
+
+/* 출력하기 글씨 */
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+justify-content: center;
+align-items: center;
+`;
+
+const PrintNotice = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 32px; /* 160% */
+margin-top: 104px;
+
+`;
+
+
 
 
 const students = [
@@ -648,7 +683,23 @@ function GroupDetailWrite() {
              </option>
         ))}
         </StudentSelect>
-        <Printexecl onClick={exportToExcel}>엑셀로 출력</Printexecl>
+        <Printexecl onClick={ () => setShowSmallContainer(!showSmallContainer)}>엑셀로 출력</Printexecl>
+            
+        {showSmallContainer && (
+        <SmallContainer>
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+          <PrintNotice>
+            한셀로 출력하시겠습니까?
+          </PrintNotice>
+          <Print onClick={exportToExcel} >출력하기</Print>
+      
+
+        </SmallContainer>
+        )}
+
+
+
+
     </Header>
     <MainContainer>
         <LeftContainer>
@@ -663,7 +714,7 @@ function GroupDetailWrite() {
                 <ScoreResult>3등 </ScoreResult>
                 <PercentBody>
                   <ScoreTitle>기준 퍼센테이지</ScoreTitle>
-                  <Percent type="text"  onChange={() => {}}> 80 </Percent>
+                  <Percent type="text"  onChange={() => {}}/>
                   <ScoreTitle>:</ScoreTitle>
                 </PercentBody>
                 
