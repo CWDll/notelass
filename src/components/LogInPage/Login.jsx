@@ -60,8 +60,11 @@ export default function Login() {
 
       if (response.status === 200) {
         alert("로그인 성공!");
-        const accessToken = response.data.result.token; // 여기를 수정했습니다.
-        console.log("accessToken테스트:", accessToken); // accessToken 값을 출력합니다.
+        const accessToken = response.data.result.token;
+        console.log("accessToken테스트:", accessToken);
+
+        // 로컬 스토리지에 토큰 저장
+        localStorage.setItem("token", accessToken);
         navigate("/");
       } else {
         alert("로그인 실패!");
