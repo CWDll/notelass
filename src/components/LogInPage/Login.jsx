@@ -54,17 +54,14 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
 
     try {
       const response = await instance.post(`/api/auth/login`, data);
 
       if (response.status === 200) {
-        //회원가입 성공
         alert("로그인 성공!");
+        const accessToken = response.data.result.token; // 여기를 수정했습니다.
+        console.log("accessToken테스트:", accessToken); // accessToken 값을 출력합니다.
         navigate("/");
       } else {
         alert("로그인 실패!");
