@@ -8,7 +8,6 @@ import {
   Routes,
 } from "react-router-dom";
 import store from "./store";
-import { routes } from "./routes";
 
 import Home from "./components/MainPage/Home";
 import Layout from "./components/Layout/Layout";
@@ -28,6 +27,7 @@ import AssignmentDetail from "./components/Component/AssignmentDetail";
 import StudentScoreDetail from "./components/Component/StudentScoreDetail";
 import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./components/Component/GroupScoreDetail";
+import CreateGroup from "./components/Component/CreateGroup";
 // 로그인페이지
 import Login from "./components/LogInPage/Login";
 import SelectSchool from "./components/LogInPage/SelectSchool";
@@ -49,6 +49,7 @@ function App() {
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+            <Route path="/CreateGroup" element={<CreateGroup />} />
             <Route
               path="/GroupDetailClass/AssignmentDetail"
               element={<AssignmentDetail />}

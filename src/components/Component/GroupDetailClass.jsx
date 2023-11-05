@@ -7,6 +7,7 @@ import person from "../../assets/person.svg";
 import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
+import exit from "../../assets/exit.svg";
 
 import axios from "../../assets/api/axios";
 import { useParams } from 'react-router-dom';
@@ -44,7 +45,7 @@ const NoticeContainer = styled.div`
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 363px;
-  margin-top: 48px;
+  margin-top: 33px;
   position: relative;
   align-items: center;
 `;
@@ -69,7 +70,7 @@ const ManagementContainer = styled.div`
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 30px;
-  margin-top: 48px;
+  margin-top: 33px;
   position: relative;
 `;
 
@@ -167,6 +168,49 @@ const NoticeDate = styled.div`
 
 `;
 
+const Button = styled.button` 
+height: 54px;
+flex-shrink: 0;
+border-radius: 6px;
+background: #4849FF;
+margin-left: 16px;
+margin-top: 57px;
+
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+`;
+
+const SmallContainer = styled.div`
+  width: 480px;
+  height: 544px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
+
+  position: fixed; 
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const Exit = styled.img`
+margin-top: 24px;
+margin-right: 24px;
+margin-left: 432px;
+width: 24px;
+
+`;
+
 
 
 
@@ -197,6 +241,7 @@ function GroupDetailClass() {
  
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [showSmallContainer, setShowSmallContainer] = useState(false);
 
 
 
@@ -230,6 +275,16 @@ function GroupDetailClass() {
       <Header>
         <Img src={chevron_left} alt="chevron_left"  onClick={BackButton}/>
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
+        <Button onClick={ () => setShowSmallContainer(!showSmallContainer)}>그룹 정보</Button>
+
+        {showSmallContainer && (
+        <SmallContainer>
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+        
+      
+
+        </SmallContainer>
+      )}
       </Header>
       <MainContainer>
         <LeftSectionContainer>

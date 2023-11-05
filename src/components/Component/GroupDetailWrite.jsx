@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import arrow_repeat from "../../assets/arrow_repeat.svg";
+import chevron_right_Blue from "../../assets/chevron_right_Blue.svg";
+import exit from "../../assets/exit.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -178,7 +180,7 @@ const ByteCounting = styled.p`
     font-weight: 600;
     line-height: normal;
     margin-right: 24px;
-    margin-bottom: -5px;
+    margin-bottom: 5px;
 `;
 
 const SuggestWordContainer = styled.div`
@@ -341,6 +343,207 @@ margin-left: 32px;
 margin-top: 8px;
 `;
 
+const HancellButton = styled.button`
+display: inline-flex;
+width: 163px;
+height: 25px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 6px;
+background: #EDEDFF;
+margin-right: 24px;
+margin-left : 438px;
+
+
+color: var(--primary-cobalt, #4849FF);
+text-align: right;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
+
+const SmallContainer = styled.div`
+  width: 480px;
+  height: 288px;
+  flex-shrink: 0; 
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
+
+  position: fixed; 
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+
+  display: flex;
+  flex-direction: column;
+`;
+
+
+const Exit = styled.img`
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
+
+const Notice = styled.p`
+  color: var(--cool-grayscale-title, #26282B);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  margin-left: 63px;
+  margin-right: 63px;
+  margin-top: 76px;
+  justify-content: center;
+  align-items: center;
+
+`;
+
+const ButtonContainer = styled.div`
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 32px;
+  margin-right: 32px;
+`;
+
+const ExitButton = styled.button`
+
+width: 192px;
+height: 56px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--primary-cobalt, #4849FF);
+  margin-right: 16px;
+
+  /* 나가기 글씨 */
+  color: #ffffff;
+  font-size: 14px;
+  padding: 12px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ContinueButton = styled.button`
+
+width: 192px;
+height: 56px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #EDEDFF;
+
+  /* 계속 작성하기 글씨 */
+  color: var(--primary-cobalt, #4849FF);
+  font-size: 14px;
+  padding: 12px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Printexecl = styled.button`
+display: inline-flex;
+height: 46px;
+padding: 11px 18px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 6px;
+background: #4849FF;
+margin-left: 260px;
+margin-top: 60px;
+
+
+  /* 엑셀로 출력 글씨 */
+  color: #FFF;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const Percent = styled.input`
+display: flex;
+width: 56px;
+height: 25px;
+padding: 4px 12px 4px 31px;
+justify-content: flex-end;
+align-items: center;
+flex-shrink: 0;
+border-radius: 6px;
+background: #EDEDFF;
+margin-right: 8px;
+margin-left: 8px;
+
+/* % 글씨 */
+color: var(--primary-cobalt, #4849FF);
+text-align: right;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-decoration-line: underline;
+padding-left:12px;
+`;
+
+const PercentBody = styled.div`
+display: flex;
+align-items: column;
+`;
+
+const Print = styled.button`
+display: inline-flex;
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+background: var(--primary-cobalt, #4849FF);
+margin-left: 40px;
+margin-top: 56px;
+
+/* 출력하기 글씨 */
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+justify-content: center;
+align-items: center;
+`;
+
+const PrintNotice = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 32px; /* 160% */
+margin-top: 104px;
+
+`;
+
+
+
+
 const students = [
     { id: 1, name: "1번 김민수" },
     { id: 2, name: "2번 김민수" },
@@ -377,6 +580,7 @@ function GroupDetailWrite() {
     const [buttonText, setButtonText] = useState("저장하기");
     const [selectedStudent, setSelectedStudent] = useState();
     const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
+    const [showSmallContainer, setShowSmallContainer] = useState(false);
    
   
   const handleSaveFromStudentBook = (text) => {
@@ -447,7 +651,28 @@ function GroupDetailWrite() {
 
     <div>
     <Header>
-        <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
+        <Img 
+        src={chevron_left} alt="chevron_left" 
+        onClick={ () => setShowSmallContainer(!showSmallContainer)} />
+
+        
+        {showSmallContainer && (
+        <SmallContainer>
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+          <Notice>
+            출력하지 않으면 작성한 문장이 초기화됩니다. <br />
+            정말 나가시겠습니까?
+          </Notice>
+          <ButtonContainer>
+            <ExitButton onClick={BackButton}>나가기</ExitButton>
+            <ContinueButton onClick={ () => setShowSmallContainer(!showSmallContainer)}>계속 작성하기</ContinueButton>
+            
+          </ButtonContainer>
+      
+
+        </SmallContainer>
+        )}
+
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect onChange={handleStudentChange}>
@@ -458,6 +683,23 @@ function GroupDetailWrite() {
              </option>
         ))}
         </StudentSelect>
+        <Printexecl onClick={ () => setShowSmallContainer(!showSmallContainer)}>엑셀로 출력</Printexecl>
+            
+        {showSmallContainer && (
+        <SmallContainer>
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+          <PrintNotice>
+            한셀로 출력하시겠습니까?
+          </PrintNotice>
+          <Print onClick={exportToExcel} >출력하기</Print>
+      
+
+        </SmallContainer>
+        )}
+
+
+
+
     </Header>
     <MainContainer>
         <LeftContainer>
@@ -470,12 +712,14 @@ function GroupDetailWrite() {
                 <ScoreResult>5회(상위 1%) </ScoreResult>
                 <ScoreTitle>과제 종합등수: </ScoreTitle>
                 <ScoreResult>3등 </ScoreResult>
-                <div>
-                <ScoreTitle>자작시 경진대회: </ScoreTitle>
-                <ScoreResult>1등 </ScoreResult>
-                <ScoreTitle>수학 경진대회: </ScoreTitle>
-                <ScoreResult>3등 </ScoreResult>
-                </div>
+                <PercentBody>
+                  <ScoreTitle>기준 퍼센테이지</ScoreTitle>
+                  <Percent type="text"  onChange={() => {}}/>
+                  <ScoreTitle>:</ScoreTitle>
+                </PercentBody>
+                
+
+                
             </ScoreList>
             {!isTextSaved ? (
                 <>
@@ -489,6 +733,9 @@ function GroupDetailWrite() {
                     }}
                 />
                 <ByteCounting>{byteCount}/1500 byte</ByteCounting>
+                <HancellButton>한셀에서 가져오기
+                  <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+                </HancellButton>
                 </WritingBox>
                 <SuggestWordContainer>
                     <SuggestWord>보기</SuggestWord>

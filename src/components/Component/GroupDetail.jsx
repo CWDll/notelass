@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import exit from "../../assets/exit.svg";
 
 
 
@@ -13,7 +14,7 @@ const NoteContainer = styled.div`
     box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
     position: relative;
     margin-left: 363px;
-    margin-top: 72px;
+    margin-top: 16px;
 `;
 
 
@@ -64,13 +65,145 @@ const SubjectBody = styled.div`
 
 `;
 
+const Button = styled.button`
+width: 144px;
+height: 54px;
+flex-shrink: 0;
+border-radius: 6px;
+border: 2px dashed #4849FF;
+background: #EDEDFF;
+margin-TOP: 74px;
+margin-left: 1413px;
 
+color: #4849FF;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+
+
+`
 
 const SubjectBodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 16px;
 `;
+
+const SmallContainer = styled.div`
+  width: 480px;
+  height: 544px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
+
+  position: fixed; 
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-left: 40px;
+text-align: left;
+
+flex-shrink: 0;
+`;
+
+const TextBox = styled.input`
+display: flex;
+width: 400px;
+height: 56px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+margin-top: 16px;
+margin-bottom: 32px;
+margin-left: 40px;
+
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1.5px solid rgba(201, 205, 210, 0.50);
+background: #FFF;
+
+color: var(--cool-grayscale-line, #C9CDD2);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+padding-left: 16px;
+`;
+
+const Button2 = styled.button`
+width: 400px;
+height: 56px;
+flex-shrink: 0;
+border-radius: 8px;
+background: var(--primary-cobalt, #4849FF);
+margin-left: 40px;
+
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top: 15px;
+`;
+
+const Exit = styled.img`
+margin-top: 24px;
+margin-right: 24px;
+margin-left: 432px;
+width: 24px;
+
+`;
+
+const Code = styled.p`
+color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 48px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+justify-content: center;
+margin-top: 32px;
+margin-left: 20px;
+margin-bottom: 140px;
+`;
+
+const Title2 = styled.p`
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-top:126px;
+margin-left:184px;
+
+flex-shrink: 0;
+`;
+
+
 
   // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
   const subjectInfo = "노트고등학교 3학년 1반 문학";
@@ -81,13 +214,65 @@ const SubjectBodyWrapper = styled.div`
 
 function GroupDetail() {
 
+    const [showSmallContainer, setShowSmallContainer] = useState(false);
+    const [content, setContent] = useState('form');
+    const [groupCode, setGroupCode] = useState("");
+    const [grade, setGrade] = useState("");
+    const [classNumber, setClassNumber] = useState("");
+    const [subject, setSubject] = useState("");
+
+
 
     const navigate = useNavigate();
     const onClick = () => {
       navigate("/GroupDetailClass");
     };
 
+    const generateGroupCode = () => {
+      let code = "";
+      for(let i=0; i<6; i++) {
+          code += Math.floor(Math.random() * 10);
+      }
+      setGroupCode(code);
+  }
+
+
+
+
+
+
    return (
+    <>
+    
+    <Button onClick={ () => setShowSmallContainer(!showSmallContainer)}>그룹생성</Button>
+  
+      
+    {showSmallContainer && (
+        <SmallContainer>
+          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
+              {content === 'form' ? (
+              <>
+                  <Title>대상 학년 선택</Title>
+                  <TextBox type="text" placeholder="대상 학년을 입력해 주세요" onChange={e => setGrade(e.target.value)}></TextBox>
+                  <Title>대상 반 선택</Title>
+                  <TextBox type="text" placeholder="대상 반을 입력해 주세요" onChange={e => setClassNumber(e.target.value)}></TextBox>
+                  <Title>과목 선택</Title>
+                  <TextBox type="text" placeholder="담당하시는 과목을 입력해 주세요" onChange={e => setSubject(e.target.value)}></TextBox>
+                  <Button2 onClick={() => {generateGroupCode(); setContent('code');}}>다음</Button2>
+              </>
+          ) : (
+                  <>
+                  <Title2>그룹 입장 코드</Title2>
+                  <Code>{groupCode}</Code>
+                  <Button2 onClick={() => navigate("/GroupDetailClass", { state: { grade, classNumber, subject, groupCode } })}>완료</Button2>
+                  </>
+              )}
+
+        </SmallContainer>
+      )}
+
+
+
     <NoteContainer>
    
     <SubjectBodyWrapper> 
@@ -112,6 +297,7 @@ function GroupDetail() {
         </SubjectBodyWrapper> 
   </NoteContainer>
 
+    </>
 
 
   );
