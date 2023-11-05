@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import instance from "../../assets/api/axios";
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -50,13 +51,27 @@ export default function Login() {
     navigate("/selectSchool");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    try {
+      const response = await instance.post(`/api/auth/login`, data);
+
+      if (response.status === 200) {
+        //회원가입 성공
+        alert("로그인 성공!");
+        navigate("/");
+      } else {
+        alert("로그인 실패!");
+      }
+    } catch (error) {
+      console.error("로그인 오류:", error);
+    }
   };
 
   return (
