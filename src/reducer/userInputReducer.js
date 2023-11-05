@@ -17,7 +17,7 @@ const userInputReducer = (state = initialState, action) => {
     case SET_USER_INPUT:
       return {
         ...state,
-        [action.payload.key]: action.payload.value,
+        [action.payload.name]: action.payload.value,
       };
     default:
       return state;

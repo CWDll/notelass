@@ -84,47 +84,51 @@ export default function SelectSchool() {
   const [schoolGrade, setSchoolGrade] = useState(""); // 학년
   const [schoolClass, setschoolClass] = useState(""); // 반
   const [schoolNumber, setschoolNumber] = useState(""); // 번호
-  const [schoolName, setSchoolName] = useState(""); // 학교 이름
+  const [school, setSchool] = useState(""); // 학교 이름
   const [name, setName] = useState("");
   const [showCopyright, setShowCopyright] = useState(false);
 
-  const reduxInput = (e) => {
-    const { name, value } = e.target;
+  const reduxInput = (event) => {
+    const { name, value } = event;
     dispatch(setUserInput(name, value));
+    console.log("reduxInput의 event객체: " + event);
+    console.log("reduxInput의 nama과 value입니덩: " + name, value);
   };
 
   const handleRoleChange = (event) => {
     setRole(event.target.value); // 라디오 버튼 값이 변경될 때마다 상태 변수 업데이트
-    reduxInput(event); // StudentInfo() 실행을 위해 setRole 이후 reduxInput 실행
+    reduxInput(event.target); // StudentInfo() 실행을 위해 setRole 이후 reduxInput 실행
   };
   //입학년도 바꾸기
   const handleAgeChange = (event) => {
     setAdmissionAge(event.target.value);
-    reduxInput(event);
+    console.log(event.target.value);
+    reduxInput(event.target);
   };
   //학년 바꾸기
   const handleGradeChange = (event) => {
     setSchoolGrade(event.target.value);
-    reduxInput(event);
+    reduxInput(event.target);
   };
   //반 바꾸기
   const handleClassChange = (event) => {
     setschoolClass(event.target.value);
-    reduxInput(event);
+    reduxInput(event.target);
   };
   //번호 바꾸기
   const handleNumberChange = (event) => {
     setschoolNumber(event.target.value);
-    reduxInput(event);
+    reduxInput(event.target);
   };
   // 학교 이름 바꾸기
   const handleSchoolNameChange = (event) => {
-    setSchoolName(event.target.value);
-    reduxInput(event);
+    setSchool(event.target.value);
+    reduxInput(event.target);
   };
+  // 이름 바꾸기
   const handleNameChange = (event) => {
     setName(event.target.value);
-    reduxInput(event);
+    reduxInput(event.target);
   };
 
   const handleSubmit = () => {
@@ -133,7 +137,7 @@ export default function SelectSchool() {
 
   // "학생"이 선택되면 Copyright 컴포넌트를 렌더링하도록 설정
   useEffect(() => {
-    if (role === "student") {
+    if (role === "STUDENT") {
       setShowCopyright(true);
     } else {
       setShowCopyright(false);
@@ -152,9 +156,9 @@ export default function SelectSchool() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={schoolGrade}
-              label="admission"
+              label="grade"
               onChange={handleGradeChange}
-              name="admissionYear"
+              name="grade"
             >
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
@@ -169,7 +173,8 @@ export default function SelectSchool() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={schoolClass}
-              label="admission"
+              label="classNum"
+              name="classNum"
               onChange={handleClassChange}
             >
               <MenuItem value={1}>1</MenuItem>
@@ -190,7 +195,8 @@ export default function SelectSchool() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={schoolNumber}
-              label="admission"
+              label="number"
+              name="number"
               onChange={handleNumberChange}
             >
               <MenuItem value="" disabled>
@@ -221,24 +227,36 @@ export default function SelectSchool() {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
+            name="school"
             options={
-              schoolName
-                ? schoolList
-                : [{ label: "등록한 학교 이름만 나옵니다" }]
-            } // school name이 있을 때만 options 출력
+              school ? schoolList : [{ label: "등록한 학교 이름만 나옵니다" }]
+            }
             getOptionLabel={(option) => option.label}
             sx={{ width: 300 }}
-            onInputChange={handleSchoolNameChange} // 입력 값이 변경될 때 마다 handleSchoolNameChange 함수 호출
+            isOptionEqualToValue={(option, value) =>
+              option.label === value.label
+            }
+            onInputChange={(event, value, reason) => {
+              if (reason === "input") {
+                setSchool(value); // 입력 값 변경에 따라 상태 업데이트
+              }
+            }}
+            onChange={(event, value, reason) => {
+              if (value != null) {
+                setSchool(value.label); // 선택한 옵션으로 상태 업데이트
+                reduxInput({ name: "school", value: value.label }); // Redux store 업데이트
+              }
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="학교 이름을 입력해주세요"
-                // onChange={reduxInput}
-                // name="school"
+                name="school"
               />
             )}
           />
         </InnerContainer>
+
         <InnerContainer>
           <TitleText>입학 년도</TitleText>
           <Box>
@@ -250,11 +268,12 @@ export default function SelectSchool() {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={admissionAge}
+                name="admissionYear"
                 label="admission"
                 onChange={handleAgeChange}
               >
-                <MenuItem value={2018}>2018년</MenuItem>
-                <MenuItem value={2019}>2019년</MenuItem>
+                <MenuItem value={"2018"}>2018년</MenuItem>
+                <MenuItem value={"2019"}>2019년</MenuItem>
                 <MenuItem value={2020}>2020년</MenuItem>
                 <MenuItem value={2021}>2021년</MenuItem>
                 <MenuItem value={2022}>2022년</MenuItem>
@@ -265,22 +284,22 @@ export default function SelectSchool() {
         </InnerContainer>
         <InnerContainer>
           <TitleText>신분 선택</TitleText>
-          <RadioGroup value={role} onChange={handleRoleChange} name="role">
+          <RadioGroup name="role" value={role} onChange={handleRoleChange}>
             <FlexRow>
               <FormControlLabel
-                value="teacher"
+                value="TEACHER"
                 control={<Radio />}
                 label="선생님"
                 style={{
-                  color: role === "teacher" ? "black" : "gray",
+                  color: role === "TEACHER" ? "black" : "gray",
                 }}
               />
               <FormControlLabel
-                value="student"
+                value="STUDENT"
                 control={<Radio />}
                 label="학생"
                 style={{
-                  color: role === "student" ? "black" : "gray",
+                  color: role === "STUDENT" ? "black" : "gray",
                 }}
               />
             </FlexRow>
@@ -294,6 +313,7 @@ export default function SelectSchool() {
             placeholder="이름을 입력하세요"
             value={name}
             onChange={handleNameChange}
+            name="name"
           />
         </InnerContainer>
 
@@ -313,19 +333,19 @@ export default function SelectSchool() {
 }
 
 const schoolList = [
-  { label: "강남중학교", year: 2000 },
-  { label: "남서울중학교", year: 2000 },
-  { label: "노원중학교", year: 2000 },
-  { label: "대한중학교", year: 2000 },
-  { label: "라온중학교", year: 2000 },
-  { label: "마산중학교", year: 2000 },
-  { label: "부산중학교", year: 2000 },
-  { label: "송탄중학교", year: 2000 },
-  { label: "의정부중학교", year: 2000 },
-  { label: "의정부서중학교", year: 2000 },
-  { label: "중곡중학교", year: 2000 },
-  { label: "청담중학교", year: 2000 },
-  { label: "통영중학교", year: 2000 },
-  { label: "판교중학교", year: 2000 },
-  { label: "하남중학교", year: 2000 },
+  { label: "강남중학교" },
+  { label: "남서울중학교" },
+  { label: "노원중학교" },
+  { label: "대한중학교" },
+  { label: "라온중학교" },
+  { label: "마산중학교" },
+  { label: "부산중학교" },
+  { label: "송탄중학교" },
+  { label: "의정부중학교" },
+  { label: "의정부서중학교" },
+  { label: "중곡중학교" },
+  { label: "청담중학교" },
+  { label: "통영중학교" },
+  { label: "판교중학교" },
+  { label: "하남중학교" },
 ];
