@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
+import personimg from "../../assets/personimg.svg";
+import bell from "../../assets/bell.svg";
+import searching from "../../assets/searching.svg";
 
 const NavContainer = styled.div`
   width: 1920px;
@@ -85,6 +88,42 @@ const LogoImg = styled.img`
   flex-shrink: 0;
 `;
 
+const Bell = styled.img`
+  width: 50px;
+  height:50px;
+  flex-shrink: 0;
+  margin-left: 10px;
+`;
+
+const Person = styled.img`
+
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  border-radius: 50%;
+  background: var(--primary-cobalt, gray);
+`;
+
+const SearchBox = styled.input`
+display: inline-flex;
+padding: 6px 16px;
+justify-content: center;
+align-items: center;
+gap: 77px;
+width: 224px;
+height: 36px;
+border-radius: 100px;
+background: var(--cool-grayscale-background, #F5F5FC);
+`;
+
+const Searching = styled.img`
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-left: -30px;
+`;
+
 export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
@@ -140,8 +179,18 @@ export default function Nav() {
 
   const renderAuthButtons = () => {
     if (isLoggedIn) {
-      // 로그인 상태일 때 '마이페이지' 링크 표시
-      return <SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
+      // 로그인 상태일 때 '마이페이지
+      return (
+        <>  
+           
+            <SearchBox type="text" placeholder="노트, 학습자료 검색"/>
+            <Searching src={searching} alt="searching" />
+            
+            <Bell src={bell} alt="bell" />
+            <Person src={personimg} alt="personimg" />
+        </>
+      );
+      //<SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
     } else {
       // 로그인 상태가 아닐 때 '로그인'과 '회원가입' 버튼 표시
       return (
