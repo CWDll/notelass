@@ -88,6 +88,11 @@ const LogoImg = styled.img`
 export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  const updateLoginState = (loggedIn) => {
+    setIsLoggedIn(loggedIn);
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -131,6 +136,21 @@ export default function Nav() {
   };
   const navigateSignup = () => {
     navigate("/selectSchool");
+  };
+
+  const renderAuthButtons = () => {
+    if (isLoggedIn) {
+      // 로그인 상태일 때 '마이페이지' 링크 표시
+      return <SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
+    } else {
+      // 로그인 상태가 아닐 때 '로그인'과 '회원가입' 버튼 표시
+      return (
+        <>
+          <SignInBtn onClick={navigateLogin}>로그인</SignInBtn>
+          <SignUnBtn onClick={navigateSignup}>회원가입</SignUnBtn>
+        </>
+      );
+    }
   };
 
   return (
@@ -183,8 +203,7 @@ export default function Nav() {
         </NavItems>
       </NavItemContainer>
       <SignBtnContainer>
-        <SignInBtn onClick={navigateLogin}>로그인</SignInBtn>
-        <SignUnBtn onClick={navigateSignup}>회원가입</SignUnBtn>
+        {renderAuthButtons()}
       </SignBtnContainer>
     </NavContainer>
   );
