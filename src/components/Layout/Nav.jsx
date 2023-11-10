@@ -90,13 +90,12 @@ const LogoImg = styled.img`
 
 const Bell = styled.img`
   width: 50px;
-  height:50px;
+  height: 50px;
   flex-shrink: 0;
   margin-left: 10px;
 `;
 
 const Person = styled.img`
-
   width: 50px;
   height: 50px;
   flex-shrink: 0;
@@ -106,15 +105,15 @@ const Person = styled.img`
 `;
 
 const SearchBox = styled.input`
-display: inline-flex;
-padding: 6px 16px;
-justify-content: center;
-align-items: center;
-gap: 77px;
-width: 224px;
-height: 36px;
-border-radius: 100px;
-background: var(--cool-grayscale-background, #F5F5FC);
+  display: inline-flex;
+  padding: 6px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 77px;
+  width: 224px;
+  height: 36px;
+  border-radius: 100px;
+  background: var(--cool-grayscale-background, #f5f5fc);
 `;
 
 const Searching = styled.img`
@@ -127,7 +126,7 @@ const Searching = styled.img`
 export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
 
   const updateLoginState = (loggedIn) => {
     setIsLoggedIn(loggedIn);
@@ -181,13 +180,12 @@ export default function Nav() {
     if (isLoggedIn) {
       // 로그인 상태일 때 '마이페이지
       return (
-        <>  
-           
-            <SearchBox type="text" placeholder="노트, 학습자료 검색"/>
-            <Searching src={searching} alt="searching" />
-            
-            <Bell src={bell} alt="bell" />
-            <Person src={personimg} alt="personimg" />
+        <>
+          <SearchBox type="text" placeholder="노트, 학습자료 검색" />
+          <Searching src={searching} alt="searching" />
+
+          <Bell src={bell} alt="bell" />
+          <Person src={personimg} alt="personimg" />
         </>
       );
       //<SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
@@ -251,9 +249,7 @@ export default function Nav() {
           환경설정
         </NavItems>
       </NavItemContainer>
-      <SignBtnContainer>
-        {renderAuthButtons()}
-      </SignBtnContainer>
+      <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
   );
 }
