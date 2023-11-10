@@ -42,7 +42,7 @@ const Text = styled.p`
 `;
 
 const SmallContainer = styled.div`
-  width: 720px;
+  width: 760px;
   height: 480px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -102,7 +102,7 @@ const ExitImg = styled.img`
 `;
 
 const Textarea = styled.textarea`
-  width: 672px;
+  width: 710px;
   height: 240px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -300,11 +300,11 @@ function StudentBook() {
 
             <p>태도 점수</p>
             <CountContainer>
-              <Button onClick={speechDownCount}>
+              <Button onClick={attitudeDownCount}>
                 <Img src={caret_down} alt="caret_down" />
               </Button>
-              {speechCount}
-              <Button onClick={speechUpCount}>
+              {attitudeCount}
+              <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>
             </CountContainer>
