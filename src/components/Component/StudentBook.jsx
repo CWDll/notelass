@@ -257,7 +257,9 @@ function StudentBook() {
       {showSmallContainer && (
         <SmallContainer onClick={(e) => e.stopPropagation()}>
           <GroupSelect onChange={handleGroupChange}>
-            <option value=""></option>
+            <option value="" disabled selected>
+              그룹 선택
+            </option>
             {groups.map((group) => (
               <option key={group.id} value={group.id}>
                 {group.group}
@@ -266,7 +268,9 @@ function StudentBook() {
           </GroupSelect>
 
           <StudentSelect onChange={handleStudentChange}>
-            <option value=""></option>
+            <option value="" disabled selected>
+              학생 선택
+            </option>
             {students.map((student) => (
               <option key={student.id} value={student.id}>
                 {student.name}
