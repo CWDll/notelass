@@ -222,14 +222,22 @@ function GroupDetail() {
     const [classNum, setClassNum] = useState("");
     const [subject, setSubject] = useState("");
 
+    const accessToken = localStorage.getItem("token");
 
+    console.log(`Stored token: ${accessToken}`);
 
     const navigate = useNavigate();
     const onClick = () => {
       navigate("/GroupDetailClass");
     };
 
-
+    //그룹 생성 통신
+    const api = axios.create({
+      baseURL: 'http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
 
   const generateGroup = async () => {
 
@@ -240,19 +248,20 @@ function GroupDetail() {
     setGroupCode(code);
 
     try {
-        const response = await axios.post('/api/group', {
-            grade: parseInt(grade), 
-            classNum: parseInt(classNum), 
-            subject: subject
-        });
+      const response = await api.post('/api/group', {
+        grade: parseInt(grade), 
+        classNum: parseInt(classNum), 
+        subject: subject
+        
+      });
 
         // 응답이 성공적이면 groupCode 상태 업데이트
-        if (response.data.code === 201) {
-            setGroupCode(response.data.result);
-            setContent('code');
-        } else {
-            console.error('서버로부터 예상치 못한 응답을 받았습니다:', response.data);
-        }
+        if (response.status === 201) {
+          setGroupCode(response.data.result);
+          setContent('code');
+      } else {
+          console.error('서버로부터 예상치 못한 응답을 받았습니다:', response.data);
+      }
     } catch (error) {
         console.error('그룹 생성 중 오류가 발생했습니다:', error);
     }

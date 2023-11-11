@@ -584,9 +584,31 @@ function GroupDetailWrite() {
     const [showSmallContainer, setShowSmallContainer] = useState(false);
     const [attachedFile, setAttachedFile] = useState(null);
 
+
+    //파일 업로드
     const handleFileChange = (event) => {
         setAttachedFile(event.target.files[0]);
     };
+
+    const uploadFile = async (groupId, file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+    
+      try {
+        const response = await axios.post(`/api/record/excel/${groupId}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+    
+        if (response.status === 201) {
+          alert('생기부 파일이 등록되었습니다.');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
    
   
   const handleSaveFromStudentBook = (text) => {
@@ -611,6 +633,10 @@ function GroupDetailWrite() {
           sendRecord(groupId, selectedStudent, inputText);
         } else {
             exportToExcel(savedText);
+
+            if (attachedFile) {
+              uploadFile(groupId, attachedFile);
+            }
         }
       };
 
