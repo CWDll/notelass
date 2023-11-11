@@ -42,7 +42,7 @@ const Text = styled.p`
 `;
 
 const SmallContainer = styled.div`
-  width: 720px;
+  width: 760px;
   height: 480px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -102,7 +102,7 @@ const ExitImg = styled.img`
 `;
 
 const Textarea = styled.textarea`
-  width: 672px;
+  width: 710px;
   height: 240px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -257,7 +257,9 @@ function StudentBook() {
       {showSmallContainer && (
         <SmallContainer onClick={(e) => e.stopPropagation()}>
           <GroupSelect onChange={handleGroupChange}>
-            <option value=""></option>
+            <option value="" disabled selected>
+              그룹 선택
+            </option>
             {groups.map((group) => (
               <option key={group.id} value={group.id}>
                 {group.group}
@@ -266,7 +268,9 @@ function StudentBook() {
           </GroupSelect>
 
           <StudentSelect onChange={handleStudentChange}>
-            <option value=""></option>
+            <option value="" disabled selected>
+              학생 선택
+            </option>
             {students.map((student) => (
               <option key={student.id} value={student.id}>
                 {student.name}
@@ -300,11 +304,11 @@ function StudentBook() {
 
             <p>태도 점수</p>
             <CountContainer>
-              <Button onClick={speechDownCount}>
+              <Button onClick={attitudeDownCount}>
                 <Img src={caret_down} alt="caret_down" />
               </Button>
-              {speechCount}
-              <Button onClick={speechUpCount}>
+              {attitudeCount}
+              <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>
             </CountContainer>
