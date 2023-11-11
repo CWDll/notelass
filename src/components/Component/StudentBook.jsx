@@ -7,6 +7,8 @@ import caret_up from "../../assets/caret_up.svg";
 import caret_down from "../../assets/img/caret_down.svg";
 // import caret_down from "../../assets/caret_down.svg";
 
+import instance from "../../assets/api/axios";
+
 const StudentBookContainer = styled.div`
   width: 60px;
   height: 118px;
@@ -211,6 +213,24 @@ function StudentBook() {
   const [speechCount, setSpeechCount] = useState(0);
   const [attitudeCount, setAttitudeCount] = useState(0);
 
+  const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const res = await instance.get("/api/group");
+        if (res.data && res.data.result && res.data.result.groupList) {
+          setGroups(res.data.result.groupList); // 전체 그룹 데이터를 상태에 저장합니다.
+        }
+      } catch (error) {
+        console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
+        // 오류 처리 로직...
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
   //발표 점수 계산
   const speechUpCount = () => {
     setSpeechCount(speechCount + 1);
@@ -237,17 +257,46 @@ function StudentBook() {
   const handleStudentChange = (e) => {
     e.stopPropagation();
     setSelectedStudent(e.target.value);
+    console.log("Selected Student: " + e.target.value);
+    console.log("Selected Student: " + e.target);
   };
 
   //반 선택
   const handleGroupChange = (e) => {
     e.stopPropagation();
     setSelectedGroup(e.target.value);
+    console.log("Selected Group: " + e.target.value);
   };
 
-  const handleSave = () => {
-    setShowSmallContainer(false);
-    onSave(inputText);
+  const handleSave = async (e) => {
+    // setShowSmallContainer(false);
+    // onSave(inputText);
+    e.preventDefault();
+
+    const requestBody = {
+      content: inputText,
+      attitudeScore: attitudeCount,
+      presentationNum: speechCount,
+    };
+
+    try {
+      console.log("requestBody의 상태: " + requestBody);
+      const response = await instance.post(
+        `/api/handbook/{groupId}/{userId}`,
+        requestBody
+      );
+
+      if (response.status === 201) {
+        //회원가입 성공
+        alert("학생 수첩 작성이 완료되었습니다.");
+        navigate("/");
+      } else {
+        alert("학생 수첩 작성에 실패하였습니다.");
+      }
+    } catch (error) {
+      console.error("학생 수첩 작성 오류:", error);
+      // Further logic upon error...
+    }
   };
 
   return (
