@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 
+import axios from "axios";
+
 
 
 const NoteContainer = styled.div`
@@ -83,8 +85,7 @@ font-style: normal;
 font-weight: 700;
 line-height: normal;
 
-
-`
+`;
 
 const SubjectBodyWrapper = styled.div`
   display: flex;
@@ -218,7 +219,7 @@ function GroupDetail() {
     const [content, setContent] = useState('form');
     const [groupCode, setGroupCode] = useState("");
     const [grade, setGrade] = useState("");
-    const [classNumber, setClassNumber] = useState("");
+    const [classNum, setClassNum] = useState("");
     const [subject, setSubject] = useState("");
 
 
@@ -228,15 +229,34 @@ function GroupDetail() {
       navigate("/GroupDetailClass");
     };
 
-    const generateGroupCode = () => {
-      let code = "";
-      for(let i=0; i<6; i++) {
-          code += Math.floor(Math.random() * 10);
-      }
-      setGroupCode(code);
-  }
 
 
+  const generateGroup = async () => {
+
+    let code = "";
+    for(let i=0; i<6; i++) {
+        code += Math.floor(Math.random() * 10);
+    }
+    setGroupCode(code);
+
+    try {
+        const response = await axios.post('/api/group', {
+            grade: parseInt(grade), 
+            classNum: parseInt(classNum), 
+            subject: subject
+        });
+
+        // 응답이 성공적이면 groupCode 상태 업데이트
+        if (response.data.code === 201) {
+            setGroupCode(response.data.result);
+            setContent('code');
+        } else {
+            console.error('서버로부터 예상치 못한 응답을 받았습니다:', response.data);
+        }
+    } catch (error) {
+        console.error('그룹 생성 중 오류가 발생했습니다:', error);
+    }
+};
 
 
 
@@ -253,12 +273,12 @@ function GroupDetail() {
               {content === 'form' ? (
               <>
                   <Title>대상 학년 선택</Title>
-                  <TextBox type="text" placeholder="대상 학년을 입력해 주세요" onChange={e => setGrade(e.target.value)}></TextBox>
+                  <TextBox type="text" value={grade} placeholder="대상 학년을 입력해 주세요" onChange={e => setGrade(e.target.value)}></TextBox>
                   <Title>대상 반 선택</Title>
-                  <TextBox type="text" placeholder="대상 반을 입력해 주세요" onChange={e => setClassNumber(e.target.value)}></TextBox>
+                  <TextBox type="text" value={classNum} placeholder="대상 반을 입력해 주세요" onChange={e => setClassNum(e.target.value)}></TextBox>
                   <Title>과목 선택</Title>
-                  <TextBox type="text" placeholder="담당하시는 과목을 입력해 주세요" onChange={e => setSubject(e.target.value)}></TextBox>
-                  <Button2 onClick={() => {generateGroupCode(); setContent('code');}}>다음</Button2>
+                  <TextBox type="text" value={subject} placeholder="담당하시는 과목을 입력해 주세요" onChange={e => setSubject(e.target.value)}></TextBox>
+                  <Button2 onClick={generateGroup}>다음</Button2>
               </>
           ) : (
                   <>

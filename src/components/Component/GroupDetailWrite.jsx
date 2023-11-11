@@ -345,7 +345,7 @@ margin-top: 8px;
 
 const HancellButton = styled.button`
 display: inline-flex;
-width: 163px;
+width: 168px;
 height: 25px;
 padding: 4px 12px;
 justify-content: center;
@@ -355,6 +355,7 @@ border-radius: 6px;
 background: #EDEDFF;
 margin-right: 24px;
 margin-left : 438px;
+position: relative;
 
 
 color: var(--primary-cobalt, #4849FF);
@@ -581,6 +582,11 @@ function GroupDetailWrite() {
     const [selectedStudent, setSelectedStudent] = useState();
     const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
     const [showSmallContainer, setShowSmallContainer] = useState(false);
+    const [attachedFile, setAttachedFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        setAttachedFile(event.target.files[0]);
+    };
    
   
   const handleSaveFromStudentBook = (text) => {
@@ -733,9 +739,16 @@ function GroupDetailWrite() {
                     }}
                 />
                 <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-                <HancellButton>한셀에서 가져오기
-                  <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-                </HancellButton>
+                <HancellButton>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept=".xls,.xlsx,.csv,.cell"
+                  style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0 }} // 이 부분 추가
+                />
+                한셀에서 가져오기
+                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+              </HancellButton>
                 </WritingBox>
                 <SuggestWordContainer>
                     <SuggestWord>보기</SuggestWord>
