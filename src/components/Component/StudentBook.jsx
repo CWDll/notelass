@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
@@ -215,6 +215,7 @@ function StudentBook() {
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
 
+  /*
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -230,6 +231,7 @@ function StudentBook() {
 
     fetchGroups();
   }, []);
+  */
 
   //발표 점수 계산
   const speechUpCount = () => {
