@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
 import exit from "../../assets/exit.svg";
 import caret_up from "../../assets/caret_up.svg";
-import caret_down from "../../assets/caret_down.svg";
+import caret_down from "../../assets/img/caret_down.svg";
+// import caret_down from "../../assets/caret_down.svg";
 
 const StudentBookContainer = styled.div`
   width: 60px;
@@ -97,8 +98,8 @@ const ExitImg = styled.img`
   height: 24px;
   flex-shrink: 0;
 
-  margin-top: -50px;
-  margin-left: 672px;
+  margin-top: -40px;
+  margin-left: 700px;
 `;
 
 const Textarea = styled.textarea`
@@ -138,6 +139,7 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-top: 24px;
+  margin-left: 30px;
 `;
 
 const CancleButton = styled.button`
@@ -165,7 +167,7 @@ const SaveButton = styled.button`
   background: var(--primary-cobalt, #4849ff);
   margin-left: 16px;
   margin-right: 24px;
-  margin-top: 24px;
+  margin-top: 16px;
   color: #fff;
   text-align: center;
   font-family: Pretendard;
@@ -182,7 +184,8 @@ const CountContainer = styled.div`
   flex-direction: row;
   align-items: center;
   border-radius: 8px;
-  margin-left: 32px;
+  margin-left: 10px;
+  margin-right: 20px;
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   padding: 5px;
 `;
