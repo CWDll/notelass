@@ -568,16 +568,21 @@ function GroupDetailWrite() {
   const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState('');
 
   //파일 업로드
   const handleFileChange = (event) => {
-    setAttachedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      console.log('선택된 파일:', file); // 콘솔에 파일 정보 로깅
+      setAttachedFile(file);
+    }
   };
-
   const uploadFile = async (groupId, file) => {
     const formData = new FormData();
     formData.append("file", file);
 
+    setUploadStatus('pending'); // 업로드 진행 중 상태 설정
     try {
       const response = await axios.post(
         `/api/record/excel/${groupId}`,
@@ -590,10 +595,16 @@ function GroupDetailWrite() {
       );
 
       if (response.status === 201) {
+        setUploadStatus('success'); // 업로드 성공 상태 설정
         alert("생기부 파일이 등록되었습니다.");
+      } else {
+        setUploadStatus('fail'); // 실패 상태 설정
+        console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
       }
     } catch (error) {
-      console.error(error);
+      setUploadStatus('fail'); // 실패 상태 설정
+      console.error("파일 업로드 중 오류가 발생했습니다:", error);
+      alert("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 
@@ -650,19 +661,7 @@ function GroupDetailWrite() {
 
   /***  통신  ***/
   //생기부 작성
-  const sendRecord = async (groupId, userId, content) => {
-    try {
-      const response = await axios.post(`/api/record/${groupId}/${userId}`, {
-        content,
-      });
-      if (response.status === 201) {
-        alert("생활기록부 작성이 완료되었습니다.");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+ 
   return (
     <div>
       <Header>
@@ -759,10 +758,14 @@ function GroupDetailWrite() {
                       width: "100%",
                       height: "100%",
                       opacity: 0,
-                    }} // 이 부분 추가
+                    }} 
                   />
-                  한셀에서 가져오기
+                  한셀에서 가져오깅
                   <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+                  {uploadStatus === 'pending' && <p>업로드 중...</p>}
+                  {uploadStatus === 'success' && <p>업로드 성공!</p>}
+                  {uploadStatus === 'fail' && <p>업로드 실패!</p>}
+
                 </HancellButton>
               </WritingBox>
               <SuggestWordContainer>

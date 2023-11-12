@@ -272,6 +272,8 @@ function GroupDetail() {
     }
   };
 
+ 
+
   return (
     <>
       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
@@ -341,12 +343,6 @@ function GroupDetail() {
               <PurpleText>문</PurpleText>
             </CircleText>
             <BoldText>노트고등학교 3학년 2반 문학</BoldText>
-          </SubjectBody>
-          <SubjectBody onClick={onClick}>
-            <CircleText>
-              <PurpleText>문</PurpleText>
-            </CircleText>
-            <BoldText>노트고등학교 3학년 3반 문학</BoldText>
           </SubjectBody>
         </SubjectBodyWrapper>
       </NoteContainer>
