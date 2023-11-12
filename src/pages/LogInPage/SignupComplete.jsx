@@ -27,13 +27,12 @@ const TitleImg = styled.img`
 
 export default function SignupComplete() {
   const navigate = useNavigate();
-  const navigateGo = () => {
+  const navigateToLogin = () => {
     navigate("/login");
   };
 
   return (
     <ContainerWidth_1920>
-      {/* <Container> */}
       <InnerContainer>
         <TitleImg src={intro1} alt="My Button" />
         <img src={title} alt="My Button" />
@@ -41,8 +40,7 @@ export default function SignupComplete() {
       <InnerContainer>
         <img src={welcomeTitle} alt="My Button" />
       </InnerContainer>
-      <img src={toLoginBtn} alt="My Button" />
-      {/* </Container> */}
+      <img src={toLoginBtn} alt="My Button" onClick={navigateToLogin} />
     </ContainerWidth_1920>
   );
 }
