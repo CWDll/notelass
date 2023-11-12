@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import chevron_right from "../../../  assets/chevron_right.svg";
+import chevron_right from "../../../assets/chevron_right.svg";
 import {
   GroupContainer,
   BoldText,

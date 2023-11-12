@@ -1,6 +1,6 @@
 import React from "react";
 import NoteDetail from "../../components/Component/Note/NoteDetail";
-import NoteDetailSubject from "../../components/Component/NoteDetailSubject";
+import NoteDetailSubject from "./NoteDetailSubject";
 
 function Note() {
   return (

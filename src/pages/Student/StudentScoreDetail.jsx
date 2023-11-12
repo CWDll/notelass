@@ -4,11 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import file from "../../assets/file.svg";
-import person from "../../assets/person.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-import { SubjectContainer } from "./Home/Style/GroupsStyle";
 
 const Header = styled.header`
   display: flex;
@@ -52,30 +50,19 @@ const Title = styled.p`
   margin-left: 32px;
 `;
 
-const NoticeContentWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 352px);
-  grid-auto-rows: 56px;
-  grid-gap: 16px;
-  justify-content: center;
-`;
-
-const StudentContent = styled.div`
+const NoticeContent = styled.div`
   display: flex;
   flex-direction: row;
-  width: 320px;
-  height: 48px;
-  margin-top: 16px;
-  align-items: center;
-`;
-
-const PersonImg = styled.img`
-  width: 24px;
-  height: 24px;
+  margin-top: 32px;
   margin-left: 32px;
 `;
 
-const StudentName = styled.p`
+const NoticeImg = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
+const NoticeTitle = styled.p`
   color: var(--cool-grayscale-title, #26282b);
   font-family: Pretendard;
   font-size: 16px;
@@ -87,12 +74,18 @@ const StudentName = styled.p`
 `;
 
 const Score = styled.p`
-  margin-left: 24px;
+  width: 50px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: ${({ score }) => getScoreColor(score)};
+  margin-left: 40px;
 
   /*점수 글씨*/
-  color: var(--primary-cobalt, #4849ff);
+  color: #fff;
+  text-align: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -117,30 +110,38 @@ const XlsxButton = styled.button`
   line-height: normal;
 `;
 
-const SudentNum = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 16px;
-`;
+//점수 색깔을 결정하는 함수
+function getScoreColor(scoreString) {
+  const actualScore = parseInt(scoreString.split("/")[0]);
+  if (actualScore >= 7) {
+    return "var(--primary-green, #00BAB3)";
+  } else if (actualScore >= 5) {
+    return "var(--primary-yellow, #FDD26E)";
+  } else {
+    return "var(--primary-pink, #F78)";
+  }
+}
 
-function GroupScoreDetail() {
+function StudentScoreDetail() {
   const navigate = useNavigate();
   const BackButton = () => {
-    navigate("/GroupDetailClass");
+    navigate("/GroupDetailWrite");
+  };
+
+  const TaskClick = (noticeTitle) => {
+    if (noticeTitle === "과제1") {
+      navigate("/StudentTaskDetail");
+    }
   };
 
   const studentScores = [
     {
-      title: "과제 1",
+      title: "1번 김민수",
       assignments: [
-        { SudentNum: "1", StudentName: "김민수", score: "10점" },
-        { SudentNum: "2", StudentName: "김민수", score: "10점" },
-        { SudentNum: "3", StudentName: "김민수", score: "10점" },
-        { SudentNum: "4", StudentName: "김민수", score: "10점" },
+        { noticeTitle: "과제4", score: "6/10" },
+        { noticeTitle: "과제3", score: "9/10" },
+        { noticeTitle: "과제2", score: "3/10" },
+        { noticeTitle: "과제1", score: "8/10" },
       ],
     },
   ];
@@ -148,9 +149,8 @@ function GroupScoreDetail() {
   const exportToCSV = () => {
     const csvData = studentScores.flatMap((student) => {
       return student.assignments.map((assignment) => ({
-        과제목록: student.title,
-        출석번호: assignment.SudentNum,
-        이름: assignment.StudentName,
+        이름: student.title,
+        과제: assignment.noticeTitle,
         점수: assignment.score,
       }));
     });
@@ -158,7 +158,7 @@ function GroupScoreDetail() {
     const fileType =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
-    const fileName = "반별 학생 성적";
+    const fileName = "학생별 성적";
     const ws = XLSX.utils.json_to_sheet(csvData);
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
@@ -176,17 +176,17 @@ function GroupScoreDetail() {
         {studentScores.map((student, idx) => (
           <>
             <Title key={`student-${idx}`}>{student.title}</Title>
+
             <XlsxButton onClick={exportToCSV}>엑셀 출력</XlsxButton>
-            <NoticeContentWrapper>
-              {student.assignments.map((assignment, idx) => (
-                <StudentContent key={`assignment-${idx}`}>
-                  <PersonImg src={person} alt="person" />
-                  <SudentNum>{assignment.SudentNum}</SudentNum>
-                  <StudentName>{assignment.StudentName}</StudentName>
-                  <Score>{assignment.score}</Score>
-                </StudentContent>
-              ))}
-            </NoticeContentWrapper>
+            {student.assignments.map((assignment, idx) => (
+              <NoticeContent key={`assignment-${idx}`}>
+                <NoticeImg src={file} alt="file" />
+                <NoticeTitle onClick={() => TaskClick(assignment.noticeTitle)}>
+                  {assignment.noticeTitle}
+                </NoticeTitle>
+                <Score score={assignment.score}>{assignment.score}</Score>
+              </NoticeContent>
+            ))}
           </>
         ))}
       </MainContainer>
@@ -194,4 +194,4 @@ function GroupScoreDetail() {
   );
 }
 
-export default GroupScoreDetail;
+export default StudentScoreDetail;
