@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
@@ -212,6 +212,7 @@ function GroupDetail() {
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
+  const [groupList, setGroupList] = useState([]);
 
   const accessToken = localStorage.getItem("token");
 
@@ -228,7 +229,6 @@ function GroupDetail() {
       "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
     credentials: true,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
   });
@@ -261,6 +261,7 @@ function GroupDetail() {
       if (response.status === 201) {
         setGroupCode(response.data.result);
         setContent("code");
+        getGroupList();
       } else {
         console.error(
           "서버로부터 예상치 못한 응답을 받았습니다:",
@@ -272,6 +273,23 @@ function GroupDetail() {
     }
   };
 
+  //유저가 속한 목록 불러오기
+  const getGroupList = async () => {
+    try {
+      const response = await api.get('/api/group');
+      if (response.status === 200) {
+        setGroupList(response.data.result.groupList);
+      } else {
+        console.error('서버로부터 예상치 못한 응답을 받았습니다:', response.data);
+      }
+    } catch (error) {
+      console.error('그룹 목록 조회 중 오류가 발생했습니다:', error);
+    }
+  };
+
+  useEffect(() => {
+    getGroupList();
+  }, []);
  
 
   return (
@@ -344,6 +362,14 @@ function GroupDetail() {
             </CircleText>
             <BoldText>노트고등학교 3학년 2반 문학</BoldText>
           </SubjectBody>
+          <div>
+            {groupList.map(group => (
+              <div key={group.id}>
+                <h2>{group.school}</h2>
+                <p>학년: {group.grade}, 반: {group.classNum}, 과목: {group.subject}, 선생님: {group.teacher}, 코드: {group.code}</p>
+              </div>
+            ))}
+          </div>
         </SubjectBodyWrapper>
       </NoteContainer>
     </>
