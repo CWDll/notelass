@@ -274,10 +274,10 @@ export default function SelectSchool() {
               >
                 <MenuItem value={"2018"}>2018년</MenuItem>
                 <MenuItem value={"2019"}>2019년</MenuItem>
-                <MenuItem value={2020}>2020년</MenuItem>
-                <MenuItem value={2021}>2021년</MenuItem>
-                <MenuItem value={2022}>2022년</MenuItem>
-                <MenuItem value={2023}>2023년</MenuItem>
+                <MenuItem value={"2020"}>2020년</MenuItem>
+                <MenuItem value={"2021"}>2021년</MenuItem>
+                <MenuItem value={"2022"}>2022년</MenuItem>
+                <MenuItem value={"2023"}>2023년</MenuItem>
               </Select>
             </FormControl>
           </Box>
