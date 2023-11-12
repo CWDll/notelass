@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
 
 import axios from "../../assets/api/axios";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -138,7 +138,6 @@ const NoticeTitle = styled.div`
   margin-bottom: 15px;
 `;
 
-
 const SudentNum = styled.p`
   font-size: 16px;
   font-style: normal;
@@ -154,35 +153,34 @@ const NoticeDate = styled.div`
   height: 20px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: var(--primary-light-cobalt, #EDEDFF);
+  background: var(--primary-light-cobalt, #ededff);
   margin-left: 16px;
   margin-top: 14px;
 
-  color: var(--primary-cobalt, #4849FF);
+  color: var(--primary-cobalt, #4849ff);
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   text-align: center;
-
 `;
 
-const Button = styled.button` 
-height: 54px;
-flex-shrink: 0;
-border-radius: 6px;
-background: #4849FF;
-margin-left: 16px;
-margin-top: 57px;
+const Button = styled.button`
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #4849ff;
+  margin-left: 16px;
+  margin-top: 57px;
 
-color: #FFF;
-text-align: center;
-font-family: Pretendard;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 const SmallContainer = styled.div`
@@ -190,33 +188,27 @@ const SmallContainer = styled.div`
   height: 544px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
-  position: fixed; 
+  position: fixed;
   top: 50%;
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  z-index: 1000; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
 
   display: flex;
   flex-direction: column;
 `;
 
 const Exit = styled.img`
-margin-top: 24px;
-margin-right: 24px;
-margin-left: 432px;
-width: 24px;
-
+  margin-top: 24px;
+  margin-right: 24px;
+  margin-left: 432px;
+  width: 24px;
 `;
 
-
-
-
-
 function GroupDetailClass() {
-
   const { groupId } = useParams();
   const navigate = useNavigate();
   const onClick = () => {
@@ -234,16 +226,11 @@ function GroupDetailClass() {
     navigate("/StudentScoreDetail");
   };
   const TaskClick = () => {
-      navigate("/GroupScoreDetail");
+    navigate("/GroupScoreDetail");
   };
-
-    
- 
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-
-
 
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
@@ -260,31 +247,34 @@ function GroupDetailClass() {
   /*** 통신  ***/
   //그룹 별 공지 목록 조회
   useEffect(() => {
-  axios.get(`/api/notice/${groupId}`)
-    .then(response => {
-      setNotices(response.data);
-    })
-    .catch(error => {
-      console.error('There was an error!', error);
-    });
+    axios
+      .get(`/api/notice/${groupId}`)
+      .then((response) => {
+        setNotices(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
   }, [groupId]);
-
 
   return (
     <>
       <Header>
-        <Img src={chevron_left} alt="chevron_left"  onClick={BackButton}/>
+        <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
-        <Button onClick={ () => setShowSmallContainer(!showSmallContainer)}>그룹 정보</Button>
+        <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+          그룹 정보
+        </Button>
 
         {showSmallContainer && (
-        <SmallContainer>
-          <Exit src={exit} alt="exit" onClick={ () => setShowSmallContainer(!showSmallContainer)}></Exit>
-        
-      
-
-        </SmallContainer>
-      )}
+          <SmallContainer>
+            <Exit
+              src={exit}
+              alt="exit"
+              onClick={() => setShowSmallContainer(!showSmallContainer)}
+            ></Exit>
+          </SmallContainer>
+        )}
       </Header>
       <MainContainer>
         <LeftSectionContainer>
@@ -299,16 +289,26 @@ function GroupDetailClass() {
 
             {/* 그룹별 공지사항 목록 조회*/}
             <SubjectContainer>
-            {notices.map((notice, index) => (
-              <StyledNoticeItem key={notice.id} onClick={() => handleOnClick(index)}>
-                <NoticeContent>
-                  <NoticeImg src={clickedIndices.has(index) ? envelopeOpen : envelope} alt="envelope" />
-                  <NoticeTitle>{notice.title}</NoticeTitle>
-                  {!clickedIndices.has(index) && <NoticeDate>{new Date(notice.createdDate).toLocaleDateString()}</NoticeDate>}
-                </NoticeContent>
-              </StyledNoticeItem>
-            ))}
-          </SubjectContainer>
+              {notices.map((notice, index) => (
+                <StyledNoticeItem
+                  key={notice.id}
+                  onClick={() => handleOnClick(index)}
+                >
+                  <NoticeContent>
+                    <NoticeImg
+                      src={clickedIndices.has(index) ? envelopeOpen : envelope}
+                      alt="envelope"
+                    />
+                    <NoticeTitle>{notice.title}</NoticeTitle>
+                    {!clickedIndices.has(index) && (
+                      <NoticeDate>
+                        {new Date(notice.createdDate).toLocaleDateString()}
+                      </NoticeDate>
+                    )}
+                  </NoticeContent>
+                </StyledNoticeItem>
+              ))}
+            </SubjectContainer>
           </NoticeContainer>
 
           <GroupContainer>
@@ -397,8 +397,6 @@ function GroupDetailClass() {
             </NoticeContent>
           </SubjectContainer>
         </ManagementContainer>
-
-        
       </MainContainer>
     </>
   );

@@ -19,7 +19,7 @@ import StudentScoreDetail from "./components/Component/StudentScoreDetail";
 import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./components/Component/GroupScoreDetail";
 // 로그인페이지
-import Login from "./components/LogInPage/Login";
+import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./components/LogInPage/SelectSchool";
 import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificationAndPassword";
 

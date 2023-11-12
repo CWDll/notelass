@@ -29,9 +29,9 @@ import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./components/Component/GroupScoreDetail";
 import CreateGroup from "./components/Component/CreateGroup";
 // 로그인페이지
-import Login from "./components/LogInPage/Login";
-import SelectSchool from "./components/LogInPage/SelectSchool";
-import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificationAndPassword";
+import Login from "./pages/LogInPage/Login";
+import SelectSchool from "./pages/LogInPage/SelectSchool";
+import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
 
 function App() {
   // const elem = useRoutes(routes);

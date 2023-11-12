@@ -226,7 +226,9 @@ function GroupDetail() {
   const api = axios.create({
     baseURL:
       "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
+    credentials: true,
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
   });
@@ -238,12 +240,22 @@ function GroupDetail() {
     }
     setGroupCode(code);
 
+    const requestBody = {
+      grade: parseInt(grade),
+      classNum: parseInt(classNum),
+      subject: subject,
+    };
+
+    console.log(
+      "grade: " + grade + ", type: " + `Type: ${typeof parseInt(grade)}`
+    );
+    console.log(
+      "grade: " + classNum + ", type: " + `Type: ${typeof parseInt(classNum)}`
+    );
+    console.log("grade: " + subject + ", type: " + `Type: ${typeof subject}`);
+    console.log(requestBody);
     try {
-      const response = await instance.post("/api/group", {
-        grade: parseInt(grade),
-        classNum: parseInt(classNum),
-        subject: subject,
-      });
+      const response = await api.post("/api/group", requestBody);
 
       // 응답이 성공적이면 groupCode 상태 업데이트
       if (response.status === 201) {
@@ -305,7 +317,7 @@ function GroupDetail() {
               <Button2
                 onClick={() =>
                   navigate("/GroupDetailClass", {
-                    state: { grade, classNumber, subject, groupCode },
+                    state: { grade, classNum, subject, groupCode },
                   })
                 }
               >
