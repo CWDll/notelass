@@ -33,6 +33,7 @@ import NoticeDetail from "./pages/Notice/NoticeDetail";
 import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
+import SignupComplete from "./pages/LogInPage/SignupComplete";
 
 function App() {
   // const elem = useRoutes(routes);
@@ -84,6 +85,7 @@ function App() {
             path="/EmailVerificationAndPassword"
             element={<EmailVerificationAndPassword />}
           />
+          <Route path="/SignupComplete" element={<SignupComplete />} />
         </Routes>
       </Router>
     </Provider>
