@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
@@ -212,6 +212,7 @@ function GroupDetail() {
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
+  const [groupList, setGroupList] = useState([]);
 
   const accessToken = localStorage.getItem("token");
 
@@ -228,7 +229,6 @@ function GroupDetail() {
       "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
     credentials: true,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
   });
@@ -272,7 +272,6 @@ function GroupDetail() {
     }
   };
 
- 
 
   return (
     <>
@@ -344,6 +343,7 @@ function GroupDetail() {
             </CircleText>
             <BoldText>노트고등학교 3학년 2반 문학</BoldText>
           </SubjectBody>
+
         </SubjectBodyWrapper>
       </NoteContainer>
     </>
