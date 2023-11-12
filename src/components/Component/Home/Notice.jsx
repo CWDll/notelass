@@ -11,7 +11,7 @@ import {
   DetailText,
   Img,
   SelectButton,
-} from "./NoticeStyle";
+} from "./Style/NoticeStyle";
 import envelope from "../../../assets/envelope.svg";
 import envelopeOpen from "../../../assets/envelopeOpen.svg";
 import chevron_right from "../../../assets/chevron_right.svg";

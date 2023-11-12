@@ -10,7 +10,7 @@ import {
   HandoutContainer,
   TextGroup,
   DetailText,
-} from "./RecentNoteStyle";
+} from "./Style/RecentNoteStyle";
 import paper from "../../../assets/paper.svg";
 
 const handout = () => {

@@ -17,7 +17,7 @@ import {
   Taskbody,
   DetailText,
   Img,
-} from "./TasksStyle";
+} from "./Style/TasksStyle";
 
 const StyledTaskBox = styled(Box)`
   width: 327px;

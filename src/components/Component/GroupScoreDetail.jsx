@@ -8,7 +8,7 @@ import person from "../../assets/person.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-import { SubjectContainer } from "./Home/GroupsStyle";
+import { SubjectContainer } from "./Home/Style/GroupsStyle";
 
 const Header = styled.header`
   display: flex;

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import chevron_right from "../../../assets/chevron_right.svg";
+import chevron_right from "../../../  assets/chevron_right.svg";
 import {
   GroupContainer,
   BoldText,
@@ -15,7 +15,7 @@ import {
   Teacher,
   SubjectText,
   Img,
-} from "./GroupsStyle";
+} from "./Style/GroupsStyle";
 
 export default function Groups() {
   const navigate = useNavigate();
