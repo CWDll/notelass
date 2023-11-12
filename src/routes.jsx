@@ -1,6 +1,6 @@
 // src/routes.jsx (js로 사용해도 무방)
 // import GlobalLayout from "./pages/_layout";
-import Home from "./components/MainPage/Home";
+import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
 import TimeTable from "./components/Component/TimeTable";
 import MealTable from "./components/Component/MealTable";

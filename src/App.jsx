@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import store from "./store";
 
-import Home from "./components/MainPage/Home";
+import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
 import TimeTable from "./components/Component/TimeTable";
 import MealTable from "./components/Component/MealTable";
@@ -28,6 +28,7 @@ import StudentScoreDetail from "./components/Component/StudentScoreDetail";
 import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./components/Component/GroupScoreDetail";
 import CreateGroup from "./components/Component/CreateGroup";
+import NoticeDetail from "./components/Component/NoticeDetail";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool";
@@ -45,6 +46,7 @@ function App() {
             {/* Home의 공지 부분의 시간표,급식표 */}
             <Route path="/TimeTable" element={<TimeTable />} />
             <Route path="/MealTable" element={<MealTable />} />
+            <Route path="/NoticeDetail" element={<NoticeDetail />} />
 
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />

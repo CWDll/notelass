@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Box from "../Component/Box";
+import Box from "../Box";
 import CircularBar from "./CircularBar";
-import chevron_right from "../../assets/chevron_right.svg";
-
+import chevron_right from "../../../assets/chevron_right.svg";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,7 +19,6 @@ import {
   Img,
 } from "./TasksStyle";
 
-
 const StyledTaskBox = styled(Box)`
   width: 327px;
   height: 84px;
@@ -33,9 +31,7 @@ const StyledTaskBox = styled(Box)`
   align-items: center;
   padding: 0 18px;
   position: relative;
-  
 `;
-
 
 const Tasks = () => {
   const navigate = useNavigate();
@@ -43,8 +39,6 @@ const Tasks = () => {
     navigate("/TasksDetail");
   };
 
-
-  
   const renderTaskBoxes = () => {
     return [1, 2, 3, 4].map((i) => (
       <StyledTaskBox key={i}>
@@ -57,22 +51,21 @@ const Tasks = () => {
     ));
   };
 
-
-
   return (
     <TasksContainer>
       <GroupHead>
         <BoldText>과제</BoldText>
-        <DetailText style={{ "text-decoration": "underline" }} onClick={onClick}>
+        <DetailText
+          style={{ "text-decoration": "underline" }}
+          onClick={onClick}
+        >
           전체보기
         </DetailText>
         <Img src={chevron_right} alt="chevron_right" />
       </GroupHead>
       <GroupBody>
         <SubjectContainer>
-          <TaskGrid>
-            {renderTaskBoxes()}
-          </TaskGrid>
+          <TaskGrid>{renderTaskBoxes()}</TaskGrid>
         </SubjectContainer>
       </GroupBody>
     </TasksContainer>
