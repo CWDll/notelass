@@ -531,6 +531,30 @@ const PrintNotice = styled.p`
   margin-top: 104px;
 `;
 
+const Keyword = styled.input`
+  display: flex;
+  width: 150px;
+  height: 25px;
+  padding: 4px 12px 4px 31px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #ededff;
+  margin-left: 130px;
+  margin-top: -48px;
+`;
+
+const Text = styled.p`
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  padding: 24px 24px 24px 24px;
+`;
+
+
 const students = [
   { id: 1, name: "1번 김민수" },
   { id: 2, name: "2번 김민수" },
@@ -699,13 +723,24 @@ function GroupDetailWrite() {
           if (parseInt(percent) <= 15) { // 입력값이 15 이하인 경우
             setOutput("과제2(상위 10%)");
           } else {
-            setOutput("과제1(상위 25%), 과제3(상위 25%), 과제4(상위 20%)");
+            setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
           }
         } else {
           setOutput("");
         }
       }
     };
+
+    //////////// 가이드라인 문장 
+    const [guidelineIndex, setGuidelineIndex] = useState(0);
+    const guidelineTexts = ["문학 공부에 있어서 책임감을 가지고 매일 꾸준히 독서하고 그 내용을 분석하여 이를 통해 문학에 대한 이해력을 향상시켰다.", 
+    "문학 수업에서는 언제나 최선을 다해 열정을 보였고 이 과목에서 배운 다양한 작품들을 통해 인간의 감정과 삶에 대해 깊이 이해하려 노력했다.", 
+    "학교에서 열린 문학 토론 대회에서는 팀장으로서 팀을 이끌었다. 이 경험을 통해 문학에 대한 사랑과 열정을 더욱 확실하게 느꼈다."]; 
+    
+    const handleGuidelineTextKeyDown = () => {
+      setGuidelineIndex((prevIndex) => (prevIndex + 1) % guidelineTexts.length);
+    };
+
 
 
 
@@ -718,6 +753,15 @@ function GroupDetailWrite() {
           <SavedText>수업시간에 집중하여 수업에 적극적으로 참여함</SavedText>
         </StudentBookText>
       );
+    };
+
+    ////
+    const [keywords, setKeywords] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+
+    const handleAddKeyword = (keyword) => {
+      setKeywords([...keywords, keyword]);
+      setInputValue("");
     };
  
 
@@ -787,11 +831,9 @@ function GroupDetailWrite() {
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>5점 </ScoreResult>
+            <ScoreResult>5점(상위 5%) </ScoreResult>
             <ScoreTitle>발표 횟수: </ScoreTitle>
             <ScoreResult>5회(상위 1%) </ScoreResult>
-            <ScoreTitle>과제 종합등수: </ScoreTitle>
-            <ScoreResult>3등 </ScoreResult>
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent type="text" value={percent} onChange={handlePercentChange} onKeyDown={handleKeyDown}/>
@@ -834,22 +876,24 @@ function GroupDetailWrite() {
 
                 </HancellButton>
               </WritingBox>
+              <>
+              <Text style={{marginLeft: "10px"}}>키워드 입력: </Text>
+              <Keyword type="text" value={inputValue} 
+               onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleAddKeyword(e.target.value); }} />
+              </>
               <SuggestWordContainer>
-                <SuggestWord>보기</SuggestWord>
-                <SuggestWord>본보기</SuggestWord>
-                <SuggestWord>사례</SuggestWord>
+                {keywords.map((keyword, index) => <SuggestWord key={index}>{keyword}</SuggestWord>)}
               </SuggestWordContainer>
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
+                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" onClick={handleGuidelineTextKeyDown} />  
               </GuidelineContainer>
               <GuidelineBox>
-                <GuidelineText>
-                  시를 읽고 분석하는 과정에서 시의 아름다움에 대해 느껴 애송시
-                  소개 글쓰기에 적극적으로 참여하고 학습함. 이러한 활동을 통해
-                  자신의 삶에 대해 성찰해보는 자세를 보이며 시를 보다 창의적이고
-                  거시적인 관점으로 이해하는 계기가 됨.
-                </GuidelineText>
+              <Text>
+                {guidelineTexts[guidelineIndex]}
+              </Text>
+              
               </GuidelineBox>
             </>
           ) : null}

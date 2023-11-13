@@ -17,13 +17,13 @@ const NavContainer = styled.div`
 
 const Notelass = styled.h2`
   color: #4849ff;
-  size: 22px;
-
+  display: flex;
   font-size: 22px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin-left: 12px;
+  white-space: nowrap;
 `;
 
 const NavItemContainer = styled.div`
