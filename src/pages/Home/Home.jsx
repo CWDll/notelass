@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Calendartwo from "../../components/Component/Home/Calendartwo";
 import TailCalendar from "../../components/Component/TailCalendar";
 import Groups from "../../components/Component/Home/Groups";
-import Notice from "../../components/Component/Home/Notice";
+import Contents from "../../components/Component/Home/Contents";
 import Tasks from "../../components/Component/Home/Tasks";
 // import RecentNote from "../../components/Component/Home/RecentNote";
 import RecentNote from "../../components/Component/Home/RecentNote";
@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <LeftHomeBody>
-        <Notice />
+        <Contents />
         <Tasks />
         <RecentNote />
       </LeftHomeBody>

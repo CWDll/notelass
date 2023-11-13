@@ -18,6 +18,11 @@ import chevron_right from "../../../assets/chevron_right.svg";
 
 function Notice() {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("notices");
+  const changeTab = (tabName) => {
+    setActiveTab(tabName);
+  };
+
   const onClick = () => {
     navigate("/NoticeDetail");
   };
@@ -51,9 +56,15 @@ function Notice() {
   return (
     <StyledContainerBox>
       <HeadingRow>
-        <SelectButton $isFirst>학교 주요 공지</SelectButton>
-        <SelectButton onClick={timetable}>시간표</SelectButton>
-        <SelectButton onClick={mealtable}>오늘의 급식</SelectButton>
+        <SelectButton $isFirst onClick={() => changeTab("notices")}>
+          학교 주요 공지
+        </SelectButton>
+        <SelectButton onClick={() => changeTab("timetable")}>
+          시간표
+        </SelectButton>
+        <SelectButton onClick={() => changeTab("mealtable")}>
+          오늘의 급식
+        </SelectButton>
         <DetailText
           style={{ "text-decoration": "underline" }}
           onClick={onClick}
