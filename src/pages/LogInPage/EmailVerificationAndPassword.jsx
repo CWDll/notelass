@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
@@ -80,6 +81,7 @@ export default function EmailVerificationAndPassword() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
+  const navigate = useNavigate();
 
   // 입력된 값이 정수인지 확인하고, 정수가 아니라면 변환하거나 기본값을 설정합니다.
   const parseIfInteger = (name, value) => {
@@ -254,8 +256,8 @@ export default function EmailVerificationAndPassword() {
 
       if (response.status === 201) {
         //회원가입 성공
-        alert("회원가입이 완료되었습니다.");
-        navigate("/");
+        console.log("회원가입이 완료되었습니다.");
+        navigate("/navigateToComplete");
       } else {
         alert("회원가입에 실패했습니다.");
       }
