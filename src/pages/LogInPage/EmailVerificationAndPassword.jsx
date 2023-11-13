@@ -82,6 +82,7 @@ export default function EmailVerificationAndPassword() {
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
   const navigate = useNavigate();
+  67;
 
   // 입력된 값이 정수인지 확인하고, 정수가 아니라면 변환하거나 기본값을 설정합니다.
   const parseIfInteger = (name, value) => {
