@@ -578,7 +578,9 @@ function GroupDetailWrite() {
       setAttachedFile(file);
     }
   };
+
   const uploadFile = async (groupId, file) => {
+    console.log("Uploading file...");
     const formData = new FormData();
     formData.append("file", file);
 
@@ -600,6 +602,7 @@ function GroupDetailWrite() {
       } else {
         setUploadStatus('fail'); // 실패 상태 설정
         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+        console.log("Response status code: ", response.status);
       }
     } catch (error) {
       setUploadStatus('fail'); // 실패 상태 설정
@@ -625,7 +628,7 @@ function GroupDetailWrite() {
     if (!isTextSaved) {
       setSavedText(inputText);
       setIsTextSaved(true);
-      setButtonText("엑셀 출력");
+      setButtonText("한셀 출력");
 
       sendRecord(groupId, selectedStudent, inputText);
     } else {
@@ -647,17 +650,76 @@ function GroupDetailWrite() {
     alert("복사되었습니다.");
   };
 
-  const exportToExcel = (text) => {
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const exportToExcel = () => {
+    const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
-    const fileName = "활동기록 총 정리";
-    const ws = XLSX.utils.aoa_to_sheet([[text]]);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const fileName = "학생별 세부능력 및 특기사항";
+  
+    
+    // const headers = ["학생 이름", "반", "번호", "과제1","과제2", "과제3", "과제4"];
+  
+    
+    // const studentsData = [
+    //   ["지석진", "3학년 1반", "1", "상위 25%", "상위 25%", "상위 20%", "상위 10%"],
+    //   ["이광수", "3학년 1반", "2", "상위 50%", "상위 45%", "상위 30%" , "상위 20%"],
+    // ];
+
+    const headers = ["학생 이름", "반","번", "내용"];
+  
+    
+    const studentsData = [
+      ["지석진", "3학년 1반", "1번" , "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함"],
+      ["이광수", "3학년 1반", "2번" , inputText],
+      ["유재석", "3학년 1반", "1번" , "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함"],
+    ];
+      
+    
+    const data = [headers, ...studentsData];
+  
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = { Sheets: { 'Data': ws }, SheetNames: ["Data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
+    const dataBlob = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(dataBlob, fileName + fileExtension);
   };
+
+
+  ////////////
+ 
+    const [percent, setPercent] = useState("");
+    const [output, setOutput] = useState("");
+  
+    const handlePercentChange = (e) => {
+      setPercent(e.target.value);
+    };
+  
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        if (percent) {
+          if (parseInt(percent) <= 15) { // 입력값이 15 이하인 경우
+            setOutput("과제2(상위 10%)");
+          } else {
+            setOutput("과제1(상위 25%), 과제3(상위 25%), 과제4(상위 20%)");
+          }
+        } else {
+          setOutput("");
+        }
+      }
+    };
+
+
+
+  ////////////
+    const [textOutput, setTextOutput] = useState("");
+
+    const handleContainerClick = () => {
+      setTextOutput(
+        <StudentBookText>
+          <SavedText>수업시간에 집중하여 수업에 적극적으로 참여함</SavedText>
+        </StudentBookText>
+      );
+    };
+ 
 
   /***  통신  ***/
   //생기부 작성
@@ -704,7 +766,7 @@ function GroupDetailWrite() {
           ))}
         </StudentSelect>
         <Printexecl onClick={() => setShowSmallContainer(!showSmallContainer)}>
-          엑셀로 출력
+          한셀로 출력
         </Printexecl>
 
         {showSmallContainer && (
@@ -732,8 +794,9 @@ function GroupDetailWrite() {
             <ScoreResult>3등 </ScoreResult>
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
-              <Percent type="text" onChange={() => {}} />
+              <Percent type="text" value={percent} onChange={handlePercentChange} onKeyDown={handleKeyDown}/>
               <ScoreTitle>:</ScoreTitle>
+              <p style={{ marginLeft: "3px" }}>{output}</p>
             </PercentBody>
           </ScoreList>
           {!isTextSaved ? (
@@ -760,8 +823,11 @@ function GroupDetailWrite() {
                       opacity: 0,
                     }} 
                   />
-                  한셀에서 가져오깅
+                  한셀에서 가져오기
+                
                   <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+                
+                    
                   {uploadStatus === 'pending' && <p>업로드 중...</p>}
                   {uploadStatus === 'success' && <p>업로드 성공!</p>}
                   {uploadStatus === 'fail' && <p>업로드 실패!</p>}
@@ -804,7 +870,7 @@ function GroupDetailWrite() {
           )}
         </LeftContainer>
 
-        <RightContainer>
+        <RightContainer onClick={handleContainerClick}>
           <Title>학생수첩</Title>
           <InfoContainer>
             <TimeText>2023년 1학기-1</TimeText>
@@ -812,6 +878,7 @@ function GroupDetailWrite() {
           <StudentBookText>
             <SavedText>자발적으로 수업 준비물을 옮기는데 도움을 줌</SavedText>
           </StudentBookText>
+          {textOutput}
         </RightContainer>
       </MainContainer>
     </div>

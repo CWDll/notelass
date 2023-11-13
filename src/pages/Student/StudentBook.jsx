@@ -120,7 +120,7 @@ const Textarea = styled.textarea`
   outline: none;
 `;
 
-const Button = styled.button`
+const Button = styled.div`
   width: 12px;
   height: 20px;
   flex-shrink: 0;
@@ -128,12 +128,17 @@ const Button = styled.button`
   background: rgba(201, 205, 210, 0.5);
   outline: none;
   align-items: center;
+  position: relative;
+  z-index: 0; 
 `;
 
 const Img = styled.img`
   width: 12px;
   height: 20px;
   flex-shrink: 0;
+  position: relative; 
+  z-index: 2; 
+
 `;
 
 const ButtonContainer = styled.div`
@@ -170,6 +175,7 @@ const SaveButton = styled.button`
   margin-left: 16px;
   margin-right: 24px;
   margin-top: 16px;
+  margin-bottom: 24px;
   color: #fff;
   text-align: center;
   font-family: Pretendard;
@@ -348,9 +354,9 @@ function StudentBook() {
             <p>발표 횟수</p>
             <CountContainer>
               <Button onClick={speechDownCount}>
-                <Img src={caret_down} alt="caret_down" />
+              <Img src={caret_down} alt="caret_down" />
               </Button>
-              {speechCount}
+              <p style={{marginLeft: "18px", marginRight: "18px"}}>{speechCount}</p>
               <Button onClick={speechUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>
@@ -361,7 +367,7 @@ function StudentBook() {
               <Button onClick={attitudeDownCount}>
                 <Img src={caret_down} alt="caret_down" />
               </Button>
-              {attitudeCount}
+              <p style={{marginLeft: "18px", marginRight: "18px"}}>{speechCount}</p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>

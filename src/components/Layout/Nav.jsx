@@ -89,17 +89,18 @@ const LogoImg = styled.img`
 `;
 
 const Bell = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-  margin-left: 10px;
+  margin-left: 25px;
 `;
 
 const Person = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   margin-left: 10px;
+  margin-right: 70px;
   border-radius: 50%;
   background: var(--primary-cobalt, gray);
 `;
