@@ -11,8 +11,8 @@ import store from "./store";
 
 import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
-import TimeTable from "./pages/Table/TimeTable";
-import MealTable from "./pages/Table/MealTable";
+import TimeTable from "./components/Component/Table/TimeTable";
+import MealTable from "./components/Component/Table/MealTable";
 import GroupDetail from "./pages/Group/GroupDetail";
 import Introduce from "./pages/Introduce/Introduce";
 import Note from "./pages/Note/Note";

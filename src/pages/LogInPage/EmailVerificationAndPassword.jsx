@@ -258,7 +258,7 @@ export default function EmailVerificationAndPassword() {
       if (response.status === 201) {
         //회원가입 성공
         console.log("회원가입이 완료되었습니다.");
-        navigate("/navigateToComplete");
+        navigate("/SignupComplete");
       } else {
         alert("회원가입에 실패했습니다.");
       }

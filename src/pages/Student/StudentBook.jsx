@@ -129,16 +129,15 @@ const Button = styled.div`
   outline: none;
   align-items: center;
   position: relative;
-  z-index: 0; 
+  z-index: 0;
 `;
 
 const Img = styled.img`
   width: 12px;
   height: 20px;
   flex-shrink: 0;
-  position: relative; 
-  z-index: 2; 
-
+  position: relative;
+  z-index: 2;
 `;
 
 const ButtonContainer = styled.div`
@@ -198,12 +197,6 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-const groups = [
-  { id: 1, group: "1반" },
-  { id: 2, group: "2반" },
-  { id: 3, group: "3반" },
-  { id: 4, group: "4반" },
-];
 const students = [
   { id: 1, name: "1번 김민수" },
   { id: 2, name: "2번 김민수" },
@@ -220,7 +213,12 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-
+  const Existgroups = [
+    { id: 1, group: "1반" },
+    { id: 2, group: "2반" },
+    { id: 3, group: "3반" },
+    { id: 4, group: "4반" },
+  ];
   /*
   useEffect(() => {
     const fetchGroups = async () => {
@@ -282,22 +280,22 @@ function StudentBook() {
     e.preventDefault();
 
     const requestBody = {
-      content: inputText,
-      attitudeScore: attitudeCount,
-      presentationNum: speechCount,
+      // content: inputText,
+      // attitudeScore: attitudeCount,
+      // presentationNum: speechCount,
+
+      content: "22번 학생 테스트",
+      attitudeScore: 5,
+      presentationNum: 3,
     };
 
     try {
       console.log("requestBody의 상태: " + requestBody);
-      const response = await instance.post(
-        `/api/handbook/{groupId}/{userId}`,
-        requestBody
-      );
+      const response = await instance.post(`/api/handbook/9/22`, requestBody);
 
       if (response.status === 201) {
         //회원가입 성공
-        alert("학생 수첩 작성이 완료되었습니다.");
-        navigate("/");
+        alert("22번 학생의 학생 수첩 작성이 완료되었습니다.");
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
@@ -320,7 +318,7 @@ function StudentBook() {
             <option value="" disabled selected>
               그룹 선택
             </option>
-            {groups.map((group) => (
+            {Existgroups.map((group) => (
               <option key={group.id} value={group.id}>
                 {group.group}
               </option>
@@ -354,9 +352,11 @@ function StudentBook() {
             <p>발표 횟수</p>
             <CountContainer>
               <Button onClick={speechDownCount}>
-              <Img src={caret_down} alt="caret_down" />
+                <Img src={caret_down} alt="caret_down" />
               </Button>
-              <p style={{marginLeft: "18px", marginRight: "18px"}}>{speechCount}</p>
+              <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+                {speechCount}
+              </p>
               <Button onClick={speechUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>
@@ -367,7 +367,9 @@ function StudentBook() {
               <Button onClick={attitudeDownCount}>
                 <Img src={caret_down} alt="caret_down" />
               </Button>
-              <p style={{marginLeft: "18px", marginRight: "18px"}}>{speechCount}</p>
+              <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+                {speechCount}
+              </p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
               </Button>
