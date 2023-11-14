@@ -29,11 +29,11 @@ function Contents() {
   const onClick = () => {
     navigate("/NoticeDetail");
   };
-  const timetable = () => {
-    navigate("/TimeTable");
-  };
-  const mealtable = () => {
-    navigate("/MealTable");
+
+  // TimeTable 목데이터
+  const sampleSchedule = {
+    today: ["3-7", "3-2", "3-1", "3-3", "3-5", "3-4"],
+    tomorrow: ["3-1", "3-3", "3-5", "3-2", "3-7", "3-4"],
   };
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
@@ -98,7 +98,7 @@ function Contents() {
       </NoticeBody> */}
       <NoticeBody>
         {activeTab === "notices" && <Notice />}
-        {activeTab === "timetable" && <TimeTable />}
+        {activeTab === "timetable" && <TimeTable schedule={sampleSchedule} />}
         {activeTab === "mealtable" && <MealTable />}
       </NoticeBody>
     </StyledContainerBox>
