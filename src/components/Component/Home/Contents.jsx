@@ -15,8 +15,11 @@ import {
 import envelope from "../../../assets/envelope.svg";
 import envelopeOpen from "../../../assets/envelopeOpen.svg";
 import chevron_right from "../../../assets/chevron_right.svg";
+import Notice from "./Notice";
+import MealTable from "../Table/MealTable";
+import TimeTable from "../Table/TimeTable";
 
-function Notice() {
+function Contents() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("notices");
   const changeTab = (tabName) => {
@@ -74,12 +77,12 @@ function Notice() {
         <Img src={chevron_right} alt="chevron_right" />
       </HeadingRow>
 
-      <LeftHeading>내가 올린 공지/과제/강의자료</LeftHeading>
+      {/* <LeftHeading>내가 올린 공지/과제/강의자료</LeftHeading> */}
 
-      <NoticeBody>
+      {/* <NoticeBody>
         {postContent.map((content, index) => (
           <StyledNoticeItem
-            key={index}
+          key={index}
             isClicked={clickedIndices.has(index)}
             onClick={() => handleOnClick(index)}
           >
@@ -92,9 +95,14 @@ function Notice() {
             </NoticeContent>
           </StyledNoticeItem>
         ))}
+      </NoticeBody> */}
+      <NoticeBody>
+        {activeTab === "notices" && <Notice />}
+        {activeTab === "timetable" && <TimeTable />}
+        {activeTab === "mealtable" && <MealTable />}
       </NoticeBody>
     </StyledContainerBox>
   );
 }
 
-export default Notice;
+export default Contents;
