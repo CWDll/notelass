@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -555,12 +555,7 @@ const Text = styled.p`
 `;
 
 
-const students = [
-  { id: 1, name: "1번 김민수" },
-  { id: 2, name: "2번 김민수" },
-  { id: 3, name: "3번 김민수" },
-  { id: 4, name: "4번 김민수" },
-];
+
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -765,6 +760,28 @@ function GroupDetailWrite() {
     };
  
 
+    // 학생 선택 
+    const [students, setStudents] = useState([]);
+  
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('/api/group/students/9');
+        console.log(response); 
+  
+       
+        const filteredStudents = response.data.result
+          .filter(student => [22, 23, 24, 25, 26].includes(student.id));
+        setStudents(filteredStudents);
+  
+      } catch (error) {
+        console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+      }
+    };
+  
+    fetchStudents();
+  }, []);
+
   /***  통신  ***/
   //생기부 작성
  
@@ -803,9 +820,9 @@ function GroupDetailWrite() {
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect onChange={handleStudentChange}>
           <option value=""></option>
-          {students.map((student) => (
+          {students.map((student, index) => (
             <option key={student.id} value={student.id}>
-              {student.name}
+              {index+1}번 {student.name}
             </option>
           ))}
         </StudentSelect>
