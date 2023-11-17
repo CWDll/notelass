@@ -10,7 +10,6 @@ import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
 
 import axios from "../../assets/api/axios";
-import { useParams } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -209,7 +208,6 @@ const Exit = styled.img`
 `;
 
 function GroupDetailClass() {
-  const { groupId } = useParams();
   const navigate = useNavigate();
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
@@ -242,20 +240,44 @@ function GroupDetailClass() {
     });
   };
 
-  const [notices, setNotices] = useState([]);
+  //학생 목록에 데이터 받아오기
+
+  const [students, setStudents] = useState([]);
+  
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('/api/group/students/9');
+        console.log(response); 
+  
+       
+        const filteredStudents = response.data.result
+          .filter(student => [22, 23, 24, 25, 26].includes(student.id));
+        setStudents(filteredStudents);
+  
+      } catch (error) {
+        console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+      }
+    };
+  
+    fetchStudents();
+  }, []);
+  
 
   /*** 통신  ***/
-  //그룹 별 공지 목록 조회
-  useEffect(() => {
-    axios
-      .get(`/api/notice/${groupId}`)
-      .then((response) => {
-        setNotices(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  }, [groupId]);
+  // //그룹 별 공지 목록 조회
+  // const [notices, setNotices] = useState([]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/notice/${groupId}`)
+  //     .then((response) => {
+  //       setNotices(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error!", error);
+  //     });
+  // }, [groupId]);
 
   return (
     <>
@@ -288,7 +310,7 @@ function GroupDetailClass() {
             </DetailText>
 
             {/* 그룹별 공지사항 목록 조회*/}
-            <SubjectContainer>
+            {/* <SubjectContainer>
               {notices.map((notice, index) => (
                 <StyledNoticeItem
                   key={notice.id}
@@ -305,10 +327,10 @@ function GroupDetailClass() {
                         {new Date(notice.createdDate).toLocaleDateString()}
                       </NoticeDate>
                     )}
-                  </NoticeContent>
-                </StyledNoticeItem>
+                  </NoticeContent> */}
+                {/* </StyledNoticeItem>
               ))}
-            </SubjectContainer>
+            </SubjectContainer> */}
           </NoticeContainer>
 
           <GroupContainer>
@@ -368,35 +390,17 @@ function GroupDetailClass() {
         </LeftSectionContainer>
 
         <ManagementContainer>
-          <Title>생기부 관리</Title>
-          <SubjectContainer>
-            <NoticeContent onClick={GroupDetailWrite}>
-              <NoticeImg src={person} alt="person" />
-              <SudentNum>1</SudentNum>
-              <NoticeTitle>김민수</NoticeTitle>
-            </NoticeContent>
-            <NoticeContent>
-              <NoticeImg src={person} alt="person" />
-              <SudentNum>2</SudentNum>
-              <NoticeTitle>김민수</NoticeTitle>
-            </NoticeContent>
-            <NoticeContent>
-              <NoticeImg src={person} alt="person" />
-              <SudentNum>3</SudentNum>
-              <NoticeTitle>김민수</NoticeTitle>
-            </NoticeContent>
-            <NoticeContent>
-              <NoticeImg src={person} alt="person" />
-              <SudentNum>4</SudentNum>
-              <NoticeTitle>김민수</NoticeTitle>
-            </NoticeContent>
-            <NoticeContent>
-              <NoticeImg src={person} alt="person" />
-              <SudentNum>5</SudentNum>
-              <NoticeTitle>김민수</NoticeTitle>
-            </NoticeContent>
-          </SubjectContainer>
-        </ManagementContainer>
+        <Title>생기부 관리</Title>
+        <SubjectContainer>
+        {students.map((student, index) => (
+          <NoticeContent key={student.id} onClick={() => GroupDetailWrite(index)}>
+            <NoticeImg src={person} alt="person" />
+            <SudentNum>{index + 1}</SudentNum>
+            <NoticeTitle>{student.name}</NoticeTitle>
+          </NoticeContent>
+        ))}
+        </SubjectContainer>
+      </ManagementContainer>
       </MainContainer>
     </>
   );

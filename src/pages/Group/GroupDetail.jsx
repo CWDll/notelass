@@ -229,6 +229,7 @@ function GroupDetail() {
       "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
     credentials: true,
     headers: {
+      
       Authorization: `Bearer ${accessToken}`,
     },
   });
