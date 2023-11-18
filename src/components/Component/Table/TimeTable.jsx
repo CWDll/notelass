@@ -2,43 +2,61 @@ import React from "react";
 import styled from "styled-components";
 
 const TableContainer = styled.div`
-  width: 684px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-gap: 10px;
+  gap: 10px;
   background-color: #f1f1f1;
   padding: 10px;
 `;
 
-const Tableheader = styled.div`
-  grid-column: 1 / -1; /* Header will span all columns */
+const Header = styled.div`
+  grid-column: 1 / -1;
   text-align: center;
+  font-weight: bold;
 `;
 
-const Tableday = styled.div`
+const DayContainer = styled.div`
   grid-column: 1 / -1;
-  background-color: white;
-  padding: 5px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 5px 10px;
 `;
 
-const TimeSlot = styled.div`
-  background-color: white;
+const Day = styled.div`
+  font-size: 0.9em;
+`;
+
+const PeriodContainer = styled.div`
+  display: contents;
+`;
+
+const Period = styled.div`
+  background-color: #fff;
   text-align: center;
   padding: 20px 0;
+  font-size: 0.8em;
 `;
 
-function TimeTable({ schedule }) {
+const TimeTable = ({ schedule }) => {
   return (
     <TableContainer>
-      <Tableheader>시간표</Tableheader>
-      <Tableday>오늘, 2023년 11월 14일</Tableday>
-      {schedule.today.map((period, index) => (
-        <TimeSlot key={index}>{period}</TimeSlot>
+      <Header>시간표</Header>
+      {schedule.map((day) => (
+        <React.Fragment key={day.date}>
+          <DayContainer>
+            <Day>{day.date}</Day>
+          </DayContainer>
+          <PeriodContainer>
+            {day.periods.map((period, index) => (
+              <Period key={index}>{period}</Period>
+            ))}
+          </PeriodContainer>
+        </React.Fragment>
       ))}
     </TableContainer>
   );
-}
+};
 
 export default TimeTable;

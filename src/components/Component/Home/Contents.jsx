@@ -31,10 +31,18 @@ function Contents() {
   };
 
   // TimeTable 목데이터
-  const sampleSchedule = {
-    today: ["3-7", "3-2", "3-1", "3-3", "3-5", "3-4"],
-    tomorrow: ["3-1", "3-3", "3-5", "3-2", "3-7", "3-4"],
-  };
+
+  const scheduleData = [
+    {
+      date: "오늘, 9/18 화요일",
+      periods: ["3-7", "3-2", "3-1", "3-3", "3-5", "3-4", "3-6", "3-8"],
+    },
+    {
+      date: "내일, 9/19 수요일",
+      periods: ["3-1", "3-6", "3-4", "3-2", "3-3", "3-8", "3-5", "3-7"],
+    },
+    // ... 다른 날짜 및 기간들
+  ];
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
 
@@ -98,7 +106,7 @@ function Contents() {
       </NoticeBody> */}
       <NoticeBody>
         {activeTab === "notices" && <Notice />}
-        {activeTab === "timetable" && <TimeTable schedule={sampleSchedule} />}
+        {activeTab === "timetable" && <TimeTable schedule={scheduleData} />}
         {activeTab === "mealtable" && <MealTable />}
       </NoticeBody>
     </StyledContainerBox>
