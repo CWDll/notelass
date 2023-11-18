@@ -222,10 +222,12 @@ function StudentBook() {
   // ];
 
   useEffect(() => {
+    console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
         const res = await instance.get("/api/group");
         if (res.data && res.data.result && res.data.result.groupList) {
+          console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
           const newGroups = res.data.result.groupList.map((g) => ({
             id: g.id,
@@ -235,6 +237,9 @@ function StudentBook() {
         }
       } catch (error) {
         console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
+        console.log("sd");
+      } finally {
+        console.log("useEffect 실행 완료");
       }
     };
 
@@ -272,7 +277,7 @@ function StudentBook() {
   };
 
   //반 선택
-  const handleGroupChange = (e) => {
+  const handleGroupChange = async (e) => {
     e.stopPropagation();
     const groupId = e.target.value;
     setSelectedGroup(groupId);

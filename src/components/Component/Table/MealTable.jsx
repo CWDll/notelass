@@ -22,8 +22,17 @@ const MealTitle = styled.img`
 `;
 
 const StyledHr = styled.hr`
-  margin: 0 10px 0 10px;
+  margin: 20px 0px 10px 0px;
   font-weight: 20px;
+`;
+
+const Menu = styled.p`
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+const Kcal = styled.p`
+  color: #9ea4aa;
 `;
 
 export default function MealTable() {
@@ -31,12 +40,18 @@ export default function MealTable() {
     <TableContainer>
       <MealContainer>
         <MealTitle src={lunch} alt="lunch" />
-        <p>등심돈까스, 우동국, 마카로니 콘샐러드, 쌀밥, 단무지, 배추김치 </p>
+        <Menu>
+          등심돈까스, 우동국, 마카로니 콘샐러드, 쌀밥, 단무지, 배추김치
+        </Menu>
+        <Kcal>( 803.4kcal )</Kcal>
       </MealContainer>
       <StyledHr />
       <MealContainer>
         <MealTitle src={dinner} alt="dinner" />
-        <p>등심돈까스, 우동국, 마카로니 콘샐러드, 쌀밥, 단무지, 배추김치 </p>
+        <Menu>
+          등심돈까스, 우동국, 마카로니 콘샐러드, 쌀밥, 단무지, 배추김치
+        </Menu>
+        <Kcal>( 803.4kcal )</Kcal>
       </MealContainer>
     </TableContainer>
   );
