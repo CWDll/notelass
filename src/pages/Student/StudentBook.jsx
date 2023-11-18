@@ -219,13 +219,18 @@ function StudentBook() {
     { id: 3, group: "3반" },
     { id: 4, group: "4반" },
   ];
-  /*
+
   useEffect(() => {
     const fetchGroups = async () => {
       try {
         const res = await instance.get("/api/group");
         if (res.data && res.data.result && res.data.result.groupList) {
-          setGroups(res.data.result.groupList); // 전체 그룹 데이터를 상태에 저장합니다.
+          // 서버에서 받은 데이터를 기반으로 새로운 배열을 생성합니다.
+          const newGroups = res.data.result.groupList.map((g) => ({
+            id: g.id,
+            group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
+          }));
+          setGroups(newGroups); // 새로운 배열로 상태를 업데이트합니다.
         }
       } catch (error) {
         console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
@@ -235,7 +240,6 @@ function StudentBook() {
 
     fetchGroups();
   }, []);
-  */
 
   //발표 점수 계산
   const speechUpCount = () => {
@@ -318,11 +322,15 @@ function StudentBook() {
             <option value="" disabled selected>
               그룹 선택
             </option>
-            {Existgroups.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.group}
-              </option>
-            ))}
+            {groups.map(
+              (
+                group // 'groups' 상태를 사용합니다.
+              ) => (
+                <option key={group.id} value={group.id}>
+                  {group.group}
+                </option>
+              )
+            )}
           </GroupSelect>
 
           <StudentSelect onChange={handleStudentChange}>
