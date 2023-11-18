@@ -208,6 +208,7 @@ function StudentBook() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState();
   const [selectedGroup, setSelectedGroup] = useState();
+  const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
   const [inputText, setInputText] = useState("");
   const [speechCount, setSpeechCount] = useState(0);
   const [attitudeCount, setAttitudeCount] = useState(0);
@@ -225,7 +226,7 @@ function StudentBook() {
       try {
         const res = await instance.get("/api/group");
         if (res.data && res.data.result && res.data.result.groupList) {
-          // 서버에서 받은 데이터를 기반으로 새로운 배열을 생성합니다.
+          // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
           const newGroups = res.data.result.groupList.map((g) => ({
             id: g.id,
             group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
@@ -273,38 +274,48 @@ function StudentBook() {
   //반 선택
   const handleGroupChange = (e) => {
     e.stopPropagation();
-    setSelectedGroup(e.target.value);
-    console.log("Selected Group: " + e.target.value);
+    const groupId = e.target.value;
+    setSelectedGroup(groupId);
+    console.log("Selected Group: " + groupId);
+
+    try {
+      const res = instance.get(`/api/group/students/${groupId}`);
+      if (res.data && res.data.result && res.data.result.studentIdNameDtoList) {
+        setStudents(res.data.result.studentIdNameDtoList); // 학생 데이터를 상태에 저장합니다.
+      }
+    } catch (error) {
+      console.error("학생 데이터를 가져오는 중 오류 발생:", error);
+      // 오류 처리 로직...
+    }
   };
 
   const handleSave = async (e) => {
-    // setShowSmallContainer(false);
-    // onSave(inputText);
     e.preventDefault();
 
-    const requestBody = {
-      // content: inputText,
-      // attitudeScore: attitudeCount,
-      // presentationNum: speechCount,
+    // 상태에서 groupId와 userId를 사용합니다.
+    const groupId = selectedGroup; // 이전에 선택된 그룹 ID
+    const userId = selectedStudent; // 이전에 선택된 학생 ID
 
-      content: "22번 학생 테스트",
-      attitudeScore: 5,
-      presentationNum: 3,
+    const requestBody = {
+      content: inputText, // 텍스트 입력 내용
+      attitudeScore: attitudeCount, // 태도 점수
+      presentationNum: speechCount, // 발표 횟수
     };
 
     try {
-      console.log("requestBody의 상태: " + requestBody);
-      const response = await instance.post(`/api/handbook/9/22`, requestBody);
+      console.log("보낸 requestBody: ", requestBody);
+      const response = await instance.post(
+        `/api/handbook/${groupId}/${userId}`,
+        requestBody
+      );
 
       if (response.status === 201) {
-        //회원가입 성공
-        alert("22번 학생의 학생 수첩 작성이 완료되었습니다.");
+        alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
     } catch (error) {
       console.error("학생 수첩 작성 오류:", error);
-      // Further logic upon error...
     }
   };
 
