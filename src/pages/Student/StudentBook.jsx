@@ -213,12 +213,12 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-  const Existgroups = [
-    { id: 1, group: "1반" },
-    { id: 2, group: "2반" },
-    { id: 3, group: "3반" },
-    { id: 4, group: "4반" },
-  ];
+  // const Existgroups = [
+  //   { id: 1, group: "1반" },
+  //   { id: 2, group: "2반" },
+  //   { id: 3, group: "3반" },
+  //   { id: 4, group: "4반" },
+  // ];
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -230,11 +230,10 @@ function StudentBook() {
             id: g.id,
             group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
           }));
-          setGroups(newGroups); // 새로운 배열로 상태를 업데이트합니다.
+          setGroups(newGroups);
         }
       } catch (error) {
         console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
-        // 오류 처리 로직...
       }
     };
 
@@ -324,7 +323,7 @@ function StudentBook() {
             </option>
             {groups.map(
               (
-                group // 'groups' 상태를 사용합니다.
+                group // 'groups' 상태를 사용
               ) => (
                 <option key={group.id} value={group.id}>
                   {group.group}
