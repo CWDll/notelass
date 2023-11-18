@@ -7,7 +7,7 @@ const initialState = {
   classNum: 0, // selectSchool page
   number: 0, // selectSchool page
   name: "", // EmailVerificationAndPassword page
-  admissionYear: "", // EmailVerificationAndPassword page
+  admissionYear: 0, // EmailVerificationAndPassword page
   school: "", // selectSchool page
   role: "", // selectSchool page
 };

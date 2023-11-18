@@ -210,8 +210,8 @@ export default function EmailVerificationAndPassword() {
         missingFields.push(name);
       }
       // "admissionYear"가 문자열인지 확인
-      if (name === "admissionYear" && typeof userInput[name] !== "string") {
-        typeErrors.push(name + " should be a string");
+      if (name === "admissionYear" && typeof userInput[name] !== "number") {
+        typeErrors.push(name + " should be a number");
       }
       // "grade", "classNum", "number"가 정수인지 확인
       if (
