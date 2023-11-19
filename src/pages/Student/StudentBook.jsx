@@ -279,7 +279,8 @@ function StudentBook() {
     console.log("Selected Group: " + groupId);
 
     try {
-      const res = instance.get(`/api/group/students/${groupId}`);
+      // const res = instance.get(`/api/group/students/${groupId}`);
+      const res = instance.get(`/api/group/students/9`);
       if (res.data && res.data.result && res.data.result.studentIdNameDtoList) {
         setStudents(res.data.result.studentIdNameDtoList); // 학생 데이터를 상태에 저장합니다.
       }
@@ -305,12 +306,14 @@ function StudentBook() {
     try {
       console.log("보낸 requestBody: ", requestBody);
       const response = await instance.post(
-        `/api/handbook/${groupId}/${userId}`,
+        // `/api/handbook/${groupId}/${userId}`,
+        `/api/handbook/9/22`,
         requestBody
       );
 
       if (response.status === 201) {
-        alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        alert(`22번 학생의 학생 수첩 작성이 완료되었습니다.`);
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
