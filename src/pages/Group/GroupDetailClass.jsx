@@ -8,8 +8,9 @@ import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
+import instance from "../../assets/api/axios";
 
-import axios from "../../assets/api/axios";
+// import axios from "../../assets/api/axios";
 
 const Header = styled.header`
   display: flex;
@@ -247,7 +248,7 @@ function GroupDetailClass() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('/api/group/students/9');
+        const response = await instance.get('/api/group/students/9');
         console.log(response); 
   
        
