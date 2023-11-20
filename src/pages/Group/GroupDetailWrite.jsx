@@ -11,6 +11,7 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
 import axios from "../../assets/api/axios";
+import instance from "../../assets/api/axios";
 
 const Header = styled.header`
   display: flex;
@@ -726,29 +727,6 @@ function GroupDetailWrite() {
       }
     };
 
-    //////////// 가이드라인 문장 
-    const [guidelineIndex, setGuidelineIndex] = useState(0);
-    const guidelineTexts = ["","문학 공부에 있어서 책임감을 가지고 매일 꾸준히 독서하고 그 내용을 분석하여 이를 통해 문학에 대한 이해력을 향상시켰다.", 
-    "문학 수업에서는 언제나 최선을 다해 열정을 보였고 이 과목에서 배운 다양한 작품들을 통해 인간의 감정과 삶에 대해 깊이 이해하려 노력했다.", 
-    "학교에서 열린 문학 토론 대회에서는 팀장으로서 팀을 이끌었다. 이 경험을 통해 문학에 대한 사랑과 열정을 더욱 확실하게 느꼈다."]; 
-    
-    const handleGuidelineTextKeyDown = () => {
-      setGuidelineIndex((prevIndex) => (prevIndex + 1) % guidelineTexts.length);
-    };
-
-
-
-
-  ////////////
-    const [textOutput, setTextOutput] = useState("");
-
-    const handleContainerClick = () => {
-      setTextOutput(
-        <StudentBookText>
-          <SavedText>수업시간에 집중하여 수업에 적극적으로 참여함</SavedText>
-        </StudentBookText>
-      );
-    };
 
     ////
     const [keywords, setKeywords] = useState([]);
@@ -766,7 +744,7 @@ function GroupDetailWrite() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('/api/group/students/9');
+        const response = await instance.get('/api/group/students/9');
         console.log(response); 
   
        
@@ -779,8 +757,32 @@ function GroupDetailWrite() {
       }
     };
   
-    fetchStudents();
+    fetchStudentBook();
+  }, [groupId, userId]);
+
+
+  // 학생 수첩 조회 Get
+  const [studentBookEntries, setStudentBookEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchStudentBook = async () => {
+
+      try {
+        const response = await instance.get(`/api/handbook/9/22`);
+        console.log(response);
+        if (response.status === 200) {
+          setSavedTextFromStudentBook(response.data.result);
+        } else {
+          console.error("서버로부터 예상치 못한 응답을 받았습니다:", response.data);
+        }
+      } catch (error) {
+        console.error("학생 수첩을 가져오지 못했습니다.:", error.message);
+      }
+    };
+
+    fetchStudentBook();
   }, []);
+
 
   /***  통신  ***/
   //생기부 작성
@@ -904,11 +906,11 @@ function GroupDetailWrite() {
               </SuggestWordContainer>
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" onClick={handleGuidelineTextKeyDown} />  
+                <ReapeatImg src={arrow_repeat} alt="arrow_repeat"  />  
               </GuidelineContainer>
               <GuidelineBox>
               <Text>
-                {guidelineTexts[guidelineIndex]}
+                  안녕 
               </Text>
               
               </GuidelineBox>
@@ -931,7 +933,7 @@ function GroupDetailWrite() {
           )}
         </LeftContainer>
 
-        <RightContainer onClick={handleContainerClick}>
+        {/* <RightContainer>
           <Title>학생수첩</Title>
           <InfoContainer>
             <TimeText>2023년 1학기-1</TimeText>
@@ -939,8 +941,19 @@ function GroupDetailWrite() {
           <StudentBookText>
             <SavedText>자발적으로 수업 준비물을 옮기는데 도움을 줌</SavedText>
           </StudentBookText>
-          {textOutput}
-        </RightContainer>
+        </RightContainer> */}
+
+      <RightContainer>
+        <Title>학생수첩</Title>
+        {studentBookEntries.map(entry => (
+          <InfoContainer key={entry.id}>
+            <TimeText>{entry.createdDate}</TimeText>
+            <StudentBookText>
+              <SavedText>{entry.content}</SavedText>
+            </StudentBookText>
+          </InfoContainer>
+        ))}
+      </RightContainer>
       </MainContainer>
     </div>
   );
