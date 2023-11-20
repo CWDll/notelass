@@ -215,8 +215,8 @@ function GroupDetailClass() {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
     navigate("/GroupDetailClass/AssignmentDetail");
   };
-  const GroupDetailWrite = (gruopId, userId) => {
-    navigate(`/GroupDetailWrite/${gruopId}/${userId}`);
+  const GroupDetailWrite = (paramsGruopId, paramsUserId) => {
+    navigate(`/GroupDetailWrite/${paramsGruopId}/${paramsUserId}`);
   };
 
   const BackButton = () => {
