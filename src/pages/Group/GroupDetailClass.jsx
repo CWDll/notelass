@@ -216,7 +216,7 @@ function GroupDetailClass() {
     navigate("/GroupDetailClass/AssignmentDetail");
   };
   const GroupDetailWrite = () => {
-    navigate("/GroupDetailWrite");
+    navigate(`/GroupDetailWrite/${id}`);
   };
 
   const BackButton = () => {
@@ -394,7 +394,7 @@ function GroupDetailClass() {
             {students.map((student, index) => (
               <NoticeContent
                 key={student.id}
-                onClick={() => GroupDetailWrite(index)}
+                onClick={() => GroupDetailWrite(id)}
               >
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>{index + 1}</SudentNum>

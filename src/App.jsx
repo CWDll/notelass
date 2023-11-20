@@ -66,7 +66,10 @@ function App() {
             />
             <Route path="/StudentTaskDetail" element={<StudentTaskDetail />} />
             <Route path="/GroupScoreDetail" element={<GroupScoreDetail />} />
-            <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
+            <Route
+              path="/GroupDetailWrite/:id"
+              element={<GroupDetailWrite />}
+            />
 
             <Route path="/TasksDetail" element={<TasksDetail />} />
             <Route path="/Note" element={<Note />} />
