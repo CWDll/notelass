@@ -587,8 +587,6 @@ function GroupDetailWrite() {
   const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
-  // const paramsGroupId = params.groupId; //
-  // const paramsUserId = params.userId; //
 
   //파일 업로드
   const handleFileChange = (event) => {
@@ -746,25 +744,25 @@ function GroupDetailWrite() {
   // 학생 선택
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    console.log("params로 가져온 groupId: ", paramsGroupId);
-    const fetchStudents = async () => {
-      try {
-        const response = await instance.get(
-          `/api/group/students/${paramsGroupId}`
-        );
-        console.log(response);
+  // useEffect(() => {
+  //   console.log("params로 가져온 groupId: ", paramsGroupId);
+  //   const fetchStudents = async () => {
+  //     try {
+  //       const response = await instance.get(
+  //         `/api/group/students/${paramsGroupId}`
+  //       );
+  //       console.log(response);
 
-        if (response.data && response.data.result) {
-          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
-        }
-      } catch (error) {
-        console.error("학생리스트를 가져오지 못했습니다.:", error.message);
-      }
-    };
+  //       if (response.data && response.data.result) {
+  //         setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
+  //       }
+  //     } catch (error) {
+  //       console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+  //     }
+  //   };
 
-    fetchStudents();
-  }, []);
+  //   fetchStudents();
+  // }, []);
 
   // 학생 수첩 조회 Get
   const [groupId, setGroupId] = useState(null);
@@ -773,6 +771,7 @@ function GroupDetailWrite() {
 
   useEffect(() => {
     console.log("paramsGroupId: ", paramsGroupId);
+    console.log("paramsUserId: ", paramsUserId);
     const fetchStudentBook = async () => {
       try {
         const response = await instance.get(
@@ -782,6 +781,7 @@ function GroupDetailWrite() {
         if (response.status === 200) {
           console.log("/api/handbook/${paramsGroupId}/${paramsUserId} 성공!!!");
           setSavedTextFromStudentBook(response.data.result);
+          // setStudentBookEntries(response.data.result);
         } else {
           console.error(
             "서버로부터 예상치 못한 응답을 받았습니다:",
