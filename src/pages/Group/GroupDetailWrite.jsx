@@ -742,6 +742,30 @@ function GroupDetailWrite() {
 
   // 학생 선택
   const [students, setStudents] = useState([]);
+  useEffect(() => {
+    // URL에서 가져온 userId 값을 상태에 설정
+    if (paramsUserId) {
+      setSelectedStudent(paramsUserId);
+    }
+
+    const fetchStudents = async () => {
+      try {
+        const response = await instance.get(
+          `/api/group/students/${paramsGroupId}`
+        );
+        console.log(response);
+
+        if (response.data && response.data.result) {
+          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
+          console.log("response.data.result: ", response.data.result); // 학생 데이터를 상태에 저장합니다.
+        }
+      } catch (error) {
+        console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+      }
+    };
+
+    fetchStudents();
+  }, [paramsGroupId]);
 
   // useEffect(() => {
   //   console.log("params로 가져온 groupId: ", paramsGroupId);
@@ -894,7 +918,7 @@ function GroupDetailWrite() {
 
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
-        <StudentSelect onChange={handleStudentChange}>
+        <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value=""></option>
           {students.map((student, index) => (
             <option key={student.id} value={student.id}>
