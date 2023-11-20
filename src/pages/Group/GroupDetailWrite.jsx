@@ -814,6 +814,51 @@ useEffect(() => {
   }
 }, [paramsGroupId, paramsUserId]); 
 
+
+
+// 학생 수첩 내용 DELETE 함수
+const deleteStudentBookEntry = async (handbookContentId) => {
+  try {
+    const response = await instance.delete(`/api/handbook/${handbookContentId}`);
+    if (response.status === 204) {
+      // 성공적으로 삭제되었을 때 UI에서 해당 항목을 제거하기 위해 상태를 업데이트합니다.
+      setStudentBookEntries(currentEntries =>
+        currentEntries.filter(entry => entry.id !== handbookContentId)
+      );
+      alert("항목이 성공적으로 삭제되었습니다.");
+    } else {
+      // 오류가 있을 경우
+      console.error("삭제에 실패했습니다:", response);
+    }
+  } catch (error) {
+    console.error("삭제 중 오류가 발생했습니다:", error);
+  }
+};
+
+
+// 학생 수첩 내용 수정 함수
+// const updateStudentBookEntry = async (handbookContentId, newContent) => {
+//   try {
+//     const response = await instance.patch(`/api/handbook/${handbookContentId}`, {
+//       content: newContent,
+//     });
+//     if (response.status === 200) {
+//       // UI를 업데이트하기 위해 상태를 업데이트 합니다.
+//       setStudentBookEntries(currentEntries =>
+//         currentEntries.map(entry =>
+//           entry.id === handbookContentId ? { ...entry, content: newContent } : entry
+//         )
+//       );
+//       alert("항목이 성공적으로 수정되었습니다.");
+//     } else {
+//       // 오류가 있을 경우
+//       console.error("수정에 실패했습니다:", response);
+//     }
+//   } catch (error) {
+//     console.error("수정 중 오류가 발생했습니다:", error);
+//   }
+// };
+
   /***  통신  ***/
   //생기부 작성
 
@@ -987,6 +1032,11 @@ useEffect(() => {
               {/* 날짜 형식을 년-월-일 */}
               {new Date(entry.createdDate).toLocaleDateString('ko-KR')}
             </TimeText>
+            <div style={{ display: "flex" , gap: "10px", justifyContent: "right", marginRight: "35px", 
+                        marginTop: "-20PX"}}>
+              <TimeText>수정하기</TimeText>
+              <TimeText onClick={() => deleteStudentBookEntry(entry.id)}>삭제하기</TimeText>
+            </div>
             <StudentBookText>
               <SavedText>{entry.content}</SavedText>
             </StudentBookText>
