@@ -287,7 +287,9 @@ function StudentBook() {
 
     try {
       // const res = instance.get(`/api/group/students/${groupId}`);
-      const res = instance.get(`/api/group/students/9`);
+      const res = await instance.get(`/api/group/students/9`);
+      console.log("students/groupId 서버 응답 확인" + res);
+      console.log("students/groupId 서버 응답 확인" + res.data);
       if (res.data && res.data.result && res.data.result.studentIdNameDtoList) {
         setStudents(res.data.result.studentIdNameDtoList); // 학생 데이터를 상태에 저장합니다.
       }
@@ -295,6 +297,7 @@ function StudentBook() {
       console.error("학생 데이터를 가져오는 중 오류 발생:", error);
       // 오류 처리 로직...
     }
+    console.log("/api/group/students/groupId is finished");
   };
 
   const handleSave = async (e) => {
@@ -313,8 +316,8 @@ function StudentBook() {
     try {
       console.log("보낸 requestBody: ", requestBody);
       const response = await instance.post(
-        // `/api/handbook/${groupId}/${userId}`,
-        `/api/handbook/9/22`,
+        `/api/handbook/${groupId}/${userId}`,
+        // `/api/handbook/9/22`,
         requestBody
       );
 
