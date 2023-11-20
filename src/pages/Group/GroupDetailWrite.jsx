@@ -761,27 +761,33 @@ function GroupDetailWrite() {
     fetchStudents();
   }, []);
 
-  // // 학생 수첩 조회 Get
-  // const [studentBookEntries, setStudentBookEntries] = useState([]);
+  // 학생 수첩 조회 Get
+  const [groupId, setGroupId] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [studentBookEntries, setStudentBookEntries] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchStudentBook = async () => {
+  useEffect(() => {
+    const fetchStudentBook = async () => {
+      try {
+        const response = await instance.get(
+          `/api/handbook/${groupId}/${userId}`
+        );
+        console.log(response);
+        if (response.status === 200) {
+          setSavedTextFromStudentBook(response.data.result);
+        } else {
+          console.error(
+            "서버로부터 예상치 못한 응답을 받았습니다:",
+            response.data
+          );
+        }
+      } catch (error) {
+        console.error("학생 수첩을 가져오지 못했습니다.:", error.message);
+      }
+    };
 
-  //     try {
-  //       const response = await instance.get(`/api/handbook/9/22`);
-  //       console.log(response);
-  //       if (response.status === 200) {
-  //         setSavedTextFromStudentBook(response.data.result);
-  //       } else {
-  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("학생 수첩을 가져오지 못했습니다.:", error.message);
-  //     }
-  //   };
-
-  //   fetchStudentBook();
-  // }, [groupId, userId]);
+    fetchStudentBook();
+  }, [groupId, userId]);
 
   /***  통신  ***/
   //생기부 작성
@@ -937,7 +943,7 @@ function GroupDetailWrite() {
           )}
         </LeftContainer>
 
-        <RightContainer>
+        {/* <RightContainer>
           <Title>학생수첩</Title>
           <InfoContainer>
             <TimeText>2023년 1학기-1</TimeText>
@@ -945,19 +951,19 @@ function GroupDetailWrite() {
           <StudentBookText>
             <SavedText>자발적으로 수업 준비물을 옮기는데 도움을 줌</SavedText>
           </StudentBookText>
-        </RightContainer>
+        </RightContainer>  */}
 
-        {/* <RightContainer>
-        <Title>학생수첩</Title>
-        {studentBookEntries.map(entry => (
-          <InfoContainer key={entry.id}>
-            <TimeText>{entry.createdDate}</TimeText>
-            <StudentBookText>
-              <SavedText>{entry.content}</SavedText>
-            </StudentBookText>
-          </InfoContainer>
-        ))}
-      </RightContainer>*/}
+        <RightContainer>
+          <Title>학생수첩</Title>
+          {studentBookEntries.map((entry) => (
+            <InfoContainer key={entry.id}>
+              <TimeText>{entry.createdDate}</TimeText>
+              <StudentBookText>
+                <SavedText>{entry.content}</SavedText>
+              </StudentBookText>
+            </InfoContainer>
+          ))}
+        </RightContainer>
       </MainContainer>
     </div>
   );
