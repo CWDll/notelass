@@ -555,9 +555,6 @@ const Text = styled.p`
   padding: 24px 24px 24px 24px;
 `;
 
-
-
-
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -588,13 +585,13 @@ function GroupDetailWrite() {
   const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState('');
+  const [uploadStatus, setUploadStatus] = useState("");
 
   //파일 업로드
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log('선택된 파일:', file); // 콘솔에 파일 정보 로깅
+      console.log("선택된 파일:", file); // 콘솔에 파일 정보 로깅
       setAttachedFile(file);
     }
   };
@@ -604,7 +601,7 @@ function GroupDetailWrite() {
     const formData = new FormData();
     formData.append("file", file);
 
-    setUploadStatus('pending'); // 업로드 진행 중 상태 설정
+    setUploadStatus("pending"); // 업로드 진행 중 상태 설정
     try {
       const response = await axios.post(
         `/api/record/excel/${groupId}`,
@@ -617,15 +614,15 @@ function GroupDetailWrite() {
       );
 
       if (response.status === 201) {
-        setUploadStatus('success'); // 업로드 성공 상태 설정
+        setUploadStatus("success"); // 업로드 성공 상태 설정
         alert("생기부 파일이 등록되었습니다.");
       } else {
-        setUploadStatus('fail'); // 실패 상태 설정
+        setUploadStatus("fail"); // 실패 상태 설정
         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
         console.log("Response status code: ", response.status);
       }
     } catch (error) {
-      setUploadStatus('fail'); // 실패 상태 설정
+      setUploadStatus("fail"); // 실패 상태 설정
       console.error("파일 업로드 중 오류가 발생했습니다:", error);
       alert("파일 업로드 중 오류가 발생했습니다.");
     }
@@ -671,95 +668,98 @@ function GroupDetailWrite() {
   };
 
   const exportToExcel = () => {
-    const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
     const fileName = "학생별 세부능력 및 특기사항";
-  
-    
+
     // const headers = ["학생 이름", "반", "번호", "과제1","과제2", "과제3", "과제4"];
-  
-    
+
     // const studentsData = [
     //   ["지석진", "3학년 1반", "1", "상위 25%", "상위 25%", "상위 20%", "상위 10%"],
     //   ["이광수", "3학년 1반", "2", "상위 50%", "상위 45%", "상위 30%" , "상위 20%"],
     // ];
 
-    const headers = ["학생 이름", "반","번", "내용"];
-  
-    
+    const headers = ["학생 이름", "반", "번", "내용"];
+
     const studentsData = [
-      ["지석진", "3학년 1반", "1번" , "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함"],
-      ["이광수", "3학년 1반", "2번" , inputText],
-      ["유재석", "3학년 1반", "1번" , "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함"],
+      [
+        "지석진",
+        "3학년 1반",
+        "1번",
+        "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
+      ],
+      ["이광수", "3학년 1반", "2번", inputText],
+      [
+        "유재석",
+        "3학년 1반",
+        "1번",
+        "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
+      ],
     ];
-      
-    
+
     const data = [headers, ...studentsData];
-  
+
     const ws = XLSX.utils.aoa_to_sheet(data);
-    const wb = { Sheets: { 'Data': ws }, SheetNames: ["Data"] };
+    const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const dataBlob = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(dataBlob, fileName + fileExtension);
   };
 
-
   ////////////
- 
-    const [percent, setPercent] = useState("");
-    const [output, setOutput] = useState("");
-  
-    const handlePercentChange = (e) => {
-      setPercent(e.target.value);
-    };
-  
-    const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        if (percent) {
-          if (parseInt(percent) <= 15) { // 입력값이 15 이하인 경우
-            setOutput("과제2(상위 10%)");
-          } else {
-            setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
-          }
+
+  const [percent, setPercent] = useState("");
+  const [output, setOutput] = useState("");
+
+  const handlePercentChange = (e) => {
+    setPercent(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (percent) {
+        if (parseInt(percent) <= 15) {
+          // 입력값이 15 이하인 경우
+          setOutput("과제2(상위 10%)");
         } else {
-          setOutput("");
+          setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
         }
+      } else {
+        setOutput("");
       }
-    };
+    }
+  };
 
+  ////
+  const [keywords, setKeywords] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
-    ////
-    const [keywords, setKeywords] = useState([]);
-    const [inputValue, setInputValue] = useState("");
+  const handleAddKeyword = (keyword) => {
+    setKeywords([...keywords, keyword]);
+    setInputValue("");
+  };
 
-    const handleAddKeyword = (keyword) => {
-      setKeywords([...keywords, keyword]);
-      setInputValue("");
-    };
- 
+  // 학생 선택
+  const [students, setStudents] = useState([]);
 
-    // 학생 선택 
-    const [students, setStudents] = useState([]);
-  
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await instance.get('/api/group/students/9');
-        console.log(response); 
-  
-       
-        const filteredStudents = response.data.result
-          .filter(student => [22, 23, 24, 25, 26].includes(student.id));
+        const response = await instance.get("/api/group/students/9");
+        console.log(response);
+
+        const filteredStudents = response.data.result.filter((student) =>
+          [22, 23, 24, 25, 26].includes(student.id)
+        );
         setStudents(filteredStudents);
-  
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
       }
     };
-  
-    fetchStudents();
-  }, []); 
 
+    fetchStudents();
+  }, []);
 
   // // 학생 수첩 조회 Get
   // const [studentBookEntries, setStudentBookEntries] = useState([]);
@@ -783,10 +783,9 @@ function GroupDetailWrite() {
   //   fetchStudentBook();
   // }, [groupId, userId]);
 
-
   /***  통신  ***/
   //생기부 작성
- 
+
   return (
     <div>
       <Header>
@@ -824,7 +823,7 @@ function GroupDetailWrite() {
           <option value=""></option>
           {students.map((student, index) => (
             <option key={student.id} value={student.id}>
-              {index+1}번 {student.name}
+              {index + 1}번 {student.name}
             </option>
           ))}
         </StudentSelect>
@@ -855,7 +854,12 @@ function GroupDetailWrite() {
             <ScoreResult>5회(상위 1%) </ScoreResult>
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
-              <Percent type="text" value={percent} onChange={handlePercentChange} onKeyDown={handleKeyDown}/>
+              <Percent
+                type="text"
+                value={percent}
+                onChange={handlePercentChange}
+                onKeyDown={handleKeyDown}
+              />
               <ScoreTitle>:</ScoreTitle>
               <p style={{ marginLeft: "3px" }}>{output}</p>
             </PercentBody>
@@ -882,37 +886,37 @@ function GroupDetailWrite() {
                       width: "100%",
                       height: "100%",
                       opacity: 0,
-                    }} 
+                    }}
                   />
                   한셀에서 가져오기
-                
                   <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-                
-                    
-                  {uploadStatus === 'pending' && <p>업로드 중...</p>}
-                  {uploadStatus === 'success' && <p>업로드 성공!</p>}
-                  {uploadStatus === 'fail' && <p>업로드 실패!</p>}
-
+                  {uploadStatus === "pending" && <p>업로드 중...</p>}
+                  {uploadStatus === "success" && <p>업로드 성공!</p>}
+                  {uploadStatus === "fail" && <p>업로드 실패!</p>}
                 </HancellButton>
               </WritingBox>
               <>
-              <Text style={{marginLeft: "10px"}}>키워드 입력: </Text>
-              <Keyword type="text" value={inputValue} 
-               onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleAddKeyword(e.target.value); }} />
+                <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
+                <Keyword
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleAddKeyword(e.target.value);
+                  }}
+                />
               </>
               <SuggestWordContainer>
-                {keywords.map((keyword, index) => <SuggestWord key={index}>{keyword}</SuggestWord>)}
+                {keywords.map((keyword, index) => (
+                  <SuggestWord key={index}>{keyword}</SuggestWord>
+                ))}
               </SuggestWordContainer>
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat"  />  
+                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
               </GuidelineContainer>
               <GuidelineBox>
-              <Text>
-                  안녕 
-              </Text>
-              
+                <Text>안녕</Text>
               </GuidelineBox>
             </>
           ) : null}
@@ -933,7 +937,7 @@ function GroupDetailWrite() {
           )}
         </LeftContainer>
 
-         <RightContainer>
+        <RightContainer>
           <Title>학생수첩</Title>
           <InfoContainer>
             <TimeText>2023년 1학기-1</TimeText>
@@ -941,9 +945,9 @@ function GroupDetailWrite() {
           <StudentBookText>
             <SavedText>자발적으로 수업 준비물을 옮기는데 도움을 줌</SavedText>
           </StudentBookText>
-        </RightContainer> 
+        </RightContainer>
 
-      {/* <RightContainer>
+        {/* <RightContainer>
         <Title>학생수첩</Title>
         {studentBookEntries.map(entry => (
           <InfoContainer key={entry.id}>
@@ -954,7 +958,7 @@ function GroupDetailWrite() {
           </InfoContainer>
         ))}
       </RightContainer>*/}
-      </MainContainer> 
+      </MainContainer>
     </div>
   );
 }

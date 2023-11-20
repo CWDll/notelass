@@ -215,8 +215,8 @@ function GroupDetailClass() {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
     navigate("/GroupDetailClass/AssignmentDetail");
   };
-  const GroupDetailWrite = () => {
-    navigate(`/GroupDetailWrite/${id}`);
+  const GroupDetailWrite = (gruopId, userId) => {
+    navigate(`/GroupDetailWrite/${gruopId}/${userId}`);
   };
 
   const BackButton = () => {
@@ -254,6 +254,7 @@ function GroupDetailClass() {
 
         if (response.data && response.data.result) {
           setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
+          console.log("response.data.result: ", response.data.result); // 학생 데이터를 상태에 저장합니다.
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -394,7 +395,7 @@ function GroupDetailClass() {
             {students.map((student, index) => (
               <NoticeContent
                 key={student.id}
-                onClick={() => GroupDetailWrite(id)}
+                onClick={() => GroupDetailWrite(id, student.id)}
               >
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>{index + 1}</SudentNum>
