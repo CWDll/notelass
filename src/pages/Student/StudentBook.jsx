@@ -324,7 +324,8 @@ function StudentBook() {
 
       if (response.status === 201) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
-        alert(`22번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        console.log("학생 수첩 작성 성공!");
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
@@ -400,7 +401,7 @@ function StudentBook() {
                 <Img src={caret_down} alt="caret_down" />
               </Button>
               <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-                {speechCount}
+                {attitudeCount}
               </p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
