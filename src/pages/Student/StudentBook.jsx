@@ -288,10 +288,11 @@ function StudentBook() {
     try {
       // const res = instance.get(`/api/group/students/${groupId}`);
       const res = await instance.get(`/api/group/students/9`);
-      console.log("students/groupId 서버 응답 확인" + res);
-      console.log("students/groupId 서버 응답 확인" + res.data);
-      if (res.data && res.data.result && res.data.result.studentIdNameDtoList) {
-        setStudents(res.data.result.studentIdNameDtoList); // 학생 데이터를 상태에 저장합니다.
+      console.log("students/groupId 서버 응답 확인", res);
+      console.log("students/groupId 서버 응답 확인", res.data);
+      console.log("students/groupId 서버 응답 확인", res.data.result);
+      if (res.data && res.data.result) {
+        setStudents(res.data.result); // 학생 데이터를 상태에 저장합니다.
       }
     } catch (error) {
       console.error("학생 데이터를 가져오는 중 오류 발생:", error);
