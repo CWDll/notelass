@@ -214,18 +214,19 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-  const Existgroups = [
-    { id: 1, group: "1반" },
-    { id: 2, group: "2반" },
-    { id: 3, group: "3반" },
-    { id: 4, group: "4반" },
-  ];
+  // const Existgroups = [
+  //   { id: 1, group: "1반" },
+  //   { id: 2, group: "2반" },
+  //   { id: 3, group: "3반" },
+  //   { id: 4, group: "4반" },
+  // ];
 
   useEffect(() => {
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
         const resp = await instance.get(`/api/group`);
+        console.log("서버 응답 확인" + resp);
         if (resp.data && resp.data.result && resp.data.result.groupList) {
           console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
@@ -394,7 +395,7 @@ function StudentBook() {
                 <Img src={caret_down} alt="caret_down" />
               </Button>
               <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-                {attitudeCount}
+                {speechCount}
               </p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
