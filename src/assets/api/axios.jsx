@@ -17,6 +17,7 @@ instance.interceptors.request.use(
     // 헤더에 토큰 추가
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
+      // console.log("axsios.jsx: token 존재:" + token);
     }
 
     return config;

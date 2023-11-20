@@ -214,22 +214,22 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-  // const Existgroups = [
-  //   { id: 1, group: "1반" },
-  //   { id: 2, group: "2반" },
-  //   { id: 3, group: "3반" },
-  //   { id: 4, group: "4반" },
-  // ];
+  const Existgroups = [
+    { id: 1, group: "1반" },
+    { id: 2, group: "2반" },
+    { id: 3, group: "3반" },
+    { id: 4, group: "4반" },
+  ];
 
   useEffect(() => {
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
-        const res = await instance.get("/api/group");
-        if (res.data && res.data.result && res.data.result.groupList) {
+        const resp = await instance.get(`/api/group`);
+        if (resp.data && resp.data.result && resp.data.result.groupList) {
           console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
-          const newGroups = res.data.result.groupList.map((g) => ({
+          const newGroups = resp.data.result.groupList.map((g) => ({
             id: g.id,
             group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
           }));
@@ -371,7 +371,7 @@ function StudentBook() {
             onChange={(e) => {
               const text = e.target.value;
               setInputText(text);
-              setByteCount(calculateByteCount(text));
+              // setByteCount(calculateByteCount(text));
             }}
           />
           <ButtonContainer>
@@ -394,7 +394,7 @@ function StudentBook() {
                 <Img src={caret_down} alt="caret_down" />
               </Button>
               <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-                {speechCount}
+                {attitudeCount}
               </p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />

@@ -5,11 +5,11 @@ import envelopeOpen from "../../../assets/envelopeOpen.svg";
 
 export const StyledContainerBox = styled.div`
   width: 684px;
-  height: 400px;
+  /* height: 400px; */
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  /* box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05); */
 `;
 
 export const StyledNoticeItem = styled.li`
