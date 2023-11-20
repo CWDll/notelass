@@ -252,10 +252,9 @@ function GroupDetailClass() {
         const response = await instance.get(`/api/group/students/${id}`);
         console.log(response);
 
-        const filteredStudents = response.data.result.filter((student) =>
-          [22, 23, 24, 25, 26].includes(student.id)
-        );
-        setStudents(filteredStudents);
+        if (response.data && response.data.result) {
+          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
+        }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
       }
