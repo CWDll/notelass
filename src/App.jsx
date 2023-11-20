@@ -51,7 +51,10 @@ function App() {
 
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
-            <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+            <Route
+              path="/GroupDetailClass/:id"
+              element={<GroupDetailClass />}
+            />
             <Route path="/CreateGroup" element={<CreateGroup />} />
             <Route
               path="/GroupDetailClass/AssignmentDetail"
