@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
 import exit from "../../assets/exit.svg";
 import caret_up from "../../assets/caret_up.svg";
 import caret_down from "../../assets/img/caret_down.svg";
-// import caret_down from "../../assets/caret_down.svg";
 
 import instance from "../../assets/api/axios";
 
@@ -214,12 +212,6 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-  // const Existgroups = [
-  //   { id: 1, group: "1반" },
-  //   { id: 2, group: "2반" },
-  //   { id: 3, group: "3반" },
-  //   { id: 4, group: "4반" },
-  // ];
 
   useEffect(() => {
     console.log("useEffect 실행 시작");
@@ -228,10 +220,10 @@ function StudentBook() {
         const resp = await instance.get(`/api/group`);
         console.log("서버 응답: ", JSON.stringify(resp, null, 2));
         console.log("서버 응답 확인" + resp.data);
-        if (resp.data && resp.data.result && resp.data.result.groupList) {
+        if (resp.data && resp.data.result) {
           console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
-          const newGroups = resp.data.result.groupList.map((g) => ({
+          const newGroups = resp.data.result.map((g) => ({
             id: g.id,
             group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
           }));
@@ -286,14 +278,18 @@ function StudentBook() {
     console.log("Selected Group: " + groupId);
 
     try {
-      const res = instance.get(`/api/group/students/${groupId}`);
-      if (res.data && res.data.result && res.data.result.studentIdNameDtoList) {
+      const res = await instance.get(`/api/group/students/${groupId}`);
+      console.log("students/groupId 서버 응답 확인", res);
+      console.log("students/groupId 서버 응답 확인", res.data);
+      console.log("students/groupId 서버 응답 확인", res.data.result);
+      if (res.data && res.data.result) {
         setStudents(res.data.result); // 학생 데이터를 상태에 저장합니다.
       }
     } catch (error) {
       console.error("학생 데이터를 가져오는 중 오류 발생:", error);
       // 오류 처리 로직...
     }
+    console.log("/api/group/students/groupId is finished");
   };
 
   const handleSave = async (e) => {
@@ -313,12 +309,14 @@ function StudentBook() {
       console.log("보낸 requestBody: ", requestBody);
       const response = await instance.post(
         `/api/handbook/${groupId}/${userId}`,
-       
+        // `/api/handbook/9/22`,
         requestBody
       );
 
       if (response.status === 201) {
+        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        console.log("학생 수첩 작성 성공!");
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
@@ -394,7 +392,7 @@ function StudentBook() {
                 <Img src={caret_down} alt="caret_down" />
               </Button>
               <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-                {speechCount}
+                {attitudeCount}
               </p>
               <Button onClick={attitudeUpCount}>
                 <Img src={caret_up} alt="caret_up" />
