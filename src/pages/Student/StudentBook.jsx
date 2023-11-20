@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import book from "../../assets/book.svg";
 import exit from "../../assets/exit.svg";
 import caret_up from "../../assets/caret_up.svg";
 import caret_down from "../../assets/img/caret_down.svg";
-// import caret_down from "../../assets/caret_down.svg";
 
 import instance from "../../assets/api/axios";
 
@@ -214,12 +212,6 @@ function StudentBook() {
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
-  // const Existgroups = [
-  //   { id: 1, group: "1반" },
-  //   { id: 2, group: "2반" },
-  //   { id: 3, group: "3반" },
-  //   { id: 4, group: "4반" },
-  // ];
 
   useEffect(() => {
     console.log("useEffect 실행 시작");
@@ -286,8 +278,7 @@ function StudentBook() {
     console.log("Selected Group: " + groupId);
 
     try {
-      // const res = instance.get(`/api/group/students/${groupId}`);
-      const res = await instance.get(`/api/group/students/9`);
+      const res = await instance.get(`/api/group/students/${groupId}`);
       console.log("students/groupId 서버 응답 확인", res);
       console.log("students/groupId 서버 응답 확인", res.data);
       console.log("students/groupId 서버 응답 확인", res.data.result);
