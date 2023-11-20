@@ -216,12 +216,12 @@ function GroupDetail() {
 
   const accessToken = localStorage.getItem("token");
 
-  console.log(`Stored token: ${accessToken}`);
 
   const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/GroupDetailClass");
-  };
+  const handleGroupClick = (id) => {
+    // navigate(`/GroupDetailClass/${id}`);
+    navigate(`/GroupDetailClass`);
+  }
 
   //그룹 생성 통신
   const api = axios.create({
@@ -256,7 +256,7 @@ function GroupDetail() {
     console.log("grade: " + subject + ", type: " + `Type: ${typeof subject}`);
     console.log(requestBody);
     try {
-      const response = await api.post("/api/group", requestBody);
+      const response = await instance.post("/api/group", requestBody);
 
       // 응답이 성공적이면 groupCode 상태 업데이트
       if (response.status === 201) {
@@ -272,6 +272,25 @@ function GroupDetail() {
       console.error("그룹 생성 중 오류가 발생했습니다:", error);
     }
   };
+
+  // 속한 그룹 목록 GET
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await instance.get("/api/group");
+        if (response.status === 200 && Array.isArray(response.data.result)) {
+          setGroupList(response.data.result);
+        } else {
+          // 오류 처리
+          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      }
+    };
+  
+    fetchGroups();
+  }, []);
 
 
   return (
@@ -330,7 +349,7 @@ function GroupDetail() {
         </SmallContainer>
       )}
 
-      <NoteContainer>
+      {/* <NoteContainer>
         <SubjectBodyWrapper>
           <SubjectBody onClick={onClick}>
             <CircleText>
@@ -346,7 +365,20 @@ function GroupDetail() {
           </SubjectBody>
 
         </SubjectBodyWrapper>
-      </NoteContainer>
+      </NoteContainer>  */}
+
+       <NoteContainer>
+        <SubjectBodyWrapper>
+          {groupList.map(group => (
+            <SubjectBody key={group.id} onClick={() => handleGroupClick(group.id)}>
+              <CircleText>
+                <PurpleText>{group.subject[0]}</PurpleText>
+              </CircleText>
+              <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
+            </SubjectBody>
+          ))}
+        </SubjectBodyWrapper>
+      </NoteContainer> 
     </>
   );
 }
