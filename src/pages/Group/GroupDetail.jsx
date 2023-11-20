@@ -222,14 +222,7 @@ function GroupDetail() {
   };
 
   //그룹 생성 통신
-  const api = axios.create({
-    baseURL:
-      "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
-    credentials: true,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+
 
   const generateGroup = async () => {
     let code = "";

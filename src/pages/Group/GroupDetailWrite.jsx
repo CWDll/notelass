@@ -275,7 +275,7 @@ const SavedText = styled.pre`
 `;
 
 const InfoContainer = styled.div`
-  display: flex;
+  display: column;
   align-items: center;
   margin-left: 32px;
   margin-top: 16px;
@@ -337,7 +337,6 @@ const StudentBookText = styled.div`
   border-radius: 8px;
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
-  margin-left: 32px;
   margin-top: 8px;
 `;
 
@@ -762,33 +761,58 @@ function GroupDetailWrite() {
     fetchStudents();
   }, []);
 
-  // 학생 수첩 조회 Get
-  const [groupId, setGroupId] = useState(null);
-  const [userId, setUserId] = useState(null);
+  // // 학생 수첩 조회 Get
+  // const [studentBookEntries, setStudentBookEntries] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchStudentBook = async () => {
+  //     const groupId = 9; // 하드코딩된 그룹 ID
+  //     const userId = 22; // 하드코딩된 유저 ID
+  
+  //     try {
+  //       const response = await instance.get(`/api/handbook/${groupId}/${userId}`);
+  //       console.log('학생 수첩 조회 내용:', response.data); 
+  //     if (response.status === 200) {
+  //       setSavedTextFromStudentBook(response.data.result);
+  //       setStudentBookEntries(response.data.result); 
+  //       } else {
+  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+  //       }
+  //     } catch (error) {
+  //       console.error("학생 수첩을 가져오지 못했습니다.:", error);
+  //     }
+  //   };
+  
+  //   fetchStudentBook(); // useEffect 내에서 바로 호출
+  // }, []); // 빈 의존성 배열을 사용하여 마운트 시 한 번만 호출
+
+
+
+
+  
+  //paramsGroupId, paramsUserId
   const [studentBookEntries, setStudentBookEntries] = useState([]);
 
-  useEffect(() => {
-    const fetchStudentBook = async () => {
-      try {
-        const response = await instance.get(
-          `/api/handbook/${groupId}/${userId}`
-        );
-        console.log(response);
-        if (response.status === 200) {
-          setSavedTextFromStudentBook(response.data.result);
-        } else {
-          console.error(
-            "서버로부터 예상치 못한 응답을 받았습니다:",
-            response.data
-          );
-        }
-      } catch (error) {
-        console.error("학생 수첩을 가져오지 못했습니다.:", error.message);
+useEffect(() => {
+  const fetchStudentBook = async () => {
+    try {
+      const response = await instance.get(`/api/handbook/${paramsGroupId}/${paramsUserId}`);
+      console.log('학생 수첩 조회 내용:', response.data); 
+      if (response.status === 200) {
+        setSavedTextFromStudentBook(response.data.result);
+        setStudentBookEntries(response.data.result); 
+      } else {
+        console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
       }
-    };
+    } catch (error) {
+      console.error("학생 수첩을 가져오지 못했습니다.:", error);
+    }
+  };
 
+  if (paramsGroupId && paramsUserId) { 
     fetchStudentBook();
-  }, [groupId, userId]);
+  }
+}, [paramsGroupId, paramsUserId]); 
 
   /***  통신  ***/
   //생기부 작성
@@ -954,17 +978,21 @@ function GroupDetailWrite() {
           </StudentBookText>
         </RightContainer>  */}
 
-        <RightContainer>
-          <Title>학생수첩</Title>
-          {studentBookEntries.map((entry) => (
-            <InfoContainer key={entry.id}>
-              <TimeText>{entry.createdDate}</TimeText>
-              <StudentBookText>
-                <SavedText>{entry.content}</SavedText>
-              </StudentBookText>
-            </InfoContainer>
-          ))}
-        </RightContainer>
+      <RightContainer>
+        <Title>학생수첩</Title>
+        {studentBookEntries.map((entry) => (
+          <InfoContainer key={entry.id}>
+            
+            <TimeText>
+              {/* 날짜 형식을 년-월-일 */}
+              {new Date(entry.createdDate).toLocaleDateString('ko-KR')}
+            </TimeText>
+            <StudentBookText>
+              <SavedText>{entry.content}</SavedText>
+            </StudentBookText>
+          </InfoContainer>
+        ))}
+      </RightContainer>
       </MainContainer>
     </div>
   );
