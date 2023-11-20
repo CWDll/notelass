@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
@@ -216,12 +216,10 @@ function GroupDetail() {
 
   const accessToken = localStorage.getItem("token");
 
-
   const navigate = useNavigate();
   const handleGroupClick = (id) => {
-    // navigate(`/GroupDetailClass/${id}`);
-    navigate(`/GroupDetailClass`);
-  }
+    navigate(`/GroupDetailClass/${id}`);
+  };
 
   //그룹 생성 통신
   const api = axios.create({
@@ -229,7 +227,6 @@ function GroupDetail() {
       "http://ec2-15-165-142-90.ap-northeast-2.compute.amazonaws.com:8080",
     credentials: true,
     headers: {
-      
       Authorization: `Bearer ${accessToken}`,
     },
   });
@@ -288,10 +285,9 @@ function GroupDetail() {
         console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
       }
     };
-  
+
     fetchGroups();
   }, []);
-
 
   return (
     <>
@@ -367,10 +363,13 @@ function GroupDetail() {
         </SubjectBodyWrapper>
       </NoteContainer>  */}
 
-       <NoteContainer>
+      <NoteContainer>
         <SubjectBodyWrapper>
-          {groupList.map(group => (
-            <SubjectBody key={group.id} onClick={() => handleGroupClick(group.id)}>
+          {groupList.map((group) => (
+            <SubjectBody
+              key={group.id}
+              onClick={() => handleGroupClick(group.id)}
+            >
               <CircleText>
                 <PurpleText>{group.subject[0]}</PurpleText>
               </CircleText>
@@ -378,7 +377,7 @@ function GroupDetail() {
             </SubjectBody>
           ))}
         </SubjectBodyWrapper>
-      </NoteContainer> 
+      </NoteContainer>
     </>
   );
 }

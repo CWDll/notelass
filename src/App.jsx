@@ -51,7 +51,10 @@ function App() {
 
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
-            <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
+            <Route
+              path="/GroupDetailClass/:id"
+              element={<GroupDetailClass />}
+            />
             <Route path="/CreateGroup" element={<CreateGroup />} />
             <Route
               path="/GroupDetailClass/AssignmentDetail"
@@ -63,7 +66,10 @@ function App() {
             />
             <Route path="/StudentTaskDetail" element={<StudentTaskDetail />} />
             <Route path="/GroupScoreDetail" element={<GroupScoreDetail />} />
-            <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
+            <Route
+              path="/GroupDetailWrite/:id"
+              element={<GroupDetailWrite />}
+            />
 
             <Route path="/TasksDetail" element={<TasksDetail />} />
             <Route path="/Note" element={<Note />} />

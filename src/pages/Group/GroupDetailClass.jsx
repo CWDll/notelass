@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import person from "../../assets/person.svg";
@@ -210,12 +210,13 @@ const Exit = styled.img`
 
 function GroupDetailClass() {
   const navigate = useNavigate();
+  const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
     navigate("/GroupDetailClass/AssignmentDetail");
   };
   const GroupDetailWrite = () => {
-    navigate("/GroupDetailWrite");
+    navigate(`/GroupDetailWrite/${id}`);
   };
 
   const BackButton = () => {
@@ -244,26 +245,23 @@ function GroupDetailClass() {
   //학생 목록에 데이터 받아오기
 
   const [students, setStudents] = useState([]);
-  
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await instance.get('/api/group/students/9');
-        console.log(response); 
-  
-       
-        const filteredStudents = response.data.result
-          .filter(student => [22, 23, 24, 25, 26].includes(student.id));
-        setStudents(filteredStudents);
-  
+        const response = await instance.get(`/api/group/students/${id}`);
+        console.log(response);
+
+        if (response.data && response.data.result) {
+          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
+        }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
       }
     };
-  
+
     fetchStudents();
   }, []);
-  
 
   /*** 통신  ***/
   // //그룹 별 공지 목록 조회
@@ -329,7 +327,7 @@ function GroupDetailClass() {
                       </NoticeDate>
                     )}
                   </NoticeContent> */}
-                {/* </StyledNoticeItem>
+            {/* </StyledNoticeItem>
               ))}
             </SubjectContainer> */}
           </NoticeContainer>
@@ -391,17 +389,20 @@ function GroupDetailClass() {
         </LeftSectionContainer>
 
         <ManagementContainer>
-        <Title>생기부 관리</Title>
-        <SubjectContainer>
-        {students.map((student, index) => (
-          <NoticeContent key={student.id} onClick={() => GroupDetailWrite(index)}>
-            <NoticeImg src={person} alt="person" />
-            <SudentNum>{index + 1}</SudentNum>
-            <NoticeTitle>{student.name}</NoticeTitle>
-          </NoticeContent>
-        ))}
-        </SubjectContainer>
-      </ManagementContainer>
+          <Title>생기부 관리</Title>
+          <SubjectContainer>
+            {students.map((student, index) => (
+              <NoticeContent
+                key={student.id}
+                onClick={() => GroupDetailWrite(id)}
+              >
+                <NoticeImg src={person} alt="person" />
+                <SudentNum>{index + 1}</SudentNum>
+                <NoticeTitle>{student.name}</NoticeTitle>
+              </NoticeContent>
+            ))}
+          </SubjectContainer>
+        </ManagementContainer>
       </MainContainer>
     </>
   );
