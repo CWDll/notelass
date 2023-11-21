@@ -42,7 +42,7 @@ export const NoticeContent = styled.div`
 export const NoticeBody = styled.div`
   width: 684px;
   height: 48px;
-  margin-top: 28px;
+  /* margin-top: 28px; */
   flex-shrink: 0;
 `;
 

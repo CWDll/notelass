@@ -36,8 +36,6 @@ export const LeftHeading = styled.p`
   line-height: normal;
 `;
 
-
-
 export const GrayText = styled.p`
   color: gray;
   font-size: 10px;
@@ -56,7 +54,7 @@ export const MainNoticeContainer = styled.div`
 export const NoticeBody = styled.div`
   width: 684px;
   height: 48px;
-  margin-top: 28px;
+  margin-top: 18px;
   flex-shrink: 0;
 `;
 
@@ -99,7 +97,7 @@ export const Img = styled.img`
   margin-left: 360px;
 `;
 
-export  const SelectButton = styled.button`
+export const SelectButton = styled.button`
   display: flex;
   height: 24px;
   padding: 4px 8px;
@@ -107,20 +105,19 @@ export  const SelectButton = styled.button`
   align-items: center;
   gap: 10px;
   border-radius: 12px;
-  background: var(--primary-light-cobalt, #EDEDFF);
-  margin-left:${props => props.$isFirst ? '27' : '8'}px;
+  background: var(--primary-light-cobalt, #ededff);
+  margin-left: ${(props) => (props.$isFirst ? "27" : "8")}px;
   margin-top: 37px;
 
   &:focus {
     outline: none;
   }
 
-  color: var(--primary-cobalt, #4849FF);
+  color: var(--primary-cobalt, #4849ff);
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   white-space: nowrap;
-
 `;
