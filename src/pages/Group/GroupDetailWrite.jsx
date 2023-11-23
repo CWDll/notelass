@@ -634,6 +634,7 @@ function GroupDetailWrite() {
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
+    navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`);
   };
 
   const navigate = useNavigate();
