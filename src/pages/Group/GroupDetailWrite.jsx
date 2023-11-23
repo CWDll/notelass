@@ -641,18 +641,38 @@ function GroupDetailWrite() {
     navigate("/GroupDetailClass");
   };
 
-  const handleSaveButtonClick = () => {
+  // const handleSaveButtonClick = () => {
+  //   if (!isTextSaved) {
+  //     setSavedText(inputText);
+  //     setIsTextSaved(true);
+  //     setButtonText("한셀 출력");
+
+  //     sendRecord(groupId, selectedStudent, inputText);
+  //   } else {
+  //     exportToExcel(savedText);
+
+  //     if (attachedFile) {
+  //       uploadFile(groupId, attachedFile);
+  //     }
+  //   }
+  // };
+
+
+  const handleSaveButtonClick = async () => {
     if (!isTextSaved) {
-      setSavedText(inputText);
-      setIsTextSaved(true);
-      setButtonText("한셀 출력");
-
-      sendRecord(groupId, selectedStudent, inputText);
+      const saveSuccessful = await saveData(inputText);
+      if (saveSuccessful) {
+        // 저장 성공 후 필요한 추가 로직을 여기에 구현
+        setIsTextSaved(true); // 서버에 저장된 상태로 변경
+        setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        // fetchData(); // 필요하다면 서버로부터 데이터를 다시 가져올 수 있음
+      }
     } else {
-      exportToExcel(savedText);
-
+      // '한셀 출력' 로직을 여기에 구현
+      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
+  
       if (attachedFile) {
-        uploadFile(groupId, attachedFile);
+        uploadFile(groupId, attachedFile); // 첨부된 파일이 있으면 파일 업로드
       }
     }
   };
@@ -812,7 +832,7 @@ function GroupDetailWrite() {
   //   fetchStudentBook(); // useEffect 내에서 바로 호출
   // }, []); // 빈 의존성 배열을 사용하여 마운트 시 한 번만 호출
 
-  //paramsGroupId, paramsUserId
+  //학생 수첩 조회 Get 함수
   const [studentBookEntries, setStudentBookEntries] = useState([]);
 
   useEffect(() => {
@@ -881,6 +901,41 @@ function GroupDetailWrite() {
   //     console.error("수정 중 오류가 발생했습니다:", error);
   //   }
   // };
+
+//생기부 작성 POST 함수
+const saveData = async (text) => {
+  try {
+    const response = await instance.post(`/api/record/${paramsGroupId}/${paramsUserId}`, { content: text });
+    if (response.status === 201) {
+      console.log("데이터가 성공적으로 저장되었습니다.");
+      setIsTextSaved(true); // 데이터가 저장되었음을 상태에 표시
+      setButtonText("한셀 출력"); // 버튼 텍스트 변경
+      setInputText(text); // 입력된 텍스트를 저장
+      return true;
+    }
+  } catch (error) {
+    console.error("데이터 저장 중 오류가 발생했습니다:", error.response ? error.response.data : error);
+    setIsTextSaved(false); // 데이터가 저장되지 않았음을 상태에 표시
+  }
+  return false;
+};
+
+
+  //생기부 내용 조회 Get 함수
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/api/fetch/${paramsGroupId}`);
+      if (response.status === 200) {
+        setInputText(response.data.content);
+        console.log("데이터를 성공적으로 가져왔습니다.");
+      }
+    } catch (error) {
+      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+    }
+  };
+
+
+
 
   /***  통신  ***/
   //생기부 작성
@@ -967,12 +1022,9 @@ function GroupDetailWrite() {
             <>
               <WritingBox>
                 <Textarea
-                  value={inputText}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    setInputText(text);
-                    setByteCount(calculateByteCount(text));
-                  }}
+                   value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+            
                 />
                 <ByteCounting>{byteCount}/1500 byte</ByteCounting>
                 <HancellButton>
