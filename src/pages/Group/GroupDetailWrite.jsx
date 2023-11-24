@@ -866,7 +866,6 @@ function GroupDetailWrite() {
         `/api/handbook/${handbookContentId}`
       );
       if (response.status === 204) {
-        // 성공적으로 삭제되었을 때 UI에서 해당 항목을 제거하기 위해 상태를 업데이트합니다.
         setStudentBookEntries((currentEntries) =>
           currentEntries.filter((entry) => entry.id !== handbookContentId)
         );
@@ -902,7 +901,8 @@ function GroupDetailWrite() {
   //     console.error("수정 중 오류가 발생했습니다:", error);
   //   }
   // };
-  // 전체 생활기록부 글 불러오기 함수
+
+  // 전체 생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
   const [savedTextFromText, setSavedTextFromText] = useState("");
 
@@ -1124,11 +1124,12 @@ function GroupDetailWrite() {
                     {/* 날짜 형식을 년-월-일 */}
                     {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
                   </TimeText>
-
-                  <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                  <CopyButton onClick={handleCopyButtonClick}>
-                    복사하기
-                  </CopyButton>
+                  <div style={{ marginTop: "-20px" }}>
+                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
+                    <CopyButton onClick={handleCopyButtonClick}>
+                      복사하기
+                    </CopyButton>
+                  </div>
                   <StudentBookText>
                     <SavedText>{entry.content}</SavedText>
                   </StudentBookText>
