@@ -202,7 +202,7 @@ const students = [
   { id: 4, name: "4번 김민수" },
 ];
 
-function StudentBookContent({ show, onClose, groupId, userId }) {
+function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
   const [selectedStudent, setSelectedStudent] = useState(userId);
   const [selectedGroup, setSelectedGroup] = useState(groupId);
   const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
@@ -213,6 +213,14 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
 
   useEffect(() => {
+    console.log(
+      "props로 넘어온 정보들: ",
+      show,
+      onClose,
+      groupId,
+      userId,
+      contentId
+    );
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {

@@ -582,6 +582,7 @@ function GroupDetailWrite() {
   const [showStudentBook, setShowStudentBook] = useState(false);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [contentId, setContentId] = useState();
   //
   const [byteCount, setByteCount] = useState(0);
   const [inputText, setInputText] = useState("");
@@ -630,10 +631,12 @@ function GroupDetailWrite() {
     console.log("entry.id", entry.id);
     console.log("entryIdType", typeof entry.id);
     console.log("entryId", entryId);
+
     if (entry) {
       setSelectedGroupId(paramsGroupId);
       setSelectedUserId(paramsUserId);
       setShowStudentBook(true);
+      setContentId(entryId);
       console.log("setShowStudentBook=true 만든 상태");
     } else {
       console.error("학생 정보를 찾을 수 없음");
@@ -1180,6 +1183,7 @@ function GroupDetailWrite() {
               onClose={() => setShowStudentBook(false)}
               groupId={selectedGroupId}
               userId={selectedUserId}
+              contentId={contentId}
             />
           )}
         </RightContainer>
