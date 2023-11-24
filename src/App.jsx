@@ -29,6 +29,8 @@ import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
 import CreateGroup from "./components/Component/Group/CreateGroup";
 import NoticeDetail from "./pages/Notice/NoticeDetail";
+//학생수첩
+import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool";
@@ -48,7 +50,8 @@ function App() {
             <Route path="/TimeTable" element={<TimeTable />} />
             <Route path="/MealTable" element={<MealTable />} />
             <Route path="/NoticeDetail" element={<NoticeDetail />} />
-
+            {/* 학생수첩 */}
+            <Route path="/StudentBook" elemetn={<StudentBook />} />
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route

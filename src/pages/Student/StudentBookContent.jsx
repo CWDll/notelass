@@ -7,8 +7,6 @@ import caret_down from "../../assets/img/caret_down.svg";
 
 import instance from "../../assets/api/axios";
 
-import StudentBookContent from "./StudentBookContent";
-
 const StudentBookContainer = styled.div`
   width: 60px;
   height: 118px;
@@ -204,26 +202,7 @@ const students = [
   { id: 4, name: "4번 김민수" },
 ];
 
-/*
-1
-2
-3
-4
-5
-6
-7
-8
-9
-0
-1
-2
-3
-4
-5
-*/
-
-function StudentBook({ show, onClose, groupId, userId }) {
-  const [showSmallContainer, setShowSmallContainer] = useState(false);
+function StudentBookContent({ show, onClose, groupId, userId }) {
   const [selectedStudent, setSelectedStudent] = useState(userId);
   const [selectedGroup, setSelectedGroup] = useState(groupId);
   const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
@@ -260,11 +239,9 @@ function StudentBook({ show, onClose, groupId, userId }) {
     fetchGroups();
   }, [groupId, userId]);
 
-  // useEffect를 사용하여 외부에서 받은 show 상태에 따라 내부의 showSmallContainer 상태를 조절
-  useEffect(() => {
-    setShowSmallContainer(show);
-    console.log(show, onclose, groupId, userId);
-  }, [show]);
+  if (show == false) {
+    return null; // show가 false일 경우 아무 것도 렌더링하지 않음
+  }
 
   // 모달 닫기 핸들러
   const handleClose = () => {
@@ -351,6 +328,7 @@ function StudentBook({ show, onClose, groupId, userId }) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
+        location.reload();
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
@@ -360,15 +338,74 @@ function StudentBook({ show, onClose, groupId, userId }) {
   };
 
   return (
-    <StudentBookContainer
-      onClick={() => setShowSmallContainer(!showSmallContainer)}
-    >
-      <BookImg src={book} alt="book" />
-      <Text>학생 수첩</Text>
+    <SmallContainer onClick={(e) => e.stopPropagation()}>
+      <GroupSelect onChange={handleGroupChange}>
+        <option value="" disabled selected>
+          그룹 선택
+        </option>
+        {groups.map(
+          (
+            group // 'groups' 상태를 사용
+          ) => (
+            <option key={group.id} value={group.id}>
+              {group.group}
+            </option>
+          )
+        )}
+      </GroupSelect>
 
-      {showSmallContainer && <StudentBookContent />}
-    </StudentBookContainer>
+      <StudentSelect onChange={handleStudentChange}>
+        <option value="" disabled selected>
+          학생 선택
+        </option>
+        {students.map((student) => (
+          <option key={student.id} value={student.id}>
+            {student.name}
+          </option>
+        ))}
+      </StudentSelect>
+      <ExitImg src={exit} alt="exit" onClick={handleClose}></ExitImg>
+      <Textarea
+        value={inputText}
+        onChange={(e) => {
+          const text = e.target.value;
+          setInputText(text);
+          // setByteCount(calculateByteCount(text));
+        }}
+      />
+      <ButtonContainer>
+        <p>발표 횟수</p>
+        <CountContainer>
+          <Button onClick={speechDownCount}>
+            <Img src={caret_down} alt="caret_down" />
+          </Button>
+          <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+            {speechCount}
+          </p>
+          <Button onClick={speechUpCount}>
+            <Img src={caret_up} alt="caret_up" />
+          </Button>
+        </CountContainer>
+
+        <p>태도 점수</p>
+        <CountContainer>
+          <Button onClick={attitudeDownCount}>
+            <Img src={caret_down} alt="caret_down" />
+          </Button>
+          <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+            {attitudeCount}
+          </p>
+          <Button onClick={attitudeUpCount}>
+            <Img src={caret_up} alt="caret_up" />
+          </Button>
+        </CountContainer>
+      </ButtonContainer>
+
+      {/* <CancleButton onClick={() => setShowSmallContainer(false)}> */}
+      <CancleButton onClick={handleClose}>취소</CancleButton>
+      <SaveButton onClick={handleSave}>저장하기</SaveButton>
+    </SmallContainer>
   );
 }
 
-export default StudentBook;
+export default StudentBookContent;

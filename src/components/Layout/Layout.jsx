@@ -16,10 +16,16 @@ export const Container = styled.div`
 export default function Layout() {
   //pdf-viewer에서는 학생수첩과 Footer가 보이지 않게 함
   const location = useLocation();
-  const shouldRenderStudentBook =
-    location.pathname !== "/NoteDetailSubject/pdf-viewer";
+  // 정규 표현식을 사용하여 '/GroupDetailWrite/:groupId/:userId' 패턴과 일치하는지 확인
+  const isGroupDetailWritePath = /\/GroupDetailWrite\/\d+\/\d+/.test(
+    location.pathname
+  );
+
   const shouldRenderFooter =
     location.pathname !== "/NoteDetailSubject/pdf-viewer";
+  const shouldRenderStudentBook =
+    location.pathname !== "/NoteDetailSubject/pdf-viewer" ||
+    !isGroupDetailWritePath;
 
   return (
     <Container>
