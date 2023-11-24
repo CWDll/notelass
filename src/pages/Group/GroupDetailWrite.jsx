@@ -578,14 +578,15 @@ function GroupDetailWrite() {
   const [byteCount, setByteCount] = useState(0);
   const [inputText, setInputText] = useState("");
   const [savedText, setSavedText] = useState("");
-  const [isTextSaved, setIsTextSaved] = useState(false);
   const [buttonText, setButtonText] = useState("저장하기");
+  const [isTextSaved, setIsTextSaved] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState();
   const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
+  const [fetchText, setFetchText] = useState("");
 
   //파일 업로드
   const handleFileChange = (event) => {
@@ -604,7 +605,7 @@ function GroupDetailWrite() {
     setUploadStatus("pending"); // 업로드 진행 중 상태 설정
     try {
       const response = await axios.post(
-        `/api/record/excel/${groupId}`,
+        `/api/record/excel/${paramsGroupId}`,
         formData,
         {
           headers: {
@@ -628,9 +629,6 @@ function GroupDetailWrite() {
     }
   };
 
-  const handleSaveFromStudentBook = (text) => {
-    setSavedTextFromStudentBook(text);
-  };
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -642,18 +640,38 @@ function GroupDetailWrite() {
     navigate("/GroupDetailClass");
   };
 
-  const handleSaveButtonClick = () => {
+  // const handleSaveButtonClick = () => {
+  //   if (!isTextSaved) {
+  //     setSavedText(inputText);
+  //     setIsTextSaved(true);
+  //     setButtonText("한셀 출력");
+
+  //     sendRecord(groupId, selectedStudent, inputText);
+  //   } else {
+  //     exportToExcel(savedText);
+
+  //     if (attachedFile) {
+  //       uploadFile(groupId, attachedFile);
+  //     }
+  //   }
+  // };
+
+
+  const handleSaveButtonClick = async () => {
     if (!isTextSaved) {
-      setSavedText(inputText);
-      setIsTextSaved(true);
-      setButtonText("한셀 출력");
-
-      sendRecord(groupId, selectedStudent, inputText);
+      const saveSuccessful = await saveData(inputText);
+      if (saveSuccessful) {
+        // 저장 성공 후 필요한 추가 로직을 여기에 구현
+        setIsTextSaved(true); // 서버에 저장된 상태로 변경
+        setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        await fetchText();
+      }
     } else {
-      exportToExcel(savedText);
-
+      // '한셀 출력' 로직을 여기에 구현
+      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
+  
       if (attachedFile) {
-        uploadFile(groupId, attachedFile);
+        uploadFile(groupId, attachedFile); 
       }
     }
   };
@@ -673,13 +691,6 @@ function GroupDetailWrite() {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
     const fileName = "학생별 세부능력 및 특기사항";
-
-    // const headers = ["학생 이름", "반", "번호", "과제1","과제2", "과제3", "과제4"];
-
-    // const studentsData = [
-    //   ["지석진", "3학년 1반", "1", "상위 25%", "상위 25%", "상위 20%", "상위 10%"],
-    //   ["이광수", "3학년 1반", "2", "상위 50%", "상위 45%", "상위 30%" , "상위 20%"],
-    // ];
 
     const headers = ["학생 이름", "반", "번", "내용"];
 
@@ -768,52 +779,8 @@ function GroupDetailWrite() {
     fetchStudents();
   }, [paramsGroupId]);
 
-  // useEffect(() => {
-  //   console.log("params로 가져온 groupId: ", paramsGroupId);
-  //   const fetchStudents = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `/api/group/students/${paramsGroupId}`
-  //       );
-  //       console.log(response);
 
-  //       if (response.data && response.data.result) {
-  //         setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
-  //       }
-  //     } catch (error) {
-  //       console.error("학생리스트를 가져오지 못했습니다.:", error.message);
-  //     }
-  //   };
-
-  //   fetchStudents();
-  // }, []);
-
-  // // 학생 수첩 조회 Get
-  // const [studentBookEntries, setStudentBookEntries] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchStudentBook = async () => {
-  //     const groupId = 9; // 하드코딩된 그룹 ID
-  //     const userId = 22; // 하드코딩된 유저 ID
-
-  //     try {
-  //       const response = await instance.get(`/api/handbook/${groupId}/${userId}`);
-  //       console.log('학생 수첩 조회 내용:', response.data);
-  //     if (response.status === 200) {
-  //       setSavedTextFromStudentBook(response.data.result);
-  //       setStudentBookEntries(response.data.result);
-  //       } else {
-  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
-  //       }
-  //     } catch (error) {
-  //       console.error("학생 수첩을 가져오지 못했습니다.:", error);
-  //     }
-  //   };
-
-  //   fetchStudentBook(); // useEffect 내에서 바로 호출
-  // }, []); // 빈 의존성 배열을 사용하여 마운트 시 한 번만 호출
-
-  //paramsGroupId, paramsUserId
+  //학생 수첩 조회 Get 함수
   const [studentBookEntries, setStudentBookEntries] = useState([]);
 
   useEffect(() => {
@@ -838,6 +805,8 @@ function GroupDetailWrite() {
       fetchStudentBook();
     }
   }, [paramsGroupId, paramsUserId]);
+
+
 
   // 학생 수첩 내용 DELETE 함수
   const deleteStudentBookEntry = async (handbookContentId) => {
@@ -882,6 +851,53 @@ function GroupDetailWrite() {
   //     console.error("수정 중 오류가 발생했습니다:", error);
   //   }
   // };
+// 전체 생활기록부 글 불러오기 함수
+  const [TextEntries, setTextEntries] = useState([]);
+  const [savedTextFromText, setSavedTextFromText] = useState("");
+
+// 생활기록부 전체 불러오기 함수
+useEffect(() => {
+  const fetchText = async () => {
+    try {
+      const response = await instance.get(`/api/record/${paramsGroupId}/${paramsUserId}`);
+      if (response.status === 200 && response.data.result) {
+        setTextEntries(response.data.result);
+      } else {
+        console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+      }
+    } catch (error) {
+      console.error("데이터 불러오기 중 오류 발생:", error);
+    }
+  };
+
+  if (paramsGroupId && paramsUserId) {
+    fetchText();
+  }
+}, [paramsGroupId, paramsUserId]);
+
+
+// 생활기록부 POST 함수
+const saveData = async (text) => {
+  const requestBody = {
+    content: text,
+  };
+
+  try {
+    const postResponse = await instance.post(`/api/record/${paramsGroupId}/${paramsUserId}`, requestBody);
+
+    if (postResponse.status === 201) {
+      console.log("생활기록부 작성 성공!");
+      return postResponse.data; // 저장된 데이터를 반환
+    } else {
+      console.error("예상치 못한 상태 코드:", postResponse.status, postResponse.data);
+    }
+  } catch (error) {
+    console.error("데이터 저장 중 오류 발생:", error);
+  }
+  return null; // 오류 발생 시 null 반환
+};
+
+
 
   /***  통신  ***/
   //생기부 작성
@@ -931,6 +947,7 @@ function GroupDetailWrite() {
           한셀로 출력
         </Printexecl>
 
+        {/*한셀로 출력하기 버튼을 누르면 창 생성*/ }
         {showSmallContainer && (
           <SmallContainer>
             <Exit
@@ -961,20 +978,25 @@ function GroupDetailWrite() {
                 onKeyDown={handleKeyDown}
               />
               <ScoreTitle>:</ScoreTitle>
-              <p style={{ marginLeft: "3px" }}>{output}</p>
+              <div style={{ marginLeft: "3px" }}>{output}</div>
             </PercentBody>
           </ScoreList>
           {!isTextSaved ? (
             <>
               <WritingBox>
+
+                {/*생활기록부 입력창*/}
+
                 <Textarea
                   value={inputText}
                   onChange={(e) => {
-                    const text = e.target.value;
-                    setInputText(text);
-                    setByteCount(calculateByteCount(text));
+                    setInputText(e.target.value);
+                    setByteCount(calculateByteCount(e.target.value)); // Also update the byte count when text changes
                   }}
                 />
+
+
+               
                 <ByteCounting>{byteCount}/1500 byte</ByteCounting>
                 <HancellButton>
                   <input
@@ -990,12 +1012,11 @@ function GroupDetailWrite() {
                   />
                   한셀에서 가져오기
                   <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-                  {uploadStatus === "pending" && <p>업로드 중...</p>}
-                  {uploadStatus === "success" && <p>업로드 성공!</p>}
-                  {uploadStatus === "fail" && <p>업로드 실패!</p>}
+                 
                 </HancellButton>
               </WritingBox>
               <>
+                {/**키워드 입력창 */}
                 <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
                 <Keyword
                   type="text"
@@ -1021,31 +1042,40 @@ function GroupDetailWrite() {
             </>
           ) : null}
 
-          {isTextSaved && (
-            <div>
-              <InfoContainer>
-                <TimeText>2023년 1학기-1</TimeText>
-                <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                <CopyButton onClick={handleCopyButtonClick}>
-                  복사하기
-                </CopyButton>
-              </InfoContainer>
-              <SavedTextContainer>
-                <SavedText>{savedText}</SavedText>
-              </SavedTextContainer>
-            </div>
-          )}
-        </LeftContainer>
+            {isTextSaved && (
+              <div>
+                {/* <InfoContainer>
+                  <EditButton onClick={handleTextEdit}>수정하기</EditButton>
+                  <CopyButton onClick={handleCopyButtonClick}>복사하기</CopyButton>
+                </InfoContainer>
 
-        {/* <RightContainer>
-          <Title>학생수첩</Title>
-          <InfoContainer>
-            <TimeText>2023년 1학기-1</TimeText>
-          </InfoContainer>
-          <StudentBookText>
-            <SavedText>자발적으로 수업 준비물을 옮기는데 도움을 줌</SavedText>
-          </StudentBookText>
-        </RightContainer>  */}
+                <SavedTextContainer>
+                  {TextEntries.map((entry, index) => (
+                    <SavedText key={index}>
+                      {entry.content} - {new Date(entry.createdDate).toLocaleDateString('ko-KR')}
+                    </SavedText>
+                  ))}
+                </SavedTextContainer> */}
+
+          {TextEntries.map((entry) => (
+            <InfoContainer key={entry.id}>
+              <TimeText>
+                {/* 날짜 형식을 년-월-일 */}
+                {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
+              </TimeText>
+              
+              <EditButton onClick={handleTextEdit}>수정하기</EditButton>
+              <CopyButton onClick={handleCopyButtonClick}>복사하기</CopyButton>
+              <StudentBookText>
+                <SavedText>{entry.content}</SavedText>
+              </StudentBookText>
+            </InfoContainer>
+          ))}
+
+
+              </div>
+            )}
+        </LeftContainer>
 
         <RightContainer>
           <Title>학생수첩</Title>
