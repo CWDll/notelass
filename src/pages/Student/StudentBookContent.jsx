@@ -43,16 +43,17 @@ const Text = styled.p`
 `;
 
 const SmallContainer = styled.div`
-  width: 760px;
-  height: 480px;
+  /* width: 760px;
+  height: 480px; */
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed;
-  margin-left: -1000px;
-  margin-top: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const StudentSelect = styled.select`
@@ -195,16 +196,15 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-const students = [
-  { id: 1, name: "1번 김민수" },
-  { id: 2, name: "2번 김민수" },
-  { id: 3, name: "3번 김민수" },
-  { id: 4, name: "4번 김민수" },
-];
-
-function StudentBookContent({ show, onClose, groupId, userId }) {
-  const [selectedStudent, setSelectedStudent] = useState(userId);
-  const [selectedGroup, setSelectedGroup] = useState(groupId);
+function StudentBookContent({
+  show,
+  onClose,
+  propsGroupId,
+  propsUserId,
+  contentId,
+}) {
+  const [selectedStudent, setSelectedStudent] = useState(propsUserId);
+  const [selectedGroup, setSelectedGroup] = useState(propsGroupId);
   const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
   const [inputText, setInputText] = useState("");
   const [speechCount, setSpeechCount] = useState(0);
@@ -213,12 +213,54 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
 
   useEffect(() => {
+    console.log(
+      "props로 넘어온 정보들: ",
+      show,
+      onClose,
+      propsGroupId,
+      propsUserId,
+      contentId
+    );
+
+    if (contentId) {
+      const fetchStudentBook = async () => {
+        try {
+          const response = await instance.get(
+            `/api/handbook/${propsGroupId}/${propsUserId}`
+          );
+          console.log("####학생 수첩 조회 내용:", response.data);
+          if (response.status === 200 && response.data.result) {
+            const studentBookEntries = response.data.result;
+            // contentId와 일치하는 항목 찾기
+            const matchingEntry = studentBookEntries.find(
+              (entry) => entry.id === contentId
+            );
+            if (matchingEntry) {
+              // 찾은 내용으로 setInputText 호출
+              setInputText(matchingEntry.content);
+            }
+          } else {
+            console.error(
+              "서버로부터 예상치 못한 응답을 받았습니다:",
+              response
+            );
+          }
+        } catch (error) {
+          console.error("학생 수첩을 가져오지 못했습니다.:", error);
+        }
+      };
+
+      if (propsGroupId && propsUserId) {
+        fetchStudentBook();
+      }
+    }
+
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
         const resp = await instance.get(`/api/group`);
-        console.log("서버 응답: ", JSON.stringify(resp, null, 2));
-        console.log("서버 응답 확인" + resp.data);
+        // console.log("서버 응답: ", JSON.stringify(resp, null, 2));
+        // console.log("서버 응답 확인" + resp.data);
         if (resp.data && resp.data.result) {
           console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
@@ -237,7 +279,7 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
     };
 
     fetchGroups();
-  }, [groupId, userId]);
+  }, [propsGroupId, propsUserId]);
 
   if (show == false) {
     return null; // show가 false일 경우 아무 것도 렌더링하지 않음
@@ -278,7 +320,6 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
     e.stopPropagation();
     setSelectedStudent(e.target.value);
     console.log("Selected Student: " + e.target.value);
-    console.log("Selected Student: " + e.target);
   };
 
   //반 선택
@@ -289,7 +330,13 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
     console.log("Selected Group: " + groupId);
 
     try {
-      const res = await instance.get(`/api/group/students/${groupId}`);
+      let res;
+      if (contentId) {
+        res = await instance.get(`/api/group/students/${propsGroupId}`);
+      } else {
+        res = await instance.get(`/api/group/students/${groupId}`);
+      }
+
       console.log("students/groupId 서버 응답 확인", res);
       console.log("students/groupId 서버 응답 확인", res.data);
       console.log("students/groupId 서버 응답 확인", res.data.result);
@@ -303,8 +350,11 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
     console.log("/api/group/students/groupId is finished");
   };
 
+  // 저장하기 버튼 클릭
   const handleSave = async (e) => {
     e.preventDefault();
+
+    // contentId가 있으면 POST대신 PATCH를 보낼 로직
 
     // 상태에서 groupId와 userId를 사용합니다.
     const groupId = selectedGroup; // 이전에 선택된 그룹 ID
@@ -318,16 +368,29 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
 
     try {
       console.log("보낸 requestBody: ", requestBody);
-      const response = await instance.post(
-        `/api/handbook/${groupId}/${userId}`,
-        // `/api/handbook/9/22`,
-        requestBody
-      );
+      console.log("현재 contentId: ", contentId);
+      let response;
+      if (contentId) {
+        response = await instance.patch(
+          `/api/handbook/${contentId}`,
+          requestBody
+        );
+      } else {
+        response = await instance.post(
+          `/api/handbook/${groupId}/${userId}`,
+          // `/api/handbook/9/22`,
+          requestBody
+        );
+      }
 
       if (response.status === 201) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
+        location.reload();
+      } else if (response.status === 200) {
+        alert(`${userId}번 학생의 학생 수첩 수정이 완료되었습니다.`);
+        console.log("학생 수첩 수정 성공!");
         location.reload();
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
@@ -339,7 +402,7 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
 
   return (
     <SmallContainer onClick={(e) => e.stopPropagation()}>
-      <GroupSelect onChange={handleGroupChange}>
+      <GroupSelect value={selectedGroup} onChange={handleGroupChange}>
         <option value="" disabled selected>
           그룹 선택
         </option>
@@ -354,7 +417,7 @@ function StudentBookContent({ show, onClose, groupId, userId }) {
         )}
       </GroupSelect>
 
-      <StudentSelect onChange={handleStudentChange}>
+      <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
         <option value="" disabled selected>
           학생 선택
         </option>

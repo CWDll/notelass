@@ -105,6 +105,7 @@ const RightContainer = styled.div`
   margin-left: 30px;
   margin-top: 48px;
   position: relative;
+  overflow-y: scroll;
 `;
 
 const Title = styled.p`
@@ -582,6 +583,7 @@ function GroupDetailWrite() {
   const [showStudentBook, setShowStudentBook] = useState(false);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [contentId, setContentId] = useState();
   //
   const [byteCount, setByteCount] = useState(0);
   const [inputText, setInputText] = useState("");
@@ -630,10 +632,12 @@ function GroupDetailWrite() {
     console.log("entry.id", entry.id);
     console.log("entryIdType", typeof entry.id);
     console.log("entryId", entryId);
+
     if (entry) {
       setSelectedGroupId(paramsGroupId);
       setSelectedUserId(paramsUserId);
       setShowStudentBook(true);
+      setContentId(entryId);
       console.log("setShowStudentBook=true 만든 상태");
     } else {
       console.error("학생 정보를 찾을 수 없음");
@@ -652,16 +656,20 @@ const handleFileChange = async (event) => {
     formData.append('file', file);
     console.log(formData); 
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
 
-    try {
-      const response = await instance.post(`/api/record/excel/${paramsGroupId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', 
-        },
-      });
+      try {
+        const response = await instance.post(
+          `/api/record/excel/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
       console.log(response); // 서버 응답 확인
   
@@ -678,83 +686,6 @@ const handleFileChange = async (event) => {
     }
   }
 };
-
-
-// 엑셀 파일 다운로드 함수
-const exportToExcel = async () => {
-  try {
-    // 생활기록부 내용을 가져오는 GET 요청 직접 실행
-    const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
-    if (response.status === 200 && response.data.result) {
-      const fileUrl = response.data.result.fileUrl;
-      console.log("학생 수첩 조회 내용:", response.data);
-
-      // 서버에서 제공하는 파일 URL을 사용하여 파일 다운로드
-      window.open(fileUrl); // 또는 FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.xlsx");
-    } else {
-      console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
-      alert("생활기록부 파일을 가져오지 못했습니다.");
-    }
-  } catch (error) {
-    console.error("엑셀 파일을 가져오는 중 오류가 발생했습니다.", error);
-    alert("엑셀 파일을 가져오는 중 오류가 발생했습니다.");
-  }
-};
-  // // 생활기록부 내용을 가져오는 GET 요청 함수
-  // const fetchRecordExcel = async () => {
-  //   try {
-  //     const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
-  //     if (response.status === 200 && response.data.result) {
-  //       const fileUrl = response.data.result.fileUrl;
-  //       console.log("학생 수첩 조회 내용:", response.data);
-  //       return fileUrl; 
-  //     } else {
-  //       console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("생활기록부 파일 가져오기 중 오류 발생:", error);
-  //   }
-  //   return null; 
-  // };
-
-
-  // // 엑셀 파일 다운로드 함수
-  // const exportToExcel = async () => {
-  //   // const fileType =
-  //   //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  //   // const fileExtension = ".xlsx";
-  //   // const fileName = "학생별 세부능력 및 특기사항";
-
-  //   // // const headers = ["학생 이름", "반", "번", "내용"];
-  //   // const headers = ["반", "학생 이름",  "내용"];
-
-  //   // const studentsData = [
-     
-  //   // ];
-
-  //   // const data = [headers, ...studentsData];
-
-  //   // const ws = XLSX.utils.aoa_to_sheet(data);
-  //   // const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
-  //   // const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-  //   // const dataBlob = new Blob([excelBuffer], { type: fileType });
-  //   // FileSaver.saveAs(dataBlob, fileName + fileExtension);
-
-
-  //   try {
-  //     const fileUrl = await fetchRecordExcel();
-  //     if (fileUrl) {
-  //       window.open(fileUrl); 
-  //     } else {
-  //       alert("생활기록부 파일을 가져오지 못했습니다.");
-  //     }
-  //   } catch (error) {
-  //     console.error("엑셀 파일을 가져오는 중 오류가 발생했습니다.", error);
-  //     alert("엑셀 파일을 가져오는 중 오류가 발생했습니다.");
-  //   }
-  // };
-
-
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -1207,8 +1138,9 @@ const exportToExcel = async () => {
             <StudentBookContent
               show={showStudentBook}
               onClose={() => setShowStudentBook(false)}
-              groupId={selectedGroupId}
-              userId={selectedUserId}
+              propsGroupId={selectedGroupId}
+              propsUserId={selectedUserId}
+              contentId={contentId}
             />
           )}
         </RightContainer>
