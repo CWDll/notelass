@@ -647,41 +647,48 @@ function GroupDetailWrite() {
   };
   //
 
+  //생활기록부 엑셀 파일 업로드 POST 함수
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(formData); // formData 확인
 
-//생활기록부 엑셀 파일 업로드 POST 함수
-const handleFileChange = async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log(formData); // formData 확인
-
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    try {
-      const response = await instance.post(`/api/record/excel/${paramsGroupId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', 
-        },
-      });
-
-      console.log(response); // 서버 응답 확인
-  
-      if (response.status === 201) {
-        console.log("생활기록부 파일 업로드 성공!");
-        setUploadStatus("업로드 성공!"); // 상태 업데이트
-      } else {
-        console.error("예상치 못한 상태 코드:", response.status, response.data);
-        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
       }
-    } catch (error) {
-      console.error("생활기록부 파일 업로드 중 오류 발생:", error);
-      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+
+      try {
+        const response = await instance.post(
+          `/api/record/excel/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        console.log(response); // 서버 응답 확인
+
+        if (response.status === 201) {
+          console.log("생활기록부 파일 업로드 성공!");
+          setUploadStatus("업로드 성공!"); // 상태 업데이트
+        } else {
+          console.error(
+            "예상치 못한 상태 코드:",
+            response.status,
+            response.data
+          );
+          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+        }
+      } catch (error) {
+        console.error("생활기록부 파일 업로드 중 오류 발생:", error);
+        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+      }
     }
-  }
-};
+  };
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -1177,8 +1184,8 @@ const handleFileChange = async (event) => {
             <StudentBookContent
               show={showStudentBook}
               onClose={() => setShowStudentBook(false)}
-              groupId={selectedGroupId}
-              userId={selectedUserId}
+              propsGroupId={selectedGroupId}
+              propsUserId={selectedUserId}
               contentId={contentId}
             />
           )}

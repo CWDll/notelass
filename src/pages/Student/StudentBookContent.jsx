@@ -196,9 +196,15 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
-  const [selectedStudent, setSelectedStudent] = useState(userId);
-  const [selectedGroup, setSelectedGroup] = useState(groupId);
+function StudentBookContent({
+  show,
+  onClose,
+  propsGroupId,
+  propsUserId,
+  contentId,
+}) {
+  const [selectedStudent, setSelectedStudent] = useState(propsUserId);
+  const [selectedGroup, setSelectedGroup] = useState(propsGroupId);
   const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
   const [inputText, setInputText] = useState("");
   const [speechCount, setSpeechCount] = useState(0);
@@ -211,15 +217,16 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
       "props로 넘어온 정보들: ",
       show,
       onClose,
-      groupId,
-      userId,
+      propsGroupId,
+      propsUserId,
       contentId
     );
+
     if (contentId) {
       const fetchStudentBook = async () => {
         try {
           const response = await instance.get(
-            `/api/handbook/${groupId}/${userId}`
+            `/api/handbook/${propsGroupId}/${propsUserId}`
           );
           console.log("####학생 수첩 조회 내용:", response.data);
           if (response.status === 200 && response.data.result) {
@@ -243,10 +250,11 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
         }
       };
 
-      if (groupId && userId) {
+      if (propsGroupId && propsUserId) {
         fetchStudentBook();
       }
     }
+
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
@@ -271,7 +279,7 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
     };
 
     fetchGroups();
-  }, [groupId, userId]);
+  }, [propsGroupId, propsUserId]);
 
   if (show == false) {
     return null; // show가 false일 경우 아무 것도 렌더링하지 않음
@@ -322,7 +330,13 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
     console.log("Selected Group: " + groupId);
 
     try {
-      const res = await instance.get(`/api/group/students/${groupId}`);
+      let res;
+      if (contentId) {
+        res = await instance.get(`/api/group/students/${propsGroupId}`);
+      } else {
+        res = await instance.get(`/api/group/students/${groupId}`);
+      }
+
       console.log("students/groupId 서버 응답 확인", res);
       console.log("students/groupId 서버 응답 확인", res.data);
       console.log("students/groupId 서버 응답 확인", res.data.result);
@@ -336,6 +350,7 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
     console.log("/api/group/students/groupId is finished");
   };
 
+  // 저장하기 버튼 클릭
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -372,6 +387,10 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
+        location.reload();
+      } else if (response.status === 200) {
+        alert(`${userId}번 학생의 학생 수첩 수정이 완료되었습니다.`);
+        console.log("학생 수첩 수정 성공!");
         location.reload();
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
