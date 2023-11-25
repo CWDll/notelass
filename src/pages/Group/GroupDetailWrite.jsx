@@ -647,46 +647,41 @@ function GroupDetailWrite() {
   };
   //
 
-  //파일 업로드
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log("선택된 파일:", file); // 콘솔에 파일 정보 로깅
-      setAttachedFile(file);
-    }
-  };
 
-  const uploadFile = async (groupId, file) => {
-    console.log("Uploading file...");
+//생활기록부 엑셀 파일 업로드 POST 함수
+const handleFileChange = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
+    console.log(formData); // formData 확인
 
-    setUploadStatus("pending"); // 업로드 진행 중 상태 설정
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
     try {
-      const response = await axios.post(
-        `/api/record/excel/${paramsGroupId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await instance.post(`/api/record/excel/${paramsGroupId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
+      });
 
+      console.log(response); // 서버 응답 확인
+  
       if (response.status === 201) {
-        setUploadStatus("success"); // 업로드 성공 상태 설정
-        alert("생기부 파일이 등록되었습니다.");
+        console.log("생활기록부 파일 업로드 성공!");
+        setUploadStatus("업로드 성공!"); // 상태 업데이트
       } else {
-        setUploadStatus("fail"); // 실패 상태 설정
-        console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
-        console.log("Response status code: ", response.status);
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
       }
     } catch (error) {
-      setUploadStatus("fail"); // 실패 상태 설정
-      console.error("파일 업로드 중 오류가 발생했습니다:", error);
-      alert("파일 업로드 중 오류가 발생했습니다.");
+      console.error("생활기록부 파일 업로드 중 오류 발생:", error);
+      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
     }
-  };
+  }
+};
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
