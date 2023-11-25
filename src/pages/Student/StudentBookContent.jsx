@@ -221,12 +221,44 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
       userId,
       contentId
     );
+    if (contentId) {
+      const fetchStudentBook = async () => {
+        try {
+          const response = await instance.get(
+            `/api/handbook/${groupId}/${userId}`
+          );
+          console.log("####학생 수첩 조회 내용:", response.data);
+          if (response.status === 200 && response.data.result) {
+            const studentBookEntries = response.data.result;
+            // contentId와 일치하는 항목 찾기
+            const matchingEntry = studentBookEntries.find(
+              (entry) => entry.id === contentId
+            );
+            if (matchingEntry) {
+              // 찾은 내용으로 setInputText 호출
+              setInputText(matchingEntry.content);
+            }
+          } else {
+            console.error(
+              "서버로부터 예상치 못한 응답을 받았습니다:",
+              response
+            );
+          }
+        } catch (error) {
+          console.error("학생 수첩을 가져오지 못했습니다.:", error);
+        }
+      };
+
+      if (groupId && userId) {
+        fetchStudentBook();
+      }
+    }
     console.log("useEffect 실행 시작");
     const fetchGroups = async () => {
       try {
         const resp = await instance.get(`/api/group`);
-        console.log("서버 응답: ", JSON.stringify(resp, null, 2));
-        console.log("서버 응답 확인" + resp.data);
+        // console.log("서버 응답: ", JSON.stringify(resp, null, 2));
+        // console.log("서버 응답 확인" + resp.data);
         if (resp.data && resp.data.result) {
           console.log("api/groups GET 성공");
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
@@ -347,7 +379,7 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
 
   return (
     <SmallContainer onClick={(e) => e.stopPropagation()}>
-      <GroupSelect onChange={handleGroupChange}>
+      <GroupSelect value={selectedGroup} onChange={handleGroupChange}>
         <option value="" disabled selected>
           그룹 선택
         </option>
@@ -362,7 +394,7 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
         )}
       </GroupSelect>
 
-      <StudentSelect onChange={handleStudentChange}>
+      <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
         <option value="" disabled selected>
           학생 선택
         </option>
