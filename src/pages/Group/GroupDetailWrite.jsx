@@ -869,10 +869,11 @@ const handleFileChange = async (event) => {
     const fetchText = async () => {
       try {
         const response = await instance.get(
-          `/api/record/excel/${paramsGroupId}/${paramsUserId}`
+          `/api/record/${paramsGroupId}/${paramsUserId}`
         );
         if (response.status === 200 && response.data.result) {
           setTextEntries(response.data.result);
+          
         } else {
           console.error("데이터를 가져오는 데 실패했습니다:", 
           response.status,
@@ -896,12 +897,13 @@ const handleFileChange = async (event) => {
 
     try {
       const postResponse = await instance.post(
-        `/api/record/excel/${paramsGroupId}/${paramsUserId}`,
+        `/api/record/${paramsGroupId}/${paramsUserId}`,
         requestBody
       );
-      console.log("생활기록부 작성 내용:", requestBody);
+      
       if (postResponse.status === 201) {
         console.log("생활기록부 작성 성공!");
+        console.log("생활기록부 작성 내용:", requestBody);
         return postResponse.data; 
       } else {
         console.error(
@@ -915,6 +917,80 @@ const handleFileChange = async (event) => {
     }
     return null; 
   };
+
+  // // 파일 업로드를 위한 이벤트 핸들러
+  // const handleFileUpload = async (event) => {
+  //   const file = event.target.files[0]; 
+  //   if (file) {
+  //     await uploadAssignment(paramsGroupId, file); 
+  //   }
+  // };
+
+  // // 과제 성적 엑셀 업로드 POST 함수
+  // const uploadAssignment = async (paramsGroupId, file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  
+  //   try {
+  //     const response = await instance.post(
+  //       `/api/assignment/file/${paramsGroupId}`,
+  //       formData
+  //     );
+  
+  //     if (response.status === 201) {
+  //       console.log("과제 성적 파일 업로드 성공!", response.data);
+  //     } else {
+  //       console.log("파일 업로드 성공, 하지만 예상치 못한 상태 코드:", response.status, response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+  //     // 기존 오류 처리 코드
+  //   }
+  // };
+
+
+  //과제 성적 파일 업로드 POST 함수
+const uploadAssignment = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData); 
+
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+        const response = await instance.post(
+          `/api/assignment/file/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+      console.log(response); // 서버 응답 확인
+  
+      if (response.status === 201) {
+        console.log("과제 성적 파일 업로드 성공!");
+        setUploadStatus("업로드 성공!"); // 상태 업데이트
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+      }
+    } catch (error) {
+      console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+    }
+  }
+};
+
+
+
+
 
   /***  통신  ***/
   //생기부 작성
@@ -987,7 +1063,25 @@ const handleFileChange = async (event) => {
       </Header>
       <MainContainer>
         <LeftContainer>
+          
           <Title>활동기록 총 정리</Title>
+          <button style ={{marginLeft: "200px", marginTop : "-100px"}}>
+                  <input
+                    type="file"
+                    onChange={uploadAssignment}
+                    accept=".xls,.xlsx,.csv,.cell"
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      width: "100%",
+                      opacity: 0,
+                     
+                    }}
+                  />
+                  과제 데이터 불러오기 
+                  {/* <img src={chevron_right_Blue} alt="chevron_right_Blue" /> */}
+          </button>
+          
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
