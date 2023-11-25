@@ -105,6 +105,7 @@ const RightContainer = styled.div`
   margin-left: 30px;
   margin-top: 48px;
   position: relative;
+  overflow-y: scroll;
 `;
 
 const Title = styled.p`

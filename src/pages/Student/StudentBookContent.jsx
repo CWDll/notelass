@@ -195,13 +195,6 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-const students = [
-  { id: 1, name: "1번 김민수" },
-  { id: 2, name: "2번 김민수" },
-  { id: 3, name: "3번 김민수" },
-  { id: 4, name: "4번 김민수" },
-];
-
 function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
   const [selectedStudent, setSelectedStudent] = useState(userId);
   const [selectedGroup, setSelectedGroup] = useState(groupId);
@@ -318,7 +311,6 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
     e.stopPropagation();
     setSelectedStudent(e.target.value);
     console.log("Selected Student: " + e.target.value);
-    console.log("Selected Student: " + e.target);
   };
 
   //반 선택
@@ -346,6 +338,8 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    // contentId가 있으면 POST대신 PATCH를 보낼 로직
+
     // 상태에서 groupId와 userId를 사용합니다.
     const groupId = selectedGroup; // 이전에 선택된 그룹 ID
     const userId = selectedStudent; // 이전에 선택된 학생 ID
@@ -358,11 +352,20 @@ function StudentBookContent({ show, onClose, groupId, userId, contentId }) {
 
     try {
       console.log("보낸 requestBody: ", requestBody);
-      const response = await instance.post(
-        `/api/handbook/${groupId}/${userId}`,
-        // `/api/handbook/9/22`,
-        requestBody
-      );
+      console.log("현재 contentId: ", contentId);
+      let response;
+      if (contentId) {
+        response = await instance.patch(
+          `/api/handbook/${contentId}`,
+          requestBody
+        );
+      } else {
+        response = await instance.post(
+          `/api/handbook/${groupId}/${userId}`,
+          // `/api/handbook/9/22`,
+          requestBody
+        );
+      }
 
       if (response.status === 201) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
