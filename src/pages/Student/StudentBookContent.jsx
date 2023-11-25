@@ -43,16 +43,17 @@ const Text = styled.p`
 `;
 
 const SmallContainer = styled.div`
-  width: 760px;
-  height: 480px;
+  /* width: 760px;
+  height: 480px; */
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed;
-  margin-left: -1000px;
-  margin-top: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const StudentSelect = styled.select`
