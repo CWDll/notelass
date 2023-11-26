@@ -658,14 +658,33 @@ function GroupDetailWrite() {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
+
+      // 클라이언트에서 파일 읽기 
+      // const reader = new FileReader();
+      // reader.onload = (e) => {
+      //   try {
+      //     const data = new Uint8Array(e.target.result);
+      //     const workbook = XLSX.read(data, { type: 'array' });
+      //     const sheetName = workbook.SheetNames[0];
+      //     const worksheet = workbook.Sheets[sheetName];
+      //     const json = XLSX.utils.sheet_to_json(worksheet);
+      //     console.log('Loaded data:', json); // 로드된 데이터 확인
+      //     const specialAbilities = json.map((row) => row['세부능력 및 특기사항']).join('\n');
+      //     console.log('Extracted specialAbilities:', specialAbilities); // 추출된 데이터 확인
+      //     setInputText(specialAbilities); // Textarea에 값을 설정
+      //   } catch (error) {
+      //     console.error('Error reading file:', error);
+      //   }
+      // };
+      // reader.onerror = (error) => {
+      //   console.error('Error occurred while reading file:', error);
+      // };
+      // reader.readAsArrayBuffer(file);
+  
+      // 서버에 파일 업로드
       const formData = new FormData();
       formData.append("file", file);
-      console.log(formData); // formData 확인
-
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-
+  
       try {
         const response = await instance.post(
           `/api/record/excel/${paramsGroupId}`,
@@ -676,37 +695,36 @@ function GroupDetailWrite() {
             },
           }
         );
-
-        console.log(response); // 서버 응답 확인
-
+  
         if (response.status === 201) {
           console.log("생활기록부 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); // 상태 업데이트
+          setUploadStatus("업로드 성공!"); 
         } else {
           console.error(
             "예상치 못한 상태 코드:",
             response.status,
             response.data
           );
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+          setUploadStatus("업로드 실패: 예상치 못한 상태 코드");
         }
       } catch (error) {
         console.error("생활기록부 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+        setUploadStatus("업로드 실패: 오류 발생");
       }
     }
   };
 
+  // 생기부 다운로드 받기 GET 함수
   const exportToExcel = async () => {
     try {
-      // 생활기록부 내용을 가져오는 GET 요청 직접 실행
+      
       const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
       if (response.status === 200 && response.data.result) {
         const fileUrl = response.data.result.fileUrl;
         console.log("학생 수첩 조회 내용:", response.data);
   
-        // 서버에서 제공하는 파일 URL을 사용하여 파일 다운로드
-        window.open(fileUrl); // 또는 FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.xlsx");
+        
+        window.open(fileUrl);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -718,7 +736,7 @@ function GroupDetailWrite() {
   };
 
 
-   //과제 성적 파일 업로드 POST 함수
+  //과제 성적 파일 업로드 POST 함수
 const uploadAssignment = async (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -757,8 +775,46 @@ const uploadAssignment = async (event) => {
   }
 };
 
+  // 과제 점수 조회 GET 함수
+
+const [percentage, setPercentage] = useState(''); 
+const [filteredAssignments, setFilteredAssignments] = useState([]);
+const [getAssignment, setgetAssignment] = useState([]);
+
+const fetchAssignment = async () => {
+  try {
+    const url = `/api/record/detail/${paramsGroupId}/${paramsUserId}?percentage=${percentage}`;
+    console.log("요청 URL:", url);
+    const response = await instance.get(url);
+    console.log("과제 점수 조회 내용:", response.data);
+    if (response.status === 200) {
+      setFilteredAssignments(response.data.result.highScoreAssignmentList);
+      console.log("과제 점수 조회 내용2: ", response.data.result.highScoreAssignmentList);
+    } else {
+      console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+    }
+  } catch (error) {
+    console.error("과제 점수를 가져오지 못했습니다.:", error);
+  }
+};
 
 
+
+useEffect(() => {
+  if (paramsGroupId && paramsUserId && percentage) { 
+    fetchAssignment();
+  }
+}, [paramsGroupId, paramsUserId, percentage]);
+
+const handlePercentChange = (e) => {
+  setPercentage(e.target.value); 
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === 'Enter') {
+    fetchAssignment();
+  }
+};
 
 
 
@@ -791,24 +847,6 @@ const uploadAssignment = async (event) => {
   //   }
   // };
 
-  const handleSaveButtonClick = async () => {
-    if (!isTextSaved) {
-      const saveSuccessful = await saveData(inputText);
-      if (saveSuccessful) {
-        // 저장 성공 후 필요한 추가 로직을 여기에 구현
-        setIsTextSaved(true); // 서버에 저장된 상태로 변경
-        setButtonText("한셀 출력"); // 버튼 텍스트 변경
-        await fetchText();
-      }
-    } else {
-      // '한셀 출력' 로직을 여기에 구현
-      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
-
-      if (attachedFile) {
-        uploadFile(groupId, attachedFile);
-      }
-    }
-  };
 
   const handleTextEdit = () => {
     setIsTextSaved(false);
@@ -820,62 +858,8 @@ const uploadAssignment = async (event) => {
     alert("복사되었습니다.");
   };
 
-  // const exportToExcel = () => {
-  //   const fileType =
-  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  //   const fileExtension = ".xlsx";
-  //   const fileName = "학생별 세부능력 및 특기사항";
 
-  //   const headers = ["학생 이름", "반", "번", "내용"];
 
-  //   const studentsData = [
-  //     [
-  //       "지석진",
-  //       "3학년 1반",
-  //       "1번",
-  //       "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
-  //     ],
-  //     ["이광수", "3학년 1반", "2번", inputText],
-  //     [
-  //       "유재석",
-  //       "3학년 1반",
-  //       "1번",
-  //       "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
-  //     ],
-  //   ];
-
-  //   const data = [headers, ...studentsData];
-
-  //   const ws = XLSX.utils.aoa_to_sheet(data);
-  //   const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
-  //   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-  //   const dataBlob = new Blob([excelBuffer], { type: fileType });
-  //   FileSaver.saveAs(dataBlob, fileName + fileExtension);
-  // };
-
-  ////////////
-
-  const [percent, setPercent] = useState("");
-  const [output, setOutput] = useState("");
-
-  const handlePercentChange = (e) => {
-    setPercent(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      if (percent) {
-        if (parseInt(percent) <= 15) {
-          // 입력값이 15 이하인 경우
-          setOutput("과제2(상위 10%)");
-        } else {
-          setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
-        }
-      } else {
-        setOutput("");
-      }
-    }
-  };
 
   //
   const [keywords, setKeywords] = useState([]);
@@ -964,7 +948,7 @@ const uploadAssignment = async (event) => {
   const [TextEntries, setTextEntries] = useState([]);
   const [savedTextFromText, setSavedTextFromText] = useState("");
 
-  // 생활기록부 전체 불러오기 함수
+  //생활기록부 전체 불러오기 함수
   useEffect(() => {
     const fetchText = async () => {
       try {
@@ -1016,7 +1000,7 @@ const uploadAssignment = async (event) => {
 
   //////////////////////////////
 
-
+  // 가이드라인 GET 함수
   const fetchGuideLine = useCallback(async () => {
     try {
       const guideRes = await instance.get(
@@ -1070,19 +1054,33 @@ const uploadAssignment = async (event) => {
     return null; // 오류 발생 시 null 반환
   };
 
+
+  
+  const handleSaveButtonClick = async () => {
+    if (!isTextSaved) {
+      const saveSuccessful = await saveData(inputText);
+      if (saveSuccessful) {
+        // 저장 성공 후 필요한 추가 로직을 여기에 구현
+        setIsTextSaved(true); // 서버에 저장된 상태로 변경
+        // setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        await fetchText();
+      }
+    } else {
+      // '한셀 출력' 로직을 여기에 구현
+      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
+
+      if (attachedFile) {
+        uploadFile(groupId, attachedFile);
+      }
+    }
+  };
+
   /***  통신  ***/
   //생기부 작성
 
   return (
     <div>
-      {/* {showStudentBook && (
-        <StudentBook
-          show={showStudentBook}
-          onClose={closeStudentBook}
-          groupId={selectedGroupId}
-          userId={selectedUserId}
-        />
-      )} */}
+
       <Header>
         <Img
           src={chevron_left}
@@ -1144,7 +1142,7 @@ const uploadAssignment = async (event) => {
           <div style= {{display: "flex" ,alignItems: "center"}} >
           <Title>활동기록 총 정리</Title>
             <HancellButton style ={{marginLeft: "10px", marginTop: "32px"}}>
-                  <input
+                <input
                     type="file"
                     onChange={uploadAssignment}
                     accept=".xls,.xlsx,.csv,.cell"
@@ -1153,29 +1151,39 @@ const uploadAssignment = async (event) => {
                       height: "100%",
                       width: "100%",
                       opacity: 0,
-                     
+
                     }}
                   />
                   과제 데이터 불러오기 
-                  {/* <img src={chevron_right_Blue} alt="chevron_right_Blue" /> */}
+                  
           </HancellButton> 
           </div>
-          <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
+          <SaveButton onClick={handleSaveButtonClick}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>5점(상위 5%) </ScoreResult>
+            <ScoreResult>5점(상위 5%)</ScoreResult>
             <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>5회(상위 1%) </ScoreResult>
+            <ScoreResult>5회(상위 1%)</ScoreResult>
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
                 type="text"
-                value={percent}
+                value={percentage}
                 onChange={handlePercentChange}
                 onKeyDown={handleKeyDown}
               />
               <ScoreTitle>:</ScoreTitle>
-              <div style={{ marginLeft: "3px" }}>{output}</div>
+              <div style={{ marginLeft: "3px" }}>
+                {filteredAssignments.length > 0 ? (
+                  filteredAssignments.map((assignment, index) => (
+                    <div key={index}>
+                      <p>과제명: {assignment.name}, 점수: {assignment.score}, 상위: {assignment.rank}%</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>해당 퍼센테이지에 대한 과제가 없습니다.</p>
+                )}
+              </div>
             </PercentBody>
           </ScoreList>
           {!isTextSaved ? (
@@ -1187,7 +1195,7 @@ const uploadAssignment = async (event) => {
                   value={inputText}
                   onChange={(e) => {
                     setInputText(e.target.value);
-                    setByteCount(calculateByteCount(e.target.value)); // Also update the byte count when text changes
+                    setByteCount(calculateByteCount(e.target.value)); 
                   }}
                 />
 
@@ -1238,11 +1246,11 @@ const uploadAssignment = async (event) => {
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-          ) : null}
-
-          {isTextSaved && (
+            ) : null}
+           
+           {isTextSaved && (
             <div>
-             
+
 
               {TextEntries.map((entry) => (
                 <InfoContainer key={entry.id}>
@@ -1263,6 +1271,7 @@ const uploadAssignment = async (event) => {
               ))}
             </div>
           )}
+
         </LeftContainer>
 
         <RightContainer>
