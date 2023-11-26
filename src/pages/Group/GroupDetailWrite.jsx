@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useCallback} from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -560,6 +560,10 @@ const Text = styled.p`
   padding: 24px 24px 24px 24px;
 `;
 
+const Button = styled.button`
+  display: inline-flex;
+  `;
+
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -693,6 +697,27 @@ function GroupDetailWrite() {
     }
   };
 
+  const exportToExcel = async () => {
+    try {
+      // 생활기록부 내용을 가져오는 GET 요청 직접 실행
+      const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
+      if (response.status === 200 && response.data.result) {
+        const fileUrl = response.data.result.fileUrl;
+        console.log("학생 수첩 조회 내용:", response.data);
+  
+        // 서버에서 제공하는 파일 URL을 사용하여 파일 다운로드
+        window.open(fileUrl); // 또는 FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.xlsx");
+      } else {
+        console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
+        alert("생활기록부 파일을 가져오지 못했습니다.");
+      }
+    } catch (error) {
+      console.error("엑셀 파일을 가져오는 중 오류가 발생했습니다.", error);
+      alert("엑셀 파일을 가져오는 중 오류가 발생했습니다.");
+    }
+  };
+
+
    //과제 성적 파일 업로드 POST 함수
 const uploadAssignment = async (event) => {
   const file = event.target.files[0];
@@ -731,6 +756,14 @@ const uploadAssignment = async (event) => {
     }
   }
 };
+
+
+
+
+
+
+
+
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -787,38 +820,38 @@ const uploadAssignment = async (event) => {
     alert("복사되었습니다.");
   };
 
-  const exportToExcel = () => {
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".xlsx";
-    const fileName = "학생별 세부능력 및 특기사항";
+  // const exportToExcel = () => {
+  //   const fileType =
+  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  //   const fileExtension = ".xlsx";
+  //   const fileName = "학생별 세부능력 및 특기사항";
 
-    const headers = ["학생 이름", "반", "번", "내용"];
+  //   const headers = ["학생 이름", "반", "번", "내용"];
 
-    const studentsData = [
-      [
-        "지석진",
-        "3학년 1반",
-        "1번",
-        "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
-      ],
-      ["이광수", "3학년 1반", "2번", inputText],
-      [
-        "유재석",
-        "3학년 1반",
-        "1번",
-        "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
-      ],
-    ];
+  //   const studentsData = [
+  //     [
+  //       "지석진",
+  //       "3학년 1반",
+  //       "1번",
+  //       "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
+  //     ],
+  //     ["이광수", "3학년 1반", "2번", inputText],
+  //     [
+  //       "유재석",
+  //       "3학년 1반",
+  //       "1번",
+  //       "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
+  //     ],
+  //   ];
 
-    const data = [headers, ...studentsData];
+  //   const data = [headers, ...studentsData];
 
-    const ws = XLSX.utils.aoa_to_sheet(data);
-    const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const dataBlob = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(dataBlob, fileName + fileExtension);
-  };
+  //   const ws = XLSX.utils.aoa_to_sheet(data);
+  //   const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
+  //   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  //   const dataBlob = new Blob([excelBuffer], { type: fileType });
+  //   FileSaver.saveAs(dataBlob, fileName + fileExtension);
+  // };
 
   ////////////
 
@@ -953,29 +986,61 @@ const uploadAssignment = async (event) => {
     }
   }, [paramsGroupId, paramsUserId]);
 
-  // 가이드라인 GET
-  useEffect(() => {
-    console.log("가이드라인?");
-    const fetchGuideLine = async () => {
-      try {
-        const guideRes = await instance.get(
-          `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
-        );
-        console.log("가이드라인 내용:", guideRes.data);
-        if (guideRes.status === 200) {
-          setGuideLineText(guideRes.data.result);
-        } else {
-          console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
-        }
-      } catch (error) {
-        console.error("가이드라인 에러:", error);
-      }
-    };
 
-    if (paramsGroupId && paramsUserId) {
-      fetchGuideLine();
+ 
+  // 가이드라인 GET 
+
+  // useEffect(() => {
+  //   console.log("가이드라인?");
+  //   const fetchGuideLine = async () => {
+  //     try {
+  //       const guideRes = await instance.get(
+  //         `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
+  //       );
+  //       console.log("가이드라인 내용:", guideRes.data);
+  //       if (guideRes.status === 200) {
+  //         setGuideLineText(guideRes.data.result);
+  //       } else {
+  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
+  //       }
+  //     } catch (error) {
+  //       console.error("가이드라인 에러:", error);
+  //     }
+  //   };
+
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchGuideLine();
+  //   }
+  // }, [paramsGroupId, paramsUserId,fetchGuideLine]);
+
+
+  //////////////////////////////
+
+
+  const fetchGuideLine = useCallback(async () => {
+    try {
+      const guideRes = await instance.get(
+        `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
+      );
+      console.log("가이드라인 내용:", guideRes.data);
+      if (guideRes.status === 200) {
+        setGuideLineText(guideRes.data.result);
+      } else {
+        console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
+      }
+    } catch (error) {
+      console.error("가이드라인 에러:", error);
     }
-  }, [paramsGroupId, paramsUserId]);
+  }, [paramsGroupId, paramsUserId, keywords]);
+
+  // useEffect(() => {
+  //   console.log("가이드라인?");
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchGuideLine();
+  //   }
+  // }, [paramsGroupId, paramsUserId, fetchGuideLine]);
+
+
 
   // 생활기록부 POST 함수
   const saveData = async (text) => {
@@ -985,7 +1050,7 @@ const uploadAssignment = async (event) => {
 
     try {
       const postResponse = await instance.post(
-        `/api/record/${paramsGroupId}/${paramsUserId}`,
+        `/api/record/excel/${paramsGroupId}/${paramsUserId}`,
         requestBody
       );
 
@@ -1076,8 +1141,25 @@ const uploadAssignment = async (event) => {
       </Header>
       <MainContainer>
         <LeftContainer>
+          <div style= {{display: "flex" ,alignItems: "center"}} >
           <Title>활동기록 총 정리</Title>
-           
+            <HancellButton style ={{marginLeft: "10px", marginTop: "32px"}}>
+                  <input
+                    type="file"
+                    onChange={uploadAssignment}
+                    accept=".xls,.xlsx,.csv,.cell"
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      width: "100%",
+                      opacity: 0,
+                     
+                    }}
+                  />
+                  과제 데이터 불러오기 
+                  {/* <img src={chevron_right_Blue} alt="chevron_right_Blue" /> */}
+          </HancellButton> 
+          </div>
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
@@ -1148,7 +1230,9 @@ const uploadAssignment = async (event) => {
               {/*가이드라인 문장 */}
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
+                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" 
+                onClick={fetchGuideLine}
+                />
               </GuidelineContainer>
               <GuidelineBox>
                 <Text>{guideLineText}</Text>
