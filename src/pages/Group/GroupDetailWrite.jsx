@@ -724,7 +724,7 @@ function GroupDetailWrite() {
         console.log("학생 수첩 조회 내용:", response.data);
   
         
-        window.open(fileUrl);
+         FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.cell");
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -847,19 +847,58 @@ const handleKeyDown = (e) => {
   //   }
   // };
 
+  const handleSaveButtonClick = async () => {
+    if (!isTextSaved) {
+      const saveSuccessful = await saveData(inputText);
+      if (saveSuccessful) {
+        // 저장 성공 후 필요한 추가 로직을 여기에 구현
+        setIsTextSaved(true); // 서버에 저장된 상태로 변경
+        // setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        await fetchText();
+      }
+    } else {
+      // '한셀 출력' 로직을 여기에 구현
+      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
 
-  const handleTextEdit = () => {
-    setIsTextSaved(false);
-    setButtonText("저장하기");
+      if (attachedFile) {
+        uploadFile(groupId, attachedFile);
+      }
+    }
   };
 
-  const handleCopyButtonClick = () => {
-    navigator.clipboard.writeText(savedText);
-    alert("복사되었습니다.");
+  // const handleTextEdit = () => {
+  //   setIsTextSaved(false);
+  //   setButtonText("저장하기");
+  // };
+
+  // const handleCopyButtonClick = () => {
+  //   navigator.clipboard.writeText(savedText);
+  //   alert("복사되었습니다.");
+  // };
+
+
+
+  const [percent, setPercent] = useState("");
+  const [output, setOutput] = useState("");
+
+  const handlePercentChange = (e) => {
+    setPercent(e.target.value);
   };
 
-
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (percent) {
+        if (parseInt(percent) <= 15) {
+          // 입력값이 15 이하인 경우
+          setOutput("과제2(상위 10%)");
+        } else {
+          setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
+        }
+      } else {
+        setOutput("");
+      }
+    }
+  };
 
   //
   const [keywords, setKeywords] = useState([]);
@@ -948,27 +987,27 @@ const handleKeyDown = (e) => {
   const [TextEntries, setTextEntries] = useState([]);
   const [savedTextFromText, setSavedTextFromText] = useState("");
 
-  //생활기록부 전체 불러오기 함수
-  useEffect(() => {
-    const fetchText = async () => {
-      try {
-        const response = await instance.get(
-          `/api/record/${paramsGroupId}/${paramsUserId}`
-        );
-        if (response.status === 200 && response.data.result) {
-          setTextEntries(response.data.result);
-        } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-        }
-      } catch (error) {
-        console.error("데이터 불러오기 중 오류 발생:", error);
-      }
-    };
+  // 생활기록부 전체 불러오기 함수
+  // useEffect(() => {
+  //   const fetchText = async () => {
+  //     try {
+  //       const response = await instance.get(
+  //         `/api/record/${paramsGroupId}/${paramsUserId}`
+  //       );
+  //       if (response.status === 200 && response.data.result) {
+  //         setTextEntries(response.data.result);
+  //       } else {
+  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+  //       }
+  //     } catch (error) {
+  //       console.error("데이터 불러오기 중 오류 발생:", error);
+  //     }
+  //   };
 
-    if (paramsGroupId && paramsUserId) {
-      fetchText();
-    }
-  }, [paramsGroupId, paramsUserId]);
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchText();
+  //   }
+  // }, [paramsGroupId, paramsUserId]);
 
 
  
@@ -1186,7 +1225,7 @@ const handleKeyDown = (e) => {
               </div>
             </PercentBody>
           </ScoreList>
-          {!isTextSaved ? (
+          {/* {!isTextSaved ? ( */}
             <>
               <WritingBox>
                 {/*생활기록부 입력창*/}
@@ -1246,31 +1285,7 @@ const handleKeyDown = (e) => {
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-            ) : null}
-           
-           {isTextSaved && (
-            <div>
-
-
-              {TextEntries.map((entry) => (
-                <InfoContainer key={entry.id}>
-                  <TimeText>
-                    {/* 날짜 형식을 년-월-일 */}
-                    {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
-                  </TimeText>
-                  <div style={{ marginTop: "-20px" }}>
-                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                    <CopyButton onClick={handleCopyButtonClick}>
-                      복사하기
-                    </CopyButton>
-                  </div>
-                  <StudentBookText>
-                    <SavedText>{entry.content}</SavedText>
-                  </StudentBookText>
-                </InfoContainer>
-              ))}
-            </div>
-          )}
+           {/* ) : null} */}
 
         </LeftContainer>
 
