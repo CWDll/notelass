@@ -237,13 +237,15 @@ const ReapeatImg = styled.img`
 
 const GuidelineBox = styled.div`
   width: 620px;
-  height: 120px;
+  min-height: 120px; 
   flex-shrink: 0;
   border-radius: 8px;
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   margin-left: 32px;
   margin-top: 24px;
+  padding: 10px; 
+  overflow: hidden; 
 `;
 
 const GuidelineText = styled.p`
@@ -335,7 +337,7 @@ const CopyButton = styled.button`
 `;
 
 const StudentBookText = styled.div`
-  width: 416px;
+  width: 400px;
   height: 56px;
   flex-shrink: 0;
   border-radius: 8px;
@@ -691,6 +693,45 @@ function GroupDetailWrite() {
     }
   };
 
+   //과제 성적 파일 업로드 POST 함수
+const uploadAssignment = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData); 
+
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+        const response = await instance.post(
+          `/api/assignment/file/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+      console.log(response); // 서버 응답 확인
+
+      if (response.status === 201) {
+        console.log("과제 성적 파일 업로드 성공!");
+        setUploadStatus("업로드 성공!"); // 상태 업데이트
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+      }
+    } catch (error) {
+      console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+    }
+  }
+};
+
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
     navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`);
@@ -1036,6 +1077,7 @@ function GroupDetailWrite() {
       <MainContainer>
         <LeftContainer>
           <Title>활동기록 총 정리</Title>
+           
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
@@ -1101,6 +1143,9 @@ function GroupDetailWrite() {
                   <SuggestWord key={index}>{keyword}</SuggestWord>
                 ))}
               </SuggestWordContainer>
+
+
+              {/*가이드라인 문장 */}
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
                 <ReapeatImg src={arrow_repeat} alt="arrow_repeat" />
@@ -1113,18 +1158,7 @@ function GroupDetailWrite() {
 
           {isTextSaved && (
             <div>
-              {/* <InfoContainer>
-                  <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                  <CopyButton onClick={handleCopyButtonClick}>복사하기</CopyButton>
-                </InfoContainer>
-
-                <SavedTextContainer>
-                  {TextEntries.map((entry, index) => (
-                    <SavedText key={index}>
-                      {entry.content} - {new Date(entry.createdDate).toLocaleDateString('ko-KR')}
-                    </SavedText>
-                  ))}
-                </SavedTextContainer> */}
+             
 
               {TextEntries.map((entry) => (
                 <InfoContainer key={entry.id}>

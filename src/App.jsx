@@ -55,7 +55,7 @@ function App() {
             <Route path="/Introduce" element={<Introduce />} />
             <Route path="/GroupDetail" element={<GroupDetail />} />
             <Route
-              path="/GroupDetailClass/:paramsGroupId"
+              path="/GroupDetailClass/:id"
               element={<GroupDetailClass />}
             />
             <Route path="/CreateGroup" element={<CreateGroup />} />

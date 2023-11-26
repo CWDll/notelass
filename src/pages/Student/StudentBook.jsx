@@ -197,12 +197,6 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-const students = [
-  { id: 1, name: "1번 김민수" },
-  { id: 2, name: "2번 김민수" },
-  { id: 3, name: "3번 김민수" },
-  { id: 4, name: "4번 김민수" },
-];
 
 /*
 1

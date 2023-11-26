@@ -253,12 +253,12 @@ function GroupDetailClass() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await instance.get(`/api/group/students/${paramsGroupId}`);
+        const response = await instance.get(`/api/group/students/${id}`);
         console.log(response);
 
         if (response.data && response.data.result) {
-          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
-          console.log("response.data.result: ", response.data.result); // 학생 데이터를 상태에 저장합니다.
+          setStudents(response.data.result); 
+          console.log("response.data.result: ", response.data.result); 
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
