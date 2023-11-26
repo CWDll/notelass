@@ -885,29 +885,6 @@ function GroupDetailWrite() {
     }
   };
 
-  // 학생 수첩 내용 수정 함수
-  // const updateStudentBookEntry = async (handbookContentId, newContent) => {
-  //   try {
-  //     const response = await instance.patch(`/api/handbook/${handbookContentId}`, {
-  //       content: newContent,
-  //     });
-  //     if (response.status === 200) {
-  //       // UI를 업데이트하기 위해 상태를 업데이트 합니다.
-  //       setStudentBookEntries(currentEntries =>
-  //         currentEntries.map(entry =>
-  //           entry.id === handbookContentId ? { ...entry, content: newContent } : entry
-  //         )
-  //       );
-  //       alert("항목이 성공적으로 수정되었습니다.");
-  //     } else {
-  //       // 오류가 있을 경우
-  //       console.error("수정에 실패했습니다:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("수정 중 오류가 발생했습니다:", error);
-  //   }
-  // };
-
   // 전체 생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
   const [savedTextFromText, setSavedTextFromText] = useState("");
@@ -931,6 +908,30 @@ function GroupDetailWrite() {
 
     if (paramsGroupId && paramsUserId) {
       fetchText();
+    }
+  }, [paramsGroupId, paramsUserId]);
+
+  // 가이드라인 GET
+  useEffect(() => {
+    console.log("가이드라인?");
+    const fetchGuideLine = async () => {
+      try {
+        const guideRes = await instance.get(
+          `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
+        );
+        console.log("가이드라인 내용:", guideRes.data);
+        if (guideRes.status === 200) {
+          console.log("가이드라인 내용2: ", guideRes.data.result);
+        } else {
+          console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
+        }
+      } catch (error) {
+        console.error("가이드라인 에러:", error);
+      }
+    };
+
+    if (paramsGroupId && paramsUserId) {
+      fetchGuideLine();
     }
   }, [paramsGroupId, paramsUserId]);
 
