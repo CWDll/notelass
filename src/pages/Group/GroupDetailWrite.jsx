@@ -647,13 +647,14 @@ function GroupDetailWrite() {
   };
   //
 
-  //생활기록부 엑셀 파일 업로드 POST 함수
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(formData); // formData 확인
+
+//생활기록부 파일 업로드 POST 함수
+const handleFileChange = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData); 
 
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
@@ -670,25 +671,21 @@ function GroupDetailWrite() {
           }
         );
 
-        console.log(response); // 서버 응답 확인
-
-        if (response.status === 201) {
-          console.log("생활기록부 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); // 상태 업데이트
-        } else {
-          console.error(
-            "예상치 못한 상태 코드:",
-            response.status,
-            response.data
-          );
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
-        }
-      } catch (error) {
-        console.error("생활기록부 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+      console.log(response); // 서버 응답 확인
+  
+      if (response.status === 201) {
+        console.log("생활기록부 파일 업로드 성공!");
+        setUploadStatus("업로드 성공!"); // 상태 업데이트
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
       }
+    } catch (error) {
+      console.error("생활기록부 파일 업로드 중 오류 발생:", error);
+      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
     }
-  };
+  }
+};
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -700,34 +697,17 @@ function GroupDetailWrite() {
     navigate("/GroupDetailClass");
   };
 
-  // const handleSaveButtonClick = () => {
-  //   if (!isTextSaved) {
-  //     setSavedText(inputText);
-  //     setIsTextSaved(true);
-  //     setButtonText("한셀 출력");
-
-  //     sendRecord(groupId, selectedStudent, inputText);
-  //   } else {
-  //     exportToExcel(savedText);
-
-  //     if (attachedFile) {
-  //       uploadFile(groupId, attachedFile);
-  //     }
-  //   }
-  // };
-
+  // 생활기록부 저장하기 버튼 클릭 핸들러
   const handleSaveButtonClick = async () => {
     if (!isTextSaved) {
       const saveSuccessful = await saveData(inputText);
       if (saveSuccessful) {
-        // 저장 성공 후 필요한 추가 로직을 여기에 구현
-        setIsTextSaved(true); // 서버에 저장된 상태로 변경
-        setButtonText("한셀 출력"); // 버튼 텍스트 변경
-        await fetchText();
+        setIsTextSaved(true);
+        setButtonText("한셀 출력"); 
       }
     } else {
-      // '한셀 출력' 로직을 여기에 구현
-      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
+      
+      exportToExcel(inputText);
 
       if (attachedFile) {
         uploadFile(groupId, attachedFile);
@@ -735,48 +715,20 @@ function GroupDetailWrite() {
     }
   };
 
+
   const handleTextEdit = () => {
     setIsTextSaved(false);
     setButtonText("저장하기");
   };
 
+
+  // 학생 수첩 내용 복사 클릭 핸들러
   const handleCopyButtonClick = () => {
     navigator.clipboard.writeText(savedText);
     alert("복사되었습니다.");
   };
 
-  const exportToExcel = () => {
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".xlsx";
-    const fileName = "학생별 세부능력 및 특기사항";
 
-    const headers = ["학생 이름", "반", "번", "내용"];
-
-    const studentsData = [
-      [
-        "지석진",
-        "3학년 1반",
-        "1번",
-        "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
-      ],
-      ["이광수", "3학년 1반", "2번", inputText],
-      [
-        "유재석",
-        "3학년 1반",
-        "1번",
-        "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
-      ],
-    ];
-
-    const data = [headers, ...studentsData];
-
-    const ws = XLSX.utils.aoa_to_sheet(data);
-    const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const dataBlob = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(dataBlob, fileName + fileExtension);
-  };
 
   ////////////
 
@@ -898,8 +850,11 @@ function GroupDetailWrite() {
         );
         if (response.status === 200 && response.data.result) {
           setTextEntries(response.data.result);
+          
         } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+          console.error("데이터를 가져오는 데 실패했습니다:", 
+          response.status,
+          response.data);
         }
       } catch (error) {
         console.error("데이터 불러오기 중 오류 발생:", error);
@@ -946,10 +901,11 @@ function GroupDetailWrite() {
         `/api/record/${paramsGroupId}/${paramsUserId}`,
         requestBody
       );
-
+      
       if (postResponse.status === 201) {
         console.log("생활기록부 작성 성공!");
-        return postResponse.data; // 저장된 데이터를 반환
+        console.log("생활기록부 작성 내용:", requestBody);
+        return postResponse.data; 
       } else {
         console.error(
           "예상치 못한 상태 코드:",
@@ -960,8 +916,82 @@ function GroupDetailWrite() {
     } catch (error) {
       console.error("데이터 저장 중 오류 발생:", error);
     }
-    return null; // 오류 발생 시 null 반환
+    return null; 
   };
+
+  // // 파일 업로드를 위한 이벤트 핸들러
+  // const handleFileUpload = async (event) => {
+  //   const file = event.target.files[0]; 
+  //   if (file) {
+  //     await uploadAssignment(paramsGroupId, file); 
+  //   }
+  // };
+
+  // // 과제 성적 엑셀 업로드 POST 함수
+  // const uploadAssignment = async (paramsGroupId, file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  
+  //   try {
+  //     const response = await instance.post(
+  //       `/api/assignment/file/${paramsGroupId}`,
+  //       formData
+  //     );
+  
+  //     if (response.status === 201) {
+  //       console.log("과제 성적 파일 업로드 성공!", response.data);
+  //     } else {
+  //       console.log("파일 업로드 성공, 하지만 예상치 못한 상태 코드:", response.status, response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+  //     // 기존 오류 처리 코드
+  //   }
+  // };
+
+
+  //과제 성적 파일 업로드 POST 함수
+const uploadAssignment = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData); 
+
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+        const response = await instance.post(
+          `/api/assignment/file/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+      console.log(response); // 서버 응답 확인
+  
+      if (response.status === 201) {
+        console.log("과제 성적 파일 업로드 성공!");
+        setUploadStatus("업로드 성공!"); // 상태 업데이트
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+      }
+    } catch (error) {
+      console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+    }
+  }
+};
+
+
+
+
 
   /***  통신  ***/
   //생기부 작성
@@ -1034,7 +1064,25 @@ function GroupDetailWrite() {
       </Header>
       <MainContainer>
         <LeftContainer>
+          
           <Title>활동기록 총 정리</Title>
+          <button style ={{marginLeft: "200px", marginTop : "-100px"}}>
+                  <input
+                    type="file"
+                    onChange={uploadAssignment}
+                    accept=".xls,.xlsx,.csv,.cell"
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      width: "100%",
+                      opacity: 0,
+                     
+                    }}
+                  />
+                  과제 데이터 불러오기 
+                  {/* <img src={chevron_right_Blue} alt="chevron_right_Blue" /> */}
+          </button>
+          
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>

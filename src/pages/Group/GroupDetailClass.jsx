@@ -209,6 +209,10 @@ const Exit = styled.img`
 `;
 
 function GroupDetailClass() {
+
+  const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
+  const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
+
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
@@ -249,7 +253,7 @@ function GroupDetailClass() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await instance.get(`/api/group/students/${id}`);
+        const response = await instance.get(`/api/group/students/${paramsGroupId}`);
         console.log(response);
 
         if (response.data && response.data.result) {
@@ -279,6 +283,46 @@ function GroupDetailClass() {
   //     });
   // }, [groupId]);
 
+
+  // 학생 등록 파일 업로드 POST 함수
+  const uploadname = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log(formData); 
+  
+        for (let [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
+  
+        try {
+          const response = await instance.post(
+            `/api/group/file/${paramsGroupId}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+  
+        console.log(response); 
+    
+        if (response.status === 201) {
+          console.log("학생 등록 파일 업로드 성공!");
+          setUploadStatus("업로드 성공!"); 
+        } else {
+          console.error("예상치 못한 상태 코드:", response.status, response.data);
+          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); 
+        }
+      } catch (error) {
+        console.error("학생 등록 파일 업로드 중 오류 발생:", error);
+        setUploadStatus("업로드 실패: 오류 발생"); 
+      }
+    }
+  };
+
   return (
     <>
       <Header>
@@ -286,6 +330,21 @@ function GroupDetailClass() {
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
         <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
           그룹 정보
+        </Button>
+        <Button >
+        <input
+                    type="file"
+                    onChange={uploadname}
+                    accept=".xls,.xlsx,.csv,.cell"
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      width: "100%",
+                      opacity: 0,
+                     
+                    }}
+                  />
+                  학생 등록
         </Button>
 
         {showSmallContainer && (
