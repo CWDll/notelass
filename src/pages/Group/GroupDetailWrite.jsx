@@ -699,14 +699,14 @@ function GroupDetailWrite() {
 
   const exportToExcel = async () => {
     try {
-      // 생활기록부 내용을 가져오는 GET 요청 직접 실행
+      
       const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
       if (response.status === 200 && response.data.result) {
         const fileUrl = response.data.result.fileUrl;
         console.log("학생 수첩 조회 내용:", response.data);
   
-        // 서버에서 제공하는 파일 URL을 사용하여 파일 다운로드
-        window.open(fileUrl); // 또는 FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.xlsx");
+        
+         FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.cell");
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -797,7 +797,7 @@ const uploadAssignment = async (event) => {
       if (saveSuccessful) {
         // 저장 성공 후 필요한 추가 로직을 여기에 구현
         setIsTextSaved(true); // 서버에 저장된 상태로 변경
-        setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        // setButtonText("한셀 출력"); // 버튼 텍스트 변경
         await fetchText();
       }
     } else {
@@ -810,50 +810,17 @@ const uploadAssignment = async (event) => {
     }
   };
 
-  const handleTextEdit = () => {
-    setIsTextSaved(false);
-    setButtonText("저장하기");
-  };
-
-  const handleCopyButtonClick = () => {
-    navigator.clipboard.writeText(savedText);
-    alert("복사되었습니다.");
-  };
-
-  // const exportToExcel = () => {
-  //   const fileType =
-  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  //   const fileExtension = ".xlsx";
-  //   const fileName = "학생별 세부능력 및 특기사항";
-
-  //   const headers = ["학생 이름", "반", "번", "내용"];
-
-  //   const studentsData = [
-  //     [
-  //       "지석진",
-  //       "3학년 1반",
-  //       "1번",
-  //       "시인 윤동주 작품에 감명받아 시를 직접 작성하여 발표함",
-  //     ],
-  //     ["이광수", "3학년 1반", "2번", inputText],
-  //     [
-  //       "유재석",
-  //       "3학년 1반",
-  //       "1번",
-  //       "문학 부장으로써 한 학기 동안 성실하게 책임을 다 함",
-  //     ],
-  //   ];
-
-  //   const data = [headers, ...studentsData];
-
-  //   const ws = XLSX.utils.aoa_to_sheet(data);
-  //   const wb = { Sheets: { Data: ws }, SheetNames: ["Data"] };
-  //   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-  //   const dataBlob = new Blob([excelBuffer], { type: fileType });
-  //   FileSaver.saveAs(dataBlob, fileName + fileExtension);
+  // const handleTextEdit = () => {
+  //   setIsTextSaved(false);
+  //   setButtonText("저장하기");
   // };
 
-  ////////////
+  // const handleCopyButtonClick = () => {
+  //   navigator.clipboard.writeText(savedText);
+  //   alert("복사되었습니다.");
+  // };
+
+
 
   const [percent, setPercent] = useState("");
   const [output, setOutput] = useState("");
@@ -965,26 +932,26 @@ const uploadAssignment = async (event) => {
   const [savedTextFromText, setSavedTextFromText] = useState("");
 
   // 생활기록부 전체 불러오기 함수
-  useEffect(() => {
-    const fetchText = async () => {
-      try {
-        const response = await instance.get(
-          `/api/record/${paramsGroupId}/${paramsUserId}`
-        );
-        if (response.status === 200 && response.data.result) {
-          setTextEntries(response.data.result);
-        } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-        }
-      } catch (error) {
-        console.error("데이터 불러오기 중 오류 발생:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchText = async () => {
+  //     try {
+  //       const response = await instance.get(
+  //         `/api/record/${paramsGroupId}/${paramsUserId}`
+  //       );
+  //       if (response.status === 200 && response.data.result) {
+  //         setTextEntries(response.data.result);
+  //       } else {
+  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+  //       }
+  //     } catch (error) {
+  //       console.error("데이터 불러오기 중 오류 발생:", error);
+  //     }
+  //   };
 
-    if (paramsGroupId && paramsUserId) {
-      fetchText();
-    }
-  }, [paramsGroupId, paramsUserId]);
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchText();
+  //   }
+  // }, [paramsGroupId, paramsUserId]);
 
 
  
@@ -1075,14 +1042,7 @@ const uploadAssignment = async (event) => {
 
   return (
     <div>
-      {/* {showStudentBook && (
-        <StudentBook
-          show={showStudentBook}
-          onClose={closeStudentBook}
-          groupId={selectedGroupId}
-          userId={selectedUserId}
-        />
-      )} */}
+
       <Header>
         <Img
           src={chevron_left}
@@ -1160,7 +1120,7 @@ const uploadAssignment = async (event) => {
                   {/* <img src={chevron_right_Blue} alt="chevron_right_Blue" /> */}
           </HancellButton> 
           </div>
-          <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
+          <SaveButton onClick={handleSaveButtonClick}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>5점(상위 5%) </ScoreResult>
@@ -1178,7 +1138,7 @@ const uploadAssignment = async (event) => {
               <div style={{ marginLeft: "3px" }}>{output}</div>
             </PercentBody>
           </ScoreList>
-          {!isTextSaved ? (
+          {/* {!isTextSaved ? ( */}
             <>
               <WritingBox>
                 {/*생활기록부 입력창*/}
@@ -1238,31 +1198,8 @@ const uploadAssignment = async (event) => {
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-          ) : null}
+           {/* ) : null} */}
 
-          {isTextSaved && (
-            <div>
-             
-
-              {TextEntries.map((entry) => (
-                <InfoContainer key={entry.id}>
-                  <TimeText>
-                    {/* 날짜 형식을 년-월-일 */}
-                    {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
-                  </TimeText>
-                  <div style={{ marginTop: "-20px" }}>
-                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                    <CopyButton onClick={handleCopyButtonClick}>
-                      복사하기
-                    </CopyButton>
-                  </div>
-                  <StudentBookText>
-                    <SavedText>{entry.content}</SavedText>
-                  </StudentBookText>
-                </InfoContainer>
-              ))}
-            </div>
-          )}
         </LeftContainer>
 
         <RightContainer>
