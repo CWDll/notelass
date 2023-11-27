@@ -256,55 +256,42 @@ function GroupDetailClass() {
     });
   };
 
-  //학생 목록에 데이터 받아오기
 
+  //학생 목록 조회 GET 함수
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await instance.get(`/api/group/students/${id}`);
-        console.log(response);
-
-        if (response.data && response.data.result) {
-          setStudents(response.data.result);
-          console.log("response.data.result: ", response.data.result);
-        }
-      } catch (error) {
-        console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+  const fetchStudents = async () => {
+    try {
+      const response = await instance.get(`/api/group/students/${id}`);
+      console.log(response);
+  
+      if (response.data && response.data.result) {
+        setStudents(response.data.result);
+        console.log("response.data.result: ", response.data.result);
       }
-    };
-
+    } catch (error) {
+      console.error("학생리스트를 가져오지 못했습니다.:", error.message);
+    }
+  };
+  
+ 
+  useEffect(() => {
     fetchStudents();
-  }, []);
-
-  /*** 통신  ***/
-  // //그룹 별 공지 목록 조회
-  // const [notices, setNotices] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/notice/${groupId}`)
-  //     .then((response) => {
-  //       setNotices(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was an error!", error);
-  //     });
-  // }, [groupId]);
-
-  // 학생 등록 파일 업로드 POST 함수
+  }, []); 
+  
+  
+  //학생 등록 파일 업로드 POST 함수
   const uploadname = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
-
+  
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
+  
       try {
         const response = await instance.post(
           `/api/group/file/${id}`,
@@ -315,12 +302,13 @@ function GroupDetailClass() {
             },
           }
         );
-
+  
         console.log(response);
-
+  
         if (response.status === 201) {
           console.log("학생 등록 파일 업로드 성공!");
           setUploadStatus("업로드 성공!");
+          await fetchStudents(); 
         } else {
           console.error(
             "예상치 못한 상태 코드:",
