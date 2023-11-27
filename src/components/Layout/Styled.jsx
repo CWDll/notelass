@@ -15,7 +15,8 @@ export const FooterContainer = styled.div`
   }
 
   margin-top: 136px;
-  margin-left: 363px
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const FooterTextContent = styled.div`
@@ -42,7 +43,7 @@ export const FooterLinkContainer = styled.div`
 `;
 
 export const FooterLinkTitle = styled.h1`
-  color: var(--cool-grayscale-title, #26282B);
+  color: var(--cool-grayscale-title, #26282b);
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;

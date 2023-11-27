@@ -24,7 +24,7 @@ const StudentBookContainer = styled.div`
 
   position: fixed;
   margin-top: 236px;
-  margin-left: 1589px;
+  margin-left: 1750px;
 `;
 
 const BookImg = styled.img`
@@ -196,7 +196,6 @@ const CountContainer = styled.div`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   padding: 5px;
 `;
-
 
 /*
 1

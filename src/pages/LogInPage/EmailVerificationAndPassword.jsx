@@ -69,11 +69,15 @@ const NextButton = styled(Button)`
 const StyledTextField = styled(TextField)`
   & .MuiInput-underline:before {
     border-bottom: ${(props) =>
-      props.error ? "1px solid red" : "1px solid blue"};
+      props.error ? "1px solid red" : "1px solid black"};
   }
   /* & .MuiInput-underline:hover:not(.Mui-disabled):before {
     border-bottom: 2px solid blue;
   } */
+`;
+
+const PwCheck = styled(TextField)`
+  width: 400px;
 `;
 
 export default function EmailVerificationAndPassword() {
@@ -349,7 +353,7 @@ export default function EmailVerificationAndPassword() {
           </FormControl>
 
           <TitleText>비밀번호 확인</TitleText>
-          <TextField
+          <PwCheck
             id="confirm-password-input"
             variant="standard"
             placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
