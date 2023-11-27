@@ -233,6 +233,9 @@ const ReapeatImg = styled.img`
   height: 24px;
   margin-left: 438px;
   flex-shrink: 0;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const GuidelineBox = styled.div`
@@ -520,9 +523,7 @@ const Text = styled.p`
   padding: 24px 24px 24px 24px;
 `;
 
-const Button = styled.button`
-  display: inline-flex;
-  `;
+
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -1049,7 +1050,11 @@ const handleKeyDown = (e) => {
               onClick={() => setShowSmallContainer(!showSmallContainer)}
             ></Exit>
             <PrintNotice>한셀로 출력하시겠습니까?</PrintNotice>
-            <Print onClick={exportToExcel}>출력하기</Print>
+            <Print onClick={() => {
+                exportToExcel();
+                setShowSmallContainer(false);
+              }}>출력하기
+            </Print>
           </SmallContainer>
         )}
       </Header>
@@ -1132,18 +1137,7 @@ const handleKeyDown = (e) => {
                   <img src={chevron_right_Blue} alt="chevron_right_Blue" />
                 </HancellButton>
               </WritingBox>
-              <>
-                {/**키워드 입력창 */}
-                <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
-                <Keyword
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAddKeyword(e.target.value);
-                  }}
-                />
-              </>
+             
               <SuggestWordContainer>
                 {keywords.map((keyword, index) => (
                   <SuggestWord key={index}>{keyword}</SuggestWord>
@@ -1154,6 +1148,18 @@ const handleKeyDown = (e) => {
               {/*가이드라인 문장 */}
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
+                <>
+                {/* *키워드 입력창
+                <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
+                <Keyword
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleAddKeyword(e.target.value);
+                  }}
+                /> */}
+              </>
                 <ReapeatImg src={arrow_repeat} alt="arrow_repeat" 
                 onClick={fetchGuideLine}
                 />
