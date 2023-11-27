@@ -224,8 +224,9 @@ function GroupDetail() {
     });
   };
 
-  //그룹 생성 통신
+  
 
+  // 그룹 생성 POST 함수
   const generateGroup = async () => {
     // 대상 필드 중 하나라도 비어 있는지 확인
     if (!grade || !classNum || !subject) {
@@ -262,6 +263,7 @@ function GroupDetail() {
       if (response.status === 201) {
         setGroupCode(response.data.result);
         setContent("code");
+        await fetchGroups();
       } else {
         console.error(
           "서버로부터 예상치 못한 응답을 받았습니다:",
@@ -274,7 +276,7 @@ function GroupDetail() {
   };
 
   // 속한 그룹 목록 GET
-  useEffect(() => {
+  
     const fetchGroups = async () => {
       try {
         const response = await instance.get("/api/group");
@@ -289,9 +291,10 @@ function GroupDetail() {
       }
     };
 
-    fetchGroups();
-  }, []);
-
+    useEffect(() => {
+      fetchGroups();
+    }, []); 
+  
   return (
     <>
       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
@@ -338,7 +341,7 @@ function GroupDetail() {
                       : "var(--primary-cobalt, #4849ff)",
                 }}
               >
-                생성
+                다음
               </Button2>
             </>
           ) : (
