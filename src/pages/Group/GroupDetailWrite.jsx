@@ -659,27 +659,32 @@ function GroupDetailWrite() {
     const file = event.target.files[0];
     if (file) {
 
-      // 클라이언트에서 파일 읽기 
-      // const reader = new FileReader();
-      // reader.onload = (e) => {
-      //   try {
-      //     const data = new Uint8Array(e.target.result);
-      //     const workbook = XLSX.read(data, { type: 'array' });
-      //     const sheetName = workbook.SheetNames[0];
-      //     const worksheet = workbook.Sheets[sheetName];
-      //     const json = XLSX.utils.sheet_to_json(worksheet);
-      //     console.log('Loaded data:', json); // 로드된 데이터 확인
-      //     const specialAbilities = json.map((row) => row['세부능력 및 특기사항']).join('\n');
-      //     console.log('Extracted specialAbilities:', specialAbilities); // 추출된 데이터 확인
-      //     setInputText(specialAbilities); // Textarea에 값을 설정
-      //   } catch (error) {
-      //     console.error('Error reading file:', error);
-      //   }
-      // };
-      // reader.onerror = (error) => {
-      //   console.error('Error occurred while reading file:', error);
-      // };
-      // reader.readAsArrayBuffer(file);
+      //클라이언트에서 파일 읽기 
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet);
+          console.log('Loaded data:', json); // 로드된 데이터 확인
+
+           const studentSpecificAbilities = json
+          .filter((row) => row['성명'].toString() === paramsUserId)
+          .map((row) => row['세부능력 및 특기사항'])
+          .join('\n');
+
+          console.log('Extracted studentSpecificAbilities:', studentSpecificAbilities); // 추출된 데이터 확인
+          setInputText(studentSpecificAbilities); // Textarea에 값을 설정
+        } catch (error) {
+          console.error('Error reading file:', error);
+        }
+      };
+      reader.onerror = (error) => {
+        console.error('Error occurred while reading file:', error);
+      };
+      reader.readAsArrayBuffer(file);
   
       // 서버에 파일 업로드
       const formData = new FormData();
@@ -724,7 +729,7 @@ function GroupDetailWrite() {
         console.log("학생 수첩 조회 내용:", response.data);
   
         
-         FileSaver.saveAs(fileUrl, "학생별 세부능력 및 특기사항.cell");
+        window.open(fileUrl);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -847,58 +852,19 @@ const handleKeyDown = (e) => {
   //   }
   // };
 
-  const handleSaveButtonClick = async () => {
-    if (!isTextSaved) {
-      const saveSuccessful = await saveData(inputText);
-      if (saveSuccessful) {
-        // 저장 성공 후 필요한 추가 로직을 여기에 구현
-        setIsTextSaved(true); // 서버에 저장된 상태로 변경
-        // setButtonText("한셀 출력"); // 버튼 텍스트 변경
-        await fetchText();
-      }
-    } else {
-      // '한셀 출력' 로직을 여기에 구현
-      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
 
-      if (attachedFile) {
-        uploadFile(groupId, attachedFile);
-      }
-    }
+  const handleTextEdit = () => {
+    setIsTextSaved(false);
+    setButtonText("저장하기");
   };
 
-  // const handleTextEdit = () => {
-  //   setIsTextSaved(false);
-  //   setButtonText("저장하기");
-  // };
-
-  // const handleCopyButtonClick = () => {
-  //   navigator.clipboard.writeText(savedText);
-  //   alert("복사되었습니다.");
-  // };
-
-
-
-  const [percent, setPercent] = useState("");
-  const [output, setOutput] = useState("");
-
-  const handlePercentChange = (e) => {
-    setPercent(e.target.value);
+  const handleCopyButtonClick = () => {
+    navigator.clipboard.writeText(savedText);
+    alert("복사되었습니다.");
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      if (percent) {
-        if (parseInt(percent) <= 15) {
-          // 입력값이 15 이하인 경우
-          setOutput("과제2(상위 10%)");
-        } else {
-          setOutput("과제1(상위 25%), 과제2(상위 10%), 과제4(상위 20%)");
-        }
-      } else {
-        setOutput("");
-      }
-    }
-  };
+
+
 
   //
   const [keywords, setKeywords] = useState([]);
@@ -987,27 +953,27 @@ const handleKeyDown = (e) => {
   const [TextEntries, setTextEntries] = useState([]);
   const [savedTextFromText, setSavedTextFromText] = useState("");
 
-  // 생활기록부 전체 불러오기 함수
-  // useEffect(() => {
-  //   const fetchText = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `/api/record/${paramsGroupId}/${paramsUserId}`
-  //       );
-  //       if (response.status === 200 && response.data.result) {
-  //         setTextEntries(response.data.result);
-  //       } else {
-  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-  //       }
-  //     } catch (error) {
-  //       console.error("데이터 불러오기 중 오류 발생:", error);
-  //     }
-  //   };
+  //생활기록부 전체 불러오기 함수
+  useEffect(() => {
+    const fetchText = async () => {
+      try {
+        const response = await instance.get(
+          `/api/record/${paramsGroupId}/${paramsUserId}`
+        );
+        if (response.status === 200 && response.data.result) {
+          setTextEntries(response.data.result);
+        } else {
+          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+        }
+      } catch (error) {
+        console.error("데이터 불러오기 중 오류 발생:", error);
+      }
+    };
 
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchText();
-  //   }
-  // }, [paramsGroupId, paramsUserId]);
+    if (paramsGroupId && paramsUserId) {
+      fetchText();
+    }
+  }, [paramsGroupId, paramsUserId]);
 
 
  
@@ -1079,7 +1045,7 @@ const handleKeyDown = (e) => {
 
       if (postResponse.status === 201) {
         console.log("생활기록부 작성 성공!");
-        return postResponse.data; // 저장된 데이터를 반환
+        return postResponse.data;
       } else {
         console.error(
           "예상치 못한 상태 코드:",
@@ -1197,7 +1163,7 @@ const handleKeyDown = (e) => {
                   
           </HancellButton> 
           </div>
-          <SaveButton onClick={handleSaveButtonClick}>저장하기</SaveButton>
+          <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>5점(상위 5%)</ScoreResult>
@@ -1225,7 +1191,7 @@ const handleKeyDown = (e) => {
               </div>
             </PercentBody>
           </ScoreList>
-          {/* {!isTextSaved ? ( */}
+          {!isTextSaved ? (
             <>
               <WritingBox>
                 {/*생활기록부 입력창*/}
@@ -1285,7 +1251,31 @@ const handleKeyDown = (e) => {
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-           {/* ) : null} */}
+            ) : null}
+           
+           {isTextSaved && (
+            <div>
+
+
+              {TextEntries.map((entry) => (
+                <InfoContainer key={entry.id}>
+                  <TimeText>
+                    {/* 날짜 형식을 년-월-일 */}
+                    {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
+                  </TimeText>
+                  <div style={{ marginTop: "-20px" }}>
+                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
+                    <CopyButton onClick={handleCopyButtonClick}>
+                      복사하기
+                    </CopyButton>
+                  </div>
+                  <StudentBookText>
+                    <SavedText>{entry.content}</SavedText>
+                  </StudentBookText>
+                </InfoContainer>
+              ))}
+            </div>
+          )}
 
         </LeftContainer>
 
