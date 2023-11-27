@@ -24,20 +24,29 @@ import Button from "@mui/material/Button";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
-  height: inherit;
+  height: 1080px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border: 1px solid black;
 `;
 
 const Container = styled.div`
-  width: 500px;
+  /* width: 30%; */
+  height: 500px;
+
+  /* border: 1px solid red; */
 `;
 
 const InnerContainer = styled.div`
-  width: 100%;
+  width: 90%;
   /* height: 100%; */
   margin: 20px 0 10px 10px;
+`;
+
+const NextBtnContainer = styled.div`
+  margin-top: 150px;
 `;
 
 const Notelass = styled.h1`
@@ -68,6 +77,7 @@ const FlexRow = styled.div`
 
 const NextButton = styled(Button)`
   width: 400px;
+  margin-top: 100px;
 `;
 
 const StudentInfoFormControl = styled(FormControl)`
@@ -264,14 +274,16 @@ export default function SelectRole() {
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
-        <NextButton
-          type="submit"
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleSubmit}
-        >
-          다음
-        </NextButton>
+        <NextBtnContainer>
+          <NextButton
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+          >
+            다음
+          </NextButton>
+        </NextBtnContainer>
       </Container>
     </ContainerWidth_1920>
   );
