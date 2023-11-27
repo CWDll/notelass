@@ -7,7 +7,7 @@ import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
 
 const NavContainer = styled.div`
-  width: 1920px;
+  width: 100%;
   height: 84px;
   background-color: white;
   display: flex;

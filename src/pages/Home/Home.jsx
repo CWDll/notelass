@@ -11,8 +11,8 @@ import Tasks from "../../components/Component/Home/Tasks";
 import RecentNote from "../../components/Component/Home/RecentNote";
 
 const HomeContainer = styled.div`
-  margin-left: 363px;
-  margin-right: 363px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 70px;
   padding: 0;
   /* border: 1px solid white; */
