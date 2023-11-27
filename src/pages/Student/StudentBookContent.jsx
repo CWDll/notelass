@@ -73,6 +73,14 @@ const StudentSelect = styled.select`
   font-weight: 600;
   line-height: normal;
   padding-left: 16px;
+
+  /* 박스 스타일링 */
+  
+  
+ 
+  padding: 5px 10px; /* 내부 여백 설정 */
+  border: 1px solid #ccc; /* 테두리 색상과 두께 설정 */
+  border-radius: 5px; /* 모서리 둥글게 처리 */
 `;
 
 const GroupSelect = styled.select`

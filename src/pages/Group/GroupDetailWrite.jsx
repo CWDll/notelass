@@ -105,7 +105,7 @@ const RightContainer = styled.div`
   margin-left: 30px;
   margin-top: 48px;
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const Title = styled.p`
@@ -726,7 +726,7 @@ function GroupDetailWrite() {
       const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
       if (response.status === 200 && response.data.result) {
         const fileUrl = response.data.result.fileUrl;
-        console.log("학생 수첩 조회 내용:", response.data);
+        console.log("생활기록부 다운로드:", response.data);
   
         
         window.open(fileUrl);
@@ -977,33 +977,6 @@ const handleKeyDown = (e) => {
 
 
  
-  // 가이드라인 GET 
-
-  // useEffect(() => {
-  //   console.log("가이드라인?");
-  //   const fetchGuideLine = async () => {
-  //     try {
-  //       const guideRes = await instance.get(
-  //         `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
-  //       );
-  //       console.log("가이드라인 내용:", guideRes.data);
-  //       if (guideRes.status === 200) {
-  //         setGuideLineText(guideRes.data.result);
-  //       } else {
-  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
-  //       }
-  //     } catch (error) {
-  //       console.error("가이드라인 에러:", error);
-  //     }
-  //   };
-
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchGuideLine();
-  //   }
-  // }, [paramsGroupId, paramsUserId,fetchGuideLine]);
-
-
-  //////////////////////////////
 
   // 가이드라인 GET 함수
   const fetchGuideLine = useCallback(async () => {
@@ -1022,12 +995,7 @@ const handleKeyDown = (e) => {
     }
   }, [paramsGroupId, paramsUserId, keywords]);
 
-  // useEffect(() => {
-  //   console.log("가이드라인?");
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchGuideLine();
-  //   }
-  // }, [paramsGroupId, paramsUserId, fetchGuideLine]);
+ 
 
 
 
@@ -1065,14 +1033,11 @@ const handleKeyDown = (e) => {
     if (!isTextSaved) {
       const saveSuccessful = await saveData(inputText);
       if (saveSuccessful) {
-        // 저장 성공 후 필요한 추가 로직을 여기에 구현
-        setIsTextSaved(true); // 서버에 저장된 상태로 변경
-        // setButtonText("한셀 출력"); // 버튼 텍스트 변경
+        setIsTextSaved(true); 
         await fetchText();
       }
     } else {
-      // '한셀 출력' 로직을 여기에 구현
-      exportToExcel(inputText); // 서버에 저장된 내용을 Excel로 내보내기
+      exportToExcel(inputText); 
 
       if (attachedFile) {
         uploadFile(groupId, attachedFile);

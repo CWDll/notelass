@@ -368,6 +368,12 @@ function GroupDetailClass() {
               생성하기
             </DetailText>
 
+            <Title style ={{display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', marginTop: '-50px',
+                            height: '100%', }}>준비 중입니다.</Title>
+
+
             {/* 그룹별 공지사항 목록 조회*/}
             {/* <SubjectContainer>
               {notices.map((notice, index) => (
@@ -401,7 +407,7 @@ function GroupDetailClass() {
               더보기
             </DetailText>
             <SubjectContainer>
-              <NoticeContent>
+              {/* <NoticeContent>
                 <NoticeImg src={file} alt="file" />
                 <NoticeTitle>과제4</NoticeTitle>
               </NoticeContent>
@@ -416,7 +422,13 @@ function GroupDetailClass() {
               <NoticeContent>
                 <NoticeImg src={file} alt="file" />
                 <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-              </NoticeContent>
+              </NoticeContent> */}
+
+
+            <Title style ={{display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', marginTop: '50px',
+                            height: '100%', }}>준비 중입니다.</Title>
             </SubjectContainer>
           </GroupContainer>
 
@@ -429,7 +441,7 @@ function GroupDetailClass() {
               더보기
             </DetailText>
             <SubjectContainer>
-              <NoticeContent onClick={StudentScoreDetail}>
+              {/* <NoticeContent onClick={StudentScoreDetail}>
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>1</SudentNum>
                 <NoticeTitle>김민수</NoticeTitle>
@@ -443,7 +455,14 @@ function GroupDetailClass() {
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>3</SudentNum>
                 <NoticeTitle>김민수</NoticeTitle>
-              </NoticeContent>
+              </NoticeContent> */}
+
+
+              <Title style ={{display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', marginTop: '50px',
+                            height: '100%', }}>준비 중입니다.</Title>
+
             </SubjectContainer>
           </GroupContainer>
         </LeftSectionContainer>

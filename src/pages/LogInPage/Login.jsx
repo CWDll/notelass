@@ -65,7 +65,9 @@ export default function Login() {
 
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem("token", accessToken);
-        navigate("/");
+        // navigate("/");
+        navigate("/Groupdetail");
+        
       } else {
         alert("로그인 실패!");
       }

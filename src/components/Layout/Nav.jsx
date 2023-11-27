@@ -6,13 +6,28 @@ import personimg from "../../assets/personimg.svg";
 import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
 
+// const NavContainer = styled.div`
+//   width: 1920px;  
+//   height: 84px;
+//   background-color: white;
+//   display: flex;
+//   align-items: center;
+//   padding: 0px 20px 0px 20px; 
+//   
+//   
+// `;
+
 const NavContainer = styled.div`
-  width: 1920px;
+  width: 1920px;  
   height: 84px;
   background-color: white;
   display: flex;
   align-items: center;
-  padding: 0px 20px 0px 20px;
+  
+
+  {/*임시*/}
+  justify-content: space-between; 
+  padding: 0px 0px 0px 20px;
 `;
 
 const Notelass = styled.h2`
@@ -22,8 +37,11 @@ const Notelass = styled.h2`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-left: 12px;
+  {/*margin-left: 12;*/}
   white-space: nowrap;
+
+  {/*임시*/}
+  margin-left: -70px;
 `;
 
 const NavItemContainer = styled.div`
@@ -32,6 +50,8 @@ const NavItemContainer = styled.div`
   align-items: center;
   width: auto;
   margin-left: 358px;
+
+  
 `;
 
 const NavItems = styled.span`
@@ -47,6 +67,10 @@ const NavItems = styled.span`
   color: ${(props) => (props.isSelected ? "#4849ff" : "#9EA4AA")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "600")};
   margin: 0px 20px 0px 20px;
+
+  cursor: pointer;
+  margin-left: 250px;
+  
 `;
 
 const SignBtnContainer = styled.div`
@@ -209,7 +233,7 @@ export default function Nav() {
       </Imgbox>
       <Notelass> Note-lass</Notelass>
       <NavItemContainer>
-        <NavItems
+        {/* <NavItems
           isSelected={selectedItemIndex === 0}
           onClick={() => {
             handleNavItemClick(0), navigateToIntroduce();
@@ -217,6 +241,7 @@ export default function Nav() {
         >
           소개
         </NavItems>
+
         <NavItems
           isSelected={selectedItemIndex === 1}
           onClick={() => {
@@ -224,7 +249,8 @@ export default function Nav() {
           }}
         >
           홈
-        </NavItems>
+        </NavItems> */}
+
         <NavItems
           isSelected={selectedItemIndex === 2}
           onClick={() => {
@@ -233,7 +259,8 @@ export default function Nav() {
         >
           그룹
         </NavItems>
-        <NavItems
+
+        {/* <NavItems
           isSelected={selectedItemIndex === 3}
           onClick={() => {
             handleNavItemClick(3), navigateToNote();
@@ -241,6 +268,7 @@ export default function Nav() {
         >
           노트
         </NavItems>
+
         <NavItems
           isSelected={selectedItemIndex === 4}
           onClick={() => {
@@ -248,7 +276,8 @@ export default function Nav() {
           }}
         >
           환경설정
-        </NavItems>
+        </NavItems> */}
+
       </NavItemContainer>
       <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
