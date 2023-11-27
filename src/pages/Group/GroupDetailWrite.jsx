@@ -604,6 +604,7 @@ function GroupDetailWrite() {
   const [uploadStatus, setUploadStatus] = useState("");
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [fetchText, setFetchText] = useState("");
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // 학생 수첩 관련 함수
   // StudentBook 모달을 열기 위한 함수
@@ -833,7 +834,7 @@ const handleKeyDown = (e) => {
 
   const navigate = useNavigate();
   const BackButton = () => {
-    navigate("/GroupDetailClass");
+    navigate(-1);
   };
 
   // const handleSaveButtonClick = () => {
@@ -1055,15 +1056,15 @@ const handleKeyDown = (e) => {
         <Img
           src={chevron_left}
           alt="chevron_left"
-          onClick={() => setShowSmallContainer(!showSmallContainer)}
+          onClick={() => setShowExitConfirm(!showExitConfirm)}
         />
 
-        {showSmallContainer && (
+        {showExitConfirm && (
           <SmallContainer>
             <Exit
               src={exit}
               alt="exit"
-              onClick={() => setShowSmallContainer(!showSmallContainer)}
+              onClick={() => setShowExitConfirm(!showExitConfirm)}
             ></Exit>
             <Notice>
               출력하지 않으면 작성한 문장이 초기화됩니다. <br />
@@ -1072,7 +1073,7 @@ const handleKeyDown = (e) => {
             <ButtonContainer>
               <ExitButton onClick={BackButton}>나가기</ExitButton>
               <ContinueButton
-                onClick={() => setShowSmallContainer(!showSmallContainer)}
+                onClick={() => setShowExitConfirm(!showExitConfirm)}
               >
                 계속 작성하기
               </ContinueButton>
