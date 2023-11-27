@@ -214,7 +214,7 @@ const SuggestWord = styled.div`
 `;
 
 const GuidelineContainer = styled.div`
-  display: flex;
+  display: row;
   align-items: center;
   margin-left: 32px;
   margin-top: 32px;
@@ -510,7 +510,7 @@ const Keyword = styled.input`
   flex-shrink: 0;
   border-radius: 6px;
   background: #ededff;
-  margin-left: 130px;
+  margin-left: 160px;
   margin-top: -48px;
 `;
 
@@ -547,6 +547,8 @@ const AssigncellButton = styled.button`
   font-weight: 600;
   line-height: normal;
   `;
+
+  
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -1074,7 +1076,7 @@ function GroupDetailWrite() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
             <>
-            <AssigncellButton style ={{justifyContent: "center"}} >
+            <AssigncellButton >
               <input
                 type="file"
                 onChange={uploadAssignment}
@@ -1157,13 +1159,14 @@ function GroupDetailWrite() {
                 <SuggestWord key={index}>{keyword}</SuggestWord>
               ))}
             </SuggestWordContainer>
+            
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
               <GuidelineTitle>가이드라인 문장</GuidelineTitle>
               <>
-                {/* *키워드 입력창
-                <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
+                {/* *키워드 입력창 */}
+                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>단어를 입력하세요 : </Text>
                 <Keyword
                   type="text"
                   value={inputValue}
@@ -1171,7 +1174,8 @@ function GroupDetailWrite() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleAddKeyword(e.target.value);
                   }}
-                /> */}
+                />
+                
               </>
               <ReapeatImg
                 src={arrow_repeat}
@@ -1208,11 +1212,11 @@ function GroupDetailWrite() {
                     setShowStudentBook(!showStudentBook);
                   }}
                 >
-                  수첩수정
+                  수정
                 </TimeText>
 
                 <TimeText onClick={() => deleteStudentBookEntry(entry.id)}>
-                  삭제하기
+                  삭제
                 </TimeText>
               </div>
               <StudentBookText>
