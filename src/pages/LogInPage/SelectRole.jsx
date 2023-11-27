@@ -24,16 +24,15 @@ import Button from "@mui/material/Button";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
-  height: 1080px;
+  height: 900px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
 `;
 
 const Container = styled.div`
-  /* width: 30%; */
+  /* width: 100%; */
   height: 500px;
 
   /* border: 1px solid red; */
@@ -45,8 +44,14 @@ const InnerContainer = styled.div`
   margin: 20px 0 10px 10px;
 `;
 
+const StudentInnerContainer = styled.div`
+  width: 100%;
+  height: 1%;
+  margin: 20px 0 10px 10px;
+`;
+
 const NextBtnContainer = styled.div`
-  margin-top: 150px;
+  margin-top: 188px;
 `;
 
 const Notelass = styled.h1`
@@ -161,7 +166,7 @@ export default function SelectRole() {
   // 학생에게만 나오는 UI
   function StudentInfo() {
     return (
-      <InnerContainer>
+      <StudentInnerContainer>
         <TitleText>반, 번호 입력</TitleText>
         <FlexRow>
           <FormControl sx={{ width: 120, marginRight: 1 }}>
@@ -228,7 +233,7 @@ export default function SelectRole() {
           </FormControl>
           <TitleText>번호</TitleText>
         </FlexRow>
-      </InnerContainer>
+      </StudentInnerContainer>
     );
   }
 

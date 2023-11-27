@@ -24,6 +24,7 @@ import Button from "@mui/material/Button";
 
 const ContainerWidth_1920 = styled.div`
   width: 1920px;
+  height: 1080px;
   height: inherit;
   display: flex;
   justify-content: center;
@@ -31,13 +32,20 @@ const ContainerWidth_1920 = styled.div`
 `;
 
 const Container = styled.div`
-  width: 500px;
+  /* width: 500px; */
+  height: 500px;
+
+  /* border: 1px solid red; */
 `;
 
 const InnerContainer = styled.div`
   width: 100%;
   /* height: 100%; */
   margin: 20px 0 10px 10px;
+`;
+
+const NextBtnContainer = styled.div`
+  margin-top: 150px;
 `;
 
 const Notelass = styled.h1`
@@ -165,15 +173,16 @@ export default function SelectSchool() {
             </FormControl>
           </Box>
         </InnerContainer>
-
-        <NextButton
-          type="submit"
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleSubmit}
-        >
-          다음
-        </NextButton>
+        <NextBtnContainer>
+          <NextButton
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+          >
+            다음
+          </NextButton>
+        </NextBtnContainer>
       </Container>
     </ContainerWidth_1920>
   );
