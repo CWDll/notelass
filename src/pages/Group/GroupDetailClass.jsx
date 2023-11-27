@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import person from "../../assets/person.svg";
@@ -209,7 +209,8 @@ const Exit = styled.img`
 `;
 
 function GroupDetailClass() {
-
+  const location = useLocation();
+  const info = location.state;
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
 
@@ -219,8 +220,17 @@ function GroupDetailClass() {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
     navigate("/GroupDetailClass/AssignmentDetail");
   };
-  const GroupDetailWrite = (paramsGruopId, paramsUserId) => {
-    navigate(`/GroupDetailWrite/${paramsGruopId}/${paramsUserId}`);
+  const GroupDetailWrite = (
+    paramsGruopId,
+    paramsUserId,
+    school,
+    grade,
+    classNum,
+    subject
+  ) => {
+    navigate(`/GroupDetailWrite/${paramsGruopId}/${paramsUserId}`, {
+      state: { school, grade, classNum, subject },
+    });
   };
 
   const BackButton = () => {
@@ -257,8 +267,8 @@ function GroupDetailClass() {
         console.log(response);
 
         if (response.data && response.data.result) {
-          setStudents(response.data.result); 
-          console.log("response.data.result: ", response.data.result); 
+          setStudents(response.data.result);
+          console.log("response.data.result: ", response.data.result);
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -283,42 +293,45 @@ function GroupDetailClass() {
   //     });
   // }, [groupId]);
 
-
   // 학생 등록 파일 업로드 POST 함수
   const uploadname = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
-      console.log(formData); 
-  
-        for (let [key, value] of formData.entries()) {
-          console.log(key, value);
-        }
-  
-        try {
-          const response = await instance.post(
-            `/api/group/file/${paramsGroupId}`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-  
-        console.log(response); 
-    
+      formData.append("file", file);
+      console.log(formData);
+
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+        const response = await instance.post(
+          `/api/group/file/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        console.log(response);
+
         if (response.status === 201) {
           console.log("학생 등록 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); 
+          setUploadStatus("업로드 성공!");
         } else {
-          console.error("예상치 못한 상태 코드:", response.status, response.data);
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); 
+          console.error(
+            "예상치 못한 상태 코드:",
+            response.status,
+            response.data
+          );
+          setUploadStatus("업로드 실패: 예상치 못한 상태 코드");
         }
       } catch (error) {
         console.error("학생 등록 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생"); 
+        setUploadStatus("업로드 실패: 오류 발생");
       }
     }
   };
@@ -327,24 +340,25 @@ function GroupDetailClass() {
     <>
       <Header>
         <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
-        <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
+        <BoldTitle>
+          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
+        </BoldTitle>
         <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
           그룹 정보
         </Button>
-        <Button >
-        <input
-                    type="file"
-                    onChange={uploadname}
-                    accept=".xls,.xlsx,.csv,.cell"
-                    style={{
-                      position: "absolute",
-                      height: "100%",
-                      width: "100%",
-                      opacity: 0,
-                     
-                    }}
-                  />
-                  학생 등록
+        <Button>
+          <input
+            type="file"
+            onChange={uploadname}
+            accept=".xls,.xlsx,.csv,.cell"
+            style={{
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+              opacity: 0,
+            }}
+          />
+          학생 등록
         </Button>
 
         {showSmallContainer && (
@@ -368,11 +382,17 @@ function GroupDetailClass() {
               생성하기
             </DetailText>
 
-            <Title style ={{display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', marginTop: '-50px',
-                            height: '100%', }}>준비 중입니다.</Title>
-
+            <Title
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "-50px",
+                height: "100%",
+              }}
+            >
+              준비 중입니다.
+            </Title>
 
             {/* 그룹별 공지사항 목록 조회*/}
             {/* <SubjectContainer>
@@ -424,11 +444,17 @@ function GroupDetailClass() {
                 <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
               </NoticeContent> */}
 
-
-            <Title style ={{display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', marginTop: '50px',
-                            height: '100%', }}>준비 중입니다.</Title>
+              <Title
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "50px",
+                  height: "100%",
+                }}
+              >
+                준비 중입니다.
+              </Title>
             </SubjectContainer>
           </GroupContainer>
 
@@ -457,12 +483,17 @@ function GroupDetailClass() {
                 <NoticeTitle>김민수</NoticeTitle>
               </NoticeContent> */}
 
-
-              <Title style ={{display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', marginTop: '50px',
-                            height: '100%', }}>준비 중입니다.</Title>
-
+              <Title
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "50px",
+                  height: "100%",
+                }}
+              >
+                준비 중입니다.
+              </Title>
             </SubjectContainer>
           </GroupContainer>
         </LeftSectionContainer>
@@ -473,7 +504,16 @@ function GroupDetailClass() {
             {students.map((student, index) => (
               <NoticeContent
                 key={student.id}
-                onClick={() => GroupDetailWrite(id, student.id)}
+                onClick={() =>
+                  GroupDetailWrite(
+                    id,
+                    student.id,
+                    info.school,
+                    info.grade,
+                    info.classNum,
+                    info.subject
+                  )
+                }
               >
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>{index + 1}</SudentNum>

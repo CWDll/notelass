@@ -218,8 +218,10 @@ function GroupDetail() {
   const accessToken = localStorage.getItem("token");
 
   const navigate = useNavigate();
-  const handleGroupClick = (id) => {
-    navigate(`/GroupDetailClass/${id}`);
+  const handleGroupClick = (id, school, grade, classNum, subject) => {
+    navigate(`/GroupDetailClass/${id}`, {
+      state: { school, grade, classNum, subject },
+    });
   };
 
   //그룹 생성 통신
@@ -380,7 +382,15 @@ function GroupDetail() {
           {groupList.map((group) => (
             <SubjectBody
               key={group.id}
-              onClick={() => handleGroupClick(group.id)}
+              onClick={() =>
+                handleGroupClick(
+                  group.id,
+                  group.school,
+                  group.grade,
+                  group.classNum,
+                  group.subject
+                )
+              }
             >
               <CircleText>
                 <PurpleText>{group.subject[0]}</PurpleText>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect , useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import arrow_repeat from "../../assets/arrow_repeat.svg";
@@ -237,15 +237,15 @@ const ReapeatImg = styled.img`
 
 const GuidelineBox = styled.div`
   width: 620px;
-  min-height: 120px; 
+  min-height: 120px;
   flex-shrink: 0;
   border-radius: 8px;
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   margin-left: 32px;
   margin-top: 24px;
-  padding: 10px; 
-  overflow: hidden; 
+  padding: 10px;
+  overflow: hidden;
 `;
 
 const GuidelineText = styled.p`
@@ -562,7 +562,7 @@ const Text = styled.p`
 
 const Button = styled.button`
   display: inline-flex;
-  `;
+`;
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -585,6 +585,10 @@ const calculateByteCount = (text) => {
 };
 
 function GroupDetailWrite() {
+  const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
+  const location = useLocation();
+  const info = location.state;
+
   // 학생 수업 관련 state
   const [showStudentBook, setShowStudentBook] = useState(false);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
@@ -602,7 +606,6 @@ function GroupDetailWrite() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
-  const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [fetchText, setFetchText] = useState("");
 
   // 학생 수첩 관련 함수
@@ -658,38 +661,40 @@ function GroupDetailWrite() {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-
-      //클라이언트에서 파일 읽기 
+      //클라이언트에서 파일 읽기
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
           const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
+          const workbook = XLSX.read(data, { type: "array" });
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
           const json = XLSX.utils.sheet_to_json(worksheet);
-          console.log('Loaded data:', json); // 로드된 데이터 확인
+          console.log("Loaded data:", json); // 로드된 데이터 확인
 
-           const studentSpecificAbilities = json
-          .filter((row) => row['성명'].toString() === paramsUserId)
-          .map((row) => row['세부능력 및 특기사항'])
-          .join('\n');
+          const studentSpecificAbilities = json
+            .filter((row) => row["성명"].toString() === paramsUserId)
+            .map((row) => row["세부능력 및 특기사항"])
+            .join("\n");
 
-          console.log('Extracted studentSpecificAbilities:', studentSpecificAbilities); // 추출된 데이터 확인
+          console.log(
+            "Extracted studentSpecificAbilities:",
+            studentSpecificAbilities
+          ); // 추출된 데이터 확인
           setInputText(studentSpecificAbilities); // Textarea에 값을 설정
         } catch (error) {
-          console.error('Error reading file:', error);
+          console.error("Error reading file:", error);
         }
       };
       reader.onerror = (error) => {
-        console.error('Error occurred while reading file:', error);
+        console.error("Error occurred while reading file:", error);
       };
       reader.readAsArrayBuffer(file);
-  
+
       // 서버에 파일 업로드
       const formData = new FormData();
       formData.append("file", file);
-  
+
       try {
         const response = await instance.post(
           `/api/record/excel/${paramsGroupId}`,
@@ -700,10 +705,10 @@ function GroupDetailWrite() {
             },
           }
         );
-  
+
         if (response.status === 201) {
           console.log("생활기록부 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); 
+          setUploadStatus("업로드 성공!");
         } else {
           console.error(
             "예상치 못한 상태 코드:",
@@ -722,13 +727,11 @@ function GroupDetailWrite() {
   // 생기부 다운로드 받기 GET 함수
   const exportToExcel = async () => {
     try {
-      
       const response = await instance.get(`/api/record/excel/${paramsGroupId}`);
       if (response.status === 200 && response.data.result) {
         const fileUrl = response.data.result.fileUrl;
         console.log("생활기록부 다운로드:", response.data);
-  
-        
+
         window.open(fileUrl);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
@@ -740,14 +743,13 @@ function GroupDetailWrite() {
     }
   };
 
-
   //과제 성적 파일 업로드 POST 함수
-const uploadAssignment = async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log(formData); 
+  const uploadAssignment = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(formData);
 
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
@@ -764,67 +766,67 @@ const uploadAssignment = async (event) => {
           }
         );
 
-      console.log(response); // 서버 응답 확인
+        console.log(response); // 서버 응답 확인
 
-      if (response.status === 201) {
-        console.log("과제 성적 파일 업로드 성공!");
-        setUploadStatus("업로드 성공!"); // 상태 업데이트
-      } else {
-        console.error("예상치 못한 상태 코드:", response.status, response.data);
-        setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+        if (response.status === 201) {
+          console.log("과제 성적 파일 업로드 성공!");
+          setUploadStatus("업로드 성공!"); // 상태 업데이트
+        } else {
+          console.error(
+            "예상치 못한 상태 코드:",
+            response.status,
+            response.data
+          );
+          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+        }
+      } catch (error) {
+        console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
       }
-    } catch (error) {
-      console.error("과제 성적 파일 업로드 중 오류 발생:", error);
-      setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
     }
-  }
-};
+  };
 
   // 과제 점수 조회 GET 함수
 
-const [percentage, setPercentage] = useState(''); 
-const [filteredAssignments, setFilteredAssignments] = useState([]);
-const [getAssignment, setgetAssignment] = useState([]);
+  const [percentage, setPercentage] = useState("");
+  const [filteredAssignments, setFilteredAssignments] = useState([]);
+  const [getAssignment, setgetAssignment] = useState([]);
 
-const fetchAssignment = async () => {
-  try {
-    const url = `/api/record/detail/${paramsGroupId}/${paramsUserId}?percentage=${percentage}`;
-    console.log("요청 URL:", url);
-    const response = await instance.get(url);
-    console.log("과제 점수 조회 내용:", response.data);
-    if (response.status === 200) {
-      setFilteredAssignments(response.data.result.highScoreAssignmentList);
-      console.log("과제 점수 조회 내용2: ", response.data.result.highScoreAssignmentList);
-    } else {
-      console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+  const fetchAssignment = async () => {
+    try {
+      const url = `/api/record/detail/${paramsGroupId}/${paramsUserId}?percentage=${percentage}`;
+      console.log("요청 URL:", url);
+      const response = await instance.get(url);
+      console.log("과제 점수 조회 내용:", response.data);
+      if (response.status === 200) {
+        setFilteredAssignments(response.data.result.highScoreAssignmentList);
+        console.log(
+          "과제 점수 조회 내용2: ",
+          response.data.result.highScoreAssignmentList
+        );
+      } else {
+        console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+      }
+    } catch (error) {
+      console.error("과제 점수를 가져오지 못했습니다.:", error);
     }
-  } catch (error) {
-    console.error("과제 점수를 가져오지 못했습니다.:", error);
-  }
-};
+  };
 
+  useEffect(() => {
+    if (paramsGroupId && paramsUserId && percentage) {
+      fetchAssignment();
+    }
+  }, [paramsGroupId, paramsUserId, percentage]);
 
+  const handlePercentChange = (e) => {
+    setPercentage(e.target.value);
+  };
 
-useEffect(() => {
-  if (paramsGroupId && paramsUserId && percentage) { 
-    fetchAssignment();
-  }
-}, [paramsGroupId, paramsUserId, percentage]);
-
-const handlePercentChange = (e) => {
-  setPercentage(e.target.value); 
-};
-
-const handleKeyDown = (e) => {
-  if (e.key === 'Enter') {
-    fetchAssignment();
-  }
-};
-
-
-
-
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      fetchAssignment();
+    }
+  };
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
@@ -852,7 +854,6 @@ const handleKeyDown = (e) => {
   //   }
   // };
 
-
   const handleTextEdit = () => {
     setIsTextSaved(false);
     setButtonText("저장하기");
@@ -862,9 +863,6 @@ const handleKeyDown = (e) => {
     navigator.clipboard.writeText(savedText);
     alert("복사되었습니다.");
   };
-
-
-
 
   //
   const [keywords, setKeywords] = useState([]);
@@ -975,9 +973,6 @@ const handleKeyDown = (e) => {
     }
   }, [paramsGroupId, paramsUserId]);
 
-
- 
-
   // 가이드라인 GET 함수
   const fetchGuideLine = useCallback(async () => {
     try {
@@ -994,10 +989,6 @@ const handleKeyDown = (e) => {
       console.error("가이드라인 에러:", error);
     }
   }, [paramsGroupId, paramsUserId, keywords]);
-
- 
-
-
 
   // 생활기록부 POST 함수
   const saveData = async (text) => {
@@ -1027,17 +1018,15 @@ const handleKeyDown = (e) => {
     return null; // 오류 발생 시 null 반환
   };
 
-
-  
   const handleSaveButtonClick = async () => {
     if (!isTextSaved) {
       const saveSuccessful = await saveData(inputText);
       if (saveSuccessful) {
-        setIsTextSaved(true); 
+        setIsTextSaved(true);
         await fetchText();
       }
     } else {
-      exportToExcel(inputText); 
+      exportToExcel(inputText);
 
       if (attachedFile) {
         uploadFile(groupId, attachedFile);
@@ -1050,7 +1039,6 @@ const handleKeyDown = (e) => {
 
   return (
     <div>
-
       <Header>
         <Img
           src={chevron_left}
@@ -1080,7 +1068,9 @@ const handleKeyDown = (e) => {
           </SmallContainer>
         )}
 
-        <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
+        <BoldTitle>
+          {info.school} {info.grade}학년 {info.classNum}반 ${info.subject}
+        </BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value=""></option>
@@ -1109,24 +1099,22 @@ const handleKeyDown = (e) => {
       </Header>
       <MainContainer>
         <LeftContainer>
-          <div style= {{display: "flex" ,alignItems: "center"}} >
-          <Title>활동기록 총 정리</Title>
-            <HancellButton style ={{marginLeft: "10px", marginTop: "32px"}}>
-                <input
-                    type="file"
-                    onChange={uploadAssignment}
-                    accept=".xls,.xlsx,.csv,.cell"
-                    style={{
-                      position: "absolute",
-                      height: "100%",
-                      width: "100%",
-                      opacity: 0,
-
-                    }}
-                  />
-                  과제 데이터 불러오기 
-                  
-          </HancellButton> 
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Title>활동기록 총 정리</Title>
+            <HancellButton style={{ marginLeft: "10px", marginTop: "32px" }}>
+              <input
+                type="file"
+                onChange={uploadAssignment}
+                accept=".xls,.xlsx,.csv,.cell"
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  width: "100%",
+                  opacity: 0,
+                }}
+              />
+              과제 데이터 불러오기
+            </HancellButton>
           </div>
           <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
           <ScoreList>
@@ -1147,7 +1135,10 @@ const handleKeyDown = (e) => {
                 {filteredAssignments.length > 0 ? (
                   filteredAssignments.map((assignment, index) => (
                     <div key={index}>
-                      <p>과제명: {assignment.name}, 점수: {assignment.score}, 상위: {assignment.rank}%</p>
+                      <p>
+                        과제명: {assignment.name}, 점수: {assignment.score},
+                        상위: {assignment.rank}%
+                      </p>
                     </div>
                   ))
                 ) : (
@@ -1165,7 +1156,7 @@ const handleKeyDown = (e) => {
                   value={inputText}
                   onChange={(e) => {
                     setInputText(e.target.value);
-                    setByteCount(calculateByteCount(e.target.value)); 
+                    setByteCount(calculateByteCount(e.target.value));
                   }}
                 />
 
@@ -1204,24 +1195,23 @@ const handleKeyDown = (e) => {
                 ))}
               </SuggestWordContainer>
 
-
               {/*가이드라인 문장 */}
               <GuidelineContainer>
                 <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg src={arrow_repeat} alt="arrow_repeat" 
-                onClick={fetchGuideLine}
+                <ReapeatImg
+                  src={arrow_repeat}
+                  alt="arrow_repeat"
+                  onClick={fetchGuideLine}
                 />
               </GuidelineContainer>
               <GuidelineBox>
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-            ) : null}
-           
-           {isTextSaved && (
+          ) : null}
+
+          {isTextSaved && (
             <div>
-
-
               {TextEntries.map((entry) => (
                 <InfoContainer key={entry.id}>
                   <TimeText>
@@ -1241,7 +1231,6 @@ const handleKeyDown = (e) => {
               ))}
             </div>
           )}
-
         </LeftContainer>
 
         <RightContainer>
