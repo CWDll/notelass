@@ -68,8 +68,7 @@ const NextButton = styled(Button)`
 
 const StyledTextField = styled(TextField)`
   & .MuiInput-underline:before {
-    border-bottom: ${(props) =>
-      props.error ? "1px solid red" : "1px solid black"};
+    border-bottom: ${(props) => (props.error ? "1px solid red" : "")};
   }
   /* & .MuiInput-underline:hover:not(.Mui-disabled):before {
     border-bottom: 2px solid blue;
