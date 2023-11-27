@@ -823,6 +823,28 @@ const handleKeyDown = (e) => {
 };
 
 
+  //속한 그룹 조회 GET 함수
+  const [groupList, setGroupList] = useState([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await instance.get("/api/group");
+      if (response.status === 200 && Array.isArray(response.data.result)) {
+        const filteredGroups = response.data.result.filter(group => group.id.toString() === paramsGroupId);
+        setGroupList(filteredGroups);
+        console.log("그룹 목록:", response.data.result);
+      } else {
+          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
 
 
 
@@ -1080,8 +1102,15 @@ const handleKeyDown = (e) => {
             </ButtonContainer>
           </SmallContainer>
         )}
-
-        <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
+         {groupList.map((group) => (
+            <div
+              key={group.id}
+              onClick={() => handleGroupClick(group.id)}>
+            
+              <BoldTitle>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldTitle>
+            </div>
+          ))}
+        {/* <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle> */}
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value=""></option>
