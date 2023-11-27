@@ -232,7 +232,7 @@ const GuidelineTitle = styled.p`
 const ReapeatImg = styled.img`
   width: 24px;
   height: 24px;
-  margin-left: 438px;
+  margin-left: 590px;
   flex-shrink: 0;
   &:hover {
     cursor: pointer;
@@ -1175,11 +1175,11 @@ function GroupDetailWrite() {
                     if (e.key === "Enter") handleAddKeyword(e.target.value);
                   }}
                 />
-                <button style={{display: "flex", marginLeft: "350px", marginTop: "-100px"}}>
+                {/* <button style={{display: "flex", marginLeft: "350px", marginTop: "-100px"}}>
                 
                 학생 수첩 연동하기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-              </button>
+              </button> */}
               </>
               <ReapeatImg
                 src={arrow_repeat}
