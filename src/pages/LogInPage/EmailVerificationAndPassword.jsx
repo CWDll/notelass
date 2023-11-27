@@ -197,6 +197,7 @@ export default function EmailVerificationAndPassword() {
     } catch (error) {
       console.error("이메일 중복 확인 오류:", error);
       // Further logic upon error...
+      alert("중복된 이메일입니다.");
     }
   };
 
@@ -250,11 +251,6 @@ export default function EmailVerificationAndPassword() {
       );
       return;
     }
-
-    // const response = await axios.post(
-    //   `${import.meta.env.VITE_APP_SERVER_HOST}/api/auth/signup`,
-    //   userInput
-    // );
     try {
       console.log("userInput의 상태: " + userInput);
       const response = await instance.post(`/api/auth/signup`, userInput);
