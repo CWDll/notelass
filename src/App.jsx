@@ -46,7 +46,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+
+
+            <Route path="/Home" element={<Home />} />
+
+
+
+
+            {/* <Route index element={<Home />} /> */}
             {/* Home의 공지 부분의 시간표,급식표 */}
             <Route path="/TimeTable" element={<TimeTable />} />
             <Route path="/MealTable" element={<MealTable />} />
@@ -89,6 +96,10 @@ function App() {
             <Route path="/Setting" element={<Setting />} />
           </Route>
           {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
+
+
+          <Route index element={<Login />} />
+
           <Route path="/Login" element={<Login />} />
           <Route path="/SelectSchool" element={<SelectSchool />} />
           <Route path="/SelectRole" element={<SelectRole />} />
