@@ -295,47 +295,6 @@ const TimeText = styled.p`
   line-height: normal;
 `;
 
-const EditButton = styled.button`
-  flex-shrink: 0;
-  color: #9ea4aa;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-decoration-line: underline;
-  background: none;
-  border: none;
-  margin-left: 380px;
-  margin-right: 16px;
-  padding: 0;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const CopyButton = styled.button`
-  flex-shrink: 0;
-  color: #9ea4aa;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-decoration-line: underline;
-  background: none;
-  border: none;
-  margin-right: 16px;
-  padding: 0;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 const StudentBookText = styled.div`
   width: 400px;
   height: 56px;
@@ -607,6 +566,7 @@ function GroupDetailWrite() {
   const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const [fetchText, setFetchText] = useState("");
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // 학생 수첩 관련 함수
   // StudentBook 모달을 열기 위한 함수
@@ -828,6 +788,30 @@ function GroupDetailWrite() {
     }
   };
 
+  //속한 그룹 조회 GET 함수
+  const [groupList, setGroupList] = useState([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await instance.get("/api/group");
+        if (response.status === 200 && Array.isArray(response.data.result)) {
+          const filteredGroups = response.data.result.filter(
+            (group) => group.id.toString() === paramsGroupId
+          );
+          setGroupList(filteredGroups);
+          console.log("그룹 목록:", filteredGroups);
+        } else {
+          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      }
+    };
+
+    fetchGroups();
+  }, []);
+
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
     navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`);
@@ -835,36 +819,9 @@ function GroupDetailWrite() {
 
   const navigate = useNavigate();
   const BackButton = () => {
-    navigate("/GroupDetailClass");
+    navigate(-1);
   };
 
-  // const handleSaveButtonClick = () => {
-  //   if (!isTextSaved) {
-  //     setSavedText(inputText);
-  //     setIsTextSaved(true);
-  //     setButtonText("한셀 출력");
-
-  //     sendRecord(groupId, selectedStudent, inputText);
-  //   } else {
-  //     exportToExcel(savedText);
-
-  //     if (attachedFile) {
-  //       uploadFile(groupId, attachedFile);
-  //     }
-  //   }
-  // };
-
-  const handleTextEdit = () => {
-    setIsTextSaved(false);
-    setButtonText("저장하기");
-  };
-
-  const handleCopyButtonClick = () => {
-    navigator.clipboard.writeText(savedText);
-    alert("복사되었습니다.");
-  };
-
-  //
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
@@ -949,29 +906,28 @@ function GroupDetailWrite() {
 
   // 전체 생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
-  const [savedTextFromText, setSavedTextFromText] = useState("");
 
-  //생활기록부 전체 불러오기 함수
-  useEffect(() => {
-    const fetchText = async () => {
-      try {
-        const response = await instance.get(
-          `/api/record/${paramsGroupId}/${paramsUserId}`
-        );
-        if (response.status === 200 && response.data.result) {
-          setTextEntries(response.data.result);
-        } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-        }
-      } catch (error) {
-        console.error("데이터 불러오기 중 오류 발생:", error);
-      }
-    };
+  // //생활기록부 전체 불러오기 함수
+  // useEffect(() => {
+  //   const fetchText = async () => {
+  //     try {
+  //       const response = await instance.get(
+  //         `/api/record/${paramsGroupId}/${paramsUserId}`
+  //       );
+  //       if (response.status === 200 && response.data.result) {
+  //         setTextEntries(response.data.result);
+  //       } else {
+  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+  //       }
+  //     } catch (error) {
+  //       console.error("데이터 불러오기 중 오류 발생:", error);
+  //     }
+  //   };
 
-    if (paramsGroupId && paramsUserId) {
-      fetchText();
-    }
-  }, [paramsGroupId, paramsUserId]);
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchText();
+  //   }
+  // }, [paramsGroupId, paramsUserId]);
 
   // 가이드라인 GET 함수
   const fetchGuideLine = useCallback(async () => {
@@ -991,9 +947,10 @@ function GroupDetailWrite() {
   }, [paramsGroupId, paramsUserId, keywords]);
 
   // 생활기록부 POST 함수
-  const saveData = async (text) => {
+
+  const saveData = async () => {
     const requestBody = {
-      content: text,
+      content: inputText,
     };
 
     try {
@@ -1004,6 +961,8 @@ function GroupDetailWrite() {
 
       if (postResponse.status === 201) {
         console.log("생활기록부 작성 성공!");
+        setIsTextSaved(true);
+        console.log("생활기록부 작성 내용:", requestBody.content);
         return postResponse.data;
       } else {
         console.error(
@@ -1015,27 +974,8 @@ function GroupDetailWrite() {
     } catch (error) {
       console.error("데이터 저장 중 오류 발생:", error);
     }
-    return null; // 오류 발생 시 null 반환
+    return null;
   };
-
-  const handleSaveButtonClick = async () => {
-    if (!isTextSaved) {
-      const saveSuccessful = await saveData(inputText);
-      if (saveSuccessful) {
-        setIsTextSaved(true);
-        await fetchText();
-      }
-    } else {
-      exportToExcel(inputText);
-
-      if (attachedFile) {
-        uploadFile(groupId, attachedFile);
-      }
-    }
-  };
-
-  /***  통신  ***/
-  //생기부 작성
 
   return (
     <div>
@@ -1043,15 +983,15 @@ function GroupDetailWrite() {
         <Img
           src={chevron_left}
           alt="chevron_left"
-          onClick={() => setShowSmallContainer(!showSmallContainer)}
+          onClick={() => setShowExitConfirm(!showExitConfirm)}
         />
 
-        {showSmallContainer && (
+        {showExitConfirm && (
           <SmallContainer>
             <Exit
               src={exit}
               alt="exit"
-              onClick={() => setShowSmallContainer(!showSmallContainer)}
+              onClick={() => setShowExitConfirm(!showExitConfirm)}
             ></Exit>
             <Notice>
               출력하지 않으면 작성한 문장이 초기화됩니다. <br />
@@ -1060,7 +1000,7 @@ function GroupDetailWrite() {
             <ButtonContainer>
               <ExitButton onClick={BackButton}>나가기</ExitButton>
               <ContinueButton
-                onClick={() => setShowSmallContainer(!showSmallContainer)}
+                onClick={() => setShowExitConfirm(!showExitConfirm)}
               >
                 계속 작성하기
               </ContinueButton>
@@ -1116,7 +1056,7 @@ function GroupDetailWrite() {
               과제 데이터 불러오기
             </HancellButton>
           </div>
-          <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
+          <SaveButton onClick={saveData}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>5점(상위 5%)</ScoreResult>
@@ -1147,90 +1087,67 @@ function GroupDetailWrite() {
               </div>
             </PercentBody>
           </ScoreList>
-          {!isTextSaved ? (
+
+          <>
+            <WritingBox>
+              {/*생활기록부 입력창*/}
+
+              <Textarea
+                value={inputText}
+                onChange={(e) => {
+                  setInputText(e.target.value);
+                  setByteCount(calculateByteCount(e.target.value));
+                }}
+              />
+
+              <ByteCounting>{byteCount}/1500 byte</ByteCounting>
+              <HancellButton>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept=".xls,.xlsx,.csv,.cell"
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0,
+                  }}
+                />
+                한셀에서 가져오기
+                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+              </HancellButton>
+            </WritingBox>
             <>
-              <WritingBox>
-                {/*생활기록부 입력창*/}
-
-                <Textarea
-                  value={inputText}
-                  onChange={(e) => {
-                    setInputText(e.target.value);
-                    setByteCount(calculateByteCount(e.target.value));
-                  }}
-                />
-
-                <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-                <HancellButton>
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    accept=".xls,.xlsx,.csv,.cell"
-                    style={{
-                      position: "absolute",
-                      width: "100%",
-                      height: "100%",
-                      opacity: 0,
-                    }}
-                  />
-                  한셀에서 가져오기
-                  <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-                </HancellButton>
-              </WritingBox>
-              <>
-                {/**키워드 입력창 */}
-                <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
-                <Keyword
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAddKeyword(e.target.value);
-                  }}
-                />
-              </>
-              <SuggestWordContainer>
-                {keywords.map((keyword, index) => (
-                  <SuggestWord key={index}>{keyword}</SuggestWord>
-                ))}
-              </SuggestWordContainer>
-
-              {/*가이드라인 문장 */}
-              <GuidelineContainer>
-                <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-                <ReapeatImg
-                  src={arrow_repeat}
-                  alt="arrow_repeat"
-                  onClick={fetchGuideLine}
-                />
-              </GuidelineContainer>
-              <GuidelineBox>
-                <Text>{guideLineText}</Text>
-              </GuidelineBox>
+              {/**키워드 입력창 */}
+              <Text style={{ marginLeft: "10px" }}>키워드 입력: </Text>
+              <Keyword
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleAddKeyword(e.target.value);
+                }}
+              />
             </>
-          ) : null}
-
-          {isTextSaved && (
-            <div>
-              {TextEntries.map((entry) => (
-                <InfoContainer key={entry.id}>
-                  <TimeText>
-                    {/* 날짜 형식을 년-월-일 */}
-                    {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
-                  </TimeText>
-                  <div style={{ marginTop: "-20px" }}>
-                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                    <CopyButton onClick={handleCopyButtonClick}>
-                      복사하기
-                    </CopyButton>
-                  </div>
-                  <StudentBookText>
-                    <SavedText>{entry.content}</SavedText>
-                  </StudentBookText>
-                </InfoContainer>
+            <SuggestWordContainer>
+              {keywords.map((keyword, index) => (
+                <SuggestWord key={index}>{keyword}</SuggestWord>
               ))}
-            </div>
-          )}
+            </SuggestWordContainer>
+
+            {/*가이드라인 문장 */}
+            <GuidelineContainer>
+              <GuidelineTitle>가이드라인 문장</GuidelineTitle>
+              <ReapeatImg
+                src={arrow_repeat}
+                alt="arrow_repeat"
+                onClick={fetchGuideLine}
+              />
+            </GuidelineContainer>
+            <GuidelineBox>
+              <Text>{guideLineText}</Text>
+            </GuidelineBox>
+          </>
         </LeftContainer>
 
         <RightContainer>
