@@ -67,12 +67,11 @@ export default function Login() {
         localStorage.setItem("token", accessToken);
         // navigate("/");
         navigate("/Groupdetail");
-        
       } else {
         alert("로그인 실패!");
       }
     } catch (error) {
-      console.error("로그인 오류:", error);
+      alert("이메일과 비밀번호를 다시 확인해주세요.");
     }
   };
 

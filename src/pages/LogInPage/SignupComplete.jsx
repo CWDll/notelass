@@ -28,9 +28,7 @@ const TitleImg = styled.img`
 export default function SignupComplete() {
   const navigate = useNavigate();
   const navigateToLogin = () => {
-    // navigate("/login");
-    //검증 프로세스
-    navigate("/Groupdetail");
+    navigate("/login");
   };
 
   return (
