@@ -307,7 +307,7 @@ function GroupDetailClass() {
 
       try {
         const response = await instance.post(
-          `/api/group/file/${paramsGroupId}`,
+          `/api/group/file/${id}`,
           formData,
           {
             headers: {
