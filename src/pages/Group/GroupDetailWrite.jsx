@@ -1175,7 +1175,11 @@ function GroupDetailWrite() {
                     if (e.key === "Enter") handleAddKeyword(e.target.value);
                   }}
                 />
+                <button style={{display: "flex", marginLeft: "350px", marginTop: "-100px"}}>
                 
+                학생 수첩 연동하기
+                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+              </button>
               </>
               <ReapeatImg
                 src={arrow_repeat}
