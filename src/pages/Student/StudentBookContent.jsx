@@ -307,9 +307,7 @@ function StudentBookContent({
   };
 
   const speechDownCount = () => {
-    if (speechCount > 0) {
       setSpeechCount(speechCount - 1);
-    }
   };
 
   //태도 점수 계산
@@ -318,9 +316,7 @@ function StudentBookContent({
   };
 
   const attitudeDownCount = () => {
-    if (attitudeCount > 0) {
       setAttitudeCount(attitudeCount - 1);
-    }
   };
 
   //학생 선택

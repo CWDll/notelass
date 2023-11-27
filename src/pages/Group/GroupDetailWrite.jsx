@@ -295,46 +295,6 @@ const TimeText = styled.p`
   line-height: normal;
 `;
 
-const EditButton = styled.button`
-  flex-shrink: 0;
-  color: #9ea4aa;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-decoration-line: underline;
-  background: none;
-  border: none;
-  margin-left: 380px;
-  margin-right: 16px;
-  padding: 0;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const CopyButton = styled.button`
-  flex-shrink: 0;
-  color: #9ea4aa;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-decoration-line: underline;
-  background: none;
-  border: none;
-  margin-right: 16px;
-  padding: 0;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
 
 const StudentBookText = styled.div`
   width: 400px;
