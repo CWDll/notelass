@@ -34,6 +34,7 @@ import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool";
+import SelectRole from "./pages/LogInPage/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 
@@ -90,6 +91,7 @@ function App() {
           {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
           <Route path="/Login" element={<Login />} />
           <Route path="/SelectSchool" element={<SelectSchool />} />
+          <Route path="/SelectRole" element={<SelectRole />} />
           <Route
             path="/EmailVerificationAndPassword"
             element={<EmailVerificationAndPassword />}
