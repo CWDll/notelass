@@ -18,7 +18,7 @@ import searching from "../../assets/searching.svg";
 // `;
 
 const NavContainer = styled.div`
-  width: 1920px;  
+  width: 100%;  
   height: 84px;
   background-color: white;
   display: flex;
@@ -41,7 +41,7 @@ const Notelass = styled.h2`
   white-space: nowrap;
 
   {/*임시*/}
-  margin-left: -70px;
+  margin-left: -250px;
 `;
 
 const NavItemContainer = styled.div`

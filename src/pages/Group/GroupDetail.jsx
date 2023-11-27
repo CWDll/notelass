@@ -4,18 +4,21 @@ import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 import instance from "../../assets/api/axios";
 
-import noGroup from "../../assets/noGroup.svg";
 
 const NoteContainer = styled.div`
-  width: 1194px;
+  width: 100%;
   height: 800px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   position: relative;
-  margin-left: 363px;
+  
+
+  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-top: 16px;
+  max-width: 1194px; /* 최대 너비 제한 */
 `;
 
 const CircleText = styled.div`
@@ -198,14 +201,6 @@ const Title2 = styled.p`
   flex-shrink: 0;
 `;
 
-export const Img = styled.img`
-  width: 12px;
-  height: 12px;
-
-  margin-top: 39px;
-  margin-left: 360px;
-`;
-
 // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
 const subjectInfo = "노트고등학교 3학년 1반 문학";
 // " "를 기준으로 나누고, 3번째인 과목 명을 가져와 subject에 저장
@@ -230,6 +225,7 @@ function GroupDetail() {
   };
 
   //그룹 생성 통신
+
 
   const generateGroup = async () => {
     let code = "";
@@ -308,14 +304,14 @@ function GroupDetail() {
               <TextBox
                 type="text"
                 value={grade}
-                placeholder="숫자만 적으세요 ex) 1"
+                placeholder="대상 학년을 입력해 주세요"
                 onChange={(e) => setGrade(e.target.value)}
               ></TextBox>
               <Title>대상 반 선택</Title>
               <TextBox
                 type="text"
                 value={classNum}
-                placeholder="숫자만 적으세요 ex) 1"
+                placeholder="대상 반을 입력해 주세요"
                 onChange={(e) => setClassNum(e.target.value)}
               ></TextBox>
               <Title>과목 선택</Title>
@@ -365,21 +361,17 @@ function GroupDetail() {
 
       <NoteContainer>
         <SubjectBodyWrapper>
-          {groupList.length > 0 ? (
-            groupList.map((group) => (
-              <SubjectBody
-                key={group.id}
-                onClick={() => handleGroupClick(group.id)}
-              >
-                <CircleText>
-                  <PurpleText>{group.subject[0]}</PurpleText>
-                </CircleText>
-                <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
-              </SubjectBody>
-            ))
-          ) : (
-            <Img src={noGroup} alt="noGroup" />
-          )}
+          {groupList.map((group) => (
+            <SubjectBody
+              key={group.id}
+              onClick={() => handleGroupClick(group.id)}
+            >
+              <CircleText>
+                <PurpleText>{group.subject[0]}</PurpleText>
+              </CircleText>
+              <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
+            </SubjectBody>
+          ))}
         </SubjectBodyWrapper>
       </NoteContainer>
     </>
