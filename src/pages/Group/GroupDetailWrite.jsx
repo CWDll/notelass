@@ -833,7 +833,7 @@ const handleKeyDown = (e) => {
       if (response.status === 200 && Array.isArray(response.data.result)) {
         const filteredGroups = response.data.result.filter(group => group.id.toString() === paramsGroupId);
         setGroupList(filteredGroups);
-        console.log("그룹 목록:", response.data.result);
+        console.log("그룹 목록:", filteredGroups);
       } else {
           console.error("그룹 목록을 불러오는데 실패했습니다.");
         }
@@ -859,37 +859,9 @@ const handleKeyDown = (e) => {
     navigate(-1);
   };
 
-  // const handleSaveButtonClick = () => {
-  //   if (!isTextSaved) {
-  //     setSavedText(inputText);
-  //     setIsTextSaved(true);
-  //     setButtonText("한셀 출력");
-
-  //     sendRecord(groupId, selectedStudent, inputText);
-  //   } else {
-  //     exportToExcel(savedText);
-
-  //     if (attachedFile) {
-  //       uploadFile(groupId, attachedFile);
-  //     }
-  //   }
-  // };
-
-
-  const handleTextEdit = () => {
-    setIsTextSaved(false);
-    setButtonText("저장하기");
-  };
-
-  const handleCopyButtonClick = () => {
-    navigator.clipboard.writeText(savedText);
-    alert("복사되었습니다.");
-  };
 
 
 
-
-  //
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
@@ -924,6 +896,7 @@ const handleKeyDown = (e) => {
 
     fetchStudents();
   }, [paramsGroupId]);
+
 
   //학생 수첩 조회 Get 함수
   const [studentBookEntries, setStudentBookEntries] = useState([]);
@@ -974,29 +947,28 @@ const handleKeyDown = (e) => {
 
   // 전체 생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
-  const [savedTextFromText, setSavedTextFromText] = useState("");
 
-  //생활기록부 전체 불러오기 함수
-  useEffect(() => {
-    const fetchText = async () => {
-      try {
-        const response = await instance.get(
-          `/api/record/${paramsGroupId}/${paramsUserId}`
-        );
-        if (response.status === 200 && response.data.result) {
-          setTextEntries(response.data.result);
-        } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-        }
-      } catch (error) {
-        console.error("데이터 불러오기 중 오류 발생:", error);
-      }
-    };
+  // //생활기록부 전체 불러오기 함수
+  // useEffect(() => {
+  //   const fetchText = async () => {
+  //     try {
+  //       const response = await instance.get(
+  //         `/api/record/${paramsGroupId}/${paramsUserId}`
+  //       );
+  //       if (response.status === 200 && response.data.result) {
+  //         setTextEntries(response.data.result);
+  //       } else {
+  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+  //       }
+  //     } catch (error) {
+  //       console.error("데이터 불러오기 중 오류 발생:", error);
+  //     }
+  //   };
 
-    if (paramsGroupId && paramsUserId) {
-      fetchText();
-    }
-  }, [paramsGroupId, paramsUserId]);
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchText();
+  //   }
+  // }, [paramsGroupId, paramsUserId]);
 
 
  
@@ -1023,19 +995,23 @@ const handleKeyDown = (e) => {
 
 
   // 생활기록부 POST 함수
-  const saveData = async (text) => {
-    const requestBody = {
-      content: text,
-    };
 
+  const saveData = async () => {
+  
+    const requestBody = {
+      content: inputText,
+    };
+  
     try {
       const postResponse = await instance.post(
         `/api/record/excel/${paramsGroupId}/${paramsUserId}`,
         requestBody
       );
-
+  
       if (postResponse.status === 201) {
         console.log("생활기록부 작성 성공!");
+        setIsTextSaved(true); 
+        console.log("생활기록부 작성 내용:",requestBody.content)
         return postResponse.data;
       } else {
         console.error(
@@ -1047,29 +1023,9 @@ const handleKeyDown = (e) => {
     } catch (error) {
       console.error("데이터 저장 중 오류 발생:", error);
     }
-    return null; // 오류 발생 시 null 반환
+    return null; 
   };
 
-
-  
-  const handleSaveButtonClick = async () => {
-    if (!isTextSaved) {
-      const saveSuccessful = await saveData(inputText);
-      if (saveSuccessful) {
-        setIsTextSaved(true); 
-        await fetchText();
-      }
-    } else {
-      exportToExcel(inputText); 
-
-      if (attachedFile) {
-        uploadFile(groupId, attachedFile);
-      }
-    }
-  };
-
-  /***  통신  ***/
-  //생기부 작성
 
   return (
     <div>
@@ -1110,7 +1066,7 @@ const handleKeyDown = (e) => {
               <BoldTitle>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldTitle>
             </div>
           ))}
-        {/* <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle> */}
+        
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value=""></option>
@@ -1158,7 +1114,7 @@ const handleKeyDown = (e) => {
                   
           </HancellButton> 
           </div>
-          <SaveButton onClick={handleSaveButtonClick}>{buttonText}</SaveButton>
+          <SaveButton onClick={saveData}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>5점(상위 5%)</ScoreResult>
@@ -1186,7 +1142,7 @@ const handleKeyDown = (e) => {
               </div>
             </PercentBody>
           </ScoreList>
-          {!isTextSaved ? (
+         
             <>
               <WritingBox>
                 {/*생활기록부 입력창*/}
@@ -1246,31 +1202,9 @@ const handleKeyDown = (e) => {
                 <Text>{guideLineText}</Text>
               </GuidelineBox>
             </>
-            ) : null}
+            
            
-           {isTextSaved && (
-            <div>
-
-
-              {TextEntries.map((entry) => (
-                <InfoContainer key={entry.id}>
-                  <TimeText>
-                    {/* 날짜 형식을 년-월-일 */}
-                    {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
-                  </TimeText>
-                  <div style={{ marginTop: "-20px" }}>
-                    <EditButton onClick={handleTextEdit}>수정하기</EditButton>
-                    <CopyButton onClick={handleCopyButtonClick}>
-                      복사하기
-                    </CopyButton>
-                  </div>
-                  <StudentBookText>
-                    <SavedText>{entry.content}</SavedText>
-                  </StudentBookText>
-                </InfoContainer>
-              ))}
-            </div>
-          )}
+           
 
         </LeftContainer>
 
