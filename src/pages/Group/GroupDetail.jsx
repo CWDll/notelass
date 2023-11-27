@@ -281,6 +281,7 @@ function GroupDetail() {
       try {
         const response = await instance.get("/api/group");
         if (response.status === 200 && Array.isArray(response.data.result)) {
+          
           setGroupList(response.data.result);
         } else {
           // 오류 처리
@@ -349,11 +350,7 @@ function GroupDetail() {
               <Title2>그룹 입장 코드</Title2>
               <Code>{groupCode}</Code>
               <Button2
-                onClick={() =>
-                  navigate("/GroupDetailClass", {
-                    state: { grade, classNum, subject, groupCode },
-                  })
-                }
+                onClick={() => setShowSmallContainer(!showSmallContainer)}
               >
                 완료
               </Button2>
