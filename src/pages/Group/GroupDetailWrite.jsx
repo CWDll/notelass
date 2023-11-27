@@ -6,6 +6,7 @@ import chevron_left from "../../assets/chevron_left.svg";
 import arrow_repeat from "../../assets/arrow_repeat.svg";
 import chevron_right_Blue from "../../assets/chevron_right_Blue.svg";
 import exit from "../../assets/exit.svg";
+import right from "../../assets/right.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -83,7 +84,7 @@ const SaveButton = styled.button`
   border-radius: 6px;
   background: var(--primary-cobalt, #4849ff);
   margin-left: 579px;
-  margin-top: -24px;
+  margin-top: -34px;
 
   /* 저장하기, 엑셀로 출력 글씨 */
   color: #ffffff;
@@ -521,6 +522,31 @@ const Text = styled.p`
   line-height: 24px; /* 150% */
   padding: 24px 24px 24px 24px;
 `;
+
+const AssigncellButton = styled.button`
+ 
+  margin-left: 8px;
+  margin-top: 32px;
+  display: inline-flex;
+  height: 32px;
+  padding: 11px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+
+  border-radius: 999px;
+  border: 1.6px solid #4849FF;
+
+  /*글씨**/
+  color: #26282B;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  `;
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -1047,25 +1073,27 @@ function GroupDetailWrite() {
         <LeftContainer>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
-            <HancellButton style={{ marginLeft: "10px", marginTop: "32px" }}>
+            <>
+            <AssigncellButton style ={{justifyContent: "center"}} >
               <input
                 type="file"
                 onChange={uploadAssignment}
                 accept=".xls,.xlsx,.csv,.cell"
                 style={{
                   position: "absolute",
-                  height: "100%",
-                  width: "100%",
                   opacity: 0,
                 }}
               />
               과제 데이터 불러오기
-            </HancellButton>
+              <img src={right} alt="right" />
+            </AssigncellButton>
+            </>
           </div>
           <SaveButton onClick={saveData}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>5점(상위 5%)</ScoreResult>
+            <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>발표 횟수: </ScoreTitle>
             <ScoreResult>5회(상위 1%)</ScoreResult>
             <PercentBody>
