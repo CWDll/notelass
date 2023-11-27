@@ -1009,7 +1009,7 @@ function GroupDetailWrite() {
         )}
 
         <BoldTitle>
-          {info.school} {info.grade}학년 {info.classNum}반 ${info.subject}
+          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
         </BoldTitle>
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
