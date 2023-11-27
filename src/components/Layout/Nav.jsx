@@ -5,28 +5,30 @@ import logo from "../../assets/logo.svg";
 import personimg from "../../assets/personimg.svg";
 import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
+import instance from "../../assets/api/axios";
 
 // const NavContainer = styled.div`
-//   width: 1920px;  
+//   width: 1920px;
 //   height: 84px;
 //   background-color: white;
 //   display: flex;
 //   align-items: center;
-//   padding: 0px 20px 0px 20px; 
-//   
-//   
+//   padding: 0px 20px 0px 20px;
+//
+//
 // `;
 
 const NavContainer = styled.div`
-  width: 1920px;  
+  width: 1920px;
   height: 84px;
   background-color: white;
   display: flex;
   align-items: center;
-  
 
-  {/*임시*/}
-  justify-content: space-between; 
+   {
+    /*임시*/
+  }
+  justify-content: space-between;
   padding: 0px 0px 0px 20px;
 `;
 
@@ -37,10 +39,14 @@ const Notelass = styled.h2`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  {/*margin-left: 12;*/}
+   {
+    /*margin-left: 12;*/
+  }
   white-space: nowrap;
 
-  {/*임시*/}
+   {
+    /*임시*/
+  }
   margin-left: -70px;
 `;
 
@@ -50,8 +56,6 @@ const NavItemContainer = styled.div`
   align-items: center;
   width: auto;
   margin-left: 358px;
-
-  
 `;
 
 const NavItems = styled.span`
@@ -70,7 +74,6 @@ const NavItems = styled.span`
 
   cursor: pointer;
   margin-left: 250px;
-  
 `;
 
 const SignBtnContainer = styled.div`
@@ -201,6 +204,20 @@ export default function Nav() {
     navigate("/selectSchool");
   };
 
+  const handleLogout = async () => {
+    try {
+      const res = await instance.post(`/api/auth/logout`);
+
+      if (res.status === 200) {
+        alert("로그아웃 되었습니다");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("로그아웃 중 오류 발생:", error);
+      // 오류 처리 로직...
+    }
+  };
+
   const renderAuthButtons = () => {
     if (isLoggedIn) {
       // 로그인 상태일 때 '마이페이지
@@ -210,7 +227,7 @@ export default function Nav() {
           <Searching src={searching} alt="searching" />
 
           <Bell src={bell} alt="bell" />
-          <Person src={personimg} alt="personimg" />
+          <Person src={personimg} alt="personimg" onClick={handleLogout} />
         </>
       );
       //<SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
@@ -277,7 +294,6 @@ export default function Nav() {
         >
           환경설정
         </NavItems> */}
-
       </NavItemContainer>
       <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
