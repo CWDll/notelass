@@ -4,7 +4,6 @@ import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 import instance from "../../assets/api/axios";
 
-
 const NoteContainer = styled.div`
   width: 100%;
   height: 800px;
@@ -13,7 +12,6 @@ const NoteContainer = styled.div`
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   position: relative;
-  
 
   margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
@@ -226,8 +224,15 @@ function GroupDetail() {
 
   //그룹 생성 통신
 
-
   const generateGroup = async () => {
+    // 대상 필드 중 하나라도 비어 있는지 확인
+    if (!grade || !classNum || !subject) {
+      // Button2의 배경색을 회색(Gray)으로 설정
+      // 실제로 사용 중인 스타일에 따라 실제 CSS 속성을 조절해야 할 수 있습니다
+      document.getElementById("Button2").style.backgroundColor = "gray";
+      return;
+    }
+
     let code = "";
     for (let i = 0; i < 6; i++) {
       code += Math.floor(Math.random() * 10);
@@ -304,14 +309,14 @@ function GroupDetail() {
               <TextBox
                 type="text"
                 value={grade}
-                placeholder="대상 학년을 입력해 주세요"
+                placeholder="숫자만 적으세요 ex) 1"
                 onChange={(e) => setGrade(e.target.value)}
               ></TextBox>
               <Title>대상 반 선택</Title>
               <TextBox
                 type="text"
                 value={classNum}
-                placeholder="대상 반을 입력해 주세요"
+                placeholder="숫자만 적으세요 ex) 1"
                 onChange={(e) => setClassNum(e.target.value)}
               ></TextBox>
               <Title>과목 선택</Title>
@@ -321,7 +326,18 @@ function GroupDetail() {
                 placeholder="담당하시는 과목을 입력해 주세요"
                 onChange={(e) => setSubject(e.target.value)}
               ></TextBox>
-              <Button2 onClick={generateGroup}>다음</Button2>
+              <Button2
+                onClick={generateGroup}
+                style={{
+                  // 대상 필드 중 하나라도 비어 있다면 배경색을 회색(Gray)으로 변경
+                  backgroundColor:
+                    !grade || !classNum || !subject
+                      ? "#E6E8EE"
+                      : "var(--primary-cobalt, #4849ff)",
+                }}
+              >
+                생성
+              </Button2>
             </>
           ) : (
             <>
