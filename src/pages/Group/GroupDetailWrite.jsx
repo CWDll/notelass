@@ -592,7 +592,7 @@ function GroupDetailWrite() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
-  const [fetchText, setFetchText] = useState("");
+  // const [fetchText, setFetchText] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // 학생 수첩 관련 함수
@@ -649,34 +649,34 @@ function GroupDetailWrite() {
     const file = event.target.files[0];
     if (file) {
       //클라이언트에서 파일 읽기
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: "array" });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const json = XLSX.utils.sheet_to_json(worksheet);
-          console.log("Loaded data:", json); // 로드된 데이터 확인
+      // const reader = new FileReader();
+      // reader.onload = (e) => {
+      //   try {
+      //     const data = new Uint8Array(e.target.result);
+      //     const workbook = XLSX.read(data, { type: "array" });
+      //     const sheetName = workbook.SheetNames[0];
+      //     const worksheet = workbook.Sheets[sheetName];
+      //     const json = XLSX.utils.sheet_to_json(worksheet);
+      //     console.log("Loaded data:", json); // 로드된 데이터 확인
 
-          const studentSpecificAbilities = json
-            .filter((row) => row["성명"].toString() === paramsUserId)
-            .map((row) => row["세부능력 및 특기사항"])
-            .join("\n");
+      //     const studentSpecificAbilities = json
+      //       .filter((row) => row["성명"].toString() === paramsUserId)
+      //       .map((row) => row["세부능력 및 특기사항"])
+      //       .join("\n");
 
-          console.log(
-            "Extracted studentSpecificAbilities:",
-            studentSpecificAbilities
-          ); // 추출된 데이터 확인
-          setInputText(studentSpecificAbilities); // Textarea에 값을 설정
-        } catch (error) {
-          console.error("Error reading file:", error);
-        }
-      };
-      reader.onerror = (error) => {
-        console.error("Error occurred while reading file:", error);
-      };
-      reader.readAsArrayBuffer(file);
+      //     console.log(
+      //       "Extracted studentSpecificAbilities:",
+      //       studentSpecificAbilities
+      //     ); // 추출된 데이터 확인
+      //     setInputText(studentSpecificAbilities); // Textarea에 값을 설정
+      //   } catch (error) {
+      //     console.error("Error reading file:", error);
+      //   }
+      // };
+      // reader.onerror = (error) => {
+      //   console.error("Error occurred while reading file:", error);
+      // };
+      // reader.readAsArrayBuffer(file);
 
       // 서버에 파일 업로드
       const formData = new FormData();
@@ -696,6 +696,7 @@ function GroupDetailWrite() {
         if (response.status === 201) {
           console.log("생활기록부 파일 업로드 성공!");
           setUploadStatus("업로드 성공!");
+          await fetchText();
         } else {
           console.error(
             "예상치 못한 상태 코드:",
@@ -931,30 +932,35 @@ function GroupDetailWrite() {
     }
   };
 
-  // 전체 생활기록부 글 GET 함수
+  //생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
 
-  // //생활기록부 전체 불러오기 함수
-  // useEffect(() => {
-  //   const fetchText = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `/api/record/${paramsGroupId}/${paramsUserId}`
-  //       );
-  //       if (response.status === 200 && response.data.result) {
-  //         setTextEntries(response.data.result);
-  //       } else {
-  //         console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-  //       }
-  //     } catch (error) {
-  //       console.error("데이터 불러오기 중 오류 발생:", error);
-  //     }
-  //   };
+  //생활기록부 전체 불러오기 함수
+ 
+    const fetchText = async () => {
+      try {
+        const response = await instance.get(
+          `/api/record/excel/${paramsGroupId}/${paramsUserId}`
+        );
+        if (response.status === 200 && response.data.result) {
+          setInputText(response.data.result);
+          console.log("생활기록부 내용:", response.data.result);
+        } else {
+          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+        }
+      } catch (error) {
+        console.error("데이터 불러오기 중 오류 발생:", error);
+      }
+    };
 
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchText();
-  //   }
-  // }, [paramsGroupId, paramsUserId]);
+
+    useEffect(() => {
+    if (paramsGroupId && paramsUserId) {
+      fetchText();
+    }
+  }, [paramsGroupId, paramsUserId]);
+
+ 
 
   // 가이드라인 GET 함수
   const fetchGuideLine = useCallback(async () => {
