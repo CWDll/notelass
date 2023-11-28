@@ -201,7 +201,10 @@ const schoolList = [
   { label: "의정부서중학교" },
   { label: "중곡중학교" },
   { label: "청담중학교" },
-  { label: "통영중학교" },
+  { label: "흥덕중학교" },
   { label: "판교중학교" },
-  { label: "하남중학교" },
+  { label: "귀인중학교" },
+  { label: "군포고등학교" },
+  { label: "채울샘 강사 협동조합" },
+  { label: "기타" },
 ];
