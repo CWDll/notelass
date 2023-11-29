@@ -15,6 +15,7 @@ import * as XLSX from "xlsx";
 
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
+import BeatLoader from "react-spinners/BeatLoader";
 
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
@@ -561,6 +562,7 @@ const AssigncellButton = styled.button`
   margin-left: 370px;
   margin-top: -55px;
   `;
+
   
 
 const calculateByteCount = (text) => {
@@ -1003,30 +1005,35 @@ function GroupDetailWrite() {
  
 
   // 가이드라인 GET 함수
-const fetchGuideLine = useCallback(async () => {
+  const [loading, setLoading] = useState(false);
+  
+  const fetchGuideLine = useCallback(async () => {
+    setLoading(true); // API 호출 전 로딩 상태를 true로 설정
     const checkedHandbookIds = studentBookEntries
-    .filter((entry) => entry.checked)
-    .map((entry) => entry.id)
-    .join(',');
-
-  try {
-    const response = await instance.get(
-      `/api/guideline/${paramsGroupId}/${paramsUserId}`, {
-        params: {
-          keywords: keywords.join(','),
-          handbookIds: checkedHandbookIds
+      .filter((entry) => entry.checked)
+      .map((entry) => entry.id)
+      .join(',');
+  
+    try {
+      const response = await instance.get(
+        `/api/guideline/${paramsGroupId}/${paramsUserId}`, {
+          params: {
+            keywords: keywords.join(','),
+            handbookIds: checkedHandbookIds
+          }
         }
+      );
+      console.log("가이드라인 내용:", response.data);
+      if (response.status === 200) {
+        setGuideLineText(response.data.result);
+      } else {
+        console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
       }
-    );
-    console.log("가이드라인 내용:", response.data);
-    if (response.status === 200) {
-      setGuideLineText(response.data.result);
-    } else {
-      console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+    } catch (error) {
+      console.error("가이드라인 에러:", error);
+    } finally {
+      setLoading(false); // API 호출이 완료되면 로딩 상태를 false로 설정
     }
-  } catch (error) {
-    console.error("가이드라인 에러:", error);
-  }
   }, [paramsGroupId, paramsUserId, keywords, studentBookEntries]);
 
 
@@ -1266,7 +1273,13 @@ const fetchGuideLine = useCallback(async () => {
               />
             </GuidelineContainer>
             <GuidelineBox>
-              <Text>{guideLineText}</Text>
+                      {loading ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px'}}>
+                  <BeatLoader color="#4849ff" loading={loading} size={10} />
+                </div>
+                ) : (
+                  <Text>{guideLineText}</Text>
+                )}
             </GuidelineBox>
           </>
         </LeftContainer>
