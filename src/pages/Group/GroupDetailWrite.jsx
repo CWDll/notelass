@@ -720,7 +720,14 @@ function GroupDetailWrite() {
         const fileUrl = response.data.result.fileUrl;
         console.log("생활기록부 다운로드:", response.data);
 
-        window.open(fileUrl);
+        const a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = fileUrl.split('/').pop(); // 파일 이름을 URL에서 추출하여 설정
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+  
+        await deleteFile(paramsGroupId);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -935,7 +942,7 @@ function GroupDetailWrite() {
   //생활기록부 글 GET 함수
   const [TextEntries, setTextEntries] = useState([]);
 
-  //생활기록부 전체 불러오기 함수
+  //생활기록부 내용 불러오기 함수
  
     const fetchText = async () => {
       try {
@@ -944,6 +951,7 @@ function GroupDetailWrite() {
         );
         if (response.status === 200 && response.data.result) {
           setInputText(response.data.result);
+          // await deleteFile(paramsGroupId);
           console.log("생활기록부 내용:", response.data.result);
         } else {
           console.error("데이터를 가져오는 데 실패했습니다:", response.status);
@@ -996,6 +1004,7 @@ function GroupDetailWrite() {
         console.log("생활기록부 작성 성공!");
         setIsTextSaved(true);
         console.log("생활기록부 작성 내용:", requestBody.content);
+        alert("성공적으로 저장되었습니다");
         return postResponse.data;
       } else {
         console.error(
@@ -1009,6 +1018,26 @@ function GroupDetailWrite() {
     }
     return null;
   };
+
+
+  //생활기록부 파일 삭제 DELETE 함수
+  const deleteFile = async (paramsGroupId) => {
+
+    try {
+      const response = await instance.delete(
+        `/api/record/excel/${paramsGroupId}`
+      );
+      if (response.status === 200) {
+        console.log("생활기록부 파일 삭제 성공!");
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+      }
+    } catch (error) {
+      console.error("데이터 삭제 중 오류 발생:", error);
+    }
+  };
+
+
 
   return (
     <div>
