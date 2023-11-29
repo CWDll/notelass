@@ -870,10 +870,20 @@ function GroupDetailWrite() {
 
   // 체크 상태를 토글하는 함수
   const toggleCheck = (id) => {
-    setCheckedState(prevState => ({
-      ...prevState,
-      [id]: !prevState[id]
-    }));
+    setStudentBookEntries((currentEntries) =>
+      currentEntries.map((entry) => {
+        if (entry.id === id) {
+          // 새로운 체크 상태 객체를 만들어서 상태를 업데이트
+          const newCheckedState = {
+            ...checkedState,
+            [id]: !checkedState[id]
+          };
+          setCheckedState(newCheckedState);
+          return { ...entry, checked: !checkedState[id] };
+        }
+        return entry;
+      })
+    );
   };
 
 
@@ -992,21 +1002,32 @@ function GroupDetailWrite() {
  
 
   // 가이드라인 GET 함수
-  const fetchGuideLine = useCallback(async () => {
-    try {
-      const guideRes = await instance.get(
-        `/api/guideline/${paramsGroupId}/${paramsUserId}?keywords=${keywords}`
-      );
-      console.log("가이드라인 내용:", guideRes.data);
-      if (guideRes.status === 200) {
-        setGuideLineText(guideRes.data.result);
-      } else {
-        console.error("서버로부터 예상치 못한 응답을 받았습니다:", guideRes);
+const fetchGuideLine = useCallback(async () => {
+    const checkedHandbookIds = studentBookEntries
+    .filter((entry) => entry.checked)
+    .map((entry) => entry.id)
+    .join(',');
+
+  try {
+    const response = await instance.get(
+      `/api/guideline/${paramsGroupId}/${paramsUserId}`, {
+        params: {
+          keywords: keywords.join(','),
+          handbookIds: checkedHandbookIds
+        }
       }
-    } catch (error) {
-      console.error("가이드라인 에러:", error);
+    );
+    console.log("가이드라인 내용:", response.data);
+    if (response.status === 200) {
+      setGuideLineText(response.data.result);
+    } else {
+      console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
     }
-  }, [paramsGroupId, paramsUserId, keywords]);
+  } catch (error) {
+    console.error("가이드라인 에러:", error);
+  }
+  }, [paramsGroupId, paramsUserId, keywords, studentBookEntries]);
+
 
   // 생활기록부 POST 함수
 
@@ -1279,14 +1300,14 @@ function GroupDetailWrite() {
                   삭제
                 </TimeText>
               </div>
-               <StudentBookText>
+              <StudentBookText key={entry.id}>
                 <SavedText>{entry.content}</SavedText>
-                  <Checkbox 
-                    onClick={() => toggleCheck(entry.id)} 
-                    src={checkedState[entry.id] ? check : noncheck} 
-                    alt="check" 
-                  /> 
-                </StudentBookText>
+                <Checkbox
+                  onClick={() => toggleCheck(entry.id)}
+                  src={checkedState[entry.id] ? check : noncheck} 
+                  alt="check"
+                />
+              </StudentBookText>
             </InfoContainer>
           ))}
           {showStudentBook && (
