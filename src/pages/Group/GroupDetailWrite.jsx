@@ -720,7 +720,7 @@ function GroupDetailWrite() {
         const fileUrl = response.data.result.fileUrl;
         console.log("생활기록부 다운로드:", response.data);
 
-        window.open(fileUrl);
+        // window.open(fileUrl);
         await deleteFile(paramsGroupId);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
