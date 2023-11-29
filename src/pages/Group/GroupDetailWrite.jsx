@@ -7,6 +7,8 @@ import arrow_repeat from "../../assets/arrow_repeat.svg";
 import chevron_right_Blue from "../../assets/chevron_right_Blue.svg";
 import exit from "../../assets/exit.svg";
 import right from "../../assets/right.svg";
+import noncheck from "../../assets/noncheck.svg";
+import check from "../../assets/check.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -16,6 +18,7 @@ import instance from "../../assets/api/axios";
 
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
+import { Check } from "@mui/icons-material";
 
 const Header = styled.header`
   display: flex;
@@ -300,13 +303,16 @@ const TimeText = styled.p`
 `;
 
 const StudentBookText = styled.div`
-  width: 400px;
-  height: 56px;
+  width: 413px;
+  min-height: 56px;
   flex-shrink: 0;
   border-radius: 8px;
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   margin-top: 8px;
+  padding: 0px 50px 15px 0px;
+  overflow: hidden;
+
 `;
 
 const HancellButton = styled.button`
@@ -548,6 +554,12 @@ const AssigncellButton = styled.button`
   line-height: normal;
   `;
 
+  const Checkbox = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-left: 370px;
+  margin-top: -55px;
+  `;
   
 
 const calculateByteCount = (text) => {
@@ -850,6 +862,21 @@ function GroupDetailWrite() {
   const BackButton = () => {
     navigate(-1);
   };
+
+  //학생 수첩 체크 박스 토글 함수
+  const [checked, setChecked] = useState(false);
+
+  const [checkedState, setCheckedState] = useState({});
+
+  // 체크 상태를 토글하는 함수
+  const toggleCheck = (id) => {
+    setCheckedState(prevState => ({
+      ...prevState,
+      [id]: !prevState[id]
+    }));
+  };
+
+
 
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -1252,9 +1279,14 @@ function GroupDetailWrite() {
                   삭제
                 </TimeText>
               </div>
-              <StudentBookText>
+               <StudentBookText>
                 <SavedText>{entry.content}</SavedText>
-              </StudentBookText>
+                  <Checkbox 
+                    onClick={() => toggleCheck(entry.id)} 
+                    src={checkedState[entry.id] ? check : noncheck} 
+                    alt="check" 
+                  /> 
+                </StudentBookText>
             </InfoContainer>
           ))}
           {showStudentBook && (
