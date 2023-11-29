@@ -71,13 +71,14 @@ const MainContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 684px;
-  height: 800px;
+  min-height: 800px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 363px;
   margin-top: 48px;
+  overflow-y: hidden;
 `;
 
 const SaveButton = styled.button`
