@@ -259,36 +259,6 @@ function StudentBook({ show, onClose, groupId, userId }) {
     console.log(show, onclose, groupId, userId);
   }, [show]);
 
-  // 모달 닫기 핸들러
-  const handleClose = () => {
-    // 모달을 닫을 때 부모 컴포넌트에 알리기
-    if (onClose) onClose();
-    // 내부 상태 업데이트
-    // setShowSmallContainer(false);
-  };
-
-  //발표 점수 계산
-  const speechUpCount = () => {
-    setSpeechCount(speechCount + 1);
-  };
-
-  const speechDownCount = () => {
-    if (speechCount > 0) {
-      setSpeechCount(speechCount - 1);
-    }
-  };
-
-  //태도 점수 계산
-  const attitudeUpCount = () => {
-    setAttitudeCount(attitudeCount + 1);
-  };
-
-  const attitudeDownCount = () => {
-    if (attitudeCount > 0) {
-      setAttitudeCount(attitudeCount - 1);
-    }
-  };
-
   //학생 선택
   const handleStudentChange = (e) => {
     e.stopPropagation();
@@ -342,7 +312,8 @@ function StudentBook({ show, onClose, groupId, userId }) {
 
       if (response.status === 201) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
-        alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        alert(`${selectedStudent}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
@@ -352,6 +323,10 @@ function StudentBook({ show, onClose, groupId, userId }) {
     }
   };
 
+  const handleClose = () => {
+    setShowSmallContainer(false); // `showSmallContainer` 상태를 false로 설정하여 컴포넌트를 숨김
+  };
+
   return (
     <StudentBookContainer
       onClick={() => setShowSmallContainer(!showSmallContainer)}
@@ -359,7 +334,7 @@ function StudentBook({ show, onClose, groupId, userId }) {
       <BookImg src={book} alt="book" />
       <Text>학생 수첩</Text>
 
-      {showSmallContainer && <StudentBookContent />}
+      {showSmallContainer && <StudentBookContent onClose={handleClose} />}
     </StudentBookContainer>
   );
 }

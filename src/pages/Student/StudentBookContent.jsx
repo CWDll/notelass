@@ -75,9 +75,7 @@ const StudentSelect = styled.select`
   padding-left: 16px;
 
   /* 박스 스타일링 */
-  
-  
- 
+
   padding: 5px 10px; /* 내부 여백 설정 */
   border: 1px solid #ccc; /* 테두리 색상과 두께 설정 */
   border-radius: 5px; /* 모서리 둥글게 처리 */
@@ -212,6 +210,7 @@ function StudentBookContent({
   contentId,
 }) {
   const [selectedStudent, setSelectedStudent] = useState(propsUserId);
+  const [selectedStudentName, setSelectedStudentName] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(propsGroupId);
   const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
   const [inputText, setInputText] = useState("");
@@ -307,7 +306,7 @@ function StudentBookContent({
   };
 
   const speechDownCount = () => {
-      setSpeechCount(speechCount - 1);
+    setSpeechCount(speechCount - 1);
   };
 
   //태도 점수 계산
@@ -316,14 +315,27 @@ function StudentBookContent({
   };
 
   const attitudeDownCount = () => {
-      setAttitudeCount(attitudeCount - 1);
+    setAttitudeCount(attitudeCount - 1);
   };
 
   //학생 선택
   const handleStudentChange = (e) => {
     e.stopPropagation();
-    setSelectedStudent(e.target.value);
-    console.log("Selected Student: " + e.target.value);
+    const selectedId = e.target.value; // 선택된 학생의 ID를 이벤트 객체에서 직접 가져옴
+    setSelectedStudent(selectedId);
+
+    // students 배열에서 선택된 학생의 ID와 일치하는 학생을 찾아 이름을 업데이트
+    const foundStudent = students.find((student) => student.id == selectedId);
+    if (foundStudent) {
+      setSelectedStudentName(foundStudent.name);
+    } else {
+      setSelectedStudentName(""); // 일치하는 학생이 없으면 이름을 비움
+    }
+
+    console.log("Selected Student ID: " + selectedId);
+    console.log(
+      "Selected Student Name: " + (foundStudent ? foundStudent.name : "None")
+    );
   };
 
   //반 선택
@@ -389,11 +401,13 @@ function StudentBookContent({
 
       if (response.status === 201) {
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
-        alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
+        alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
         location.reload();
       } else if (response.status === 200) {
-        alert(`${userId}번 학생의 학생 수첩 수정이 완료되었습니다.`);
+        // alert(`${userId}번 학생의 학생 수첩 수정이 완료되었습니다.`);
+        alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 수정 성공!");
         location.reload();
       } else {
