@@ -285,8 +285,7 @@ const SavedText = styled.pre`
   line-height: 24px; /* 150% */
   white-space: pre-wrap; /* 줄 바꿈 */
   word-wrap: break-word; /* 단어 바꿈 */
-  margin-bottom: 16px;
-  padding: 16px 16px 16px 16px;
+  padding: 16px 50px 16px 16px;
 `;
 
 const InfoContainer = styled.div`
@@ -312,8 +311,7 @@ const StudentBookText = styled.div`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   margin-top: 8px;
-  padding: 0px 50px 15px 0px;
-  overflow: hidden;
+  
 
 `;
 
@@ -561,7 +559,7 @@ const AssigncellButton = styled.button`
   width: 24px;
   height: 24px;
   margin-left: 370px;
-  margin-top: -55px;
+  margin-top: -40px;
   `;
 
 
@@ -904,7 +902,7 @@ function GroupDetailWrite() {
 
   //학생 수첩 체크 박스 토글 함수
   const [checked, setChecked] = useState(false);
-
+  const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [checkedState, setCheckedState] = useState({});
 
   // 체크 상태를 토글하는 함수
@@ -923,6 +921,12 @@ function GroupDetailWrite() {
         return entry;
       })
     );
+    
+  };
+
+
+  const handleSyncButtonClick = () => {
+    setShowCheckboxes(!showCheckboxes); 
   };
 
 
@@ -1285,8 +1289,7 @@ function GroupDetailWrite() {
             {/*가이드라인 문장 */}
             <GuidelineContainer>
               <GuidelineTitle>가이드라인 문장</GuidelineTitle>
-              <SyncButton>
-                
+              <SyncButton onClick={handleSyncButtonClick}>
                 학생 수첩 연동하기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </SyncButton>
@@ -1351,13 +1354,17 @@ function GroupDetailWrite() {
                   삭제
                 </TimeText>
               </div>
-              <StudentBookText key={entry.id}>
+              <StudentBookText key={entry.id} >
                 <SavedText>{entry.content}</SavedText>
-                <Checkbox
-                  onClick={() => toggleCheck(entry.id)}
-                  src={checkedState[entry.id] ? check : noncheck} 
-                  alt="check"
-                />
+                {showCheckboxes && (
+                  <div style = {{position: "absolute"}}>
+              <Checkbox
+                onClick={() => toggleCheck(entry.id)}
+                src={checkedState[entry.id] ? check : noncheck}
+                alt="check"
+              />
+              </div>
+            )}
               </StudentBookText>
             </InfoContainer>
           ))}
