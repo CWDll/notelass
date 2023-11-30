@@ -341,8 +341,6 @@ function GroupDetailClass() {
             accept=".xls,.xlsx,.csv,.cell"
             style={{
               position: "absolute",
-              height: "100%",
-              width: "100%",
               opacity: 0,
             }}
           />
