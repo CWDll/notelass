@@ -15,7 +15,7 @@ import * as XLSX from "xlsx";
 
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
-// import BeatLoader from "react-spinners/BeatLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
@@ -314,6 +314,7 @@ const StudentBookText = styled.div`
   margin-top: 8px;
   padding: 0px 50px 15px 0px;
   overflow: hidden;
+
 `;
 
 const HancellButton = styled.button`
@@ -531,6 +532,7 @@ const Text = styled.p`
 `;
 
 const AssigncellButton = styled.button`
+ 
   margin-left: 8px;
   margin-top: 32px;
   display: inline-flex;
@@ -540,26 +542,64 @@ const AssigncellButton = styled.button`
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  background: #fff;
 
   border-radius: 999px;
-  border: 1.6px solid #4849ff;
+  border: 1.6px solid #4849FF;
 
   /*글씨**/
-  color: #26282b;
+  color: #26282B;
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-`;
+  `;
 
-const Checkbox = styled.img`
+  const Checkbox = styled.img`
   width: 24px;
   height: 24px;
   margin-left: 370px;
   margin-top: -55px;
+  `;
+
+
+  const SyncButton = styled.button`
+  display: flex;
+width: 164px;
+height: 25px;
+padding: 3px 0px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+flex-shrink: 0;
+margin-left: 168px;
+margin-top: -24px;
+background: #fff;
+
+border-radius: 999px;
+border: 1px solid #4849FF;
+
+color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+&:hover {
+  cursor: pointer;
+}
+&:focus,
+&:active {
+  outline: none; // 외곽선을 없애기 위해
+  border: 1px solid #4849FF; // 기존의 테두리 스타일을 유지하기 위해
+}
 `;
+
+  
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -875,7 +915,7 @@ function GroupDetailWrite() {
           // 새로운 체크 상태 객체를 만들어서 상태를 업데이트
           const newCheckedState = {
             ...checkedState,
-            [id]: !checkedState[id],
+            [id]: !checkedState[id]
           };
           setCheckedState(newCheckedState);
           return { ...entry, checked: !checkedState[id] };
@@ -884,6 +924,8 @@ function GroupDetailWrite() {
       })
     );
   };
+
+
 
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -971,48 +1013,50 @@ function GroupDetailWrite() {
   const [TextEntries, setTextEntries] = useState([]);
 
   //생활기록부 내용 불러오기 함수
-
-  const fetchText = async () => {
-    try {
-      const response = await instance.get(
-        `/api/record/excel/${paramsGroupId}/${paramsUserId}`
-      );
-      if (response.status === 200 && response.data.result) {
-        setInputText(response.data.result);
-        // await deleteFile(paramsGroupId);
-        console.log("생활기록부 내용:", response.data.result);
-      } else {
-        console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+ 
+    const fetchText = async () => {
+      try {
+        const response = await instance.get(
+          `/api/record/excel/${paramsGroupId}/${paramsUserId}`
+        );
+        if (response.status === 200 && response.data.result) {
+          setInputText(response.data.result);
+          // await deleteFile(paramsGroupId);
+          console.log("생활기록부 내용:", response.data.result);
+        } else {
+          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+        }
+      } catch (error) {
+        console.error("데이터 불러오기 중 오류 발생:", error);
       }
-    } catch (error) {
-      console.error("데이터 불러오기 중 오류 발생:", error);
-    }
-  };
+    };
 
-  useEffect(() => {
+
+    useEffect(() => {
     if (paramsGroupId && paramsUserId) {
       fetchText();
     }
   }, [paramsGroupId, paramsUserId]);
 
+ 
+
   // 가이드라인 GET 함수
   const [loading, setLoading] = useState(false);
-
+  
   const fetchGuideLine = useCallback(async () => {
-    setLoading(true); // API 호출 전 로딩 상태를 true로 설정
+    setLoading(true); 
     const checkedHandbookIds = studentBookEntries
       .filter((entry) => entry.checked)
       .map((entry) => entry.id)
-      .join(",");
-
+      .join(',');
+  
     try {
       const response = await instance.get(
-        `/api/guideline/${paramsGroupId}/${paramsUserId}`,
-        {
+        `/api/guideline/${paramsGroupId}/${paramsUserId}`, {
           params: {
-            keywords: keywords.join(","),
-            handbookIds: checkedHandbookIds,
-          },
+            keywords: keywords.join(','),
+            handbookIds: checkedHandbookIds
+          }
         }
       );
       console.log("가이드라인 내용:", response.data);
@@ -1024,9 +1068,10 @@ function GroupDetailWrite() {
     } catch (error) {
       console.error("가이드라인 에러:", error);
     } finally {
-      setLoading(false); // API 호출이 완료되면 로딩 상태를 false로 설정
+      setLoading(false); 
     }
   }, [paramsGroupId, paramsUserId, keywords, studentBookEntries]);
+
 
   // 생활기록부 POST 함수
 
@@ -1060,8 +1105,10 @@ function GroupDetailWrite() {
     return null;
   };
 
+
   //생활기록부 파일 삭제 DELETE 함수
   const deleteFile = async (paramsGroupId) => {
+
     try {
       const response = await instance.delete(
         `/api/record/excel/${paramsGroupId}`
@@ -1075,6 +1122,8 @@ function GroupDetailWrite() {
       console.error("데이터 삭제 중 오류 발생:", error);
     }
   };
+
+
 
   return (
     <div>
@@ -1148,19 +1197,19 @@ function GroupDetailWrite() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
             <>
-              <AssigncellButton>
-                <input
-                  type="file"
-                  onChange={uploadAssignment}
-                  accept=".xls,.xlsx,.csv,.cell"
-                  style={{
-                    position: "absolute",
-                    opacity: 0,
-                  }}
-                />
-                과제 데이터 불러오기
-                <img src={right} alt="right" />
-              </AssigncellButton>
+            <AssigncellButton >
+              <input
+                type="file"
+                onChange={uploadAssignment}
+                accept=".xls,.xlsx,.csv,.cell"
+                style={{
+                  position: "absolute",
+                  opacity: 0,
+                }}
+              />
+              과제 데이터 불러오기
+              <img src={right} alt="right" />
+            </AssigncellButton>
             </>
           </div>
           <SaveButton onClick={saveData}>저장하기</SaveButton>
@@ -1231,15 +1280,19 @@ function GroupDetailWrite() {
                 <SuggestWord key={index}>{keyword}</SuggestWord>
               ))}
             </SuggestWordContainer>
+            
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
               <GuidelineTitle>가이드라인 문장</GuidelineTitle>
+              <SyncButton>
+                
+                학생 수첩 연동하기
+                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+              </SyncButton>
               <>
                 {/* *키워드 입력창 */}
-                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
-                  단어를 입력하세요 :{" "}
-                </Text>
+                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>단어를 입력하세요 : </Text>
                 <Keyword
                   type="text"
                   value={inputValue}
@@ -1248,11 +1301,7 @@ function GroupDetailWrite() {
                     if (e.key === "Enter") handleAddKeyword(e.target.value);
                   }}
                 />
-                {/* <button style={{display: "flex", marginLeft: "350px", marginTop: "-100px"}}>
                 
-                학생 수첩 연동하기
-                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-              </button> */}
               </>
               <ReapeatImg
                 src={arrow_repeat}
@@ -1261,20 +1310,13 @@ function GroupDetailWrite() {
               />
             </GuidelineContainer>
             <GuidelineBox>
-              {loading ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "40px",
-                  }}
-                >
-                  {/* <BeatLoader color="#4849ff" loading={loading} size={10} /> */}
+                      {loading ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px'}}>
+                  <BeatLoader color="#4849ff" loading={loading} size={10} />
                 </div>
-              ) : (
-                <Text>{guideLineText}</Text>
-              )}
+                ) : (
+                  <Text>{guideLineText}</Text>
+                )}
             </GuidelineBox>
           </>
         </LeftContainer>
@@ -1313,7 +1355,7 @@ function GroupDetailWrite() {
                 <SavedText>{entry.content}</SavedText>
                 <Checkbox
                   onClick={() => toggleCheck(entry.id)}
-                  src={checkedState[entry.id] ? check : noncheck}
+                  src={checkedState[entry.id] ? check : noncheck} 
                   alt="check"
                 />
               </StudentBookText>
