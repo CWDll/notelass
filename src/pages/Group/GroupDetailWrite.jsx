@@ -153,7 +153,7 @@ const ScoreResult = styled.span`
 
 const WritingBox = styled.div`
   width: 620px;
-  height: 240px;
+  height: 185px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -192,7 +192,8 @@ const ByteCounting = styled.p`
 `;
 
 const SuggestWordContainer = styled.div`
-  margin-left: 32px;
+  margin-left: 150px;
+  margin-top: -92px;
 `;
 
 const SuggestWord = styled.div`
@@ -200,7 +201,7 @@ const SuggestWord = styled.div`
   padding: 3px 12px 4px 12px;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--primary-light-cobalt, #ededff);
   margin-top: 24px;
 
@@ -208,9 +209,8 @@ const SuggestWord = styled.div`
     margin-left: 8px;
   }
 
-  /*보기, 본보기, 사례 글씨*/
-  color: var(--primary-cobalt, #4849ff);
-  text-align: center;
+  color: #000;
+
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -222,7 +222,7 @@ const GuidelineContainer = styled.div`
   display: row;
   align-items: center;
   margin-left: 32px;
-  margin-top: 32px;
+  margin-top:16px;
 `;
 
 const GuidelineTitle = styled.p`
@@ -237,7 +237,8 @@ const GuidelineTitle = styled.p`
 const ReapeatImg = styled.img`
   width: 24px;
   height: 24px;
-  margin-left: 590px;
+  margin-left: 570px;
+  margin-top: -48px;
   flex-shrink: 0;
   &:hover {
     cursor: pointer;
@@ -508,16 +509,16 @@ const PrintNotice = styled.p`
 
 const Keyword = styled.input`
   display: flex;
-  width: 150px;
+  width: 70px;
   height: 25px;
-  padding: 4px 12px 4px 31px;
+  padding: 5px;
   justify-content: flex-end;
   align-items: center;
   flex-shrink: 0;
   border-radius: 6px;
   background: #ededff;
-  margin-left: 160px;
-  margin-top: -48px;
+  margin-left: 5px;
+  margin-top: -68px;
 `;
 
 const Text = styled.p`
@@ -602,6 +603,7 @@ const KeywordContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 16px;
 `;
 
 const KeywordChip = styled.div`
@@ -621,6 +623,13 @@ font-weight: 600;
 line-height: normal;
 `;
   
+const Line = styled.div`
+width: 619px;
+height: 0px;
+border: 1px solid #E7E7E7;
+margin-left: 32px;
+margin-top: 16px;
+`;
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -947,6 +956,11 @@ function GroupDetailWrite() {
     
   };
 
+
+  const handleRemoveKeyword = (keywordToRemove) => {
+    setKeywords(keywords.filter(keyword => keyword !== keywordToRemove));
+  };
+  
 
   const handleSyncButtonClick = () => {
     setShowCheckboxes(!showCheckboxes); 
@@ -1317,12 +1331,8 @@ function GroupDetailWrite() {
               </HancellButton>
             </WritingBox>
 
-            <SuggestWordContainer>
-              {keywords.map((keyword, index) => (
-                <SuggestWord key={index}>{keyword}</SuggestWord>
-              ))}
-            </SuggestWordContainer>
             
+            <Line/>
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
@@ -1334,15 +1344,37 @@ function GroupDetailWrite() {
               <>
                 {/* *키워드 입력창 */}
                 <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>단어를 입력하세요 : </Text>
-                <Keyword
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAddKeyword(e.target.value);
-                  }}
-                />
-                
+                <div style={{display:'flex', alignItems:'center',justifyItems: 'center'}}>
+                <SuggestWordContainer style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  {keywords.map((keyword, index) => (
+                    <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+                      <SuggestWord>{keyword}
+                       
+                        <img src={exit} alt="exit" onClick={() => handleRemoveKeyword(keyword)} 
+                        style={{display:'flex', marginLeft:'3px', width:'10px', height:'10px'}}/>
+                      </SuggestWord>
+                    </div>
+                  ))}
+                </SuggestWordContainer>
+
+                    <Keyword
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleAddKeyword(e.target.value);
+                      }}
+                    />
+
+               
+                  </div>
+                  <ReapeatImg
+                src={arrow_repeat}
+                alt="arrow_repeat"
+                onClick={fetchGuideLine}
+              />
+
+
                 <KeywordContainer>
                   {getKeywords().map((keyword) => (
                     <KeywordChip
@@ -1356,11 +1388,7 @@ function GroupDetailWrite() {
                 </KeywordContainer>
                         
               </>
-              <ReapeatImg
-                src={arrow_repeat}
-                alt="arrow_repeat"
-                onClick={fetchGuideLine}
-              />
+              
             </GuidelineContainer>
             <GuidelineBox>
                       {loading ? (
