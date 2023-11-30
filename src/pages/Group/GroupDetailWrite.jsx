@@ -602,7 +602,6 @@ const KeywordContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 20px;
 `;
 
 const KeywordChip = styled.div`
