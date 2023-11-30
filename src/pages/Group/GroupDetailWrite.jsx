@@ -806,7 +806,13 @@ function GroupDetailWrite() {
         const fileUrl = response.data.result.fileUrl;
         console.log("생활기록부 다운로드:", response.data);
 
-        // window.open(fileUrl);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = fileUrl;
+        downloadLink.download = '과목별 세부능력 및 특기사항.cell';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink)
+
         await deleteFile(paramsGroupId);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
