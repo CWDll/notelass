@@ -597,6 +597,30 @@ line-height: normal;
 }
 `;
 
+
+const KeywordContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+`;
+
+const KeywordChip = styled.div`
+  padding: 3px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid ${(props) => (props.selected ? '#4849ff' : '#E7E7E7')};
+  
+  color: #26282B;
+
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
   
 
 const calculateByteCount = (text) => {
@@ -929,7 +953,21 @@ function GroupDetailWrite() {
     setShowCheckboxes(!showCheckboxes); 
   };
 
+   
+  const getKeywords = () => (
+    ['성실', '리더십', '창의성', '책임','협력','자기주도','도전','봉사','인내'
+      ,'해결능력','독립적','주도적','유연성','혁신','성취','논리','팀워크']);
 
+   const [selectedKeywords, setSelectedKeywords] = useState([]);
+
+   // 키워드 토글
+   const toggleKeywordSelection = (keyword) => {
+     setSelectedKeywords((prevSelectedKeywords) =>
+       prevSelectedKeywords.includes(keyword)
+         ? prevSelectedKeywords.filter((k) => k !== keyword)
+         : [...prevSelectedKeywords, keyword]
+     );
+   };
 
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -955,8 +993,8 @@ function GroupDetailWrite() {
         console.log(response);
 
         if (response.data && response.data.result) {
-          setStudents(response.data.result); // 학생 데이터를 상태에 저장합니다.
-          console.log("response.data.result: ", response.data.result); // 학생 데이터를 상태에 저장합니다.
+          setStudents(response.data.result); 
+          console.log("response.data.result: ", response.data.result); 
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -1053,16 +1091,17 @@ function GroupDetailWrite() {
       .filter((entry) => entry.checked)
       .map((entry) => entry.id)
       .join(',');
-  
-    try {
-      const response = await instance.get(
-        `/api/guideline/${paramsGroupId}/${paramsUserId}`, {
+      
+      const allKeywords = [...keywords, ...selectedKeywords].join(',');
+
+      try {
+        const response = await instance.get(`/api/guideline/${paramsGroupId}/${paramsUserId}`, {
           params: {
-            keywords: keywords.join(','),
+            keywords: allKeywords,
             handbookIds: checkedHandbookIds
           }
-        }
-      );
+        });
+
       console.log("가이드라인 내용:", response.data);
       if (response.status === 200) {
         setGuideLineText(response.data.result);
@@ -1074,7 +1113,7 @@ function GroupDetailWrite() {
     } finally {
       setLoading(false); 
     }
-  }, [paramsGroupId, paramsUserId, keywords, studentBookEntries]);
+  }, [paramsGroupId, paramsUserId, keywords,selectedKeywords, studentBookEntries]);
 
 
   // 생활기록부 POST 함수
@@ -1305,6 +1344,18 @@ function GroupDetailWrite() {
                   }}
                 />
                 
+                <KeywordContainer>
+                  {getKeywords().map((keyword) => (
+                    <KeywordChip
+                      key={keyword}
+                      selected={selectedKeywords.includes(keyword)}
+                      onClick={() => toggleKeywordSelection(keyword)}
+                    >
+                      {keyword}
+                    </KeywordChip>
+                  ))}
+                </KeywordContainer>
+                        
               </>
               <ReapeatImg
                 src={arrow_repeat}
