@@ -224,8 +224,6 @@ function GroupDetail() {
     });
   };
 
-  
-
   // 그룹 생성 POST 함수
   const generateGroup = async () => {
     // 대상 필드 중 하나라도 비어 있는지 확인
@@ -276,26 +274,25 @@ function GroupDetail() {
   };
 
   // 속한 그룹 목록 GET
-  
-    const fetchGroups = async () => {
-      try {
-        const response = await instance.get("/api/group");
-        if (response.status === 200 && Array.isArray(response.data.result)) {
-          
-          setGroupList(response.data.result);
-        } else {
-          // 오류 처리
-          console.error("그룹 목록을 불러오는데 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
-      }
-    };
 
-    useEffect(() => {
-      fetchGroups();
-    }, []); 
-  
+  const fetchGroups = async () => {
+    try {
+      const response = await instance.get("/api/group");
+      if (response.status === 200 && Array.isArray(response.data.result)) {
+        setGroupList(response.data.result);
+      } else {
+        // 오류 처리
+        console.error("그룹 목록을 불러오는데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
   return (
     <>
       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>

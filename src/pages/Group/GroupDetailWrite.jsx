@@ -222,7 +222,7 @@ const GuidelineContainer = styled.div`
   display: row;
   align-items: center;
   margin-left: 32px;
-  margin-top:16px;
+  margin-top: 16px;
 `;
 
 const GuidelineTitle = styled.p`
@@ -312,8 +312,6 @@ const StudentBookText = styled.div`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   margin-top: 8px;
-  
-
 `;
 
 const HancellButton = styled.button`
@@ -531,7 +529,6 @@ const Text = styled.p`
 `;
 
 const AssigncellButton = styled.button`
- 
   margin-left: 8px;
   margin-top: 32px;
   display: inline-flex;
@@ -544,60 +541,58 @@ const AssigncellButton = styled.button`
   background: #fff;
 
   border-radius: 999px;
-  border: 1.6px solid #4849FF;
+  border: 1.6px solid #4849ff;
 
   /*글씨**/
-  color: #26282B;
+  color: #26282b;
   text-align: center;
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  `;
+`;
 
-  const Checkbox = styled.img`
+const Checkbox = styled.img`
   width: 24px;
   height: 24px;
   margin-left: 370px;
   margin-top: -40px;
-  `;
-
-
-  const SyncButton = styled.button`
-  display: flex;
-width: 164px;
-height: 25px;
-padding: 3px 0px;
-justify-content: center;
-align-items: center;
-gap: 4px;
-flex-shrink: 0;
-margin-left: 168px;
-margin-top: -24px;
-background: #fff;
-
-border-radius: 999px;
-border: 1px solid #4849FF;
-
-color: var(--primary-cobalt, #4849FF);
-text-align: center;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-
-&:hover {
-  cursor: pointer;
-}
-&:focus,
-&:active {
-  outline: none; // 외곽선을 없애기 위해
-  border: 1px solid #4849FF; // 기존의 테두리 스타일을 유지하기 위해
-}
 `;
 
+const SyncButton = styled.button`
+  display: flex;
+  width: 164px;
+  height: 25px;
+  padding: 3px 0px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: 168px;
+  margin-top: -24px;
+  background: #fff;
+
+  border-radius: 999px;
+  border: 1px solid #4849ff;
+
+  color: var(--primary-cobalt, #4849ff);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus,
+  &:active {
+    outline: none; // 외곽선을 없애기 위해
+    border: 1px solid #4849ff; // 기존의 테두리 스타일을 유지하기 위해
+  }
+`;
 
 const KeywordContainer = styled.div`
   display: flex;
@@ -611,29 +606,29 @@ const KeywordChip = styled.div`
   border-radius: 12px;
   cursor: pointer;
   background-color: transparent;
-  border: 1px solid ${(props) => (props.selected ? '#4849ff' : '#E7E7E7')};
-  
-  color: #26282B;
+  border: 1px solid ${(props) => (props.selected ? "#4849ff" : "#E7E7E7")};
 
-text-align: center;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: #26282b;
+
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
-  
+
 const Line = styled.div`
-width: 619px;
-height: 0px;
-border: 1px solid #E7E7E7;
-margin-left: 32px;
-margin-top: 16px;
+  width: 619px;
+  height: 0px;
+  border: 1px solid #e7e7e7;
+  margin-left: 32px;
+  margin-top: 16px;
 `;
 
 const XIMG = styled.img`
-width: 10px;
-height: 10px;
+  width: 10px;
+  height: 10px;
 `;
 
 const calculateByteCount = (text) => {
@@ -660,6 +655,7 @@ function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const location = useLocation();
   const info = location.state;
+  console.log("info:", info);
 
   // 학생 수업 관련 state
   const [showStudentBook, setShowStudentBook] = useState(false);
@@ -806,12 +802,12 @@ function GroupDetailWrite() {
         const fileUrl = response.data.result.fileUrl;
         console.log("생활기록부 다운로드:", response.data);
 
-        const downloadLink = document.createElement('a');
+        const downloadLink = document.createElement("a");
         downloadLink.href = fileUrl;
-        downloadLink.download = '과목별 세부능력 및 특기사항.cell';
+        downloadLink.download = "과목별 세부능력 및 특기사항.cell";
         document.body.appendChild(downloadLink);
         downloadLink.click();
-        document.body.removeChild(downloadLink)
+        document.body.removeChild(downloadLink);
 
         await deleteFile(paramsGroupId);
       } else {
@@ -956,7 +952,7 @@ function GroupDetailWrite() {
           // 새로운 체크 상태 객체를 만들어서 상태를 업데이트
           const newCheckedState = {
             ...checkedState,
-            [id]: !checkedState[id]
+            [id]: !checkedState[id],
           };
           setCheckedState(newCheckedState);
           return { ...entry, checked: !checkedState[id] };
@@ -964,34 +960,46 @@ function GroupDetailWrite() {
         return entry;
       })
     );
-    
   };
-
 
   const handleRemoveKeyword = (keywordToRemove) => {
-    setKeywords(keywords.filter(keyword => keyword !== keywordToRemove));
+    setKeywords(keywords.filter((keyword) => keyword !== keywordToRemove));
   };
-  
 
   const handleSyncButtonClick = () => {
-    setShowCheckboxes(!showCheckboxes); 
+    setShowCheckboxes(!showCheckboxes);
   };
 
-   
-  const getKeywords = () => (
-    ['성실', '리더십', '창의성', '책임','협력','자기주도','도전','봉사','인내'
-      ,'해결능력','독립적','주도적','유연성','혁신','성취','논리','팀워크']);
+  const getKeywords = () => [
+    "성실",
+    "리더십",
+    "창의성",
+    "책임",
+    "협력",
+    "자기주도",
+    "도전",
+    "봉사",
+    "인내",
+    "해결능력",
+    "독립적",
+    "주도적",
+    "유연성",
+    "혁신",
+    "성취",
+    "논리",
+    "팀워크",
+  ];
 
-   const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [selectedKeywords, setSelectedKeywords] = useState([]);
 
-   // 키워드 토글
-   const toggleKeywordSelection = (keyword) => {
-     setSelectedKeywords((prevSelectedKeywords) =>
-       prevSelectedKeywords.includes(keyword)
-         ? prevSelectedKeywords.filter((k) => k !== keyword)
-         : [...prevSelectedKeywords, keyword]
-     );
-   };
+  // 키워드 토글
+  const toggleKeywordSelection = (keyword) => {
+    setSelectedKeywords((prevSelectedKeywords) =>
+      prevSelectedKeywords.includes(keyword)
+        ? prevSelectedKeywords.filter((k) => k !== keyword)
+        : [...prevSelectedKeywords, keyword]
+    );
+  };
 
   const [keywords, setKeywords] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -1017,8 +1025,8 @@ function GroupDetailWrite() {
         console.log(response);
 
         if (response.data && response.data.result) {
-          setStudents(response.data.result); 
-          console.log("response.data.result: ", response.data.result); 
+          setStudents(response.data.result);
+          console.log("response.data.result: ", response.data.result);
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -1079,52 +1087,52 @@ function GroupDetailWrite() {
   const [TextEntries, setTextEntries] = useState([]);
 
   //생활기록부 내용 불러오기 함수
- 
-    const fetchText = async () => {
-      try {
-        const response = await instance.get(
-          `/api/record/excel/${paramsGroupId}/${paramsUserId}`
-        );
-        if (response.status === 200 && response.data.result) {
-          setInputText(response.data.result);
-          // await deleteFile(paramsGroupId);
-          console.log("생활기록부 내용:", response.data.result);
-        } else {
-          console.error("데이터를 가져오는 데 실패했습니다:", response.status);
-        }
-      } catch (error) {
-        console.error("데이터 불러오기 중 오류 발생:", error);
+
+  const fetchText = async () => {
+    try {
+      const response = await instance.get(
+        `/api/record/excel/${paramsGroupId}/${paramsUserId}`
+      );
+      if (response.status === 200 && response.data.result) {
+        setInputText(response.data.result);
+        // await deleteFile(paramsGroupId);
+        console.log("생활기록부 내용:", response.data.result);
+      } else {
+        console.error("데이터를 가져오는 데 실패했습니다:", response.status);
       }
-    };
+    } catch (error) {
+      console.error("데이터 불러오기 중 오류 발생:", error);
+    }
+  };
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (paramsGroupId && paramsUserId) {
       fetchText();
     }
   }, [paramsGroupId, paramsUserId]);
 
- 
-
   // 가이드라인 GET 함수
   const [loading, setLoading] = useState(false);
-  
+
   const fetchGuideLine = useCallback(async () => {
-    setLoading(true); 
+    setLoading(true);
     const checkedHandbookIds = studentBookEntries
       .filter((entry) => entry.checked)
       .map((entry) => entry.id)
-      .join(',');
-      
-      const allKeywords = [...keywords, ...selectedKeywords].join(',');
+      .join(",");
 
-      try {
-        const response = await instance.get(`/api/guideline/${paramsGroupId}/${paramsUserId}`, {
+    const allKeywords = [...keywords, ...selectedKeywords].join(",");
+
+    try {
+      const response = await instance.get(
+        `/api/guideline/${paramsGroupId}/${paramsUserId}`,
+        {
           params: {
             keywords: allKeywords,
-            handbookIds: checkedHandbookIds
-          }
-        });
+            handbookIds: checkedHandbookIds,
+          },
+        }
+      );
 
       console.log("가이드라인 내용:", response.data);
       if (response.status === 200) {
@@ -1135,10 +1143,15 @@ function GroupDetailWrite() {
     } catch (error) {
       console.error("가이드라인 에러:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
-  }, [paramsGroupId, paramsUserId, keywords,selectedKeywords, studentBookEntries]);
-
+  }, [
+    paramsGroupId,
+    paramsUserId,
+    keywords,
+    selectedKeywords,
+    studentBookEntries,
+  ]);
 
   // 생활기록부 POST 함수
 
@@ -1172,10 +1185,8 @@ function GroupDetailWrite() {
     return null;
   };
 
-
   //생활기록부 파일 삭제 DELETE 함수
   const deleteFile = async (paramsGroupId) => {
-
     try {
       const response = await instance.delete(
         `/api/record/excel/${paramsGroupId}`
@@ -1189,8 +1200,6 @@ function GroupDetailWrite() {
       console.error("데이터 삭제 중 오류 발생:", error);
     }
   };
-
-
 
   return (
     <div>
@@ -1264,19 +1273,19 @@ function GroupDetailWrite() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
             <>
-            <AssigncellButton >
-              <input
-                type="file"
-                onChange={uploadAssignment}
-                accept=".xls,.xlsx,.csv,.cell"
-                style={{
-                  position: "absolute",
-                  opacity: 0,
-                }}
-              />
-              과제 데이터 불러오기
-              <img src={right} alt="right" />
-            </AssigncellButton>
+              <AssigncellButton>
+                <input
+                  type="file"
+                  onChange={uploadAssignment}
+                  accept=".xls,.xlsx,.csv,.cell"
+                  style={{
+                    position: "absolute",
+                    opacity: 0,
+                  }}
+                />
+                과제 데이터 불러오기
+                <img src={right} alt="right" />
+              </AssigncellButton>
             </>
           </div>
           <SaveButton onClick={saveData}>저장하기</SaveButton>
@@ -1342,8 +1351,7 @@ function GroupDetailWrite() {
               </HancellButton>
             </WritingBox>
 
-            
-            <Line/>
+            <Line />
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
@@ -1354,37 +1362,61 @@ function GroupDetailWrite() {
               </SyncButton>
               <>
                 {/* *키워드 입력창 */}
-                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>단어를 입력하세요 : </Text>
-                <div style={{display:'flex', alignItems:'center',justifyItems: 'center'}}>
-                <SuggestWordContainer style={{ display: 'flex', flexWrap: 'wrap' }}>
-                  {keywords.map((keyword, index) => (
-                    <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-                      <SuggestWord>{keyword}
-                       
-                        <XIMG src={exit} alt="exit" onClick={() => handleRemoveKeyword(keyword)} 
-                        style={{display:'flex', marginLeft:'3px', width:'10px', height:'10px'}}/>
-                      </SuggestWord>
-                    </div>
-                  ))}
-                </SuggestWordContainer>
+                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
+                  단어를 입력하세요 :{" "}
+                </Text>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyItems: "center",
+                  }}
+                >
+                  <SuggestWordContainer
+                    style={{ display: "flex", flexWrap: "wrap" }}
+                  >
+                    {keywords.map((keyword, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginRight: "10px",
+                        }}
+                      >
+                        <SuggestWord>
+                          {keyword}
 
-                    <Keyword
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") handleAddKeyword(e.target.value);
-                      }}
-                    />
+                          <XIMG
+                            src={exit}
+                            alt="exit"
+                            onClick={() => handleRemoveKeyword(keyword)}
+                            style={{
+                              display: "flex",
+                              marginLeft: "3px",
+                              width: "10px",
+                              height: "10px",
+                            }}
+                          />
+                        </SuggestWord>
+                      </div>
+                    ))}
+                  </SuggestWordContainer>
 
-               
-                  </div>
-                  <ReapeatImg
-                src={arrow_repeat}
-                alt="arrow_repeat"
-                onClick={fetchGuideLine}
-              />
-
+                  <Keyword
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleAddKeyword(e.target.value);
+                    }}
+                  />
+                </div>
+                <ReapeatImg
+                  src={arrow_repeat}
+                  alt="arrow_repeat"
+                  onClick={fetchGuideLine}
+                />
 
                 <KeywordContainer>
                   {getKeywords().map((keyword) => (
@@ -1397,18 +1429,23 @@ function GroupDetailWrite() {
                     </KeywordChip>
                   ))}
                 </KeywordContainer>
-                        
               </>
-              
             </GuidelineContainer>
             <GuidelineBox>
-                      {loading ? (
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px'}}>
+              {loading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "40px",
+                  }}
+                >
                   <BeatLoader color="#4849ff" loading={loading} size={10} />
                 </div>
-                ) : (
-                  <Text>{guideLineText}</Text>
-                )}
+              ) : (
+                <Text>{guideLineText}</Text>
+              )}
             </GuidelineBox>
           </>
         </LeftContainer>
@@ -1443,17 +1480,17 @@ function GroupDetailWrite() {
                   삭제
                 </TimeText>
               </div>
-              <StudentBookText key={entry.id} >
+              <StudentBookText key={entry.id}>
                 <SavedText>{entry.content}</SavedText>
                 {showCheckboxes && (
-                  <div style = {{position: "absolute"}}>
-              <Checkbox
-                onClick={() => toggleCheck(entry.id)}
-                src={checkedState[entry.id] ? check : noncheck}
-                alt="check"
-              />
-              </div>
-            )}
+                  <div style={{ position: "absolute" }}>
+                    <Checkbox
+                      onClick={() => toggleCheck(entry.id)}
+                      src={checkedState[entry.id] ? check : noncheck}
+                      alt="check"
+                    />
+                  </div>
+                )}
               </StudentBookText>
             </InfoContainer>
           ))}

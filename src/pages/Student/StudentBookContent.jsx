@@ -377,7 +377,7 @@ function StudentBookContent({
     // inputText가 null이거나 빈 문자열이거나 공백만 있는 경우를 확인
     if (!inputText || inputText.trim() === "") {
       alert("내용을 입력하세요.");
-      return; // 여기서 함수를 종료하여 저장을 막습니다.
+      return;
     }
 
     const requestBody = {

@@ -24,7 +24,7 @@ const StudentBookContainer = styled.div`
 
   position: fixed;
   margin-top: 236px;
-  margin-left: 1750px;
+  margin-left: 1650px;
 `;
 
 const BookImg = styled.img`
@@ -36,11 +36,12 @@ const BookImg = styled.img`
 
 const Text = styled.p`
   margin-top: 8px;
-  margin-left: 13px;
+  margin-left: 15px;
   color: #fff;
-  font-size: 16px;
+  font-family: Pretendard-light;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: normal;
   line-height: normal;
 `;
 
@@ -217,14 +218,6 @@ const CountContainer = styled.div`
 
 function StudentBook({ show, onClose, groupId, userId }) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState(userId);
-  const [selectedGroup, setSelectedGroup] = useState(groupId);
-  const [students, setStudents] = useState([]); // 학생 데이터를 저장할 상태
-  const [inputText, setInputText] = useState("");
-  const [speechCount, setSpeechCount] = useState(0);
-  const [attitudeCount, setAttitudeCount] = useState(0);
-
-  const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
 
   useEffect(() => {
     console.log("useEffect 실행 시작");
@@ -258,70 +251,6 @@ function StudentBook({ show, onClose, groupId, userId }) {
     setShowSmallContainer(show);
     console.log(show, onclose, groupId, userId);
   }, [show]);
-
-  //학생 선택
-  const handleStudentChange = (e) => {
-    e.stopPropagation();
-    setSelectedStudent(e.target.value);
-    console.log("Selected Student: " + e.target.value);
-    console.log("Selected Student: " + e.target);
-  };
-
-  //반 선택
-  const handleGroupChange = async (e) => {
-    e.stopPropagation();
-    const groupId = e.target.value;
-    setSelectedGroup(groupId);
-    console.log("Selected Group: " + groupId);
-
-    try {
-      const res = await instance.get(`/api/group/students/${groupId}`);
-      console.log("students/groupId 서버 응답 확인", res);
-      console.log("students/groupId 서버 응답 확인", res.data);
-      console.log("students/groupId 서버 응답 확인", res.data.result);
-      if (res.data && res.data.result) {
-        setStudents(res.data.result); // 학생 데이터를 상태에 저장합니다.
-      }
-    } catch (error) {
-      console.error("학생 데이터를 가져오는 중 오류 발생:", error);
-      // 오류 처리 로직...
-    }
-    console.log("/api/group/students/groupId is finished");
-  };
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    // 상태에서 groupId와 userId를 사용합니다.
-    const groupId = selectedGroup; // 이전에 선택된 그룹 ID
-    const userId = selectedStudent; // 이전에 선택된 학생 ID
-
-    const requestBody = {
-      content: inputText, // 텍스트 입력 내용
-      attitudeScore: attitudeCount, // 태도 점수
-      presentationNum: speechCount, // 발표 횟수
-    };
-
-    try {
-      console.log("보낸 requestBody: ", requestBody);
-      const response = await instance.post(
-        `/api/handbook/${groupId}/${userId}`,
-        // `/api/handbook/9/22`,
-        requestBody
-      );
-
-      if (response.status === 201) {
-        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
-        // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
-        alert(`${selectedStudent}학생의 학생 수첩 작성이 완료되었습니다.`);
-        console.log("학생 수첩 작성 성공!");
-      } else {
-        alert("학생 수첩 작성에 실패하였습니다.");
-      }
-    } catch (error) {
-      console.error("학생 수첩 작성 오류:", error);
-    }
-  };
 
   const handleClose = () => {
     setShowSmallContainer(false); // `showSmallContainer` 상태를 false로 설정하여 컴포넌트를 숨김
