@@ -296,8 +296,6 @@ function StudentBookContent({
   const handleClose = () => {
     // 모달을 닫을 때 부모 컴포넌트에 알리기
     if (onClose) onClose();
-    // 내부 상태 업데이트
-    // setShowSmallContainer(false);
   };
 
   //발표 점수 계산
