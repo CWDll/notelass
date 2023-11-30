@@ -631,6 +631,11 @@ margin-left: 32px;
 margin-top: 16px;
 `;
 
+const XIMG = styled.img`
+width: 10px;
+height: 10px;
+`;
+
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -1350,7 +1355,7 @@ function GroupDetailWrite() {
                     <div key={index} style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
                       <SuggestWord>{keyword}
                        
-                        <img src={exit} alt="exit" onClick={() => handleRemoveKeyword(keyword)} 
+                        <XIMG src={exit} alt="exit" onClick={() => handleRemoveKeyword(keyword)} 
                         style={{display:'flex', marginLeft:'3px', width:'10px', height:'10px'}}/>
                       </SuggestWord>
                     </div>
