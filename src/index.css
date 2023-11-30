@@ -73,7 +73,7 @@ button:focus-visible {
 }
 
 @font-face {
-  font-family: "Pretendard-Black";
-  src: url(./Fonts/Pretendard-Black.woff) format("woff");
+  font-family: "Pretendard-Light";
+  src: url(./Fonts/Pretendard-Light.woff) format("woff");
 }
 
