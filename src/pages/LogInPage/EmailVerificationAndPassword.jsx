@@ -371,6 +371,7 @@ export default function EmailVerificationAndPassword() {
           <PwCheck
             id="confirm-password-input"
             variant="standard"
+            type="password"
             placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
