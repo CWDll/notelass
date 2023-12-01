@@ -85,7 +85,8 @@ export default function EmailVerificationAndPassword() {
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
   const navigate = useNavigate();
-  67;
+
+  const [authCode, setAuthCode] = useState();
 
   // 입력된 값이 정수인지 확인하고, 정수가 아니라면 변환하거나 기본값을 설정합니다.
   const parseIfInteger = (name, value) => {
@@ -190,6 +191,7 @@ export default function EmailVerificationAndPassword() {
         //중복확인 완료
         alert("이메일 중복 확인이 완료되었습니다.");
         setEmails(existEmails.data);
+        sendVerifiCode();
       } else {
         alert("이메일 중복 확인에 실패했습니다.");
       }
@@ -197,6 +199,24 @@ export default function EmailVerificationAndPassword() {
       console.error("이메일 중복 확인 오류:", error);
       // Further logic upon error...
       alert("중복된 이메일입니다.");
+    }
+  };
+
+  const sendVerifiCode = async () => {
+    try {
+      const verifiCode = await instance.post(
+        `/api/auth/email/request?email=${email}`
+      );
+
+      if (verifiCode.status === 200) {
+        alert("인증번호가 발송되었습니다.");
+        setAuthCode(verifiCode.data.result);
+      } else {
+        alert("인증번호 발송에 실패하였습니다.");
+      }
+    } catch (error) {
+      console.error("인증번호 발송 오류", error);
+      alert("인증번호 발송에 실패하였습니다.");
     }
   };
 
