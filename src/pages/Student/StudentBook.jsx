@@ -198,53 +198,8 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-/*
-1
-2
-3
-4
-5
-6
-7
-8
-9
-0
-1
-2
-3
-4
-5
-*/
-
 function StudentBook({ show, onClose, groupId, userId }) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-
-  useEffect(() => {
-    console.log("useEffect 실행 시작");
-    const fetchGroups = async () => {
-      try {
-        const resp = await instance.get(`/api/group`);
-        console.log("서버 응답: ", JSON.stringify(resp, null, 2));
-        console.log("서버 응답 확인" + resp.data);
-        if (resp.data && resp.data.result) {
-          console.log("api/groups GET 성공");
-          // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
-          const newGroups = resp.data.result.map((g) => ({
-            id: g.id,
-            group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
-          }));
-          setGroups(newGroups);
-        }
-      } catch (error) {
-        console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
-        console.log("sd");
-      } finally {
-        console.log("useEffect 실행 완료");
-      }
-    };
-
-    fetchGroups();
-  }, [groupId, userId]);
 
   // useEffect를 사용하여 외부에서 받은 show 상태에 따라 내부의 showSmallContainer 상태를 조절
   useEffect(() => {

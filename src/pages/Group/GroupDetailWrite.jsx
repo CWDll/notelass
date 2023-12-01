@@ -654,6 +654,7 @@ const calculateByteCount = (text) => {
 function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const location = useLocation();
+  console.log("location: ", location);
   const info = location.state;
   console.log("info:", info);
 
@@ -909,6 +910,15 @@ function GroupDetailWrite() {
   const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
+    // console.log(
+    //   "보자보자",
+    //   paramsGroupId,
+    //   paramsUserId,
+    //   school,
+    //   grade,
+    //   classNum,
+    //   subject
+    // );
     const fetchGroups = async () => {
       try {
         const response = await instance.get("/api/group");
@@ -931,7 +941,9 @@ function GroupDetailWrite() {
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
-    navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`);
+    navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`, {
+      replace: true,
+    });
   };
 
   const navigate = useNavigate();
@@ -1087,7 +1099,6 @@ function GroupDetailWrite() {
   const [TextEntries, setTextEntries] = useState([]);
 
   //생활기록부 내용 불러오기 함수
-
   const fetchText = async () => {
     try {
       const response = await instance.get(
@@ -1232,9 +1243,6 @@ function GroupDetailWrite() {
           </SmallContainer>
         )}
 
-        {/* <BoldTitle>
-          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
-        </BoldTitle> */}
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value="" disabled selected>
