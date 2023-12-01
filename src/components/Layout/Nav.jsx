@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
@@ -151,6 +151,35 @@ const Searching = styled.img`
   margin-left: -30px;
 `;
 
+const NavDropdownBox = styled.div`
+  width: 150px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  margin-top: 130px;
+  margin-left: 180px;
+  border-radius: 10px;
+`;
+
+const NavDropdownOptionUp = styled.div`
+  &:hover {
+    background-color: #f5f5fc;
+  }
+  width: 100%;
+  border-radius: 10px 10px 0 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+`;
+const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
+  border-radius: 0 0 10px 10px;
+`;
+
 export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
@@ -172,6 +201,22 @@ export default function Nav() {
 
     return () => {
       window.removeEventListener("scroll", () => {});
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+
+    // 외부 클릭 이벤트 리스너 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // 클린업 함수에서 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -218,6 +263,19 @@ export default function Nav() {
     }
   };
 
+  const [dropdownVisible, setDropdownVisible] = useState(false); // 드롭다운 표시 상태 추가
+  const dropdownRef = useRef(); // 드롭다운 레퍼런스 추가
+  // 드롭다운 토글 함수
+  const toggleDropdown = () => {
+    // 이미 드롭다운이 보이는 상태에서 프로필 사진을 클릭하면 드롭다운을 닫습니다.
+    if (dropdownVisible) {
+      setDropdownVisible(false);
+    } else {
+      // 드롭다운이 보이지 않는 상태에서 프로필 사진을 클릭하면 드롭다운을 엽니다.
+      setDropdownVisible(true);
+    }
+  };
+
   const renderAuthButtons = () => {
     if (isLoggedIn) {
       // 로그인 상태일 때 '마이페이지
@@ -227,7 +285,24 @@ export default function Nav() {
           <Searching src={searching} alt="searching" />
 
           <Bell src={bell} alt="bell" />
-          <Person src={personimg} alt="personimg" onClick={handleLogout} />
+          <Person src={personimg} alt="personimg" onClick={toggleDropdown} />
+          {dropdownVisible && (
+            <NavDropdownBox ref={dropdownRef} className="dropdown-menu">
+              <NavDropdownOptionUp
+                className="dropdown-item"
+                onClick={navigateTosetting}
+              >
+                환경설정
+              </NavDropdownOptionUp>
+              <hr />
+              <NavDropdownOptionDown
+                className="dropdown-item"
+                onClick={handleLogout}
+              >
+                로그아웃
+              </NavDropdownOptionDown>
+            </NavDropdownBox>
+          )}
         </>
       );
       //<SignInBtn onClick={() => navigate('/mypage')}>마이페이지</SignInBtn>;
@@ -246,7 +321,7 @@ export default function Nav() {
     <NavContainer>
       <Imgbox>
         {" "}
-        <LogoImg src={logo} alt="logo" />{" "}
+        <LogoImg src={logo} alt="logo" onClick={navigateToGroupDetail} />{" "}
       </Imgbox>
       <Notelass> Note-lass</Notelass>
       <NavItemContainer>
