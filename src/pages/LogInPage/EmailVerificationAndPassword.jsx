@@ -112,9 +112,13 @@ export default function EmailVerificationAndPassword() {
     event.preventDefault();
   };
 
-  // 이메일 정규식
+  // 비밀번호 정규식
+  const pwRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  // 이메일 정규식
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   const validateEmail = (inputEmail) => {
@@ -176,11 +180,6 @@ export default function EmailVerificationAndPassword() {
   // 이메일 중복 확인을 위해 getExistEmail
   const [emails, setEmails] = useState([]);
 
-  // const existEmails = await axios.get(
-  //   `${
-  //     import.meta.env.VITE_APP_SERVER_HOST
-  //   }/api/auth/validation?email=${email}`
-  // )
   const getExistEmails = async () => {
     try {
       const existEmails = await instance.get(
