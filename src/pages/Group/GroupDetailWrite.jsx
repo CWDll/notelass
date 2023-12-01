@@ -1269,6 +1269,7 @@ function GroupDetailWrite() {
   //유의어 추천 GET 함수
   const [selectedWord, setSelectedWord] = useState("");
   const [synonyms, setSynonyms] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
 
   const fetchSynonyms = async (word) => {
     try {
