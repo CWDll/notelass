@@ -16,6 +16,7 @@ import * as XLSX from "xlsx";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
 import BeatLoader from "react-spinners/BeatLoader";
+import BarLoader from "react-spinners/BarLoader";
 
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
@@ -168,7 +169,7 @@ const WritingBox = styled.div`
 
 const Textarea = styled.textarea`
   width: 100%;
-  height: 200px;
+  height: 185px;
   border: none;
   resize: none;
   padding: 16px;
@@ -177,6 +178,7 @@ const Textarea = styled.textarea`
     outline: none;
     box-shadow: none;
   }
+  
 `;
 
 const ByteCounting = styled.p`
@@ -188,7 +190,7 @@ const ByteCounting = styled.p`
   font-weight: 600;
   line-height: normal;
   margin-right: 24px;
-  margin-bottom: 5px;
+  margin-bottom: -15px;
 `;
 
 const SuggestWordContainer = styled.div`
@@ -324,8 +326,8 @@ const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-right: 24px;
-  margin-left: 438px;
+  margin-left: 485px;
+  margin-top: 8px;
   position: relative;
 
   color: var(--primary-cobalt, #4849ff);
@@ -633,26 +635,49 @@ const XIMG = styled.img`
 
 
 
-const ContextMenu = styled.div`
-  position: absolute;
-  top: ${(props) => props.y}px;
-  left: ${(props) => props.x}px;
-  background-color: white;
-  border: 1px solid #ddd;
-  z-index: 1000;
-  padding: 10px;
-`;
-
 const SynonymsDisplay = styled.div`
-  margin-top: 20px; // Adjust as needed
+  display: flex;
+  height: 65px;
+  padding-left: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  flex-direction: column;        
+
 `;
 
 const Synonym = styled.span`
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 8px;
+  margin-top: 16px;
   background: #ededff;
   padding: 5px 10px;
+  marin-left: -102px;
+
+  
   border-radius: 10px;
+  
+
+  color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
+
+
+const SelectedWord = styled.span`
+  color: #4849ff;
+`;
+
+const SynonymTitle = styled.p`
+color: #26282B;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 `;
 
 const calculateByteCount = (text) => {
@@ -967,6 +992,8 @@ function GroupDetailWrite() {
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
+    setSelectedWord(''); 
+    setSynonyms([]);
     navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`, {
       replace: true,
     });
@@ -1412,7 +1439,9 @@ function GroupDetailWrite() {
               />
 
               <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-              <HancellButton>
+              
+            </WritingBox>
+            <HancellButton>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -1427,18 +1456,24 @@ function GroupDetailWrite() {
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </HancellButton>
-            </WritingBox>
-
+            <SynonymsDisplay>
             {selectedWord && (
-              <SynonymsDisplay>
-                <BoldTitle>선택된 단어: {selectedWord}</BoldTitle>
+              <>
+                <SynonymTitle>
+                  <SelectedWord >'{selectedWord}'</SelectedWord> 비슷한 유의어</SynonymTitle>
                 <div>
                   {synonyms.map((synonym, index) => (
                     <Synonym key={index}>{synonym}</Synonym>
                   ))}
                 </div>
-              </SynonymsDisplay>
+                </>
             )}
+             </SynonymsDisplay>
+         
+
+
+
+
             <Line />
 
             {/*가이드라인 문장 */}
