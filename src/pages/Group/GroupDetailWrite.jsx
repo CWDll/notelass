@@ -663,6 +663,8 @@ function GroupDetailWrite() {
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [contentId, setContentId] = useState();
+  // 학생 선택
+  const [students, setStudents] = useState([]);
   //
   const [byteCount, setByteCount] = useState(0);
   const [inputText, setInputText] = useState("");
@@ -1021,8 +1023,6 @@ function GroupDetailWrite() {
     setInputValue("");
   };
 
-  // 학생 선택
-  const [students, setStudents] = useState([]);
   useEffect(() => {
     // URL에서 가져온 userId 값을 상태에 설정
     if (paramsUserId) {
@@ -1104,12 +1104,15 @@ function GroupDetailWrite() {
       const response = await instance.get(
         `/api/record/excel/${paramsGroupId}/${paramsUserId}`
       );
-      if (response.status === 200 && response.data.result) {
+      if (response.status == 200 || response.data.result) {
         setInputText(response.data.result);
         // await deleteFile(paramsGroupId);
         console.log("생활기록부 내용:", response.data.result);
       } else {
-        console.error("데이터를 가져오는 데 실패했습니다:", response.status);
+        console.error(
+          "fetchText데이터를 가져오는 데 실패했습니다:",
+          response.status
+        );
       }
     } catch (error) {
       console.error("데이터 불러오기 중 오류 발생:", error);
