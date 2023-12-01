@@ -631,6 +631,30 @@ const XIMG = styled.img`
   height: 10px;
 `;
 
+
+
+const ContextMenu = styled.div`
+  position: absolute;
+  top: ${(props) => props.y}px;
+  left: ${(props) => props.x}px;
+  background-color: white;
+  border: 1px solid #ddd;
+  z-index: 1000;
+  padding: 10px;
+`;
+
+const SynonymsDisplay = styled.div`
+  margin-top: 20px; // Adjust as needed
+`;
+
+const Synonym = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+  background: #ededff;
+  padding: 5px 10px;
+  border-radius: 10px;
+`;
+
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -1215,8 +1239,42 @@ function GroupDetailWrite() {
     }
   };
 
+  //유의어 추천 GET 함수
+  const [selectedWord, setSelectedWord] = useState("");
+  const [synonyms, setSynonyms] = useState([]);
+
+  const fetchSynonyms = async (word) => {
+    try {
+      const response = await axios.get(`/api/synonym?word=${word}`);
+      // Assuming 'result' contains the synonyms array, limit to 4 synonyms
+      setSynonyms(response.data.result.slice(0, 4));
+    } catch (error) {
+      console.error('Error fetching synonyms:', error);
+    }
+  };
+
+
+  const handleWordSelection = (word) => {
+    setSelectedWord(word);
+    fetchSynonyms(word);
+  };
+
+
+  const closeContextMenu = () => {
+    setContextMenu(null);
+  };
+
+
+
+
+
+
+
+
+
+
   return (
-    <div>
+    <div onClick={closeContextMenu}>
       <Header>
         <Img
           src={chevron_left}
@@ -1335,11 +1393,18 @@ function GroupDetailWrite() {
           </ScoreList>
 
           <>
-            <WritingBox>
+          <WritingBox onContextMenu={(event) => {
+              event.preventDefault();
+              const selectedText = window.getSelection().toString().trim();
+              if (selectedText) {
+                handleWordSelection(selectedText);
+              }
+            }}>
               {/*생활기록부 입력창*/}
 
               <Textarea
                 value={inputText}
+                spellCheck={false}
                 onChange={(e) => {
                   setInputText(e.target.value);
                   setByteCount(calculateByteCount(e.target.value));
@@ -1364,6 +1429,16 @@ function GroupDetailWrite() {
               </HancellButton>
             </WritingBox>
 
+            {selectedWord && (
+              <SynonymsDisplay>
+                <BoldTitle>선택된 단어: {selectedWord}</BoldTitle>
+                <div>
+                  {synonyms.map((synonym, index) => (
+                    <Synonym key={index}>{synonym}</Synonym>
+                  ))}
+                </div>
+              </SynonymsDisplay>
+            )}
             <Line />
 
             {/*가이드라인 문장 */}
