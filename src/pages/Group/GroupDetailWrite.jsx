@@ -1237,7 +1237,9 @@ function GroupDetailWrite() {
         </BoldTitle> */}
         <BlueTitle>세부능력특기사항</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
-          <option value=""></option>
+          <option value="" disabled selected>
+            학생 선택
+          </option>
           {students.map((student, index) => (
             <option key={student.id} value={student.id}>
               {index + 1}번 {student.name}
