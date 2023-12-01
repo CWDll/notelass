@@ -265,8 +265,7 @@ export default function EmailVerificationAndPassword() {
       let missingFields = result.missingFields || result.typeErrors || [];
       console.log("Missing or incorrect fields: ", missingFields.join(", "));
       alert(
-        "The following fields are missing or incorrect: " +
-          missingFields.join(", ")
+        "입력하지 않았거나 잘못된 입력이 존재합니다." + missingFields.join(", ")
       );
       return;
     }
