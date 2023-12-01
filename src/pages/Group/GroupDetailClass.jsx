@@ -218,7 +218,8 @@ function GroupDetailClass() {
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
-    navigate("/GroupDetailClass/AssignmentDetail");
+    // 현재 QA검증용으로 필요없는 기능이기에 잠깐 주석처리 함. 이후 함수 명 바꾸고 다시 적용하자.
+    //navigate("/GroupDetailClass/AssignmentDetail");
   };
 
   const GroupDetailWrite = (
