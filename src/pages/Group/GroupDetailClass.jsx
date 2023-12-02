@@ -8,9 +8,11 @@ import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
+import fileDownload from "../../assets/fileDownload.svg";
 import instance from "../../assets/api/axios";
 
-// import axios from "../../assets/api/axios";
+// 학생 등록 양식
+import excelFile from "../../assets/excel/StuExcel.xlsx";
 
 const Header = styled.header`
   display: flex;
@@ -208,6 +210,20 @@ const Exit = styled.img`
   width: 24px;
 `;
 
+const FileDownload = styled.img`
+  /* top: 32px;
+  right: 32px; */
+  width: 24px;
+  cursor: pointer;
+  margin-top: 45px;
+  margin-left: 10px;
+`;
+
+const CustomInput = styled.input`
+  witdh: 200px;
+  height: 10px;
+`;
+
 function GroupDetailClass() {
   const location = useLocation();
   const info = location.state;
@@ -281,6 +297,7 @@ function GroupDetailClass() {
 
   //학생 등록 파일 업로드 POST 함수
   const uploadname = async (event) => {
+    console.log("uploadname실행");
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
@@ -323,6 +340,17 @@ function GroupDetailClass() {
     }
   };
 
+  // 양식 다운로드
+  const handleDownload = () => {
+    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+    const link = document.createElement("a");
+    link.href = excelFile;
+    link.setAttribute("download", "stuExcel.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <Header>
@@ -334,9 +362,9 @@ function GroupDetailClass() {
           그룹 정보
         </Button>
         <Button>
-          <input
+          <CustomInput
             type="file"
-            onChange={uploadname}
+            onClick={uploadname}
             accept=".xls,.xlsx,.csv,.cell"
             style={{
               position: "absolute",
@@ -345,6 +373,12 @@ function GroupDetailClass() {
           />
           학생 등록
         </Button>
+
+        <FileDownload
+          src={fileDownload}
+          alt="fileDownload"
+          onClick={handleDownload}
+        />
 
         {showSmallContainer && (
           <SmallContainer>

@@ -9,6 +9,7 @@ import exit from "../../assets/exit.svg";
 import right from "../../assets/right.svg";
 import noncheck from "../../assets/noncheck.svg";
 import check from "../../assets/check.svg";
+import fileDownload from "../../assets/fileDownload.svg";
 
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -21,6 +22,9 @@ import BarLoader from "react-spinners/BarLoader";
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
 import { Check } from "@mui/icons-material";
+
+// 학생 등록 양식
+import excelFile from "../../assets/excel/StuExcel.xlsx";
 
 const Header = styled.header`
   display: flex;
@@ -178,7 +182,6 @@ const Textarea = styled.textarea`
     outline: none;
     box-shadow: none;
   }
-  
 `;
 
 const ByteCounting = styled.p`
@@ -358,6 +361,15 @@ const SmallContainer = styled.div`
 `;
 
 const Exit = styled.img`
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`;
+
+const FileDownload = styled.img`
   position: absolute;
   top: 32px;
   right: 32px;
@@ -633,16 +645,13 @@ const XIMG = styled.img`
   height: 10px;
 `;
 
-
-
 const SynonymsDisplay = styled.div`
   display: flex;
   height: 65px;
   padding-left: 32px;
   margin-top: 16px;
   margin-bottom: 16px;
-  flex-direction: column;        
-
+  flex-direction: column;
 `;
 
 const Synonym = styled.span`
@@ -653,35 +662,29 @@ const Synonym = styled.span`
   padding: 5px 10px;
   marin-left: -102px;
 
-  
   border-radius: 10px;
-  
 
-  color: var(--primary-cobalt, #4849FF);
-text-align: center;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: var(--primary-cobalt, #4849ff);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
-
 
 const SelectedWord = styled.span`
   color: #4849ff;
 `;
 
 const SynonymTitle = styled.p`
-color: #26282B;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: #26282b;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
-
-
-
 
 const calculateByteCount = (text) => {
   let byteCount = 0;
@@ -995,7 +998,7 @@ function GroupDetailWrite() {
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
-    setSelectedWord(''); 
+    setSelectedWord("");
     setSynonyms([]);
     navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`, {
       replace: true,
@@ -1275,39 +1278,38 @@ function GroupDetailWrite() {
   const [contextMenu, setContextMenu] = useState(null);
   const [synonymsLoading, setSynonymsLoading] = useState(false);
 
-
   const fetchSynonyms = async (word) => {
-    setSynonymsLoading(true); 
+    setSynonymsLoading(true);
     try {
       const response = await axios.get(`/api/synonym?word=${word}`);
       setSynonyms(response.data.result.slice(0, 4));
     } catch (error) {
-      console.error('Error fetching synonyms:', error);
+      console.error("Error fetching synonyms:", error);
     } finally {
       setSynonymsLoading(false);
     }
   };
-  
-
 
   const handleWordSelection = (word) => {
     setSelectedWord(word);
     fetchSynonyms(word);
   };
 
-
   const closeContextMenu = () => {
     setContextMenu(null);
   };
 
+  // 학생 등록 양식 다운로드
 
-
-
-
-
-
-
-
+  const handleDownload = () => {
+    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+    const link = document.createElement("a");
+    link.href = excelFile;
+    link.setAttribute("download", "학생등록 양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div onClick={closeContextMenu}>
@@ -1324,7 +1326,7 @@ function GroupDetailWrite() {
               src={exit}
               alt="exit"
               onClick={() => setShowExitConfirm(!showExitConfirm)}
-            ></Exit>
+            />
             <Notice>
               출력하지 않으면 작성한 문장이 초기화됩니다. <br />
               정말 나가시겠습니까?
@@ -1340,7 +1342,7 @@ function GroupDetailWrite() {
           </SmallContainer>
         )}
 
-        <BlueTitle>세부능력특기사항</BlueTitle>
+        <BlueTitle>세부능력특기사항클릭</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value="" disabled selected>
             학생 선택
@@ -1429,13 +1431,15 @@ function GroupDetailWrite() {
           </ScoreList>
 
           <>
-          <WritingBox onContextMenu={(event) => {
-              event.preventDefault();
-              const selectedText = window.getSelection().toString().trim();
-              if (selectedText) {
-                handleWordSelection(selectedText);
-              }
-            }}>
+            <WritingBox
+              onContextMenu={(event) => {
+                event.preventDefault();
+                const selectedText = window.getSelection().toString().trim();
+                if (selectedText) {
+                  handleWordSelection(selectedText);
+                }
+              }}
+            >
               {/*생활기록부 입력창*/}
 
               <Textarea
@@ -1448,46 +1452,48 @@ function GroupDetailWrite() {
               />
 
               <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-              
             </WritingBox>
+
             <HancellButton>
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  accept=".xls,.xlsx,.csv,.cell"
-                  style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    opacity: 0,
-                  }}
-                />
-                한셀에서 가져오기
-                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-              </HancellButton>
-              <SynonymsDisplay>
-                  {selectedWord && (
-                    <>
-                      <SynonymTitle>
-                        <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
-                      </SynonymTitle>
-                      <div>
-                        {synonymsLoading ? (
-                         <div style={{ marginTop: '15px' }}>
-                         <BarLoader color="#4849ff" loading={synonymsLoading} height={4} width={100} />
-                       </div>
-                        ) : (
-                          synonyms.map((synonym, index) => (
-                            <Synonym key={index}>{synonym}</Synonym>
-                          ))
-                        )}
+              <input
+                type="file"
+                onChange={handleFileChange}
+                accept=".xls,.xlsx,.csv,.cell"
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  opacity: 0,
+                }}
+              />
+              한셀에서 가져오기
+              <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+            </HancellButton>
+            <SynonymsDisplay>
+              {selectedWord && (
+                <>
+                  <SynonymTitle>
+                    <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
+                  </SynonymTitle>
+                  <div>
+                    {synonymsLoading ? (
+                      <div style={{ marginTop: "15px" }}>
+                        <BarLoader
+                          color="#4849ff"
+                          loading={synonymsLoading}
+                          height={4}
+                          width={100}
+                        />
                       </div>
-                    </>
-                  )}
-              </SynonymsDisplay>
-
-
-
+                    ) : (
+                      synonyms.map((synonym, index) => (
+                        <Synonym key={index}>{synonym}</Synonym>
+                      ))
+                    )}
+                  </div>
+                </>
+              )}
+            </SynonymsDisplay>
 
             <Line />
 
