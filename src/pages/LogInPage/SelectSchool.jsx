@@ -84,13 +84,12 @@ export default function SelectSchool() {
   const dispatch = useDispatch();
   const userInput = useSelector((state) => state.userInput);
   const [admissionAge, setAdmissionAge] = useState(""); // 입학년도
-  const [school, setSchool] = useState(""); // 학교 이름
+  const [school, setSchool] = useState(null); // 학교 이름
 
   const reduxInput = (event) => {
     const { name, value } = event;
     dispatch(setUserInput(name, value));
-    console.log("reduxInput의 event객체: " + event);
-    console.log("reduxInput의 nama과 value입니덩: " + name, value);
+    console.log("reduxInput의 nama과 value: " + name, value);
   };
 
   //입학년도 바꾸기
@@ -106,6 +105,13 @@ export default function SelectSchool() {
   };
 
   const handleSubmit = () => {
+    if (school === null) {
+      alert("학교 이름을 입력하세요.");
+      return;
+    } else if (admissionAge === "") {
+      alert("입학 년도를 입력하세요.");
+      return;
+    }
     navigate("/SelectRole");
   };
 
@@ -123,6 +129,7 @@ export default function SelectSchool() {
               school ? schoolList : [{ label: "등록한 학교 이름만 나옵니다" }]
             }
             getOptionLabel={(option) => option.label}
+            value={school ? { label: school } : null}
             sx={{ width: 300 }}
             isOptionEqualToValue={(option, value) =>
               option.label === value.label
@@ -130,6 +137,7 @@ export default function SelectSchool() {
             onInputChange={(event, value, reason) => {
               if (reason === "input") {
                 setSchool(value); // 입력 값 변경에 따라 상태 업데이트
+                reduxInput({ name: "school", value: value }); // Redux store 업데이트
               }
             }}
             onChange={(event, value, reason) => {
@@ -137,6 +145,10 @@ export default function SelectSchool() {
                 setSchool(value.label); // 선택한 옵션으로 상태 업데이트
                 reduxInput({ name: "school", value: value.label }); // Redux store 업데이트
               }
+            }}
+            onBlur={(event) => {
+              // 사용자가 입력 필드에서 포커스를 잃었을 때 현재 입력 값을 저장합니다.
+              reduxInput({ name: "school", value: event.target.value });
             }}
             renderInput={(params) => (
               <TextField
