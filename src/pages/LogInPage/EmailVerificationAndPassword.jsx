@@ -259,6 +259,24 @@ export default function EmailVerificationAndPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 인증번호 일치 확인
+    try {
+      const verifiCode = await instance.post(
+        `/api/auth/email/request?email=${email}&authCode=${certifiNumber}`
+      );
+
+      if (verifiCode.status === 200) {
+        alert("인증번호 확인이 완료되었습니다.");
+      } else if (verifiCode.status === 400) {
+        alert("중복된 이메일");
+        return;
+      }
+    } catch (error) {
+      console.error("인증번호 발송 오류", error);
+      alert("인증번호 발송에 실패하였습니다.");
+      return;
+    }
+
     const result = isDataComplete();
     if (result.complete !== true) {
       let missingFields = result.missingFields || result.typeErrors || [];
