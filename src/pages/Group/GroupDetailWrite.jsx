@@ -16,6 +16,7 @@ import * as XLSX from "xlsx";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
 import BeatLoader from "react-spinners/BeatLoader";
+import BarLoader from "react-spinners/BarLoader";
 
 import StudentBook from "../Student/StudentBook";
 import StudentBookContent from "../Student/StudentBookContent";
@@ -72,7 +73,7 @@ const MainContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 684px;
-  min-height: 800px;
+  min-height: 810px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -103,7 +104,7 @@ const SaveButton = styled.button`
 
 const RightContainer = styled.div`
   width: 480px;
-  height: 800px;
+  height: 810px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -168,7 +169,7 @@ const WritingBox = styled.div`
 
 const Textarea = styled.textarea`
   width: 100%;
-  height: 200px;
+  height: 185px;
   border: none;
   resize: none;
   padding: 16px;
@@ -177,6 +178,7 @@ const Textarea = styled.textarea`
     outline: none;
     box-shadow: none;
   }
+  
 `;
 
 const ByteCounting = styled.p`
@@ -188,7 +190,7 @@ const ByteCounting = styled.p`
   font-weight: 600;
   line-height: normal;
   margin-right: 24px;
-  margin-bottom: 5px;
+  margin-bottom: -15px;
 `;
 
 const SuggestWordContainer = styled.div`
@@ -324,8 +326,8 @@ const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-right: 24px;
-  margin-left: 438px;
+  margin-left: 485px;
+  margin-top: 8px;
   position: relative;
 
   color: var(--primary-cobalt, #4849ff);
@@ -631,6 +633,56 @@ const XIMG = styled.img`
   height: 10px;
 `;
 
+
+
+const SynonymsDisplay = styled.div`
+  display: flex;
+  height: 65px;
+  padding-left: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  flex-direction: column;        
+
+`;
+
+const Synonym = styled.span`
+  display: inline-block;
+  margin-right: 8px;
+  margin-top: 16px;
+  background: #ededff;
+  padding: 5px 10px;
+  marin-left: -102px;
+
+  
+  border-radius: 10px;
+  
+
+  color: var(--primary-cobalt, #4849FF);
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
+
+
+const SelectedWord = styled.span`
+  color: #4849ff;
+`;
+
+const SynonymTitle = styled.p`
+color: #26282B;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+`;
+
+
+
+
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -654,9 +706,9 @@ const calculateByteCount = (text) => {
 function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const location = useLocation();
-  console.log("location: ", location);
+  // console.log("location: ", location);
   const info = location.state;
-  console.log("info:", info);
+  // console.log("info:", info);
 
   // 학생 수업 관련 state
   const [showStudentBook, setShowStudentBook] = useState(false);
@@ -943,6 +995,8 @@ function GroupDetailWrite() {
 
   const handleStudentChange = (e) => {
     setSelectedStudent(e.target.value);
+    setSelectedWord(''); 
+    setSynonyms([]);
     navigate(`/GroupDetailWrite/${paramsGroupId}/${e.target.value}`, {
       replace: true,
     });
@@ -1215,8 +1269,48 @@ function GroupDetailWrite() {
     }
   };
 
+  //유의어 추천 GET 함수
+  const [selectedWord, setSelectedWord] = useState("");
+  const [synonyms, setSynonyms] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [synonymsLoading, setSynonymsLoading] = useState(false);
+
+
+  const fetchSynonyms = async (word) => {
+    setSynonymsLoading(true); 
+    try {
+      const response = await axios.get(`/api/synonym?word=${word}`);
+      setSynonyms(response.data.result.slice(0, 4));
+    } catch (error) {
+      console.error('Error fetching synonyms:', error);
+    } finally {
+      setSynonymsLoading(false);
+    }
+  };
+  
+
+
+  const handleWordSelection = (word) => {
+    setSelectedWord(word);
+    fetchSynonyms(word);
+  };
+
+
+  const closeContextMenu = () => {
+    setContextMenu(null);
+  };
+
+
+
+
+
+
+
+
+
+
   return (
-    <div>
+    <div onClick={closeContextMenu}>
       <Header>
         <Img
           src={chevron_left}
@@ -1335,11 +1429,18 @@ function GroupDetailWrite() {
           </ScoreList>
 
           <>
-            <WritingBox>
+          <WritingBox onContextMenu={(event) => {
+              event.preventDefault();
+              const selectedText = window.getSelection().toString().trim();
+              if (selectedText) {
+                handleWordSelection(selectedText);
+              }
+            }}>
               {/*생활기록부 입력창*/}
 
               <Textarea
                 value={inputText}
+                spellCheck={false}
                 onChange={(e) => {
                   setInputText(e.target.value);
                   setByteCount(calculateByteCount(e.target.value));
@@ -1347,7 +1448,9 @@ function GroupDetailWrite() {
               />
 
               <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-              <HancellButton>
+              
+            </WritingBox>
+            <HancellButton>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -1362,7 +1465,29 @@ function GroupDetailWrite() {
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </HancellButton>
-            </WritingBox>
+              <SynonymsDisplay>
+                  {selectedWord && (
+                    <>
+                      <SynonymTitle>
+                        <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
+                      </SynonymTitle>
+                      <div>
+                        {synonymsLoading ? (
+                         <div style={{ marginTop: '15px' }}>
+                         <BarLoader color="#4849ff" loading={synonymsLoading} height={4} width={100} />
+                       </div>
+                        ) : (
+                          synonyms.map((synonym, index) => (
+                            <Synonym key={index}>{synonym}</Synonym>
+                          ))
+                        )}
+                      </div>
+                    </>
+                  )}
+              </SynonymsDisplay>
+
+
+
 
             <Line />
 
