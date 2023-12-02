@@ -16,5 +16,5 @@ export default defineConfig({
       },
     },
   },
-  assetsInclude: ["**/*.xlsx"],
+  assetsInclude: ["**/*.xlsx", "**/*.cell"],
 });

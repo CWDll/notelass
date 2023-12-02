@@ -25,6 +25,8 @@ import { Check } from "@mui/icons-material";
 
 // 학생 등록 양식
 import excelFile from "../../assets/excel/StuExcel.xlsx";
+import HwDataFile from "../../assets/excel/StuHwData.cell";
+import RecordFile from "../../assets/excel/StuRecord.xlsx";
 
 const Header = styled.header`
   display: flex;
@@ -1308,8 +1310,8 @@ function GroupDetailWrite() {
   const handleHwDataDownload = () => {
     // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
     const link = document.createElement("a");
-    link.href = excelFile;
-    link.setAttribute("download", "학생등록 양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    link.href = HwDataFile;
+    link.setAttribute("download", "과제데이터양식.cell"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1319,8 +1321,8 @@ function GroupDetailWrite() {
   const handleStuRecordDownload = () => {
     // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
     const link = document.createElement("a");
-    link.href = excelFile;
-    link.setAttribute("download", "학생등록 양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    link.href = RecordFile;
+    link.setAttribute("download", "생활기록부양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
