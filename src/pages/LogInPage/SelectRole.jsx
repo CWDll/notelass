@@ -110,7 +110,6 @@ export default function SelectRole() {
   const reduxInput = (event) => {
     const { name, value } = event;
     dispatch(setUserInput(name, value));
-    console.log("reduxInput의 event객체: " + event);
     console.log("reduxInput의 nama과 value입니덩: " + name, value);
   };
 
@@ -151,6 +150,23 @@ export default function SelectRole() {
   };
 
   const handleSubmit = () => {
+    if (role === "TEACHER") {
+      if (name === "") {
+        alert("이름을 입력하세요.");
+        return;
+      }
+    } else if (role === "STUDENT") {
+      if (name == "") {
+        alert("이름을 입력하세요.");
+        return;
+      } else if (schoolGrade == "" || schoolClass == "" || schoolNumber == "") {
+        alert("학년, 반, 번호를 확인하세요.");
+        return;
+      }
+    } else {
+      alert("신분을 선택하세요.");
+      return;
+    }
     navigate("/EmailVerificationAndPassword");
   };
 
