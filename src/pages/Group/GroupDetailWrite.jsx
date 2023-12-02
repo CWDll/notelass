@@ -24,7 +24,6 @@ import StudentBookContent from "../Student/StudentBookContent";
 import { Check } from "@mui/icons-material";
 
 // 학생 등록 양식
-import excelFile from "../../assets/excel/StuExcel.xlsx";
 import HwDataFile from "../../assets/excel/StuHwData.cell";
 import RecordFile from "../../assets/excel/StuRecord.xlsx";
 

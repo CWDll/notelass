@@ -53,6 +53,7 @@ const SmallContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 760px;
   transform: translate(-50%, -50%);
 `;
 
@@ -445,32 +446,36 @@ function StudentBookContent({
 
   return (
     <SmallContainer onClick={(e) => e.stopPropagation()}>
-      <GroupSelect value={selectedGroup} onChange={handleGroupChange}>
-        <option value="" disabled selected>
-          그룹 선택
-        </option>
-        {groups.map(
-          (
-            group // 'groups' 상태를 사용
-          ) => (
-            <option key={group.id} value={group.id}>
-              {group.group}
+      {contentId ? null : (
+        <>
+          <GroupSelect value={selectedGroup} onChange={handleGroupChange}>
+            <option value="" disabled selected>
+              그룹 선택
             </option>
-          )
-        )}
-      </GroupSelect>
+            {groups.map(
+              (
+                group // 'groups' 상태를 사용
+              ) => (
+                <option key={group.id} value={group.id}>
+                  {group.group}
+                </option>
+              )
+            )}
+          </GroupSelect>
 
-      <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
-        <option value="" disabled selected>
-          학생 선택
-        </option>
-        {students.map((student) => (
-          <option key={student.id} value={student.id}>
-            {student.name}
-          </option>
-        ))}
-      </StudentSelect>
-      <ExitImg src={exit} alt="exit" onClick={handleClose}></ExitImg>
+          <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
+            <option value="" disabled selected>
+              학생 선택
+            </option>
+            {students.map((student) => (
+              <option key={student.id} value={student.id}>
+                {student.name}
+              </option>
+            ))}
+          </StudentSelect>
+          <ExitImg src={exit} alt="exit" onClick={handleClose}></ExitImg>
+        </>
+      )}
       <Textarea
         value={inputText}
         onChange={(e) => {
@@ -479,33 +484,35 @@ function StudentBookContent({
           // setByteCount(calculateByteCount(text));
         }}
       />
-      <ButtonContainer>
-        <p>발표 횟수</p>
-        <CountContainer>
-          <Button onClick={speechDownCount}>
-            <Img src={caret_down} alt="caret_down" />
-          </Button>
-          <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-            {speechCount}
-          </p>
-          <Button onClick={speechUpCount}>
-            <Img src={caret_up} alt="caret_up" />
-          </Button>
-        </CountContainer>
+      {contentId ? null : (
+        <ButtonContainer>
+          <p>발표 횟수</p>
+          <CountContainer>
+            <Button onClick={speechDownCount}>
+              <Img src={caret_down} alt="caret_down" />
+            </Button>
+            <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+              {speechCount}
+            </p>
+            <Button onClick={speechUpCount}>
+              <Img src={caret_up} alt="caret_up" />
+            </Button>
+          </CountContainer>
 
-        <p>태도 점수</p>
-        <CountContainer>
-          <Button onClick={attitudeDownCount}>
-            <Img src={caret_down} alt="caret_down" />
-          </Button>
-          <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-            {attitudeCount}
-          </p>
-          <Button onClick={attitudeUpCount}>
-            <Img src={caret_up} alt="caret_up" />
-          </Button>
-        </CountContainer>
-      </ButtonContainer>
+          <p>태도 점수</p>
+          <CountContainer>
+            <Button onClick={attitudeDownCount}>
+              <Img src={caret_down} alt="caret_down" />
+            </Button>
+            <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+              {attitudeCount}
+            </p>
+            <Button onClick={attitudeUpCount}>
+              <Img src={caret_up} alt="caret_up" />
+            </Button>
+          </CountContainer>
+        </ButtonContainer>
+      )}
 
       {/* <CancleButton onClick={() => setShowSmallContainer(false)}> */}
       <CancleButton onClick={handleClose}>취소</CancleButton>
