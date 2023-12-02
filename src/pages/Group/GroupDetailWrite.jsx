@@ -73,7 +73,7 @@ const MainContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 684px;
-  min-height: 800px;
+  min-height: 810px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -104,7 +104,7 @@ const SaveButton = styled.button`
 
 const RightContainer = styled.div`
   width: 480px;
-  height: 800px;
+  height: 810px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -680,6 +680,9 @@ font-weight: 600;
 line-height: normal;
 `;
 
+
+
+
 const calculateByteCount = (text) => {
   let byteCount = 0;
 
@@ -703,9 +706,9 @@ const calculateByteCount = (text) => {
 function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const location = useLocation();
-  console.log("location: ", location);
+  // console.log("location: ", location);
   const info = location.state;
-  console.log("info:", info);
+  // console.log("info:", info);
 
   // 학생 수업 관련 state
   const [showStudentBook, setShowStudentBook] = useState(false);
@@ -1270,16 +1273,21 @@ function GroupDetailWrite() {
   const [selectedWord, setSelectedWord] = useState("");
   const [synonyms, setSynonyms] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
+  const [synonymsLoading, setSynonymsLoading] = useState(false);
+
 
   const fetchSynonyms = async (word) => {
+    setSynonymsLoading(true); 
     try {
       const response = await axios.get(`/api/synonym?word=${word}`);
-      // Assuming 'result' contains the synonyms array, limit to 4 synonyms
       setSynonyms(response.data.result.slice(0, 4));
     } catch (error) {
       console.error('Error fetching synonyms:', error);
+    } finally {
+      setSynonymsLoading(false);
     }
   };
+  
 
 
   const handleWordSelection = (word) => {
@@ -1457,20 +1465,26 @@ function GroupDetailWrite() {
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </HancellButton>
-            <SynonymsDisplay>
-            {selectedWord && (
-              <>
-                <SynonymTitle>
-                  <SelectedWord >'{selectedWord}'</SelectedWord> 비슷한 유의어</SynonymTitle>
-                <div>
-                  {synonyms.map((synonym, index) => (
-                    <Synonym key={index}>{synonym}</Synonym>
-                  ))}
-                </div>
-                </>
-            )}
-             </SynonymsDisplay>
-         
+              <SynonymsDisplay>
+                  {selectedWord && (
+                    <>
+                      <SynonymTitle>
+                        <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
+                      </SynonymTitle>
+                      <div>
+                        {synonymsLoading ? (
+                         <div style={{ marginTop: '15px' }}>
+                         <BarLoader color="#4849ff" loading={synonymsLoading} height={4} width={100} />
+                       </div>
+                        ) : (
+                          synonyms.map((synonym, index) => (
+                            <Synonym key={index}>{synonym}</Synonym>
+                          ))
+                        )}
+                      </div>
+                    </>
+                  )}
+              </SynonymsDisplay>
 
 
 
