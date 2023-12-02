@@ -329,8 +329,7 @@ const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-left: 485px;
-  margin-top: 8px;
+  margin-top: 14px;
   position: relative;
 
   color: var(--primary-cobalt, #4849ff);
@@ -359,7 +358,6 @@ const SmallContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const Exit = styled.img`
   position: absolute;
   top: 32px;
@@ -370,9 +368,9 @@ const Exit = styled.img`
 `;
 
 const FileDownload = styled.img`
-  position: absolute;
-  top: 32px;
-  right: 32px;
+  position: relative;
+  top: 12px;
+  left: 3px;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -684,6 +682,13 @@ const SynonymTitle = styled.p`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+`;
+
+const CustomDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 35px;
 `;
 
 const calculateByteCount = (text) => {
@@ -1299,9 +1304,19 @@ function GroupDetailWrite() {
     setContextMenu(null);
   };
 
-  // 학생 등록 양식 다운로드
+  // 과제데이터 양식 다운로드
+  const handleHwDataDownload = () => {
+    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+    const link = document.createElement("a");
+    link.href = excelFile;
+    link.setAttribute("download", "학생등록 양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-  const handleDownload = () => {
+  // 생기부 양식 다운로드
+  const handleStuRecordDownload = () => {
     // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
     const link = document.createElement("a");
     link.href = excelFile;
@@ -1395,6 +1410,11 @@ function GroupDetailWrite() {
                 과제 데이터 불러오기
                 <img src={right} alt="right" />
               </AssigncellButton>
+              <FileDownload
+                src={fileDownload}
+                alt="fileDownload"
+                onClick={handleHwDataDownload}
+              />
             </>
           </div>
           <SaveButton onClick={saveData}>저장하기</SaveButton>
@@ -1454,21 +1474,28 @@ function GroupDetailWrite() {
               <ByteCounting>{byteCount}/1500 byte</ByteCounting>
             </WritingBox>
 
-            <HancellButton>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                accept=".xls,.xlsx,.csv,.cell"
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  opacity: 0,
-                }}
+            <CustomDiv>
+              <HancellButton>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept=".xls,.xlsx,.csv,.cell"
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0,
+                  }}
+                />
+                한셀에서 가져오기
+                <img src={chevron_right_Blue} alt="chevron_right_Blue" />
+              </HancellButton>
+              <FileDownload
+                src={fileDownload}
+                alt="fileDownload"
+                onClick={handleStuRecordDownload}
               />
-              한셀에서 가져오기
-              <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-            </HancellButton>
+            </CustomDiv>
             <SynonymsDisplay>
               {selectedWord && (
                 <>
