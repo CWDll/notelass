@@ -229,7 +229,28 @@ function StudentBookContent({
       contentId
     );
 
+    const fetchScores = async () => {
+      try {
+        const res = await instance.get(
+          `/api/record/score/${propsGroupId}/${propsUserId}`
+        );
+        console.log("fetchScores res.data:", res.data);
+
+        if (res.status === 200) {
+          console.log("fetchScores성공");
+          setSpeechCount(res.data.result.presentationNum);
+          setAttitudeCount(res.data.result.attitudeScore);
+        } else {
+          alert("fetchScores성공");
+        }
+      } catch (error) {
+        console.error("fatchScores error:", error);
+      }
+    };
+
     if (contentId) {
+      fetchScores();
+
       const fetchStudentBook = async () => {
         try {
           const response = await instance.get(
