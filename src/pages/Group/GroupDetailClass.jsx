@@ -8,11 +8,9 @@ import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
-import fileDownload from "../../assets/fileDownload.svg";
 import instance from "../../assets/api/axios";
 
-// 학생 등록 양식
-import excelFile from "../../assets/excel/StuExcel.xlsx";
+// import axios from "../../assets/api/axios";
 
 const Header = styled.header`
   display: flex;
@@ -74,6 +72,14 @@ const ManagementContainer = styled.div`
   margin-left: 30px;
   margin-top: 33px;
   position: relative;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
 
 const Title = styled.p`
@@ -210,20 +216,6 @@ const Exit = styled.img`
   width: 24px;
 `;
 
-const FileDownload = styled.img`
-  /* top: 32px;
-  right: 32px; */
-  width: 24px;
-  cursor: pointer;
-  margin-top: 45px;
-  margin-left: 10px;
-`;
-
-const CustomInput = styled.input`
-  witdh: 200px;
-  height: 10px;
-`;
-
 function GroupDetailClass() {
   const location = useLocation();
   const info = location.state;
@@ -234,10 +226,8 @@ function GroupDetailClass() {
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
-    // 현재 QA검증용으로 필요없는 기능이기에 잠깐 주석처리 함. 이후 함수 명 바꾸고 다시 적용하자.
-    //navigate("/GroupDetailClass/AssignmentDetail");
+    navigate("/GroupDetailClass/AssignmentDetail");
   };
-
   const GroupDetailWrite = (
     paramsGruopId,
     paramsUserId,
@@ -274,6 +264,7 @@ function GroupDetailClass() {
     });
   };
 
+
   //학생 목록 조회 GET 함수
   const [students, setStudents] = useState([]);
 
@@ -281,7 +272,7 @@ function GroupDetailClass() {
     try {
       const response = await instance.get(`/api/group/students/${id}`);
       console.log(response);
-
+  
       if (response.data && response.data.result) {
         setStudents(response.data.result);
         console.log("response.data.result: ", response.data.result);
@@ -290,24 +281,25 @@ function GroupDetailClass() {
       console.error("학생리스트를 가져오지 못했습니다.:", error.message);
     }
   };
-
+  
+ 
   useEffect(() => {
     fetchStudents();
-  }, []);
-
+  }, []); 
+  
+  
   //학생 등록 파일 업로드 POST 함수
   const uploadname = async (event) => {
-    console.log("uploadname실행");
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
-
+  
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
+  
       try {
         const response = await instance.post(
           `/api/group/file/${id}`,
@@ -318,13 +310,13 @@ function GroupDetailClass() {
             },
           }
         );
-
+  
         console.log(response);
-
+  
         if (response.status === 201) {
           console.log("학생 등록 파일 업로드 성공!");
           setUploadStatus("업로드 성공!");
-          await fetchStudents();
+          await fetchStudents(); 
         } else {
           console.error(
             "예상치 못한 상태 코드:",
@@ -340,17 +332,6 @@ function GroupDetailClass() {
     }
   };
 
-  // 양식 다운로드
-  const handleDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
-    const link = document.createElement("a");
-    link.href = excelFile;
-    link.setAttribute("download", "stuExcel.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <>
       <Header>
@@ -362,9 +343,9 @@ function GroupDetailClass() {
           그룹 정보
         </Button>
         <Button>
-          <CustomInput
+          <input
             type="file"
-            onClick={uploadname}
+            onChange={uploadname}
             accept=".xls,.xlsx,.csv,.cell"
             style={{
               position: "absolute",
@@ -373,12 +354,6 @@ function GroupDetailClass() {
           />
           학생 등록
         </Button>
-
-        <FileDownload
-          src={fileDownload}
-          alt="fileDownload"
-          onClick={handleDownload}
-        />
 
         {showSmallContainer && (
           <SmallContainer>
