@@ -873,7 +873,7 @@ function GroupDetailWrite() {
         downloadLink.click();
         document.body.removeChild(downloadLink);
 
-        await deleteFile(paramsGroupId);
+        // await deleteFile(paramsGroupId);
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -1158,8 +1158,7 @@ function GroupDetailWrite() {
     }
   };
 
-  //생활기록부 글 GET 함수
-  const [TextEntries, setTextEntries] = useState([]);
+
 
   //생활기록부 내용 불러오기 함수
   const fetchText = async () => {
