@@ -122,32 +122,28 @@ export default function SelectSchool() {
         <InnerContainer>
           <TitleText>학교 검색</TitleText>
           <Autocomplete
+            freeSolo // 사용자가 목록에 없는 값을 입력할 수 있게 합니다.
             disablePortal
             id="combo-box-demo"
             name="school"
-            options={
-              school ? schoolList : [{ label: "등록한 학교 이름만 나옵니다" }]
-            }
+            options={schoolList}
             getOptionLabel={(option) => option.label}
             value={school ? { label: school } : null}
             sx={{ width: 300 }}
-            isOptionEqualToValue={(option, value) =>
-              option.label === value.label
-            }
+            isOptionEqualToValue={(option, value) => option.label === value.label}
             onInputChange={(event, value, reason) => {
               if (reason === "input") {
-                setSchool(value); // 입력 값 변경에 따라 상태 업데이트
+                setSchool(value); // 사용자 입력 값으로 상태 업데이트
                 reduxInput({ name: "school", value: value }); // Redux store 업데이트
               }
             }}
             onChange={(event, value, reason) => {
               if (value != null) {
-                setSchool(value.label); // 선택한 옵션으로 상태 업데이트
-                reduxInput({ name: "school", value: value.label }); // Redux store 업데이트
+                setSchool(typeof value === 'string' ? value : value.label); // 입력 값이 문자열인 경우 직접 입력된 값으로 간주
+                reduxInput({ name: "school", value: typeof value === 'string' ? value : value.label });
               }
             }}
             onBlur={(event) => {
-              // 사용자가 입력 필드에서 포커스를 잃었을 때 현재 입력 값을 저장합니다.
               reduxInput({ name: "school", value: event.target.value });
             }}
             renderInput={(params) => (
