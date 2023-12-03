@@ -767,15 +767,6 @@ function GroupDetailWrite() {
 
 
 
-
-  useEffect(() => {
-    // 페이지에 처음 진입할 때 inputText를 초기화합니다.
-    setInputText("");
-  
-   
-  }, [paramsGroupId, paramsUserId]);
-
-
   // 학생 수첩 관련 함수
   // StudentBook 모달을 열기 위한 함수
   const openStudentBook = (groupId, userId) => {
@@ -829,35 +820,7 @@ function GroupDetailWrite() {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      //클라이언트에서 파일 읽기
-      // const reader = new FileReader();
-      // reader.onload = (e) => {
-      //   try {
-      //     const data = new Uint8Array(e.target.result);
-      //     const workbook = XLSX.read(data, { type: "array" });
-      //     const sheetName = workbook.SheetNames[0];
-      //     const worksheet = workbook.Sheets[sheetName];
-      //     const json = XLSX.utils.sheet_to_json(worksheet);
-      //     console.log("Loaded data:", json); // 로드된 데이터 확인
-
-      //     const studentSpecificAbilities = json
-      //       .filter((row) => row["성명"].toString() === paramsUserId)
-      //       .map((row) => row["세부능력 및 특기사항"])
-      //       .join("\n");
-
-      //     console.log(
-      //       "Extracted studentSpecificAbilities:",
-      //       studentSpecificAbilities
-      //     ); // 추출된 데이터 확인
-      //     setInputText(studentSpecificAbilities); // Textarea에 값을 설정
-      //   } catch (error) {
-      //     console.error("Error reading file:", error);
-      //   }
-      // };
-      // reader.onerror = (error) => {
-      //   console.error("Error occurred while reading file:", error);
-      // };
-      // reader.readAsArrayBuffer(file);
+      
 
       // 서버에 파일 업로드
       const formData = new FormData();
@@ -1493,11 +1456,13 @@ function GroupDetailWrite() {
           </div>
           <SaveButton onClick={saveData}>저장하기</SaveButton>
           <ScoreList>
-            <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>{attitudeCount}점</ScoreResult>
-            <ScoreTitle>&emsp;</ScoreTitle>
+            
             <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>{speechCount}점</ScoreResult>
+            <ScoreResult>{speechCount} 회</ScoreResult>
+            <ScoreTitle>&emsp;</ScoreTitle>
+            <ScoreTitle>태도 점수: </ScoreTitle>
+            <ScoreResult>{attitudeCount} 점</ScoreResult>
+            
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
