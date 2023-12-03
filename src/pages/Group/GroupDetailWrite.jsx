@@ -117,6 +117,13 @@ const RightContainer = styled.div`
   margin-top: 48px;
   position: relative;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
 
 const Title = styled.p`
@@ -181,6 +188,14 @@ const Textarea = styled.textarea`
   &:focus {
     outline: none;
     box-shadow: none;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
   }
 `;
 
