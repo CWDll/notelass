@@ -78,14 +78,13 @@ const MainContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 684px;
-  min-height: 810px;
+  height: 880px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 363px;
   margin-top: 48px;
-  overflow-y: hidden;
 `;
 
 const SaveButton = styled.button`
@@ -109,7 +108,7 @@ const SaveButton = styled.button`
 
 const RightContainer = styled.div`
   width: 480px;
-  height: 810px;
+  height: 880px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -117,7 +116,7 @@ const RightContainer = styled.div`
   margin-left: 30px;
   margin-top: 48px;
   position: relative;
-  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const Title = styled.p`
@@ -1158,7 +1157,8 @@ function GroupDetailWrite() {
     }
   };
 
-
+  //생활기록부 글 GET 함수
+  const [TextEntries, setTextEntries] = useState([]);
 
   //생활기록부 내용 불러오기 함수
   const fetchText = async () => {
@@ -1304,6 +1304,35 @@ function GroupDetailWrite() {
     setContextMenu(null);
   };
 
+    //발표, 태도 점수 GET 함수
+    const [speechCount, setSpeechCount] = useState(0);
+    const [attitudeCount, setAttitudeCount] = useState(0);
+  
+    
+    useEffect(() => {
+    const fetchScores = async () => {
+      try {
+        const res = await instance.get(
+          `/api/record/score/${paramsGroupId}/${paramsUserId}`
+        );
+        console.log("fetchScores res.data:", res.data);
+  
+        if (res.status === 200) {
+          console.log("fetchScores성공");
+          setSpeechCount(res.data.result.presentationNum);
+          setAttitudeCount(res.data.result.attitudeScore);
+        } else {
+          alert("fetchScores성공");
+        }
+      } catch (error) {
+        console.error("fatchScores error:", error);
+      }
+    };
+  
+    
+      fetchScores();
+    }, [paramsGroupId, paramsUserId]);
+
   // 과제데이터 양식 다운로드
   const handleHwDataDownload = () => {
     // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
@@ -1420,10 +1449,10 @@ function GroupDetailWrite() {
           <SaveButton onClick={saveData}>저장하기</SaveButton>
           <ScoreList>
             <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>5점(상위 5%)</ScoreResult>
+            <ScoreResult>{attitudeCount}점</ScoreResult>
             <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>5회(상위 1%)</ScoreResult>
+            <ScoreResult>{speechCount}점</ScoreResult>
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
