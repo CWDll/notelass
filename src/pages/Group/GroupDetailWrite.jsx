@@ -1443,7 +1443,8 @@ function GroupDetailWrite() {
                     opacity: 0,
                   }}
                 />
-                과제 데이터 불러오기
+                {/* 과제 데이터 불러오기 */}
+                준비 중
                 <img src={right} alt="right" />
               </AssigncellButton>
               <FileDownload
