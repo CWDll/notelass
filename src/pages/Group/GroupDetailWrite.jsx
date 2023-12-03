@@ -1358,7 +1358,7 @@ function GroupDetailWrite() {
           </SmallContainer>
         )}
 
-        <BlueTitle>세부능력특기사항클릭</BlueTitle>
+        <BlueTitle>학생 분석</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value="" disabled selected>
             학생 선택
