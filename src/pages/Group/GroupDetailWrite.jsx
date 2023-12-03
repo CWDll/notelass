@@ -553,6 +553,16 @@ const Text = styled.p`
   font-weight: 600;
   line-height: 24px; /* 150% */
   padding: 24px 24px 24px 24px;
+
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;
 
 const AssigncellButton = styled.button`
@@ -754,6 +764,17 @@ function GroupDetailWrite() {
   const [uploadStatus, setUploadStatus] = useState("");
   // const [fetchText, setFetchText] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+
+
+
+
+  useEffect(() => {
+    // 페이지에 처음 진입할 때 inputText를 초기화합니다.
+    setInputText("");
+  
+   
+  }, [paramsGroupId, paramsUserId]);
+
 
   // 학생 수첩 관련 함수
   // StudentBook 모달을 열기 위한 함수
@@ -1025,8 +1046,16 @@ function GroupDetailWrite() {
     });
   };
 
+
+
+
+
   const navigate = useNavigate();
+  //뒤로 가기
   const BackButton = () => {
+
+    deleteFile(paramsGroupId);
+  
     navigate(-1);
   };
 
@@ -1456,6 +1485,7 @@ function GroupDetailWrite() {
               </AssigncellButton>
               <FileDownload
                 src={fileDownload}
+                style={{ marginTop: "5px" }}
                 alt="fileDownload"
                 onClick={handleHwDataDownload}
               />
