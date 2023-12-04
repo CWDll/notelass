@@ -123,8 +123,9 @@ export default function Login() {
             <GridContainer>
               <Grid>
                 <Link
-                  variant="body2"
+                  href="body2"
                   underline="none"
+                  color={"gray"}
                   style={{ marginLeft: "40px" }}
                   onClick={navagateSignup}
                 >
