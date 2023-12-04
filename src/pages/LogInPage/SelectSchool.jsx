@@ -171,6 +171,13 @@ export default function SelectSchool() {
                 label="admission"
                 onChange={handleAgeChange}
               >
+                <MenuItem value={2011}>2012년 이전</MenuItem>
+                <MenuItem value={2012}>2012년</MenuItem>
+                <MenuItem value={2013}>2013년</MenuItem>
+                <MenuItem value={2014}>2014년</MenuItem>
+                <MenuItem value={2015}>2015년</MenuItem>
+                <MenuItem value={2016}>2016년</MenuItem>
+                <MenuItem value={2017}>2017년</MenuItem>
                 <MenuItem value={2018}>2018년</MenuItem>
                 <MenuItem value={2019}>2019년</MenuItem>
                 <MenuItem value={2020}>2020년</MenuItem>
