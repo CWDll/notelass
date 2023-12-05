@@ -430,7 +430,7 @@ function StudentBookContent({
         // alert(`${userId}번 학생의 학생 수첩 작성이 완료되었습니다.`);
         alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
-        location.reload();
+        // location.reload();
       } else if (response.status === 200) {
         // alert(`${userId}번 학생의 학생 수첩 수정이 완료되었습니다.`);
         alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);

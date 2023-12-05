@@ -1017,7 +1017,6 @@ function GroupDetailWrite() {
   //뒤로 가기
   const BackButton = () => {
 
-    deleteFile(paramsGroupId);
   
     navigate(-1);
   };

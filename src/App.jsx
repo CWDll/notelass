@@ -1,4 +1,6 @@
 import "./App.css";
+
+import { createBrowserHistory } from 'history'
 import React from "react";
 import { Provider } from "react-redux";
 import {
@@ -38,10 +40,20 @@ import SelectRole from "./pages/LogInPage/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 
+import ReactGA from 'react-ga4';
+ReactGA.initialize("G-QSTTQEGWWQ");
+
+
 function App() {
   // const elem = useRoutes(routes);
 
+
+
+
+
+
   return (
+    
     <Provider store={store}>
       <Router>
         <Routes>
