@@ -8,9 +8,14 @@ import file from "../../assets/file.svg";
 import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import exit from "../../assets/exit.svg";
+import fileDownload from "../../assets/fileDownload.svg";
+
+// api
 import instance from "../../assets/api/axios";
 
 // import axios from "../../assets/api/axios";
+
+import StuExcel from "../../assets/excel/StuExcel.xlsx";
 
 const Header = styled.header`
   display: flex;
@@ -216,6 +221,14 @@ const Exit = styled.img`
   width: 24px;
 `;
 
+const FileDownload = styled.img`
+  position: relative;
+  top: 24px;
+  left: 3px;
+  width: 24px;
+  cursor: pointer;
+`;
+
 function GroupDetailClass() {
   const location = useLocation();
   const info = location.state;
@@ -264,7 +277,6 @@ function GroupDetailClass() {
     });
   };
 
-
   //학생 목록 조회 GET 함수
   const [students, setStudents] = useState([]);
 
@@ -272,7 +284,7 @@ function GroupDetailClass() {
     try {
       const response = await instance.get(`/api/group/students/${id}`);
       console.log(response);
-  
+
       if (response.data && response.data.result) {
         setStudents(response.data.result);
         console.log("response.data.result: ", response.data.result);
@@ -281,13 +293,11 @@ function GroupDetailClass() {
       console.error("학생리스트를 가져오지 못했습니다.:", error.message);
     }
   };
-  
- 
+
   useEffect(() => {
     fetchStudents();
-  }, []); 
-  
-  
+  }, []);
+
   //학생 등록 파일 업로드 POST 함수
   const uploadname = async (event) => {
     const file = event.target.files[0];
@@ -295,11 +305,11 @@ function GroupDetailClass() {
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
-  
+
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-  
+
       try {
         const response = await instance.post(
           `/api/group/file/${id}`,
@@ -310,13 +320,13 @@ function GroupDetailClass() {
             },
           }
         );
-  
+
         console.log(response);
-  
+
         if (response.status === 201) {
           console.log("학생 등록 파일 업로드 성공!");
           setUploadStatus("업로드 성공!");
-          await fetchStudents(); 
+          await fetchStudents();
         } else {
           console.error(
             "예상치 못한 상태 코드:",
@@ -330,6 +340,18 @@ function GroupDetailClass() {
         setUploadStatus("업로드 실패: 오류 발생");
       }
     }
+  };
+
+  // 학생 등록 양식 다운로드
+
+  const handleStuExcelDownload = () => {
+    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+    const link = document.createElement("a");
+    link.href = StuExcel;
+    link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -354,6 +376,11 @@ function GroupDetailClass() {
           />
           학생 등록
         </Button>
+        <FileDownload
+          src={fileDownload}
+          alt="fileDownload"
+          onClick={handleStuExcelDownload}
+        />
 
         {showSmallContainer && (
           <SmallContainer>
