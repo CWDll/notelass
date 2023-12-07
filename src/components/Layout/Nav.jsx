@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import personimg from "../../assets/personimg.svg";
 import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
 import instance from "../../assets/api/axios";
+
 
 // const NavContainer = styled.div`
 //   width: 1920px;
@@ -184,6 +185,8 @@ export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
+  const { paramsGroupId } = useParams();
+  console.log(paramsGroupId);
 
   const updateLoginState = (loggedIn) => {
     setIsLoggedIn(loggedIn);
@@ -251,6 +254,7 @@ export default function Nav() {
 
   const handleLogout = async () => {
     try {
+      await deleteFile(paramsGroupId);
       const res = await instance.post(`/api/auth/logout`);
 
       if (res.status === 200) {
@@ -260,6 +264,27 @@ export default function Nav() {
     } catch (error) {
       console.error("로그아웃 중 오류 발생:", error);
       // 오류 처리 로직...
+    }
+  };
+
+  
+  //생활기록부 파일 삭제 DELETE 함수
+  const deleteFile = async (paramsGroupId) => {
+    try {
+      const response = await instance.delete(
+        `/api/record/excel/${paramsGroupId}`,{
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("생활기록부 파일 삭제 성공!");
+      } else {
+        console.error("예상치 못한 상태 코드:", response.status, response.data);
+      }
+    } catch (error) {
+      console.error("데이터 삭제 중 오류 발생:", error);
     }
   };
 
