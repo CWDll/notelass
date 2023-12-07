@@ -239,7 +239,9 @@ function GroupDetailClass() {
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
-    navigate("/GroupDetailClass/AssignmentDetail");
+    // 검증용으로 기능 막아둠.
+    // navigate("/GroupDetailClass/AssignmentDetail");
+    alert("준비중입니다.");
   };
   const GroupDetailWrite = (
     paramsGruopId,
