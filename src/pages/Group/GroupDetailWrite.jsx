@@ -736,7 +736,7 @@ const calculateByteCount = (text) => {
   return byteCount;
 };
 
-function GroupDetailWrite() {
+export function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const location = useLocation();
   // console.log("location: ", location);
@@ -1017,9 +1017,16 @@ function GroupDetailWrite() {
   //뒤로 가기
   const BackButton = () => {
 
-  
+      deleteFile(paramsGroupId);
     navigate(-1);
   };
+
+
+  useEffect(() => {
+    return () => {
+      deleteFile(paramsGroupId);
+    };
+  }, [paramsGroupId]); 
 
   //학생 수첩 체크 박스 토글 함수
   const [checked, setChecked] = useState(false);
@@ -1271,7 +1278,11 @@ function GroupDetailWrite() {
   const deleteFile = async (paramsGroupId) => {
     try {
       const response = await instance.delete(
-        `/api/record/excel/${paramsGroupId}`
+        `/api/record/excel/${paramsGroupId}`,{
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       if (response.status === 200) {
         console.log("생활기록부 파일 삭제 성공!");
