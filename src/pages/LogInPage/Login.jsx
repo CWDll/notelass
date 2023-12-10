@@ -123,7 +123,6 @@ export default function Login() {
             <GridContainer>
               <Grid>
                 <Link
-                  variant="body2"
                   underline="none"
                   color={"gray"}
                   style={{ marginLeft: "40px" }}
