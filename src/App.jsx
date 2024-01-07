@@ -34,7 +34,7 @@ import NoticeDetail from "./pages/Notice/NoticeDetail";
 import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login";
-import SelectSchool from "./pages/LogInPage/SelectSchool";
+import SelectSchool from "./pages/LogInPage/SelectSchool/SelectSchool";
 import SelectRole from "./pages/LogInPage/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";

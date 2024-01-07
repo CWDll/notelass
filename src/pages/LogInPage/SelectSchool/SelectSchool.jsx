@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { setUserInput } from "../actions/userInputActions";
-import { setUserInput } from "../../action/userInputActions";
+import { setUserInput } from "../../../action/userInputActions";
 // 신분 선택
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
@@ -130,7 +130,9 @@ export default function SelectSchool() {
             getOptionLabel={(option) => option.label}
             value={school ? { label: school } : null}
             sx={{ width: 300 }}
-            isOptionEqualToValue={(option, value) => option.label === value.label}
+            isOptionEqualToValue={(option, value) =>
+              option.label === value.label
+            }
             onInputChange={(event, value, reason) => {
               if (reason === "input") {
                 setSchool(value); // 사용자 입력 값으로 상태 업데이트
@@ -139,8 +141,11 @@ export default function SelectSchool() {
             }}
             onChange={(event, value, reason) => {
               if (value != null) {
-                setSchool(typeof value === 'string' ? value : value.label); // 입력 값이 문자열인 경우 직접 입력된 값으로 간주
-                reduxInput({ name: "school", value: typeof value === 'string' ? value : value.label });
+                setSchool(typeof value === "string" ? value : value.label); // 입력 값이 문자열인 경우 직접 입력된 값으로 간주
+                reduxInput({
+                  name: "school",
+                  value: typeof value === "string" ? value : value.label,
+                });
               }
             }}
             onBlur={(event) => {

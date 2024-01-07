@@ -20,7 +20,7 @@ import StudentTaskDetail from "./components/Component/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login";
-import SelectSchool from "./components/LogInPage/SelectSchool";
+import SelectSchool from "./components/LogInPage/SelectSchool/SelectSchool";
 import EmailVerificationAndPassword from "./components/LogInPage/EmailVerificationAndPassword";
 
 export const routes = [
