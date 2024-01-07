@@ -203,6 +203,19 @@ line-height: normal;
 
 `;
 
+const Btn = styled.button`
+  display: inline-flex;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+ 
+  &.active {
+    background-color: #4849ff;
+  }
+`;
+
 // Right Body 끝
 
 function AssignmentDetail() {
@@ -230,6 +243,19 @@ function AssignmentDetail() {
     imageInput.current.click();
   };
 
+  //과제/공지/강의자료 버튼 토글
+  const ButtonToggle = () => {
+    const [activeButton, setActiveButton] = useState(null);
+  
+    const handleButtonClick = (id) => {
+      setActiveButton(id); 
+    };
+  
+    const getButtonClass = (id) => {
+      return `button ${activeButton === id ? 'active' : ''}`;
+    };
+  
+
   /*** 통신 ***/
   // 공지 생성
   const onSubmitNotice = () => {
@@ -246,7 +272,7 @@ function AssignmentDetail() {
       console.error('There was an error!', error);
     });
   };
-  
+  }  
   return (
     <Wrapper>
       <Header onClick={handleHeaderClick}>
@@ -256,6 +282,17 @@ function AssignmentDetail() {
       <Body>
         <AssigmentCreateForm>
           <CreateTitle>공지/과제 생성</CreateTitle>
+          <>
+          <Btn className={getButtonClass('button1')} onClick={() => handleButtonClick('button1')}>
+            과제
+          </Btn>
+          <Btn className={getButtonClass('button2')} onClick={() => handleButtonClick('button2')}>
+            공지
+          </Btn>
+          <Btn className={getButtonClass('button3')} onClick={() => handleButtonClick('button3')}>
+            강의자료
+          </Btn>
+          </>
           <HeadInput>
             <SmallTitle>과제 제목</SmallTitle>
             <InputTitle

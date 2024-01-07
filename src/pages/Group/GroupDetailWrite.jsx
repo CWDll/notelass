@@ -737,7 +737,7 @@ const calculateByteCount = (text) => {
 };
 
 export function GroupDetailWrite() {
-  const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
+  const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
@@ -760,9 +760,7 @@ export function GroupDetailWrite() {
   const [savedTextFromStudentBook, setSavedTextFromStudentBook] = useState("");
   const [guideLineText, setGuideLineText] = useState("");
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-  const [attachedFile, setAttachedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
-  // const [fetchText, setFetchText] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
 
@@ -971,15 +969,6 @@ export function GroupDetailWrite() {
   const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
-    // console.log(
-    //   "보자보자",
-    //   paramsGroupId,
-    //   paramsUserId,
-    //   school,
-    //   grade,
-    //   classNum,
-    //   subject
-    // );
     const fetchGroups = async () => {
       try {
         const response = await instance.get("/api/group");
@@ -1352,10 +1341,9 @@ export function GroupDetailWrite() {
 
   // 과제데이터 양식 다운로드
   const handleHwDataDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
     const link = document.createElement("a");
     link.href = HwDataFile;
-    link.setAttribute("download", "과제데이터양식.cell"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    link.setAttribute("download", "과제데이터양식.cell"); 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1363,10 +1351,9 @@ export function GroupDetailWrite() {
 
   // 생기부 양식 다운로드
   const handleStuRecordDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
     const link = document.createElement("a");
     link.href = RecordFile;
-    link.setAttribute("download", "생활기록부양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+    link.setAttribute("download", "생활기록부양식.xlsx"); 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
