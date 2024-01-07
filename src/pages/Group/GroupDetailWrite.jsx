@@ -30,7 +30,7 @@ import RecordFile from "../../assets/excel/StuRecord.xlsx";
 import {
   Header,
   Img,
-  BolTitle,
+  BoldTitle,
   BlueTitle,
   StudentSelect,
   MainContainer,
@@ -82,13 +82,7 @@ import {
   SelectedWord,
   SynonymTitle,
   CustomDiv,
-  FileDownload,
-  SaveButton,
-  ScoreList,
-  ScoreTitle,
-  ScoreResult,
-  RightContainer,
-} from "./Style/GroupDetailStyle";
+} from "../../components/Component/Home/Style/GroupDetailStyle";
 
 
 // 글자 바이트 수 계산

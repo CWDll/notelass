@@ -18,13 +18,6 @@ const NoteContainer = styled.div`
   margin-top: 16px;
   max-width: 1194px; /* 최대 너비 제한 */
 
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #ccc;
-  }
 `;
 
 const CircleText = styled.div`
