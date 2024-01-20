@@ -1,52 +1,21 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import instance from "../../assets/api/axios";
+import instance from "../../../assets/api/axios";
+import * as S from "./style";
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const defaultTheme = createTheme();
 
-const ContainerBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 1920px;
-  height: 1080px;
-`;
-
-const GridContainer = styled(Grid)`
-  /* background-color: blue; */
-  width: inherit;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-`;
-
-const Notelass = styled.h1`
-  color: #4849ff;
-  size: 30px;
-  font-size: 50px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 12px;
-`;
-
-const NotelassIntro = styled(Notelass)`
-  font-size: 20px;
-`;
-
 export default function Login() {
   const navigate = useNavigate();
-
   const navagateSignup = () => {
     navigate("/selectSchool");
   };
@@ -77,7 +46,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <ContainerBox>
+      <S.ContainerBox>
         <CssBaseline />
         <Box
           sx={{
@@ -87,8 +56,8 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <NotelassIntro>태블릿 속 또다른 강의실</NotelassIntro>
-          <Notelass>Note-lass</Notelass>
+          <S.NotelassIntro>태블릿 속 또다른 강의실</S.NotelassIntro>
+          <S.Notelass>Note-lass</S.Notelass>
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -115,12 +84,8 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
 
-            <GridContainer>
+            <S.GridContainer>
               <Grid>
                 <Link
                   underline="none"
@@ -148,7 +113,7 @@ export default function Login() {
                   비밀번호 찾기
                 </Link>
               </Grid>
-            </GridContainer>
+            </S.GridContainer>
             <Button
               type="submit"
               fullWidth
@@ -159,7 +124,7 @@ export default function Login() {
             </Button>
           </Box>
         </Box>
-      </ContainerBox>
+      </S.ContainerBox>
     </ThemeProvider>
   );
 }
