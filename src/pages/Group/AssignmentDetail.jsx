@@ -66,16 +66,16 @@ const CreateTitle = styled(BigTitle)`
 `;
 
 const SmallTitle = styled.p`
-color: var(--cool-grayscale-title, #26282B);
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const SubText = styled.p`
-  color: var(--primary-cobalt, #4849FF);
+  color: var(--primary-cobalt, #4849ff);
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -182,25 +182,23 @@ const SettingBox = styled.div`
 `;
 
 const LibraryButton = styled.button`
-display: inline-flex;
-height: 40px;
-padding: 10px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-flex-shrink: 0; 
-border-radius: 8px;
-border: 1.5px solid rgba(201, 205, 210, 0.50);
-background: #FFF;
+  display: inline-flex;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1.5px solid rgba(201, 205, 210, 0.5);
+  background: #fff;
 
-color: var(--cool-grayscale-placeholder, #9EA4AA);
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-
-
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const Btn = styled.button`
@@ -210,7 +208,7 @@ const Btn = styled.button`
   border: none;
   color: white;
   cursor: pointer;
- 
+
   &.active {
     background-color: #4849ff;
   }
@@ -246,33 +244,33 @@ function AssignmentDetail() {
   //과제/공지/강의자료 버튼 토글
   const ButtonToggle = () => {
     const [activeButton, setActiveButton] = useState(null);
-  
-    const handleButtonClick = (id) => {
-      setActiveButton(id); 
-    };
-  
-    const getButtonClass = (id) => {
-      return `button ${activeButton === id ? 'active' : ''}`;
-    };
-  
 
-  /*** 통신 ***/
-  // 공지 생성
-  const onSubmitNotice = () => {
-    axios.post(`/api/notice/${groupId}`, {
-      title: assignmentName,
-      content: assignmentDesc
-})
-    .then(response => {
-      alert('공지 생성이 완료되었습니다.');
-      // 공지 생성 후 원하는 경로로 이동
-      navigate("/GroupDetailClass");
-    })
-    .catch(error => {
-      console.error('There was an error!', error);
-    });
+    const handleButtonClick = (id) => {
+      setActiveButton(id);
+    };
+
+    const getButtonClass = (id) => {
+      return `button ${activeButton === id ? "active" : ""}`;
+    };
+
+    /*** 통신 ***/
+    // 공지 생성
+    const onSubmitNotice = () => {
+      axios
+        .post(`/api/notice/${groupId}`, {
+          title: assignmentName,
+          content: assignmentDesc,
+        })
+        .then((response) => {
+          alert("공지 생성이 완료되었습니다.");
+          // 공지 생성 후 원하는 경로로 이동
+          navigate("/GroupDetailClass");
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    };
   };
-  }  
   return (
     <Wrapper>
       <Header onClick={handleHeaderClick}>
@@ -283,15 +281,24 @@ function AssignmentDetail() {
         <AssigmentCreateForm>
           <CreateTitle>공지/과제 생성</CreateTitle>
           <>
-          <Btn className={getButtonClass('button1')} onClick={() => handleButtonClick('button1')}>
-            과제
-          </Btn>
-          <Btn className={getButtonClass('button2')} onClick={() => handleButtonClick('button2')}>
-            공지
-          </Btn>
-          <Btn className={getButtonClass('button3')} onClick={() => handleButtonClick('button3')}>
-            강의자료
-          </Btn>
+            <Btn
+              className={getButtonClass("button1")}
+              onClick={() => handleButtonClick("button1")}
+            >
+              과제
+            </Btn>
+            <Btn
+              className={getButtonClass("button2")}
+              onClick={() => handleButtonClick("button2")}
+            >
+              공지
+            </Btn>
+            <Btn
+              className={getButtonClass("button3")}
+              onClick={() => handleButtonClick("button3")}
+            >
+              강의자료
+            </Btn>
           </>
           <HeadInput>
             <SmallTitle>과제 제목</SmallTitle>
@@ -319,12 +326,17 @@ function AssignmentDetail() {
               style={{ display: "none" }}
               ref={imageInput}
             />
-            <LibraryButton onClick={onCickImageUpload} style={{ marginLeft: "15px" }}>
+            <LibraryButton
+              onClick={onCickImageUpload}
+              style={{ marginLeft: "15px" }}
+            >
               라이브러리에서 파일 탐색
             </LibraryButton>
           </LegInput>
           <Foot>
-            <SubmitBtn type="submit" onClick={onSubmitNotice}>생성하기</SubmitBtn>
+            <SubmitBtn type="submit" onClick={onSubmitNotice}>
+              생성하기
+            </SubmitBtn>
             <CancelBtn type="submit">취소</CancelBtn>
           </Foot>
         </AssigmentCreateForm>
