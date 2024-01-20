@@ -18,8 +18,7 @@ import Button from "@mui/material/Button"; // 다음 버튼
 export default function ResetPassword() {
   const location = useLocation();
   const email = location.state?.email;
-
-  const [authCode, setAuthCode] = useState();
+  const [isChecked, setIsChecked] = useState(false);
 
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
@@ -49,14 +48,6 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 비밀번호 일치 여부
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    validateEmail(e.target.value);
-    console.log(e.target.value);
-    // dispatch(setUserInput({ email: e.target.value }));
-    reduxInput(e.target);
-  };
-
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     checkPasswordsMatch(e.target.value, confirmPassword);
@@ -80,49 +71,24 @@ export default function ResetPassword() {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
   };
 
-  /*********   통신 관련 로직   *********/
-  // 이메일 중복 확인을 위해 getExistEmail
-  const [emails, setEmails] = useState([]);
-
-  const getExistEmails = async () => {
+  const CheckCode = async () => {
     try {
-      const existEmails = await instance.get(
-        `/api/auth/validation?email=${email}`
+      const res = await instance.get(
+        `/api/auth/password/reset?email=${email}&code=${certifiNumber}`
       );
 
-      if (existEmails.status === 200) {
-        //중복확인 완료
-        alert("이메일 중복 확인이 완료되었습니다.");
-        setEmails(existEmails.data);
-        sendVerifiCode();
-      } else if (existEmails.status === 400) {
-        alert("중복된 이메일입니다.");
+      if (res.status === 200) {
+        // 인증번호 확인 완료
+        alert("올바른 비밀번호 재설정 코드입니다.");
+        setIsChecked(true); // isChecked가 false이면 put요청 전에 return시킬 것임.
+      } else if (res.status === 400) {
+        alert("올바르지 않은 비밀번호 재설정 코드입니다.");
         return;
       } else {
-        alert("이메일 중복 확인에 실패했습니다.");
+        alert("인증에 실패하였습니다.");
       }
     } catch (error) {
-      console.error("이메일 중복 확인 오류:", error);
-      // Further logic upon error...
-      alert("중복된 이메일입니다.");
-    }
-  };
-
-  const sendVerifiCode = async () => {
-    try {
-      const verifiCode = await instance.post(
-        `/api/auth/email/request?email=${email}`
-      );
-
-      if (verifiCode.status === 200) {
-        alert("인증번호가 발송되었습니다.");
-        setAuthCode(verifiCode.data.result);
-      } else {
-        alert("인증번호 발송에 실패하였습니다.");
-      }
-    } catch (error) {
-      console.error("인증번호 발송 오류", error);
-      alert("인증번호 발송에 실패하였습니다.");
+      console.error("인증 코드 확인 오류", error);
     }
   };
 
@@ -188,7 +154,7 @@ export default function ResetPassword() {
           />
           <Button
             variant="outlined"
-            onClick={getExistEmails}
+            onClick={CheckCode}
             sx={{
               width: "100px",
               height: "40px",
