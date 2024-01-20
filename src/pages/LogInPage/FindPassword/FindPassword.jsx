@@ -61,7 +61,7 @@ export default function FindPassword() {
               아이디 찾기
             </Link>
             <p>|</p>
-            <Link href="#" underline="none" color={"gray"}>
+            <Link href="" underline="none" color={"black"}>
               비밀번호 찾기
             </Link>
             {/* </Grid> */}
