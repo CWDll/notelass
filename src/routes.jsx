@@ -29,6 +29,7 @@ import SelectRole from "./pages/LogInPage/SelectRole/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 import FindPassword from "./pages/LogInPage/FindPassword/FindPassword";
+import ResetPassword from "./pages/LogInPage/FindPassword/ResetPassword";
 
 export const routes = [
   {
@@ -65,7 +66,7 @@ export const routes = [
       { path: "/Setting", element: <Setting />, index: true },
       { path: "/Login", element: <Login />, index: true },
       { path: "/FindPassword", element: <FindPassword />, index: true },
-
+      { path: "/ResetPassword", element: <ResetPassword />, index: true },
       { path: "/SelectSchool", element: <SelectSchool />, index: true },
       { path: "/SelectRole", element: <SelectRole />, index: true },
       {
@@ -80,26 +81,4 @@ export const routes = [
       },
     ],
   },
-];
-
-export const pages = [
-  { route: "/" },
-  { route: "/TimeTable" },
-  { route: "/MealTable" },
-  { route: "/Introduce" },
-  { route: "/GroupDetail" },
-  { route: "/GroupDetailClass" },
-  { route: "/GroupDetailClass/AssignmentDetail" },
-  { route: "/StudentScoreDetail" },
-  { route: "/StudentTaskDetail" },
-  { route: "/GroupScoreDetail" },
-  { route: "/GroupDetailWrite" },
-  { route: "/TasksDetail" },
-  { route: "/Note" },
-  { route: "/NoteDetailSubject" },
-  { route: "/NoteDetailSubject/pdf-viewer" },
-  { route: "/Setting" },
-  { route: "/Login" },
-  { route: "/SelectSchool" },
-  { route: "/EmailVerificationAndPassword" },
 ];
