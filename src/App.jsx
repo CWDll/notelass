@@ -1,128 +1,21 @@
-import "./App.css";
-
 import React from "react";
 import { Provider } from "react-redux";
-import {
-  useRoutes,
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import store from "./store";
-
-import Home from "./pages/Home/Home";
-import Layout from "./components/Layout/Layout";
-import TimeTable from "./components/Component/Table/TimeTable";
-import MealTable from "./components/Component/Table/MealTable";
-import GroupDetail from "./pages/Group/GroupDetail";
-import Introduce from "./pages/Introduce/Introduce";
-import Note from "./pages/Note/Note";
-import Setting from "./pages/Setting/Setting";
-import TasksDetail from "./pages/Task/TasksDetail";
-import NoteDetail from "./components/Component/Note/NoteDetail";
-import NoteDetailSubject from "./pages/Note/NoteDetailSubject";
-import GroupDetailClass from "./pages/Group/GroupDetailClass";
-import GroupDetailWrite from "./pages/Group/GroupDetailWrite";
-import PdfViewer from "./pages/Note/PdfViewer";
-import AssignmentDetail from "./pages/Group/AssignmentDetail";
-import StudentScoreDetail from "./pages/Student/StudentScoreDetail";
-import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
-import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
-import CreateGroup from "./components/Component/Group/CreateGroup";
-import NoticeDetail from "./pages/Notice/NoticeDetail";
-//학생수첩
-import StudentBook from "./pages/Student/StudentBook";
-// 로그인페이지
-import Login from "./pages/LogInPage/Login";
-import SelectSchool from "./pages/LogInPage/SelectSchool/SelectSchool";
-import SelectRole from "./pages/LogInPage/SelectRole";
-import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword/EmailVerificationAndPassword";
-import SignupComplete from "./pages/LogInPage/SignupComplete";
+import { routes } from "./routes";
 
 import ReactGA from "react-ga4";
 ReactGA.initialize("G-QSTTQEGWWQ");
 
 function App() {
-  // const elem = useRoutes(routes);
+  // useRoutes를 호출해 라우트 구성을 가져옴. 앞으로 모든 route 경로는 ./route.jsx에 추가하여 사용 !
+  const routeElement = useRoutes(routes);
 
   return (
     <Provider store={store}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/Home" element={<Home />} />
-
-            {/* <Route index element={<Home />} /> */}
-            {/* Home의 공지 부분의 시간표,급식표 */}
-            <Route path="/TimeTable" element={<TimeTable />} />
-            <Route path="/MealTable" element={<MealTable />} />
-            <Route path="/NoticeDetail" element={<NoticeDetail />} />
-            {/* 학생수첩 */}
-            <Route path="/StudentBook" elemetn={<StudentBook />} />
-            <Route path="/Introduce" element={<Introduce />} />
-            <Route path="/GroupDetail" element={<GroupDetail />} />
-            <Route
-              path="/GroupDetailClass/:id"
-              element={<GroupDetailClass />}
-            />
-            <Route path="/CreateGroup" element={<CreateGroup />} />
-            <Route
-              path="/GroupDetailClass/AssignmentDetail"
-              element={<AssignmentDetail />}
-            />
-            <Route
-              path="/StudentScoreDetail"
-              element={<StudentScoreDetail />}
-            />
-            <Route path="/StudentTaskDetail" element={<StudentTaskDetail />} />
-            <Route path="/GroupScoreDetail" element={<GroupScoreDetail />} />
-            <Route
-              path="/GroupDetailWrite/:paramsGroupId/:paramsUserId"
-              element={<GroupDetailWrite />}
-            />
-
-            <Route path="/TasksDetail" element={<TasksDetail />} />
-            <Route path="/Note" element={<Note />} />
-            <Route path="/Note" element={<NoteDetail />} />
-
-            {/* "/pdf-viewer" 경로를 "/NoteDetailSubject" 경로의 하위 경로로 정의 */}
-            <Route path="/NoteDetailSubject" element={<NoteDetailSubject />} />
-            <Route
-              path="/NoteDetailSubject/pdf-viewer"
-              element={<PdfViewer />}
-            />
-
-            <Route path="/Setting" element={<Setting />} />
-          </Route>
-          {/* 로그인페이지 추가(위치는 아직 셋팅X) */}
-
-          <Route index element={<Login />} />
-
-          <Route path="/Login" element={<Login />} />
-          <Route path="/SelectSchool" element={<SelectSchool />} />
-          <Route path="/SelectRole" element={<SelectRole />} />
-          <Route
-            path="/EmailVerificationAndPassword"
-            element={<EmailVerificationAndPassword />}
-          />
-          <Route path="/SignupComplete" element={<SignupComplete />} />
-        </Routes>
-      </Router>
+      {routeElement} {/* 라우트 구성을 여기에 포함 */}
     </Provider>
   );
 }
 
 export default App;
-
-/*
-// router 따로 빼는건데, error fix하고 수정할 예정..
-function App() {
-  const elem = useRoutes(routes);
-
-  return (
-    <Router>
-      <Provider store={store}>{elem}</Provider>
-    </Router>
-  );
-}
-*/
