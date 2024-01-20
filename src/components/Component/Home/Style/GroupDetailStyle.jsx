@@ -308,7 +308,7 @@ export const StudentBookText = styled.div`
 `;
 
 export const HancellButton = styled.button`
-  display: inline-flex;
+  display: flex;
   width: 168px;
   height: 25px;
   padding: 4px 12px;
@@ -317,7 +317,8 @@ export const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-top: 14px;
+  margin-top: -85px;
+  margin-left: 432px;
   position: relative;
 
   color: var(--primary-cobalt, #4849ff);
@@ -633,7 +634,6 @@ export const Line = styled.div`
   height: 0px;
   border: 1px solid #e7e7e7;
   margin-left: 32px;
-  margin-top: 16px;
 `;
 
 export const XIMG = styled.img`
@@ -645,12 +645,11 @@ export const SynonymsDisplay = styled.div`
   display: flex;
   height: 65px;
   padding-left: 32px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 36px;
   flex-direction: column;
 `;
 
-export const Synonym = styled.span`
+export const SynonymWord = styled.span`
   display: inline-block;
   margin-right: 8px;
   margin-top: 16px;
@@ -687,4 +686,5 @@ export const CustomDiv = styled.div`
   justify-content: flex-end;
   width: 100%;
   padding-right: 35px;
+  margin-top: -38px;
 `;
