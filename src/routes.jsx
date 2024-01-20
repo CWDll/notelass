@@ -28,6 +28,8 @@ import SelectSchool from "./pages/LogInPage/SelectSchool/SelectSchool";
 import SelectRole from "./pages/LogInPage/SelectRole/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
+import FindPassword from "./pages/LogInPage/FindPassword/FindPassword";
+
 export const routes = [
   {
     path: "/",
@@ -62,11 +64,18 @@ export const routes = [
       },
       { path: "/Setting", element: <Setting />, index: true },
       { path: "/Login", element: <Login />, index: true },
+      { path: "/FindPassword", element: <FindPassword />, index: true },
+
       { path: "/SelectSchool", element: <SelectSchool />, index: true },
       { path: "/SelectRole", element: <SelectRole />, index: true },
       {
         path: "/EmailVerificationAndPassword",
         element: <EmailVerificationAndPassword />,
+        index: true,
+      },
+      {
+        path: "/SignupComplete",
+        element: <SignupComplete />,
         index: true,
       },
     ],

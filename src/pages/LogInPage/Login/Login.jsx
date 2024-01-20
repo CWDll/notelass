@@ -106,7 +106,7 @@ export default function Login() {
               <p>|</p>
               <Grid>
                 <Link
-                  href="#"
+                  href="/FindPassword"
                   underline="none"
                   color={"gray"}
                   style={{ marginRight: "30px" }}
