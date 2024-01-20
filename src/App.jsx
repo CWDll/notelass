@@ -36,7 +36,7 @@ import StudentBook from "./pages/Student/StudentBook";
 import Login from "./pages/LogInPage/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool/SelectSchool";
 import SelectRole from "./pages/LogInPage/SelectRole";
-import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword";
+import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 
 import ReactGA from "react-ga4";

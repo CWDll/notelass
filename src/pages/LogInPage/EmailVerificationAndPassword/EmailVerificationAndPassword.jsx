@@ -1,83 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import axios from "../../assets/api/axios";
-import instance from "../../assets/api/axios";
-import { setUserInput } from "../../action/userInputActions";
-// 다음 버튼
-import Button from "@mui/material/Button";
-// 입력창
-import TextField from "@mui/material/TextField";
+import * as S from "./style";
+import instance from "../../../assets/api/axios";
+import { setUserInput } from "../../../action/userInputActions";
+
+import FormControl from "@mui/material/FormControl";
 // 비밀번호 숨김/공개 입력창
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-const ContainerWidth_1920 = styled.div`
-  width: 1920px;
-  /* height: 1080px; */
-  display: flex;
-  justify-content: center;
-`;
-
-const Container = styled.div`
-  width: 400px;
-  heigth: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Notelass = styled.h1`
-  color: #4849ff;
-  size: 30px;
-
-  font-size: 45px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  /* margin-left: 12px; */
-`;
-
-const TitleText = styled.p`
-  font-weight: bold;
-  font-size: 30px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-`;
-
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const FlexCol = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const NextButton = styled(Button)`
-  width: 400px;
-  height: 50px;
-  margin-top: 600px;
-  /* padding-top: 600px; */
-`;
-
-const StyledTextField = styled(TextField)`
-  & .MuiInput-underline:before {
-    border-bottom: ${(props) => (props.error ? "1px solid red" : "")};
-  }
-  /* & .MuiInput-underline:hover:not(.Mui-disabled):before {
-    border-bottom: 2px solid blue;
-  } */
-`;
-
-const PwCheck = styled(TextField)`
-  width: 400px;
-`;
 
 export default function EmailVerificationAndPassword() {
   // redux 관련
@@ -310,13 +244,13 @@ export default function EmailVerificationAndPassword() {
   };
 
   return (
-    <ContainerWidth_1920>
-      <Container>
-        <Notelass>회원가입</Notelass>
+    <S.ContainerWidth_1920>
+      <S.Container>
+        <S.Notelass>회원가입</S.Notelass>
 
-        <TitleText>이메일 주소 입력</TitleText>
-        <FlexRow>
-          <StyledTextField
+        <S.TitleText>이메일 주소 입력</S.TitleText>
+        <S.FlexRow>
+          <S.StyledTextField
             id="email-input"
             variant="standard"
             placeholder="example@notelass.com"
@@ -327,7 +261,7 @@ export default function EmailVerificationAndPassword() {
             onChange={handleEmailChange}
             fullWidth={true}
           />
-          <Button
+          <S.Button
             // onClick={handleSendEmail}
             variant="outlined"
             onClick={getExistEmails}
@@ -340,10 +274,10 @@ export default function EmailVerificationAndPassword() {
             }}
           >
             전송
-          </Button>
-        </FlexRow>
-        <TitleText>인증번호</TitleText>
-        <StyledTextField
+          </S.Button>
+        </S.FlexRow>
+        <S.TitleText>인증번호</S.TitleText>
+        <S.StyledTextField
           id="standard-basic"
           //   label="Standard"
           variant="standard"
@@ -358,13 +292,13 @@ export default function EmailVerificationAndPassword() {
           }}
         />
 
-        <TitleText>비밀번호 입력</TitleText>
-        <form onSubmit={handleSubmit}>
-          <FormControl variant="standard" fullWidth={true}>
+        <S.TitleText>비밀번호 입력</S.TitleText>
+        <S.form onSubmit={handleSubmit}>
+          <S.FormControl variant="standard" fullWidth={true}>
             {/* <InputLabel htmlFor="standard-adornment-password">
             Password
           </InputLabel> */}
-            <Input
+            <S.Input
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
@@ -375,22 +309,22 @@ export default function EmailVerificationAndPassword() {
                 isPasswordMatch ? { borderBottom: "1px solid #4849FF" } : {}
               }
               endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
+                <S.InputAdornment position="end">
+                  <S.IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
+                  </S.IconButton>
+                </S.InputAdornment>
               }
               fullWidth={true}
             />
-          </FormControl>
+          </S.FormControl>
 
-          <TitleText>비밀번호 확인</TitleText>
-          <PwCheck
+          <S.TitleText>비밀번호 확인</S.TitleText>
+          <S.PwCheck
             id="confirm-password-input"
             variant="standard"
             type="password"
@@ -404,15 +338,15 @@ export default function EmailVerificationAndPassword() {
                 : ""
             } // 문구 설정 조건
           />
-          <NextButton
+          <S.NextButton
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2, marginTop: "100px" }}
           >
             회원가입
-          </NextButton>
-        </form>
-      </Container>
-    </ContainerWidth_1920>
+          </S.NextButton>
+        </S.form>
+      </S.Container>
+    </S.ContainerWidth_1920>
   );
 }
