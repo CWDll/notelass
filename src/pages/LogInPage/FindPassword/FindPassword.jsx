@@ -1,5 +1,4 @@
-import * as React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../../assets/api/axios";
 import * as S from "./style";
@@ -9,32 +8,33 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 
 export default function FindPassword() {
+  const [email, setEmail] = useState();
   const navigate = useNavigate();
   const navagateSignup = () => {
     navigate("/selectSchool");
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
+    console.log("테스트용 이메일 입력", email);
 
     try {
-      const response = await instance.post(`/api/auth/login`, data);
+      const response = await instance.post(
+        `/api/auth/password/email?email=${email}`
+      );
 
       if (response.status === 200) {
-        alert("로그인 성공!");
-        const accessToken = response.data.result.token;
-        console.log("accessToken테스트:", accessToken);
-
-        // 로컬 스토리지에 토큰 저장
-        localStorage.setItem("token", accessToken);
-        // navigate("/");
-        navigate("/Groupdetail");
+        alert("인증 번호 전송이 완료되었습니다.");
       } else {
-        alert("로그인 실패!");
+        alert("인증 번호 발송에 실패하였습니다.");
       }
     } catch (error) {
-      alert("이메일과 비밀번호를 다시 확인해주세요.");
+      alert("이메일을 다시 확인해주세요.");
     }
   };
 
@@ -59,8 +59,10 @@ export default function FindPassword() {
             id="email"
             label="이메일을 입력해주세요"
             name="email"
+            value={email}
             autoComplete="email"
             autoFocus
+            onChange={handleEmailChange}
           />
 
           <S.GridContainer>
