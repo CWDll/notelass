@@ -44,6 +44,7 @@ export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 비밀번호 일치 여부
+  const [isRegular, setIsRegular] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -61,7 +62,17 @@ export default function ResetPassword() {
   const checkPasswordsMatch = (pwd, confirmPwd) => {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
   };
+  const isRegularExp = (password) => {
+    if (pwRegex.test(password)) {
+      console.log("비밀번호가 조건에 맞습니다.");
+      setIsRegular(true);
+    } else {
+      alert("비밀번호가 조건에 맞지 않습니다.");
+      return;
+    }
+  };
 
+  // 인증 번호 검증
   const CheckCode = async () => {
     try {
       const res = await instance.get(
@@ -88,6 +99,8 @@ export default function ResetPassword() {
     if (!isChecked) {
       alert("인증 번호를 먼저 인증해주세요.");
     }
+    isRegularExp(password);
+
     e.preventDefault();
 
     // 인증번호 일치 확인
