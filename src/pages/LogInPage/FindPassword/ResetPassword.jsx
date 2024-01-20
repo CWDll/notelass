@@ -23,9 +23,6 @@ export default function ResetPassword() {
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   // 비밀번호 정규식
   const pwRegex =
@@ -50,20 +47,14 @@ export default function ResetPassword() {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    checkPasswordsMatch(e.target.value, confirmPassword);
-    // dispatch(setUserInput({ password: e.target.value }));
-    reduxInput(e.target);
   };
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
     checkPasswordsMatch(password, e.target.value);
-    // if (isPasswordMatch == true) {
-    //   reduxInput(e); // 비밀번호 == 비밀번호체크 라면, reduxInput으로 pwd dispatch하기
-    // }
+
     if (isPasswordMatch) {
       dispatch(setUserInput({ confirmPassword: e.target.value }));
-      reduxInput(e.target);
     }
   };
   // 비밀번호 == 비밀번호체크 확인로직
@@ -94,41 +85,28 @@ export default function ResetPassword() {
 
   // 비밀번호 변경 최종 단계
   const handleSubmit = async (e) => {
+    if (!isChecked) {
+      alert("인증 번호를 먼저 인증해주세요.");
+    }
     e.preventDefault();
 
     // 인증번호 일치 확인
     try {
-      const verifiCode = await instance.get(
-        `/api/auth/email/verification?email=${email}&authCode=${certifiNumber}`
-      );
+      const res = await instance.put(`/api/auth/password/reset`, {
+        email: email,
+        code: certifiNumber,
+        newPassword: password,
+      });
 
-      if (verifiCode.data.result === true) {
-        alert("인증번호 확인이 완료되었습니다.");
-      } else if (verifiCode.data.result === false) {
-        alert("인증번호가 일치하지 않습니다.");
-        return;
+      if (res.status === 200) {
+        alert("비밀번호 재설정에 성공했습니다.");
+        navigate("/Login");
       } else {
-        alert("인증번호 확인에 실패하였습니다.");
+        alert("비밀번호 재설정에 성공했습니다.");
       }
     } catch (error) {
       console.error("인증번호 발송 오류", error);
-      alert("인증번호 발송에 실패하였습니다.");
       return;
-    }
-
-    try {
-      console.log("userInput의 상태: " + userInput);
-      const response = await instance.post(`/api/auth/signup`, userInput);
-
-      if (response.status === 201) {
-        //회원가입 성공
-        console.log("회원가입이 완료되었습니다.");
-        navigate("/SignupComplete");
-      } else {
-        alert("회원가입에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("회원가입 오류:", error);
     }
   };
 
@@ -185,7 +163,6 @@ export default function ResetPassword() {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
