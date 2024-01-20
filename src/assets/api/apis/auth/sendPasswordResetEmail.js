@@ -1,4 +1,7 @@
 import instance from "../../axios";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 export const sendPasswordResetEmail = async (email) => {
   try {
@@ -8,6 +11,7 @@ export const sendPasswordResetEmail = async (email) => {
 
     if (response.status === 200) {
       alert("인증 번호 전송이 완료되었습니다.");
+      navigate("/ResetPassword");
     } else {
       alert("인증 번호 발송에 실패하였습니다.");
     }
