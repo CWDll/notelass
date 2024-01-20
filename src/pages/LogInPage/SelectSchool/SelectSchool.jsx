@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import * as S from "./style";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { setUserInput } from "../actions/userInputActions";
 import { setUserInput } from "../../../action/userInputActions";
-// 신분 선택
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+
+// 학교 리스트
+import { schoolList } from "../../../assets/data/schoolList";
 // 학교 검색
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -19,64 +15,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-// 다음 버튼
-import Button from "@mui/material/Button";
-
-const ContainerWidth_1920 = styled.div`
-  width: 1920px;
-  height: 1080px;
-  height: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Container = styled.div`
-  /* width: 500px; */
-  height: 500px;
-
-  /* border: 1px solid red; */
-`;
-
-const InnerContainer = styled.div`
-  width: 100%;
-  /* height: 100%; */
-  margin: 20px 0 10px 10px;
-`;
-
-const NextBtnContainer = styled.div`
-  margin-top: 150px;
-`;
-
-const Notelass = styled.h1`
-  color: #4849ff;
-  size: 30px;
-
-  font-size: 50px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  /* margin-left: 12px; */
-`;
-
-const TitleText = styled.p`
-  display: flex;
-  flex-direction: row;
-  font-weight: bold;
-  font-size: 20px;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  /* margin-boto: 0px; */
-`;
-
-const NextButton = styled(Button)`
-  width: 400px;
-`;
 
 export default function SelectSchool() {
   const navigate = useNavigate();
@@ -98,11 +36,6 @@ export default function SelectSchool() {
     console.log(event.target.value);
     reduxInput(event.target);
   };
-  // 학교 이름 바꾸기
-  const handleSchoolNameChange = (event) => {
-    setSchool(event.target.value);
-    reduxInput(event.target);
-  };
 
   const handleSubmit = () => {
     if (school === null) {
@@ -116,11 +49,11 @@ export default function SelectSchool() {
   };
 
   return (
-    <ContainerWidth_1920>
-      <Container>
-        <Notelass>학교 정보 입력</Notelass>
-        <InnerContainer>
-          <TitleText>학교 검색</TitleText>
+    <S.ContainerWidth_1920>
+      <S.Container>
+        <S.Notelass>학교 정보 입력</S.Notelass>
+        <S.InnerContainer>
+          <S.TitleText>학교 검색</S.TitleText>
           <Autocomplete
             freeSolo // 사용자가 목록에 없는 값을 입력할 수 있게 합니다.
             disablePortal
@@ -159,10 +92,10 @@ export default function SelectSchool() {
               />
             )}
           />
-        </InnerContainer>
+        </S.InnerContainer>
 
-        <InnerContainer>
-          <TitleText>입학 년도</TitleText>
+        <S.InnerContainer>
+          <S.TitleText>입학 년도</S.TitleText>
           <Box>
             <FormControl sx={{ width: 300 }}>
               <InputLabel id="demo-simple-select-label" size="normal">
@@ -192,39 +125,18 @@ export default function SelectSchool() {
               </Select>
             </FormControl>
           </Box>
-        </InnerContainer>
-        <NextBtnContainer>
-          <NextButton
+        </S.InnerContainer>
+        <S.NextBtnContainer>
+          <S.NextButton
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSubmit}
           >
             다음
-          </NextButton>
-        </NextBtnContainer>
-      </Container>
-    </ContainerWidth_1920>
+          </S.NextButton>
+        </S.NextBtnContainer>
+      </S.Container>
+    </S.ContainerWidth_1920>
   );
 }
-
-const schoolList = [
-  { label: "강남중학교" },
-  { label: "남서울중학교" },
-  { label: "노원중학교" },
-  { label: "대한중학교" },
-  { label: "라온중학교" },
-  { label: "마산중학교" },
-  { label: "부산중학교" },
-  { label: "송탄중학교" },
-  { label: "의정부중학교" },
-  { label: "의정부서중학교" },
-  { label: "중곡중학교" },
-  { label: "청담중학교" },
-  { label: "흥덕중학교" },
-  { label: "판교중학교" },
-  { label: "귀인중학교" },
-  { label: "군포고등학교" },
-  { label: "채울샘 강사 협동조합" },
-  { label: "기타" },
-];
