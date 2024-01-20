@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "../EmailVerificationAndPassword/style";
-import instance from "../../../assets/api/axios";
+import {
+  checkCode,
+  resetPassword,
+} from "../../../assets/api/apis/auth/resetPassword";
+
 import { setUserInput } from "../../../action/userInputActions";
 
 import FormControl from "@mui/material/FormControl";
@@ -74,54 +78,41 @@ export default function ResetPassword() {
   };
 
   // 인증 번호 검증
-  const CheckCode = async () => {
-    try {
-      const res = await instance.get(
-        `/api/auth/password/reset?email=${email}&code=${certifiNumber}`
-      );
-
-      if (res.status === 200) {
-        // 인증번호 확인 완료
+  const CheckCode = () => {
+    checkCode(
+      email,
+      certifiNumber,
+      () => {
         alert("올바른 비밀번호 재설정 코드입니다.");
-        setIsChecked(true); // isChecked가 false이면 put요청 전에 return시킬 것임.
-      } else if (res.status === 400) {
-        alert("올바르지 않은 비밀번호 재설정 코드입니다.");
-        return;
-      } else {
-        alert("인증에 실패하였습니다.");
+        setIsChecked(true);
+      },
+      (error) => {
+        console.error("인증 코드 확인 오류", error);
       }
-    } catch (error) {
-      console.error("인증 코드 확인 오류", error);
-    }
+    );
   };
 
   // 비밀번호 변경 최종 단계
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!isChecked) {
       alert("인증 번호를 먼저 인증해주세요.");
+      return;
     }
     isRegularExp(password);
 
-    e.preventDefault();
-
-    // 인증번호 일치 확인
-    try {
-      const res = await instance.put(`/api/auth/password/reset`, {
-        email: email,
-        code: certifiNumber,
-        newPassword: password,
-      });
-
-      if (res.status === 200) {
+    resetPassword(
+      email,
+      certifiNumber,
+      password,
+      () => {
         alert("비밀번호 재설정에 성공했습니다.");
         navigate("/Login");
-      } else {
-        alert("비밀번호 재설정에 성공했습니다.");
+      },
+      (error) => {
+        console.error("비밀번호 재설정 오류", error);
       }
-    } catch (error) {
-      console.error("인증번호 발송 오류", error);
-      return;
-    }
+    );
   };
 
   return (

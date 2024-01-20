@@ -1,9 +1,6 @@
 import instance from "../../axios";
-import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
-
-export const sendPasswordResetEmail = async (email, naviage) => {
+export const sendPasswordResetEmail = async (email, navigate) => {
   try {
     const response = await instance.post(
       `/api/auth/password/email?email=${email}`
