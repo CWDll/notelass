@@ -141,34 +141,35 @@ export function GroupDetailWrite() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [studentBookEntries, setStudentBookEntries] = useState([]);
 
 
 
-  // 학생 수첩 관련 함수
-  // StudentBook 모달을 열기 위한 함수
-  const openStudentBook = (groupId, userId) => {
-    setSelectedGroupId(groupId);
-    setSelectedUserId(userId);
-    setShowStudentBook(true);
-  };
+  // // 학생 수첩 관련 함수
+  // // StudentBook 모달을 열기 위한 함수
+  // const openStudentBook = (groupId, userId) => {
+  //   setSelectedGroupId(groupId);
+  //   setSelectedUserId(userId);
+  //   setShowStudentBook(true);
+  // };
 
-  // StudentBook 모달을 닫기 위한 함수
-  const closeStudentBook = () => {
-    setShowStudentBook(false);
-  };
+  // // StudentBook 모달을 닫기 위한 함수
+  // const closeStudentBook = () => {
+  //   setShowStudentBook(false);
+  // };
 
-  const findGroupAndUserIdByEntryId = (entryId) => {
-    console.log(entryId);
-    console.log(
-      "findGroupAndUserIdByEntryId에서의 studentBookEntries: ",
-      studentBookEntries
-    );
-    const entry = studentBookEntries.find((entry) => entry.id === entryId);
-    if (entry) {
-      return { groupId: entry.groupId, userId: entry.userId };
-    }
-    return { groupId: null, userId: null };
-  };
+  // const findGroupAndUserIdByEntryId = (entryId) => {
+  //   console.log(entryId);
+  //   console.log(
+  //     "findGroupAndUserIdByEntryId에서의 studentBookEntries: ",
+  //     studentBookEntries
+  //   );
+  //   const entry = studentBookEntries.find((entry) => entry.id === entryId);
+  //   if (entry) {
+  //     return { groupId: entry.groupId, userId: entry.userId };
+  //   }
+  //   return { groupId: null, userId: null };
+  // };
 
   // // 학생 수첩 수정 버튼 클릭 핸들러
   // const handleStudentBookEdit = (entryId) => {
@@ -193,45 +194,6 @@ export function GroupDetailWrite() {
   // };
   //
 
-  // //생활기록부 엑셀 파일 업로드 POST 함수
-  // const handleFileChange = async (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-      
-
-  //     // 서버에 파일 업로드
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-
-  //     try {
-  //       const response = await instance.post(
-  //         `/api/record/excel/${paramsGroupId}`,
-  //         formData,
-  //         {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //         }
-  //       );
-
-  //       if (response.status === 201) {
-  //         console.log("생활기록부 파일 업로드 성공!");
-  //         setUploadStatus("업로드 성공!");
-  //         await fetchText();
-  //       } else {
-  //         console.error(
-  //           "예상치 못한 상태 코드:",
-  //           response.status,
-  //           response.data
-  //         );
-  //         setUploadStatus("업로드 실패: 예상치 못한 상태 코드");
-  //       }
-  //     } catch (error) {
-  //       console.error("생활기록부 파일 업로드 중 오류 발생:", error);
-  //       setUploadStatus("업로드 실패: 오류 발생");
-  //     }
-  //   }
-  // };
 
   // 생기부 다운로드 받기 GET 함수
   const exportToExcel = async () => {
@@ -604,7 +566,7 @@ export function GroupDetailWrite() {
     paramsUserId,
     keywords,
     selectedKeywords,
-    // studentBookEntries,
+    studentBookEntries,
   ]);
 
 
