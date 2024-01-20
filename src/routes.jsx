@@ -25,7 +25,7 @@ import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
 import Login from "./pages/LogInPage/Login/Login";
 import SelectSchool from "./pages/LogInPage/SelectSchool/SelectSchool";
-import SelectRole from "./pages/LogInPage/SelectRole";
+import SelectRole from "./pages/LogInPage/SelectRole/SelectRole";
 import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAndPassword/EmailVerificationAndPassword";
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 export const routes = [
@@ -63,6 +63,7 @@ export const routes = [
       { path: "/Setting", element: <Setting />, index: true },
       { path: "/Login", element: <Login />, index: true },
       { path: "/SelectSchool", element: <SelectSchool />, index: true },
+      { path: "/SelectRole", element: <SelectRole />, index: true },
       {
         path: "/EmailVerificationAndPassword",
         element: <EmailVerificationAndPassword />,
