@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { setUserInput } from "../actions/userInputActions";
-import { setUserInput } from "../../action/userInputActions";
+import { setUserInput } from "../../../action/userInputActions";
+import * as S from "./style";
+
 // 신분 선택
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-// 학교 검색
-import TextField from "@mui/material/TextField";
+
 import Autocomplete from "@mui/material/Autocomplete";
 // 입학 년도
 import Box from "@mui/material/Box";
@@ -19,79 +19,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-// 다음 버튼
-import Button from "@mui/material/Button";
-
-const ContainerWidth_1920 = styled.div`
-  width: 1920px;
-  height: 900px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Container = styled.div`
-  /* width: 100%; */
-  height: 500px;
-
-  /* border: 1px solid red; */
-`;
-
-const InnerContainer = styled.div`
-  width: 90%;
-  /* height: 100%; */
-  margin: 20px 0 10px 10px;
-`;
-
-const StudentInnerContainer = styled.div`
-  width: 100%;
-  height: 1%;
-  margin: 20px 0 10px 10px;
-`;
-
-const NextBtnContainer = styled.div`
-  margin-top: 188px;
-`;
-
-const Notelass = styled.h1`
-  color: #4849ff;
-  size: 30px;
-
-  font-size: 50px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  /* margin-left: 12px; */
-`;
-
-const TitleText = styled.p`
-  display: flex;
-  flex-direction: row;
-  font-weight: bold;
-  font-size: 20px;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  /* margin-boto: 0px; */
-`;
-
-const NextButton = styled(Button)`
-  width: 400px;
-  margin-top: 100px;
-`;
-
-const StudentInfoFormControl = styled(FormControl)`
-  margin: 5px 10px 0 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 380px;
-`;
 
 export default function SelectRole() {
   const navigate = useNavigate();
@@ -182,9 +109,9 @@ export default function SelectRole() {
   // 학생에게만 나오는 UI
   function StudentInfo() {
     return (
-      <StudentInnerContainer>
-        <TitleText>반, 번호 입력</TitleText>
-        <FlexRow>
+      <S.StudentInnerContainer>
+        <S.TitleText>반, 번호 입력</S.TitleText>
+        <S.FlexRow>
           <FormControl sx={{ width: 120, marginRight: 1 }}>
             <InputLabel id="demo-simple-select-label">학년 선택</InputLabel>
             <Select
@@ -200,7 +127,7 @@ export default function SelectRole() {
               <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
-          <TitleText>학년</TitleText>
+          <S.TitleText>학년</S.TitleText>
 
           <FormControl sx={{ width: 100, marginLeft: 1.5, marginRight: 1 }}>
             <InputLabel id="demo-simple-select-label">반 선택</InputLabel>
@@ -222,7 +149,7 @@ export default function SelectRole() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          <TitleText>반</TitleText>
+          <S.TitleText>반</S.TitleText>
 
           <FormControl sx={{ width: 120, marginLeft: 1.5, marginRight: 1 }}>
             <InputLabel id="demo-simple-select-label">번호 선택</InputLabel>
@@ -247,21 +174,21 @@ export default function SelectRole() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          <TitleText>번호</TitleText>
-        </FlexRow>
-      </StudentInnerContainer>
+          <S.TitleText>번호</S.TitleText>
+        </S.FlexRow>
+      </S.StudentInnerContainer>
     );
   }
 
   return (
-    <ContainerWidth_1920>
-      <Container>
-        <Notelass>학교 정보 입력</Notelass>
+    <S.ContainerWidth_1920>
+      <S.Container>
+        <S.Notelass>학교 정보 입력</S.Notelass>
 
-        <InnerContainer>
-          <TitleText>신분 선택</TitleText>
+        <S.InnerContainer>
+          <S.TitleText>신분 선택</S.TitleText>
           <RadioGroup name="role" value={role} onChange={handleRoleChange}>
-            <FlexRow>
+            <S.FlexRow>
               <FormControlLabel
                 value="TEACHER"
                 control={<Radio />}
@@ -278,12 +205,12 @@ export default function SelectRole() {
                   color: role === "STUDENT" ? "black" : "gray",
                 }}
               />
-            </FlexRow>
+            </S.FlexRow>
           </RadioGroup>
-        </InnerContainer>
-        <InnerContainer>
-          <TitleText>이름 입력</TitleText>
-          <StyledTextField
+        </S.InnerContainer>
+        <S.InnerContainer>
+          <S.TitleText>이름 입력</S.TitleText>
+          <S.StyledTextField
             id="name-input"
             variant="standard"
             placeholder="이름을 입력하세요"
@@ -291,21 +218,21 @@ export default function SelectRole() {
             onChange={handleNameChange}
             name="name"
           />
-        </InnerContainer>
+        </S.InnerContainer>
 
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
-        <NextBtnContainer>
-          <NextButton
+        <S.NextBtnContainer>
+          <S.NextButton
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSubmit}
           >
             다음
-          </NextButton>
-        </NextBtnContainer>
-      </Container>
-    </ContainerWidth_1920>
+          </S.NextButton>
+        </S.NextBtnContainer>
+      </S.Container>
+    </S.ContainerWidth_1920>
   );
 }
