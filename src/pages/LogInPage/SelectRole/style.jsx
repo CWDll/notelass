@@ -1,4 +1,8 @@
 import styled from "styled-components";
+// 다음 버튼
+import Button from "@mui/material/Button";
+// 학교 검색
+import TextField from "@mui/material/TextField";
 
 export const ContainerWidth_1920 = styled.div`
   width: 1920px;
@@ -56,4 +60,13 @@ export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
   /* margin-boto: 0px; */
+`;
+
+export const NextButton = styled(Button)`
+  width: 400px;
+  margin-top: 100px;
+`;
+
+export const StyledTextField = styled(TextField)`
+  width: 380px;
 `;

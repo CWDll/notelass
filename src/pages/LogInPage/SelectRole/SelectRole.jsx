@@ -11,8 +11,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-// 학교 검색
-import TextField from "@mui/material/TextField";
+
 import Autocomplete from "@mui/material/Autocomplete";
 // 입학 년도
 import Box from "@mui/material/Box";
@@ -20,21 +19,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-// 다음 버튼
-import Button from "@mui/material/Button";
-
-const NextButton = styled(Button)`
-  width: 400px;
-  margin-top: 100px;
-`;
-
-const StudentInfoFormControl = styled(FormControl)`
-  margin: 5px 10px 0 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 380px;
-`;
 
 export default function SelectRole() {
   const navigate = useNavigate();
@@ -143,7 +127,7 @@ export default function SelectRole() {
               <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
-          <TitleText>학년</TitleText>
+          <S.TitleText>학년</S.TitleText>
 
           <FormControl sx={{ width: 100, marginLeft: 1.5, marginRight: 1 }}>
             <InputLabel id="demo-simple-select-label">반 선택</InputLabel>
@@ -190,7 +174,7 @@ export default function SelectRole() {
               <MenuItem value={8}>8</MenuItem>
             </Select>
           </FormControl>
-          <TitleText>번호</TitleText>
+          <S.TitleText>번호</S.TitleText>
         </S.FlexRow>
       </S.StudentInnerContainer>
     );
@@ -226,7 +210,7 @@ export default function SelectRole() {
         </S.InnerContainer>
         <S.InnerContainer>
           <S.TitleText>이름 입력</S.TitleText>
-          <StyledTextField
+          <S.StyledTextField
             id="name-input"
             variant="standard"
             placeholder="이름을 입력하세요"
@@ -239,14 +223,14 @@ export default function SelectRole() {
         {/* "학생"이 선택된 경우에만 Copyright 컴포넌트 렌더링 */}
         {showCopyright && <StudentInfo align="center"></StudentInfo>}
         <S.NextBtnContainer>
-          <NextButton
+          <S.NextButton
             type="submit"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSubmit}
           >
             다음
-          </NextButton>
+          </S.NextButton>
         </S.NextBtnContainer>
       </S.Container>
     </S.ContainerWidth_1920>
