@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../../assets/api/axios";
+import { sendPasswordResetEmail } from "../../../assets/api/apis/auth/sendPasswordResetEmail";
 import * as S from "./style";
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,22 +21,8 @@ export default function FindPassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    console.log("테스트용 이메일 입력", email);
-
-    try {
-      const response = await instance.post(
-        `/api/auth/password/email?email=${email}`
-      );
-
-      if (response.status === 200) {
-        alert("인증 번호 전송이 완료되었습니다.");
-      } else {
-        alert("인증 번호 발송에 실패하였습니다.");
-      }
-    } catch (error) {
-      alert("이메일을 다시 확인해주세요.");
-    }
+    // 이메일 리셋 인증 코드 전송 api
+    sendPasswordResetEmail(email);
   };
 
   return (
