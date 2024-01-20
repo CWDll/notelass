@@ -16,6 +16,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button"; // 다음 버튼
 
 export default function ResetPassword() {
+  const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
   const [isChecked, setIsChecked] = useState(false);
