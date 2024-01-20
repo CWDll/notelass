@@ -2,7 +2,6 @@ import styled from "styled-components";
 import TextField from "@mui/material/TextField"; // 입력창
 import Button from "@mui/material/Button"; // 다음 버튼
 
-
 export const ContainerWidth_1920 = styled.div`
   width: 1920px;
   /* height: 1080px; */

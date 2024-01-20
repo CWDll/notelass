@@ -13,6 +13,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+// testing import code
+import Button from "@mui/material/Button"; // 다음 버튼
+
 export default function EmailVerificationAndPassword() {
   // redux 관련
   const [user, setUser] = useState({});
@@ -261,7 +264,7 @@ export default function EmailVerificationAndPassword() {
             onChange={handleEmailChange}
             fullWidth={true}
           />
-          <S.Button
+          <Button
             // onClick={handleSendEmail}
             variant="outlined"
             onClick={getExistEmails}
@@ -274,7 +277,7 @@ export default function EmailVerificationAndPassword() {
             }}
           >
             전송
-          </S.Button>
+          </Button>
         </S.FlexRow>
         <S.TitleText>인증번호</S.TitleText>
         <S.StyledTextField
@@ -293,12 +296,12 @@ export default function EmailVerificationAndPassword() {
         />
 
         <S.TitleText>비밀번호 입력</S.TitleText>
-        <S.form onSubmit={handleSubmit}>
-          <S.FormControl variant="standard" fullWidth={true}>
+        <form onSubmit={handleSubmit}>
+          <FormControl variant="standard" fullWidth={true}>
             {/* <InputLabel htmlFor="standard-adornment-password">
             Password
           </InputLabel> */}
-            <S.Input
+            <Input
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               placeholder="영문, 숫자, 특수기호 포함 8자리 이상"
@@ -309,19 +312,19 @@ export default function EmailVerificationAndPassword() {
                 isPasswordMatch ? { borderBottom: "1px solid #4849FF" } : {}
               }
               endAdornment={
-                <S.InputAdornment position="end">
-                  <S.IconButton
+                <InputAdornment position="end">
+                  <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </S.IconButton>
-                </S.InputAdornment>
+                  </IconButton>
+                </InputAdornment>
               }
               fullWidth={true}
             />
-          </S.FormControl>
+          </FormControl>
 
           <S.TitleText>비밀번호 확인</S.TitleText>
           <S.PwCheck
@@ -345,7 +348,7 @@ export default function EmailVerificationAndPassword() {
           >
             회원가입
           </S.NextButton>
-        </S.form>
+        </form>
       </S.Container>
     </S.ContainerWidth_1920>
   );
