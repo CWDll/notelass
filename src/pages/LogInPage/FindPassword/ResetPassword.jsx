@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "../EmailVerificationAndPassword/style";
 import instance from "../../../assets/api/axios";
 import { setUserInput } from "../../../action/userInputActions";
@@ -17,24 +16,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button"; // 다음 버튼
 
 export default function ResetPassword() {
+  const location = useLocation();
+  const email = location.state?.email;
+
   const [authCode, setAuthCode] = useState();
-
-  // 입력된 값이 정수인지 확인하고, 정수가 아니라면 변환하거나 기본값을 설정합니다.
-  const parseIfInteger = (name, value) => {
-    if (["grade", "classNum", "number"].includes(name)) {
-      const parsedValue = parseInt(value, 10);
-      return Number.isNaN(parsedValue) ? "" : parsedValue;
-    }
-    return value;
-  };
-
-  const reduxInput = (event) => {
-    const { name, value } = event; // event 객체에서 target 속성을 사용합니다.
-    const parsedValue = parseIfInteger(name, value);
-    dispatch(setUserInput(name, parsedValue));
-    console.log("reduxInput의 event객체: ", event);
-    console.log("reduxInput의 name과 value입니덩: ", name, parsedValue);
-  };
 
   // 비밀번호 숨기기 관련
   const [showPassword, setShowPassword] = useState(false);
@@ -47,18 +32,6 @@ export default function ResetPassword() {
   const pwRegex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  // 이메일 정규식
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-  const validateEmail = (inputEmail) => {
-    if (emailRegex.test(inputEmail)) {
-      setEmailError(false);
-    } else {
-      setEmailError(true);
-    }
-  };
   // 인증번호 관련
   const [certifiNumber, setCertifiNumber] = useState("");
   const [certifiNumError, setCertifiNumError] = useState(true); // 기본적으로 true로 설정

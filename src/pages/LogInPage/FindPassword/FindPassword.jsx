@@ -22,7 +22,7 @@ export default function FindPassword() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // 이메일 리셋 인증 코드 전송 api
-    sendPasswordResetEmail(email);
+    sendPasswordResetEmail(email, navigate);
   };
 
   return (
