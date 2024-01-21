@@ -6,7 +6,7 @@ import axios from "../../assets/api/axios";
 
 import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 const Wrapper = styled.div`
-  width: 1920px;
+  width: 1920px; 
   min-height: 1080px;
   /* display: flex;
   flex-direction: column;
@@ -39,6 +39,7 @@ const Foot = styled.div`
   margin-left: 450px;
   margin-top: 30px;
   margin-bottom: 30px;
+  
 `;
 
 const Img = styled.img`
@@ -71,16 +72,16 @@ const CreateTitle = styled(BigTitle)`
 `;
 
 const SmallTitle = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+color: var(--cool-grayscale-title, #26282B);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 `;
 
 const SubText = styled.p`
-  color: var(--primary-cobalt, #4849ff);
+  color: var(--primary-cobalt, #4849FF);
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -134,8 +135,8 @@ const InputTitle = styled.input.attrs({
   placeholder: "과제 제목을 입력하세요.",
   placeholdertextcolor: "red",
 })`
-  width: ${(props) =>
-    props.selectedButton === "강의자료" ? "493px" : "525px"};
+  
+  width: ${props => props.selectedButton === '강의자료' ? '493px' : '525px'};
   height: 40px;
   border-radius: 8px;
   border: 1px solid #c9cdd2;
@@ -189,30 +190,30 @@ const SettingBox = styled.div`
 `;
 
 const LibraryButton = styled.button`
-  display: inline-flex;
-  height: 40px;
-  padding: 10px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1.5px solid rgba(201, 205, 210, 0.5);
-  background: #fff;
-  outline: none;
+display: inline-flex;
+height: 40px;
+padding: 10px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0; 
+border-radius: 8px;
+border: 1.5px solid rgba(201, 205, 210, 0.50);
+background: #FFF;
+outline: none; 
 
-  &:hover,
-  &:focus,
-  &:active {
-    outline: none;
-  }
+&:hover, &:focus, &:active {
+  outline: none; 
+}
 
-  color: var(--cool-grayscale-placeholder, #9ea4aa);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+color: var(--cool-grayscale-placeholder, #9EA4AA);
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+
 `;
 
 const Btn = styled.button`
@@ -224,16 +225,14 @@ const Btn = styled.button`
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
-  background: #f5f5fc;
-  color: ${(props) => (props.selected ? "#4849FF" : "#9E9E9E")};
-  border: none;
-  outline: none;
+  background: #F5F5FC;
+  color: ${props => props.selected ? '#4849FF' : '#9E9E9E'}; 
+  border: none; 
+  outline: none; 
 
-  &:hover,
-  &:focus,
-  &:active {
+  &:hover, &:focus, &:active {
     border: none;
-    outline: none;
+    outline: none; 
   }
 
   &.firstButton {
@@ -241,36 +240,37 @@ const Btn = styled.button`
   }
 `;
 
-const Title = styled.div`
-  display: flex;
-  margin-top: -35px;
+const Title =  styled.div`
+display: flex;
+margin-top : -35px;
 `;
 
 const FileList = styled.div`
-  margin-top: 15px;
+margin-top: 15px;
   margin-left: -300px;
 `;
 
 const FileItem = styled.div`
   width: 620px;
   height: 40px;
-  background: #f5f5fc;
+  background: #F5F5FC;
   border: 1px solid #e6e8ee;
   border-radius: 8px;
   padding: 10px;
   margin-top: 5px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-start; 
   gap: 10px;
   margin-left: 330px;
 `;
 
 const FileName = styled.span`
+  
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
+  color: var(--Cool-Grayscale-Placeholder, #9EA4AA);
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -279,7 +279,7 @@ const FileName = styled.span`
 `;
 
 const FileSize = styled.span`
-  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
+  color: var(--Cool-Grayscale-Placeholder, #9EA4AA);
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -294,14 +294,18 @@ const FileIcon = styled.img`
   margin-right: 10px;
 `;
 
+
+
+
 // Right Body 끝
 
 function AssignmentDetail() {
+  
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
   const [selectedButton, setSelectedButton] = useState("과제");
-  // 파일 상태 추가
-  const [files, setFiles] = useState([]);
+   // 파일 상태 추가
+   const [files, setFiles] = useState([]);
 
   const navigate = useNavigate();
 
@@ -329,13 +333,15 @@ function AssignmentDetail() {
     setSelectedButton(buttonType);
   };
 
+ 
+
   // 파일 업로드 핸들러
   const handleFileChange = (event) => {
     const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
+    console.log(fileUploaded); 
     if (fileUploaded) {
-      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
-      console.log(files);
+      setFiles(prevFiles => [...prevFiles, fileUploaded]);
+      console.log(files); 
     }
   };
 
@@ -350,46 +356,46 @@ function AssignmentDetail() {
       ))}
     </FileList>
   );
+  
 
+
+  
   return (
     <Wrapper>
-      <Header onClick={handleHeaderClick}>
-        <Img src={chevron_left} alt="chevron_left" />
+      <Header >
+        <Img onClick={handleHeaderClick} src={chevron_left} alt="chevron_left" />
         <BoldTitle>노트고등학교 3학년 1반 문학</BoldTitle>
       </Header>
       <Body>
+        
         <AssigmentCreateForm>
+        
+        
           <CreateTitle>과제/공지/강의자료 생성</CreateTitle>
           <Title>
-            <Btn
-              className="firstButton"
-              onClick={() => handleButtonClick("과제")}
-              selected={selectedButton === "과제"}
-            >
-              과제
-            </Btn>
-            <Btn
-              onClick={() => handleButtonClick("공지")}
-              selected={selectedButton === "공지"}
-            >
-              공지
-            </Btn>
-            <Btn
-              onClick={() => handleButtonClick("강의자료")}
-              selected={selectedButton === "강의자료"}
-            >
-              강의자료
-            </Btn>
+          <Btn
+            className="firstButton"
+            onClick={() => handleButtonClick('과제')}
+            selected={selectedButton === '과제'} 
+          >
+            과제
+          </Btn>
+          <Btn
+            onClick={() => handleButtonClick('공지')}
+            selected={selectedButton === '공지'} 
+          >
+            공지
+          </Btn>
+          <Btn
+            onClick={() => handleButtonClick('강의자료')}
+            selected={selectedButton === '강의자료'} 
+          >
+            강의자료
+          </Btn>
           </Title>
-
+         
           <HeadInput>
-            <SmallTitle>
-              {selectedButton === "과제"
-                ? "과제 제목"
-                : selectedButton === "공지"
-                ? "공지 제목"
-                : "강의자료 제목"}
-            </SmallTitle>
+            <SmallTitle>{selectedButton === '과제' ? '과제 제목' : selectedButton === '공지' ? '공지 제목' : '강의자료 제목'}</SmallTitle>
             <InputTitle
               type="text"
               name="username"
@@ -399,13 +405,7 @@ function AssignmentDetail() {
             />
           </HeadInput>
           <BodyInput>
-            <SmallTitle>
-              {selectedButton === "과제"
-                ? "과제 설정"
-                : selectedButton === "공지"
-                ? "공지 설정"
-                : "강의자료 설정"}
-            </SmallTitle>
+            <SmallTitle>{selectedButton === '과제' ? '과제 설정' : selectedButton === '공지' ? '공지 설정' : '강의자료 설정'}</SmallTitle>
             <InputDesc
               type="text"
               name="username"
@@ -415,44 +415,34 @@ function AssignmentDetail() {
             />
           </BodyInput>
           <LegInput>
-            <SmallTitle style={{ marginLeft: "-30px" }}>파일 첨부</SmallTitle>
+            <SmallTitle style={{marginLeft: "-30px"}}>파일 첨부</SmallTitle>
             <input
               type="file"
               id="fileUpload"
               style={{ display: "none" }}
-              onChange={handleFileChange}
+              onChange={handleFileChange} 
               ref={imageInput}
             />
-            <LibraryButton
-              onClick={() => imageInput.current.click()}
-              style={{ marginLeft: "15px" }}
-            >
+            <LibraryButton onClick={() => imageInput.current.click()} style={{ marginLeft: "15px" }}>
               라이브러리에서 파일 탐색
             </LibraryButton>
+            
           </LegInput>
           {renderFileList()}
           <Foot>
-            <SubmitBtn type="submit">생성하기</SubmitBtn>
+            <SubmitBtn type="submit" >생성하기</SubmitBtn>
             <CancelBtn type="submit">취소</CancelBtn>
           </Foot>
         </AssigmentCreateForm>
         <AssignmentSettingForm>
           <CreateTitle>과제 설정</CreateTitle>
           <SettingBox>
-            <SmallTitle>과제 제목</SmallTitle>
-            <SubText>20.05.01, 12:00 AM</SubText>
+            <SmallTitle>작성자</SmallTitle>
+            <SubText>김태연 선생님</SubText>
           </SettingBox>
           <SettingBox>
-            <SmallTitle>과제 종류</SmallTitle>
-            <SubText>수행평가</SubText>
-          </SettingBox>
-          <SettingBox>
-            <SmallTitle>허용된 시도</SmallTitle>
-            <SubText>2회</SubText>
-          </SettingBox>
-          <SettingBox>
-            <SmallTitle>배점</SmallTitle>
-            <SubText>100점</SubText>
+            <SmallTitle>게시일</SmallTitle>
+            <SubText>2024.01.21</SubText>
           </SettingBox>
           <SettingBox>
             <SmallTitle>할당된 그룹</SmallTitle>
