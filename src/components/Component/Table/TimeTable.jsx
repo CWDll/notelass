@@ -65,7 +65,6 @@ const timeClass = [
 const TimeTable = ({ schedule }) => {
   return (
     <TableContainer>
-      {/* <Header>시간표</Header> */}
       {schedule.map((day) => (
         <React.Fragment key={day.date}>
           <DayContainer>
