@@ -125,30 +125,27 @@ export default function Footer() {
           <CCBox>
             <BoldText>Developer</BoldText>
             <NameBox>
-              <Name>백민석</Name>
               <Name>강하현</Name>
               <Name>이창준</Name>
+              <Name>조나애</Name>
             </NameBox>
             <NameBox>
-              <Name>조나애</Name>
               <Name>신수민</Name>
-              <Name>전승석</Name>
+              <Name>이상협</Name>
             </NameBox>
           </CCBox>
 
           <SmallCCBox>
             <BoldText>Designer</BoldText>
             <NameBox>
-              <Name>기혜림</Name>
+              <Name>박정주</Name>
             </NameBox>
-            <NameBox>
-              <Name>유주하</Name>
-            </NameBox>
+  
           </SmallCCBox>
 
           <SmallCCBox>
-            <BoldText>Sales</BoldText>
-            <NameBox>이상윤</NameBox>
+            <BoldText>Product Manager</BoldText>
+            <NameBox>백지원</NameBox>
           </SmallCCBox>
           <CCBox2>
             <BoldText>대표자: 조창익</BoldText>
