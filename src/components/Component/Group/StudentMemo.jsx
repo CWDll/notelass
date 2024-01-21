@@ -142,21 +142,14 @@ function StudentMemo() {
                   marginTop: "-20PX",
                 }}
               >
-                {/* <S.TimeText
+                <S.TimeText
                   onClick={() => {
                     handleStudentBookEdit(entry.id);
                     setShowStudentBook(!showStudentBook);
                   }}
                 >
                   수정
-                </S.TimeText> */}
-                <S.TimeText
-                    onClick={async () => {
-                        await handleStudentBookEdit(entry.id);
-                    }}
-                    >
-                    수정
-                    </S.TimeText>
+                </S.TimeText>
 
                 <S.TimeText onClick={() => deleteStudentBookEntry(entry.id)}>
                   삭제
