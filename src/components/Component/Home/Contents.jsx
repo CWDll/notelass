@@ -27,7 +27,17 @@ function Contents() {
   };
 
   const onClick = () => {
-    navigate("/NoticeDetail");
+    switch (activeTab) {
+      case "notices":
+        navigate("/NoticeDetail");
+        break;
+      case "timetable":
+        navigate("/TimeTableDetail");
+        break;
+      case "mealtable":
+        navigate("/MealTableDetail");
+        break;
+    }
   };
 
   // TimeTable 목데이터

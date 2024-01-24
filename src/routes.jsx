@@ -36,7 +36,7 @@ export const routes = [
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/Home", index: true, element: <Home /> }, // path="/" index
+      { path: "/Home", element: <Home />, index: true }, // path="/" index
       { path: "/TimeTable", element: <TimeTable />, index: true },
       { path: "/MealTable", element: <MealTable />, index: true },
       { path: "/Introduce", element: <Introduce />, index: true },
