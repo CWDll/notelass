@@ -373,25 +373,16 @@ function AssignmentDetail() {
         
           <CreateTitle>과제/공지/강의자료 생성</CreateTitle>
           <Title>
-          <Btn
-            className="firstButton"
-            onClick={() => handleButtonClick('과제')}
-            selected={selectedButton === '과제'} 
-          >
-            과제
-          </Btn>
-          <Btn
-            onClick={() => handleButtonClick('공지')}
-            selected={selectedButton === '공지'} 
-          >
-            공지
-          </Btn>
-          <Btn
-            onClick={() => handleButtonClick('강의자료')}
-            selected={selectedButton === '강의자료'} 
-          >
-            강의자료
-          </Btn>
+            {['과제', '공지', '강의자료'].map((value, index) => (
+              <Btn
+                key={value}
+                className={index === 0 ? 'firstButton' : ''}
+                onClick={() => handleButtonClick(value)}
+                selected={selectedButton === value}
+              >
+                {value}
+              </Btn>
+            ))}
           </Title>
          
           <HeadInput>
