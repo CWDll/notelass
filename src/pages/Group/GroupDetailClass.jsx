@@ -414,11 +414,11 @@ function GroupDetailClass() {
                 height: "100%",
               }}
             >
-              준비 중입니다.
+             
             </Title>
 
             {/* 그룹별 공지사항 목록 조회*/}
-            {/* <SubjectContainer>
+            <SubjectContainer>
               {notices.map((notice, index) => (
                 <StyledNoticeItem
                   key={notice.id}
@@ -435,10 +435,10 @@ function GroupDetailClass() {
                         {new Date(notice.createdDate).toLocaleDateString()}
                       </NoticeDate>
                     )}
-                  </NoticeContent> */}
-            {/* </StyledNoticeItem>
+                  </NoticeContent>
+            </StyledNoticeItem>
               ))}
-            </SubjectContainer> */}
+            </SubjectContainer>
           </NoticeContainer>
 
           <GroupContainer>
@@ -450,7 +450,7 @@ function GroupDetailClass() {
               더보기
             </DetailText>
             <SubjectContainer>
-              {/* <NoticeContent>
+              <NoticeContent>
                 <NoticeImg src={file} alt="file" />
                 <NoticeTitle>과제4</NoticeTitle>
               </NoticeContent>
@@ -465,7 +465,7 @@ function GroupDetailClass() {
               <NoticeContent>
                 <NoticeImg src={file} alt="file" />
                 <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-              </NoticeContent> */}
+              </NoticeContent>
 
               <Title
                 style={{
@@ -476,7 +476,7 @@ function GroupDetailClass() {
                   height: "100%",
                 }}
               >
-                준비 중입니다.
+               
               </Title>
             </SubjectContainer>
           </GroupContainer>
@@ -490,7 +490,7 @@ function GroupDetailClass() {
               더보기
             </DetailText>
             <SubjectContainer>
-              {/* <NoticeContent onClick={StudentScoreDetail}>
+              <NoticeContent onClick={StudentScoreDetail}>
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>1</SudentNum>
                 <NoticeTitle>김민수</NoticeTitle>
@@ -504,7 +504,7 @@ function GroupDetailClass() {
                 <NoticeImg src={person} alt="person" />
                 <SudentNum>3</SudentNum>
                 <NoticeTitle>김민수</NoticeTitle>
-              </NoticeContent> */}
+              </NoticeContent>
 
               <Title
                 style={{
@@ -515,7 +515,7 @@ function GroupDetailClass() {
                   height: "100%",
                 }}
               >
-                준비 중입니다.
+            
               </Title>
             </SubjectContainer>
           </GroupContainer>
