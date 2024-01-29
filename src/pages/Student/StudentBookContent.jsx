@@ -51,10 +51,14 @@ const SmallContainer = styled.div`
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed;
-  top: 50%;
+  margin-left: 900px;
+  margin-top: 450px;
+  top: 500px;
   left: 50%;
   width: 760px;
   transform: translate(-50%, -50%);
+
+  cursor: grab;
 `;
 
 const StudentSelect = styled.select`
@@ -219,6 +223,31 @@ function StudentBookContent({
   const [attitudeCount, setAttitudeCount] = useState(0);
 
   const [groups, setGroups] = useState([]); // useEffect용 그룹 데이터를 저장할 상태 추가
+
+  //test 드래그 관련 상태
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setOffset({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const newX = e.clientX - offset.x;
+      const newY = e.clientY - offset.y;
+      setPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   useEffect(() => {
     console.log(
@@ -445,7 +474,17 @@ function StudentBookContent({
   };
 
   return (
-    <SmallContainer onClick={(e) => e.stopPropagation()}>
+    <SmallContainer
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={handleMouseDown}
+      onMouseMove={isDragging ? handleMouseMove : null}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp} // 드래그 중 컴포넌트를 벗어났을 때
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+    >
       {contentId ? null : (
         <>
           <GroupSelect value={selectedGroup} onChange={handleGroupChange}>
