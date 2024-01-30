@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import personimg from "../../assets/personimg.svg";
@@ -7,28 +7,13 @@ import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
 import instance from "../../assets/api/axios";
 
-
-// const NavContainer = styled.div`
-//   width: 1920px;
-//   height: 84px;
-//   background-color: white;
-//   display: flex;
-//   align-items: center;
-//   padding: 0px 20px 0px 20px;
-//
-//
-// `;
-
 const NavContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 84px;
   background-color: white;
   display: flex;
   align-items: center;
 
-   {
-    /*임시*/
-  }
   justify-content: space-between;
   padding: 0px 0px 0px 20px;
 `;
@@ -40,27 +25,20 @@ const Notelass = styled.h2`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-   {
-    /*margin-left: 12;*/
-  }
   white-space: nowrap;
-
-   {
-    /*임시*/
-  }
-  margin-left: -250px;
+  margin-left: -180px;
 `;
 
 const NavItemContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: auto;
-  margin-left: 358px;
+  width: 50vw;
+  /* margin-left: 358px; */
 `;
 
 const NavItems = styled.span`
-  width: 100px;
+  width: auto;
   color: #9ea4aa;
 
   font-size: 20px;
@@ -74,7 +52,7 @@ const NavItems = styled.span`
   margin: 0px 20px 0px 20px;
 
   cursor: pointer;
-  margin-left: 250px;
+  /* margin-left: 250px; */
 `;
 
 const SignBtnContainer = styled.div`
@@ -82,7 +60,7 @@ const SignBtnContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: auto;
-  margin-left: 406px;
+  /* margin-left: 406px; */
 `;
 
 const SignInBtn = styled.span`
@@ -231,7 +209,7 @@ export default function Nav() {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
-    navigate("/");
+    navigate("/home");
   };
   const navigateToIntroduce = () => {
     navigate("/introduce");
@@ -267,14 +245,14 @@ export default function Nav() {
     }
   };
 
-  
   //생활기록부 파일 삭제 DELETE 함수
   const deleteFile = async (paramsGroupId) => {
     try {
       const response = await instance.delete(
-        `/api/record/excel/${paramsGroupId}`,{
+        `/api/record/excel/${paramsGroupId}`,
+        {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -345,12 +323,11 @@ export default function Nav() {
   return (
     <NavContainer>
       <Imgbox>
-        {" "}
-        <LogoImg src={logo} alt="logo" onClick={navigateToGroupDetail} />{" "}
+        <LogoImg src={logo} alt="logo" onClick={navigateToHome} />
       </Imgbox>
       <Notelass> Note-lass</Notelass>
       <NavItemContainer>
-        {/* <NavItems
+        <NavItems
           isSelected={selectedItemIndex === 0}
           onClick={() => {
             handleNavItemClick(0), navigateToIntroduce();
@@ -366,7 +343,7 @@ export default function Nav() {
           }}
         >
           홈
-        </NavItems> */}
+        </NavItems>
 
         <NavItems
           isSelected={selectedItemIndex === 2}
@@ -377,7 +354,7 @@ export default function Nav() {
           그룹
         </NavItems>
 
-        {/* <NavItems
+        <NavItems
           isSelected={selectedItemIndex === 3}
           onClick={() => {
             handleNavItemClick(3), navigateToNote();
@@ -393,7 +370,7 @@ export default function Nav() {
           }}
         >
           환경설정
-        </NavItems> */}
+        </NavItems>
       </NavItemContainer>
       <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
