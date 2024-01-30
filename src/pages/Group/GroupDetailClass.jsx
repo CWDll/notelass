@@ -240,8 +240,8 @@ function GroupDetailClass() {
   const onClick = () => {
     // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
     // 검증용으로 기능 막아둠.
-    // navigate("/GroupDetailClass/AssignmentDetail");
-    alert("준비중입니다.");
+    navigate("/GroupDetailClass/AssignmentDetail");
+    // alert("준비중입니다.");
   };
   const GroupDetailWrite = (
     paramsGruopId,
@@ -413,13 +413,11 @@ function GroupDetailClass() {
                 marginTop: "-50px",
                 height: "100%",
               }}
-            >
-             
-            </Title>
+            ></Title>
 
             {/* 그룹별 공지사항 목록 조회*/}
             <SubjectContainer>
-              {notices.map((notice, index) => (
+              {/* {notices.map((notice, index) => (
                 <StyledNoticeItem
                   key={notice.id}
                   onClick={() => handleOnClick(index)}
@@ -436,8 +434,8 @@ function GroupDetailClass() {
                       </NoticeDate>
                     )}
                   </NoticeContent>
-            </StyledNoticeItem>
-              ))}
+                </StyledNoticeItem>
+              ))} */}
             </SubjectContainer>
           </NoticeContainer>
 
@@ -475,9 +473,7 @@ function GroupDetailClass() {
                   marginTop: "50px",
                   height: "100%",
                 }}
-              >
-               
-              </Title>
+              ></Title>
             </SubjectContainer>
           </GroupContainer>
 
@@ -514,9 +510,7 @@ function GroupDetailClass() {
                   marginTop: "50px",
                   height: "100%",
                 }}
-              >
-            
-              </Title>
+              ></Title>
             </SubjectContainer>
           </GroupContainer>
         </LeftSectionContainer>

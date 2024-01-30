@@ -50,8 +50,16 @@ export const routes = [
         path: "/GroupDetailClass/AssignmentDetail",
         element: <AssignmentDetail />,
       },
-      { path: "/StudentScoreDetail", element: <StudentScoreDetail /> },
-      { path: "/StudentTaskDetail", element: <StudentTaskDetail /> },
+      {
+        path: "/StudentScoreDetail",
+        element: <StudentScoreDetail />,
+        index: true,
+      },
+      {
+        path: "/StudentTaskDetail",
+        element: <StudentTaskDetail />,
+        index: true,
+      },
       { path: "/GroupScoreDetail", element: <GroupScoreDetail />, index: true },
       {
         path: "/GroupDetailWrite/:paramsGroupId/:paramsUserId",
