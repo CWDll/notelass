@@ -60,7 +60,7 @@ export const routes = [
       },
       { path: "/TasksDetail", element: <TasksDetail />, index: true },
       { path: "/Note", element: <Note />, index: true },
-      { path: "/Note", element: <NoteDetail />, index: true },
+      { path: "/Notedetail", element: <NoteDetail />, index: true },
       {
         path: "/NoteDetailSubject",
         element: <NoteDetailSubject />,
