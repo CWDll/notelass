@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
@@ -13,6 +13,12 @@ import * as S from "../Style/AssignmentStyle"
 // Right Body 끝
 
 function AssignmentDetail() {
+
+  const { paramsGroupId, paramsUserId } = useParams();
+  const location = useLocation();
+  // console.log("location: ", location);
+  const info = location.state;
+  // console.log("info:", info);
   
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
@@ -58,6 +64,26 @@ function AssignmentDetail() {
     }
   };
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    if (selectedButton === '공지') {
+      try {
+        // 공지 생성 POST API
+        const response = await axios.post(`/api/notice/${paramsGroupId}`, {
+          title: assignmentName,
+          content: assignmentDesc
+        });
+        
+        console.log(response.data.message);
+        
+      } catch (error) {
+        console.error('공지 생성 요청 실패:', error);
+      }
+    }
+  };
+  
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
@@ -81,7 +107,7 @@ function AssignmentDetail() {
       </S.Header>
       <S.Body>
         
-        <S.AssigmentCreateForm>
+        <S.AssigmentCreateForm onSubmit={handleSubmit}>
         
         
           <S.CreateTitle>과제/공지/강의자료 생성</S.CreateTitle>

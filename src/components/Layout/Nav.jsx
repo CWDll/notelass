@@ -26,11 +26,7 @@ const NavContainer = styled.div`
   display: flex;
   align-items: center;
 
-   {
-    /*임시*/
-  }
-  justify-content: space-between;
-  padding: 0px 0px 0px 20px;
+ 
 `;
 
 const Notelass = styled.h2`
@@ -350,7 +346,7 @@ export default function Nav() {
       </Imgbox>
       <Notelass> Note-lass</Notelass>
       <NavItemContainer>
-        {/* <NavItems
+        <NavItems
           isSelected={selectedItemIndex === 0}
           onClick={() => {
             handleNavItemClick(0), navigateToIntroduce();
@@ -366,7 +362,7 @@ export default function Nav() {
           }}
         >
           홈
-        </NavItems> */}
+        </NavItems>
 
         <NavItems
           isSelected={selectedItemIndex === 2}
@@ -377,7 +373,7 @@ export default function Nav() {
           그룹
         </NavItems>
 
-        {/* <NavItems
+        <NavItems
           isSelected={selectedItemIndex === 3}
           onClick={() => {
             handleNavItemClick(3), navigateToNote();
@@ -393,7 +389,7 @@ export default function Nav() {
           }}
         >
           환경설정
-        </NavItems> */}
+        </NavItems>
       </NavItemContainer>
       <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
