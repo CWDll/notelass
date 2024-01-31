@@ -419,7 +419,7 @@ function GroupDetailClass() {
 
             {/* 그룹별 공지사항 목록 조회*/}
             <SubjectContainer>
-              {notices.map((notice, index) => (
+              {/* {notices.map((notice, index) => (
                 <StyledNoticeItem
                   key={notice.id}
                   onClick={() => handleOnClick(index)}
@@ -437,7 +437,7 @@ function GroupDetailClass() {
                     )}
                   </NoticeContent>
             </StyledNoticeItem>
-              ))}
+              ))} */}
             </SubjectContainer>
           </NoticeContainer>
 
