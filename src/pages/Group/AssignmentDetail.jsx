@@ -10,7 +10,7 @@ import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
 import * as S from "../Style/AssignmentStyle"
 
-// Right Body 끝
+
 
 function AssignmentDetail() {
 
@@ -90,18 +90,15 @@ function AssignmentDetail() {
             'Content-Type': 'multipart/form-data'
           }
         });
-        
-       // 성공적으로 생성된 경우 사용자에게 알림
-       console.log('공지가 성공적으로 생성되었습니다:', response.data);
-       alert('공지가 성공적으로 생성되었습니다.');
-  
-       // 공지 ID 추출
+
        const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
        console.log('생성된 공지의 ID:', noticeId);
        
      } catch (error) {
-       console.error('공지 생성 요청 실패:', error);
-       alert('공지 생성에 실패했습니다. 오류를 확인해주세요.');
+
+       console.error('공지 생성 실패:', error);
+       alert('공지 생성에 실패했습니다. ');
+
      }
    }
   };

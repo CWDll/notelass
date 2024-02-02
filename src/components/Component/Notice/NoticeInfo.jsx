@@ -8,6 +8,7 @@ export default function NoticeInfo()
     return (
         <>
         <S.SettingBox>
+
             <S.SmallTitle>작성자</S.SmallTitle>
             <S.SubText>김태연 선생님</S.SubText>
           </S.SettingBox>
