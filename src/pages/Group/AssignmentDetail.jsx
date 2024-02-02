@@ -90,18 +90,15 @@ function AssignmentDetail() {
             'Content-Type': 'multipart/form-data'
           }
         });
-        
-     
-       console.log('공지가 성공적으로 생성되었습니다:', response.data);
-       alert('공지가 성공적으로 생성되었습니다.');
-  
-      
+
        const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
        console.log('생성된 공지의 ID:', noticeId);
        
      } catch (error) {
+
        console.error('공지 생성 실패:', error);
        alert('공지 생성에 실패했습니다. ');
+
      }
    }
   };

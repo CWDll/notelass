@@ -91,6 +91,7 @@ import {
   CustomDiv,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
+
 export function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();

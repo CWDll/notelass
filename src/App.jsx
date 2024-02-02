@@ -1,38 +1,21 @@
-import { useState } from "react";
-import "./App.css"
+import "./App.css";
 import React from "react";
-import Home from "./components/MainPage/Home";
-import Layout from "./components/Layout/Layout";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import GroupDetail from "./components/Component/GroupDetail";
-import Introduce from "./components/MainPage/Introduce";
-import Note from "./components/MainPage/Note";
-import Setting from "./components/MainPage/Setting";
-import TasksDetail from "./components/Component/TasksDetail";
-import NoteDetail from "./components/Component/NoteDetail";
-import NoteDetailSubject from "./components/Component/NoteDetailSubject";
-import GroupDetailClass from "./components/Component/GroupDetailClass";
-import GroupDetailWrite from "./components/Component/GroupDetailWrite";
+import { Provider } from "react-redux";
+import { useRoutes } from "react-router-dom";
+import store from "./store";
+import { routes } from "./routes";
+
+import ReactGA from "react-ga4";
+ReactGA.initialize("G-QSTTQEGWWQ");
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/Introduce" element={<Introduce />} />
-          <Route path="/GroupDetail" element={<GroupDetail />} />
-            <Route path="/GroupDetailClass" element={<GroupDetailClass />} />
-            <Route path="/GroupDetailWrite" element={<GroupDetailWrite />} />
+  // useRoutes를 호출해 라우트 구성을 가져옴. 앞으로 모든 route 경로는 ./route.jsx에 추가하여 사용 !
+  const routeElement = useRoutes(routes);
 
-          <Route path="/TasksDetail" element={<TasksDetail />} />
-          <Route path="/Note" element={<Note />} />
-            <Route path="/Note" element={<NoteDetail />} />
-            <Route path="/NoteDetailSubject" element={<NoteDetailSubject />} />
-          <Route path="/Setting" element={<Setting />} />
-        </Route>
-      </Routes>
-    </Router>
+  return (
+    <Provider store={store}>
+      {routeElement} {/* 라우트 구성을 여기에 포함 */}
+    </Provider>
   );
 }
 
