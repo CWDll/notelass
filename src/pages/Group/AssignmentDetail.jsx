@@ -14,7 +14,7 @@ import * as S from "../Style/AssignmentStyle"
 
 function AssignmentDetail() {
 
-  const { paramsGroupId, paramsUserId } = useParams();
+  const { paramsGroupId, id,groupId  } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
@@ -66,21 +66,44 @@ function AssignmentDetail() {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (selectedButton === '공지') {
       try {
         // 공지 생성 POST API
-        const response = await axios.post(`/api/notice/${paramsGroupId}`, {
+        const formData = new FormData();
+        
+        const noticeDto = JSON.stringify({
           title: assignmentName,
-          content: assignmentDesc
+          content: assignmentDesc,
+        });
+        const blob = new Blob([noticeDto], {
+          type: 'application/json'
+        });
+        formData.append('noticeDto', blob);
+  
+        files.forEach((file, index) => {
+          formData.append(`file`, file);
+        });
+  
+        const response = await axios.post(`/api/notice/${paramsGroupId}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         });
         
-        console.log(response.data.message);
-        
-      } catch (error) {
-        console.error('공지 생성 요청 실패:', error);
-      }
-    }
+       // 성공적으로 생성된 경우 사용자에게 알림
+       console.log('공지가 성공적으로 생성되었습니다:', response.data);
+       alert('공지가 성공적으로 생성되었습니다.');
+  
+       // 공지 ID 추출
+       const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
+       console.log('생성된 공지의 ID:', noticeId);
+       
+     } catch (error) {
+       console.error('공지 생성 요청 실패:', error);
+       alert('공지 생성에 실패했습니다. 오류를 확인해주세요.');
+     }
+   }
   };
   
 
@@ -107,7 +130,7 @@ function AssignmentDetail() {
       </S.Header>
       <S.Body>
         
-        <S.AssigmentCreateForm onSubmit={handleSubmit}>
+        <S.AssigmentCreateForm >
         
         
           <S.CreateTitle>과제/공지/강의자료 생성</S.CreateTitle>
@@ -160,7 +183,7 @@ function AssignmentDetail() {
           </S.LegInput>
           {renderFileList()}
           <S.Foot>
-            <S.SubmitBtn type="submit" >생성하기</S.SubmitBtn>
+            <S.SubmitBtn type="submit" onClick={handleSubmit}>생성하기</S.SubmitBtn>
             <S.CancelBtn type="submit">취소</S.CancelBtn>
           </S.Foot>
         </S.AssigmentCreateForm>
