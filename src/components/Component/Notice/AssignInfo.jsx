@@ -18,6 +18,7 @@ export default function  AssignInfo()
           <S.SettingBox>
             <S.SmallTitle>전체 배점</S.SmallTitle>
             <S.SubText>100점</S.SubText>
+            <S.Qbtn>문제당 배점</S.Qbtn>
           </S.SettingBox>
           <S.SettingBox>
             <S.SmallTitle>할당된 그룹</S.SmallTitle>

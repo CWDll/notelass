@@ -65,6 +65,7 @@ function AssignmentDetail() {
   };
 
 
+  // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -94,7 +95,7 @@ function AssignmentDetail() {
         });
         
         const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
-        console.log('공지가 성공적으로 생성되었습니다:', response.data);
+        console.log('공지 생성 완료:', response.data);
         console.log('생성된 공지의 ID:', noticeId);
         alert('공지가 성공적으로 생성되었습니다.');
         
@@ -102,6 +103,7 @@ function AssignmentDetail() {
         console.error('공지 생성 실패:', error);
         alert('공지 생성에 실패했습니다.');
       }
+
     //강의자료 생성 POST API  
     } else if (selectedButton === '강의자료') {
       try {
@@ -125,7 +127,7 @@ function AssignmentDetail() {
         });
         
         const materialId = response.data.message.match(/강의자료 ID: (\d+)/)[1];
-        console.log('강의 자료가 성공적으로 생성되었습니다:', response.data);
+        console.log('강의 자료 생성 완료:', response.data);
         console.log('생성된 강의 자료의 ID:', materialId);
         alert('강의 자료가 성공적으로 생성되었습니다.');
         
@@ -135,6 +137,9 @@ function AssignmentDetail() {
       }
     }
   };
+
+
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
