@@ -148,6 +148,13 @@ function AssignmentDetail() {
               value={assignmentName}
               onChange={onChangeName}
               selectedButton={selectedButton}
+              placeholder={
+                selectedButton === "과제"
+                  ? "과제 설명을 입력하세요."
+                  : selectedButton === "공지"
+                  ? "공지 내용을 입력하세요."
+                  : "강의자료 설명을 입력하세요."
+              }
             />
           </S.HeadInput>
           <S.BodyInput>
@@ -164,6 +171,13 @@ function AssignmentDetail() {
               value={assignmentDesc}
               onChange={onChangeDesc}
               selectedButton={selectedButton}
+              placeholder={
+                selectedButton === "과제"
+                  ? "과제 설명을 입력하세요."
+                  : selectedButton === "공지"
+                  ? "공지 내용을 입력하세요."
+                  : "강의자료 설명을 입력하세요."
+              }
             />
           </S.BodyInput>
           <S.LegInput>

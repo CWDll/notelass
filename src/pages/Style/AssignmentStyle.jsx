@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 1920px; 
+  width: 1920px;
   min-height: 1080px;
   /* display: flex;
   flex-direction: column;
@@ -34,7 +34,6 @@ export const Foot = styled.div`
   margin-left: 450px;
   margin-top: 30px;
   margin-bottom: 30px;
-  
 `;
 
 export const Img = styled.img`
@@ -67,16 +66,16 @@ export const CreateTitle = styled(BigTitle)`
 `;
 
 export const SmallTitle = styled.p`
-color: var(--cool-grayscale-title, #26282B);
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 export const SubText = styled.p`
-  color: var(--primary-cobalt, #4849FF);
+  color: var(--primary-cobalt, #4849ff);
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -130,8 +129,8 @@ export const InputTitle = styled.input.attrs({
   placeholder: "과제 제목을 입력하세요.",
   placeholdertextcolor: "red",
 })`
-  
-  width: ${props => props.selectedButton === '강의자료' ? '493px' : '525px'};
+  width: ${(props) =>
+    props.selectedButton === "강의자료" ? "493px" : "525px"};
   height: 40px;
   border-radius: 8px;
   border: 1px solid #c9cdd2;
@@ -139,10 +138,7 @@ export const InputTitle = styled.input.attrs({
   margin-left: 24px;
 `;
 
-export const InputDesc = styled.textarea.attrs({
-  placeholder: "과제 설명을 입력하세요.",
-  placeholdertextcolor: "red",
-})`
+export const InputDesc = styled.textarea`
   width: 620px;
   height: 320px;
   /* background-color: purple; */
@@ -185,30 +181,30 @@ export const SettingBox = styled.div`
 `;
 
 export const LibraryButton = styled.button`
-    display: inline-flex;
-    height: 40px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0; 
-    border-radius: 8px;
-    border: 1.5px solid rgba(201, 205, 210, 0.50);
-    background: #FFF;
-    outline: none; 
+  display: inline-flex;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1.5px solid rgba(201, 205, 210, 0.5);
+  background: #fff;
+  outline: none;
 
-    &:hover, &:focus, &:active {
-    outline: none; 
-    }
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
-    color: var(--cool-grayscale-placeholder, #9EA4AA);
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-
-
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 export const Btn = styled.button`
@@ -220,14 +216,16 @@ export const Btn = styled.button`
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
-  background: #F5F5FC;
-  color: ${props => props.selected ? '#4849FF' : '#9E9E9E'}; 
-  border: none; 
-  outline: none; 
+  background: #f5f5fc;
+  color: ${(props) => (props.selected ? "#4849FF" : "#9E9E9E")};
+  border: none;
+  outline: none;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     border: none;
-    outline: none; 
+    outline: none;
   }
 
   &.firstButton {
@@ -235,37 +233,36 @@ export const Btn = styled.button`
   }
 `;
 
-export const Title =  styled.div`
-display: flex;
-margin-top : -35px;
+export const Title = styled.div`
+  display: flex;
+  margin-top: -35px;
 `;
 
 export const FileList = styled.div`
-margin-top: 15px;
+  margin-top: 15px;
   margin-left: -300px;
 `;
 
 export const FileItem = styled.div`
   width: 620px;
   height: 40px;
-  background: #F5F5FC;
+  background: #f5f5fc;
   border: 1px solid #e6e8ee;
   border-radius: 8px;
   padding: 10px;
   margin-top: 5px;
   display: flex;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   gap: 10px;
   margin-left: 330px;
 `;
 
 export const FileName = styled.span`
-  
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--Cool-Grayscale-Placeholder, #9EA4AA);
+  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -274,7 +271,7 @@ export const FileName = styled.span`
 `;
 
 export const FileSize = styled.span`
-  color: var(--Cool-Grayscale-Placeholder, #9EA4AA);
+  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -290,8 +287,8 @@ export const FileIcon = styled.img`
 `;
 
 export const NoticeInfo = styled.div`
-  display: flex
-  `;
+  display: flex;
+`;
 
 export const AssignInfo = styled.div`
 display
