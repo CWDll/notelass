@@ -290,16 +290,21 @@ export const FileIcon = styled.img`
 `;
 
 export const NoticeInfo = styled.div`
-  display: flex
+  display: flex;
   `;
 
 export const AssignInfo = styled.div`
-display
+  display: flex;
 `;
 
-export const Qbtn = styled.div`
+export const QuestionList = styled.div`
+  position: absolute;
+`;
+
+
+export const Qbtn = styled.button`
 display: inline-flex;
-width: 100px;
+width: 105px;
 height: 40px;
 padding: 11px 12px;
 justify-content: center;
