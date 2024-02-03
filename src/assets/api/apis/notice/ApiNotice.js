@@ -1,6 +1,6 @@
 import instance from "../../axios";
 
-export const getAllNotce = async (onSuccess) => {
+export const getAllNotice = async (onSuccess) => {
   try {
     const res = await instance.get(`/api/notice`);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style";
 import { getAllNotice } from "../../assets/api/apis/notice/ApiNotice";
@@ -10,6 +10,7 @@ function NoticeDetail() {
 
   useEffect(() => {
     getAllNotice(setNotices);
+    console.log(notices);
   }, []);
 
   function BackButton() {
@@ -26,7 +27,7 @@ function NoticeDetail() {
       </S.Breadcrumb>
       <S.TopBar>
         <S.BoldText>
-          총 <S.ColoredBoldText>4</S.ColoredBoldText>개
+          총 <S.ColoredBoldText>{notices.length}</S.ColoredBoldText>개
         </S.BoldText>
         <S.SearchInput>
           <S.DropdownContainer>
