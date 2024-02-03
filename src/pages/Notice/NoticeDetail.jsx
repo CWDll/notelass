@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as S from "./style";
 import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
 function NoticeDetail() {
+  const navigate = useNavigate();
+
   function BackButton() {
-    alert("백 버튼 클릭 이벤트 발생!");
+    navigate(-1);
   }
 
   const [isOpen, setIsOpen] = useState(false);

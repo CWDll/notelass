@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ItemWrapper = styled.div`
   width: 1194px;
-  height: 179px;
+  height: 154px;
   border-radius: 10px;
   background-color: #ffffff;
   padding: 30px 30px;
