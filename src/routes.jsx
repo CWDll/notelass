@@ -47,7 +47,7 @@ export const routes = [
         index: true,
       },
       {
-        path: "/GroupDetailClass/AssignmentDetail",
+        path: "/GroupDetailClass/:paramsGroupId/AssignmentDetail",
         element: <AssignmentDetail />,
       },
       {

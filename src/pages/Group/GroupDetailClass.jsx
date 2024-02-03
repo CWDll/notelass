@@ -210,13 +210,13 @@ function GroupDetailClass() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
 
+
   const navigate = useNavigate();
-  const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
+  const {  id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
-    // "더보기" 텍스트를 클릭하면 AssignmentDetail 페이지로 이동
-    // 검증용으로 기능 막아둠.
-    navigate("/GroupDetailClass/AssignmentDetail");
-    // alert("준비중입니다.");
+    
+     navigate(`/GroupDetailClass/${id}/AssignmentDetail`);
+    
   };
   const GroupDetailWrite = (
     paramsGruopId,
@@ -331,6 +331,26 @@ function GroupDetailClass() {
     document.body.removeChild(link);
   };
 
+  // 공지사항 GET API
+
+  const [notices, setNotices] = useState([]);
+  const fetchNotices = async () => {
+    try {
+      const response = await instance.get(`/api/notice/group/${paramsGroupId}`);
+      // API 응답에서 result 키의 값을 사용하여 상태를 설정합니다.
+      if (response.data && response.data.result) {
+        setNotices(response.data.result);
+      }
+    } catch (error) {
+      console.error("공지사항을 가져오지 못했습니다.:", error.message);
+    }
+  };
+  
+  useEffect(() => {
+    fetchStudents();
+    fetchNotices();
+  }, []);
+
   return (
     <>
       <Header>
@@ -407,7 +427,7 @@ function GroupDetailClass() {
                     )}
                   </NoticeContent>
                 </StyledNoticeItem>
-              ))} */}
+              ))}
             </SubjectContainer>
           </NoticeContainer>
 

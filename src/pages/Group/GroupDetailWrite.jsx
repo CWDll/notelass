@@ -92,29 +92,6 @@ import {
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 
-// // 글자 바이트 수 계산
-// const calculateByteCount = (text) => {
-//   let byteCount = 0;
-
-//   for (let i = 0; i < text.length; i++) {
-//     const charCode = text.charCodeAt(i);
-
-//     if (charCode <= 0x7f) {
-//       byteCount += 1;
-//     } else if (charCode <= 0x7ff) {
-//       byteCount += 2;
-//     } else if (charCode <= 0xffff) {
-//       byteCount += 3;
-//     } else {
-//       byteCount += 4;
-//     }
-//   }
-
-//   return byteCount;
-// };
-
-
-
 export function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();
