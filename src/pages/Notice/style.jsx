@@ -28,7 +28,7 @@ export const BoldText = styled.p`
 
 export const TopBar = styled.div`
   /* width: 1120px; */
-  width: 1120px;
+  width: 1194px;
   display: flex;
   justify-content: space-between;
   background-color: blue;
@@ -82,7 +82,7 @@ export const Input = styled.input``;
 export const SearchButton = styled.button``;
 
 export const ItemsContainer = styled.div`
-  width: 1120px;
+  width: 1194px;
   height: 300px;
   background-color: black;
 `;

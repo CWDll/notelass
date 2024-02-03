@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./style";
+import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
 function NoticeDetail() {
   function BackButton() {
@@ -30,7 +31,9 @@ function NoticeDetail() {
           <S.SearchButton>찾기</S.SearchButton>
         </S.SearchInput>
       </S.TopBar>
-      <S.ItemsContainer></S.ItemsContainer>
+      <S.ItemsContainer>
+        <NoticeDetailcard />
+      </S.ItemsContainer>
     </S.Container>
   );
 }
