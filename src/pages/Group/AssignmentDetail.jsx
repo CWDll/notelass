@@ -8,30 +8,25 @@ import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../../components/Component/Notice/AssignInfo";
 import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
-import * as S from "../Style/AssignmentStyle"
-
-
+import * as S from "../Style/AssignmentStyle";
 
 function AssignmentDetail() {
-
-  const { paramsGroupId, id,groupId  } = useParams();
+  const { paramsGroupId, id, groupId } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
   // console.log("info:", info);
-  
+
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
   const [selectedButton, setSelectedButton] = useState("과제");
-   // 파일 상태 추가
-   const [files, setFiles] = useState([]);
+  // 파일 상태 추가
+  const [files, setFiles] = useState([]);
 
   const navigate = useNavigate();
-
-  // Header를 클릭할 때 실행할 핸들러
+  // 헤더 클릭하여 뒤로가기
   const handleHeaderClick = () => {
-    // 원하는 경로로 이동
-    navigate("/GroupDetailClass");
+    navigate(-1);
   };
 
   const onChangeName = (e) => {
@@ -52,57 +47,54 @@ function AssignmentDetail() {
     setSelectedButton(buttonType);
   };
 
- 
-
   // 파일 업로드 핸들러
   const handleFileChange = (event) => {
     const fileUploaded = event.target.files[0];
-    console.log(fileUploaded); 
+    console.log(fileUploaded);
     if (fileUploaded) {
-      setFiles(prevFiles => [...prevFiles, fileUploaded]);
-      console.log(files); 
+      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
+      console.log(files);
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (selectedButton === '공지') {
+    if (selectedButton === "공지") {
       try {
         // 공지 생성 POST API
         const formData = new FormData();
-        
+
         const noticeDto = JSON.stringify({
           title: assignmentName,
           content: assignmentDesc,
         });
         const blob = new Blob([noticeDto], {
-          type: 'application/json'
+          type: "application/json",
         });
-        formData.append('noticeDto', blob);
-  
+        formData.append("noticeDto", blob);
+
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
-  
-        const response = await axios.post(`/api/notice/${paramsGroupId}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+
+        const response = await axios.post(
+          `/api/notice/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        });
+        );
 
-       const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
-       console.log('생성된 공지의 ID:', noticeId);
-       
-     } catch (error) {
-
-       console.error('공지 생성 실패:', error);
-       alert('공지 생성에 실패했습니다. ');
-
-     }
-   }
+        const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
+        console.log("생성된 공지의 ID:", noticeId);
+      } catch (error) {
+        console.error("공지 생성 실패:", error);
+        alert("공지 생성에 실패했습니다. ");
+      }
+    }
   };
-  
 
   const renderFileList = () => (
     <S.FileList>
@@ -115,27 +107,25 @@ function AssignmentDetail() {
       ))}
     </S.FileList>
   );
-  
 
-
-  
   return (
     <S.Wrapper>
-      <S.Header >
-        <S.Img onClick={handleHeaderClick} src={chevron_left} alt="chevron_left" />
+      <S.Header>
+        <S.Img
+          onClick={handleHeaderClick}
+          src={chevron_left}
+          alt="chevron_left"
+        />
         <S.BoldTitle>노트고등학교 3학년 1반 문학</S.BoldTitle>
       </S.Header>
       <S.Body>
-        
-        <S.AssigmentCreateForm >
-        
-        
+        <S.AssigmentCreateForm>
           <S.CreateTitle>과제/공지/강의자료 생성</S.CreateTitle>
           <S.Title>
-            {['과제', '공지', '강의자료'].map((value, index) => (
+            {["과제", "공지", "강의자료"].map((value, index) => (
               <S.Btn
                 key={value}
-                className={index === 0 ? 'firstButton' : ''}
+                className={index === 0 ? "firstButton" : ""}
                 onClick={() => handleButtonClick(value)}
                 selected={selectedButton === value}
               >
@@ -143,9 +133,15 @@ function AssignmentDetail() {
               </S.Btn>
             ))}
           </S.Title>
-         
+
           <S.HeadInput>
-            <S.SmallTitle>{selectedButton === '과제' ? '과제 제목' : selectedButton === '공지' ? '공지 제목' : '강의자료 제목'}</S.SmallTitle>
+            <S.SmallTitle>
+              {selectedButton === "과제"
+                ? "과제 제목"
+                : selectedButton === "공지"
+                ? "공지 제목"
+                : "강의자료 제목"}
+            </S.SmallTitle>
             <S.InputTitle
               type="text"
               name="username"
@@ -155,7 +151,13 @@ function AssignmentDetail() {
             />
           </S.HeadInput>
           <S.BodyInput>
-            <S.SmallTitle>{selectedButton === '과제' ? '과제 설정' : selectedButton === '공지' ? '공지 설정' : '강의자료 설정'}</S.SmallTitle>
+            <S.SmallTitle>
+              {selectedButton === "과제"
+                ? "과제 설정"
+                : selectedButton === "공지"
+                ? "공지 설정"
+                : "강의자료 설정"}
+            </S.SmallTitle>
             <S.InputDesc
               type="text"
               name="username"
@@ -165,29 +167,40 @@ function AssignmentDetail() {
             />
           </S.BodyInput>
           <S.LegInput>
-            <S.SmallTitle style={{marginLeft: "-30px"}}>파일 첨부</S.SmallTitle>
+            <S.SmallTitle style={{ marginLeft: "-30px" }}>
+              파일 첨부
+            </S.SmallTitle>
             <input
               type="file"
               id="fileUpload"
               style={{ display: "none" }}
-              onChange={handleFileChange} 
+              onChange={handleFileChange}
               ref={imageInput}
             />
-            <S.LibraryButton onClick={() => imageInput.current.click()} style={{ marginLeft: "15px" }}>
+            <S.LibraryButton
+              onClick={() => imageInput.current.click()}
+              style={{ marginLeft: "15px" }}
+            >
               라이브러리에서 파일 탐색
             </S.LibraryButton>
-            
           </S.LegInput>
           {renderFileList()}
           <S.Foot>
-            <S.SubmitBtn type="submit" onClick={handleSubmit}>생성하기</S.SubmitBtn>
+            <S.SubmitBtn type="submit" onClick={handleSubmit}>
+              생성하기
+            </S.SubmitBtn>
             <S.CancelBtn type="submit">취소</S.CancelBtn>
           </S.Foot>
         </S.AssigmentCreateForm>
         <S.AssignmentSettingForm>
-        <S.CreateTitle>{selectedButton === '과제' ? '과제 설정' : selectedButton === '공지' ? '공지 설정' : '강의자료 설정'}</S.CreateTitle>
-          {selectedButton === '과제' ? <AssignInfo/> : <NoticeInfo/>}
-         
+          <S.CreateTitle>
+            {selectedButton === "과제"
+              ? "과제 설정"
+              : selectedButton === "공지"
+              ? "공지 설정"
+              : "강의자료 설정"}
+          </S.CreateTitle>
+          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo />}
         </S.AssignmentSettingForm>
       </S.Body>
     </S.Wrapper>
