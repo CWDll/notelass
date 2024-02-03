@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style";
+import { getAllNotice } from "../../assets/api/apis/notice/ApiNotice";
 import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
 function NoticeDetail() {
   const navigate = useNavigate();
+  const [notices, setNotices] = useState([]);
+
+  useEffect(() => {
+    getAllNotice(setNotices);
+  }, []);
 
   function BackButton() {
     navigate(-1);
@@ -38,16 +44,17 @@ function NoticeDetail() {
         </S.SearchInput>
       </S.TopBar>
       <S.ItemsContainer>
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
-        <NoticeDetailcard />
+        {/* 디자인 테스트용 컴포넌트
+        <NoticeDetailcard /> */}
+        {notices.map((notice) => (
+          <NoticeDetailcard
+            key={notice.id}
+            title={notice.title}
+            content={notice.content}
+            teacher={notice.teacher}
+            createdDate={notice.createdDate}
+          />
+        ))}
       </S.ItemsContainer>
     </S.Container>
   );

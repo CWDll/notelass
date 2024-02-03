@@ -1,17 +1,24 @@
 import React from "react";
 import * as S from "./style";
 
-function NoticeDetailcard() {
+function NoticeDetailcard({ title, content, teacher, createdDate }) {
+  // 날짜 형식을 원하는 형태로 변환하는 함수 (예: '2024-02-04T12:00:00' -> '2024.02.04')
+  const formatDate = (date) => {
+    const handledDate = new Date(date);
+    return `${handledDate.getFullYear()}.${
+      handledDate.getMonth() + 1
+    }.${handledDate.getDate()}`;
+  };
+
   return (
     <S.ItemWrapper>
       <S.ContentContainer>
-        <S.Title>[공지] 안녕하세요. 일정 공유 드립니다.</S.Title>
-        <S.Content>내용입니다.</S.Content>
+        <S.Title>{title}</S.Title>
+        <S.Content>{content}</S.Content>
       </S.ContentContainer>
       <S.ItemInfo>
-        <S.Views>조회 24</S.Views>
-        <S.SmallText>김태연 선생님</S.SmallText>
-        <S.SmallText>2024.02.04</S.SmallText>
+        <S.SmallText>{teacher}</S.SmallText>
+        <S.SmallText>{formatDate(createdDate)}</S.SmallText>
       </S.ItemInfo>
     </S.ItemWrapper>
   );
