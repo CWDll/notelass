@@ -17,7 +17,7 @@ function NoticeDetailcard({ title, content, teacher, createdDate }) {
         <S.Content>{content}</S.Content>
       </S.ContentContainer>
       <S.ItemInfo>
-        <S.SmallText>{teacher}</S.SmallText>
+        <S.SmallText>{teacher} 선생님</S.SmallText>
         <S.SmallText>{formatDate(createdDate)}</S.SmallText>
       </S.ItemInfo>
     </S.ItemWrapper>
