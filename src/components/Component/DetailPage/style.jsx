@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const ItemWrapper = styled.div`
   width: 1194px;
-  height: 117px;
+  height: 179px;
   border-radius: 8px;
   background-color: gray;
-
+  padding: 30px 30px;
   display: flex;
   justify-content: space-between;
 `;
@@ -13,22 +13,24 @@ export const ItemWrapper = styled.div`
 export const ContentContainer = styled.div`
   dislay: flex;
   flex-direction: column;
-  padding: 10px;
 `;
 
 export const Title = styled.p`
   font-weight: bold;
-  size: 20px;
+  font-size: 20px;
+  margin-bottom: 6px;
 `;
 
 export const Content = styled.p`
   font-weight: 600;
-  size: 16;
+  font-size: 16;
 `;
 
 export const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Views = styled.div`
@@ -40,6 +42,7 @@ export const Views = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px;
 `;
 
 export const SmallText = styled(Content)`
