@@ -11,16 +11,19 @@ function NoticeDetail() {
 
   return (
     <S.Container>
-      <S.Breadcrumb onClick={BackButton}>
-        <S.Img alt="chevron_left" />
-        <S.BoldText>공지/과제/강의자료</S.BoldText>
+      <S.Breadcrumb>
+        <S.Img alt="chevron_left" onClick={BackButton} />
+        <S.BoldText onClick={BackButton}>공지/과제/강의자료</S.BoldText>
       </S.Breadcrumb>
       <S.TopBar>
-        <S.BoldText>총 4개</S.BoldText>
+        <S.BoldText>
+          총 <S.ColoredBoldText>4</S.ColoredBoldText>개
+        </S.BoldText>
         <S.SearchInput>
           <S.DropdownContainer>
             <S.DropdownButton onClick={() => setIsOpen(!isOpen)}>
               제목
+              <S.DownIcon />
             </S.DropdownButton>
             <S.DropdownContent isOpen={isOpen}>
               <S.DropdownItem>제목</S.DropdownItem>
@@ -28,10 +31,19 @@ function NoticeDetail() {
             </S.DropdownContent>
           </S.DropdownContainer>
           <S.Input />
-          <S.SearchButton>찾기</S.SearchButton>
+          <S.SearchButton />
         </S.SearchInput>
       </S.TopBar>
       <S.ItemsContainer>
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
+        <NoticeDetailcard />
         <NoticeDetailcard />
       </S.ItemsContainer>
     </S.Container>

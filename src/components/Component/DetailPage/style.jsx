@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const ItemWrapper = styled.div`
   width: 1194px;
   height: 179px;
-  border-radius: 8px;
-  background-color: gray;
+  border-radius: 10px;
+  background-color: #ffffff;
   padding: 30px 30px;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 export const ContentContainer = styled.div`
@@ -42,7 +43,7 @@ export const Views = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin-bottom: 10px;
 `;
 
 export const SmallText = styled(Content)`
