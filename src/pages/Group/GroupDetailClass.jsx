@@ -210,13 +210,10 @@ function GroupDetailClass() {
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
 
-
   const navigate = useNavigate();
-  const {  id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
+  const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const onClick = () => {
-    
-     navigate(`/GroupDetailClass/${id}/AssignmentDetail`);
-    
+    navigate(`/GroupDetailClass/${id}/AssignmentDetail`);
   };
   const GroupDetailWrite = (
     paramsGruopId,
@@ -345,7 +342,7 @@ function GroupDetailClass() {
       console.error("공지사항을 가져오지 못했습니다.:", error.message);
     }
   };
-  
+
   useEffect(() => {
     fetchStudents();
     fetchNotices();
@@ -409,7 +406,7 @@ function GroupDetailClass() {
 
             {/* 그룹별 공지사항 목록 조회*/}
             <SubjectContainer>
-              {/* {notices.map((notice, index) => (
+              {notices.map((notice, index) => (
                 <StyledNoticeItem
                   key={notice.id}
                   onClick={() => handleOnClick(index)}
