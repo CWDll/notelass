@@ -57,9 +57,16 @@ function AssignmentDetail() {
     }
   };
 
+
+  // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (selectedButton === "공지") {
+    
+    const formData = new FormData();
+    let response;
+    
+    //공지 생성 POST API
+    if (selectedButton === '공지') {
       try {
         // 공지 생성 POST API
         const formData = new FormData();
@@ -71,8 +78,8 @@ function AssignmentDetail() {
         const blob = new Blob([noticeDto], {
           type: "application/json",
         });
-        formData.append("noticeDto", blob);
-
+        formData.append('noticeDto', blob);
+    
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
@@ -85,13 +92,48 @@ function AssignmentDetail() {
               "Content-Type": "multipart/form-data",
             },
           }
-        );
-
+        });
+        
         const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
-        console.log("생성된 공지의 ID:", noticeId);
+        console.log('공지 생성 완료:', response.data);
+        console.log('생성된 공지의 ID:', noticeId);
+        alert('공지가 성공적으로 생성되었습니다.');
+        
       } catch (error) {
-        console.error("공지 생성 실패:", error);
-        alert("공지 생성에 실패했습니다. ");
+        console.error('공지 생성 실패:', error);
+        alert('공지 생성에 실패했습니다.');
+      }
+
+    //강의자료 생성 POST API  
+    } else if (selectedButton === '강의자료') {
+      try {
+        const materialDto = JSON.stringify({
+          title: assignmentName,
+          content: assignmentDesc,
+        });
+        const blob = new Blob([materialDto], {
+          type: 'application/json'
+        });
+        formData.append('materialDto', blob);
+    
+        files.forEach((file, index) => {
+          formData.append(`file`, file);
+        });
+    
+        response = await axios.post(`/api/material/${paramsGroupId}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        
+        const materialId = response.data.message.match(/강의자료 ID: (\d+)/)[1];
+        console.log('강의 자료 생성 완료:', response.data);
+        console.log('생성된 강의 자료의 ID:', materialId);
+        alert('강의 자료가 성공적으로 생성되었습니다.');
+        
+      } catch (error) {
+        console.error('강의 자료 생성 실패:', error);
+        alert('강의 자료 생성에 실패했습니다.');
       }
     }
   };

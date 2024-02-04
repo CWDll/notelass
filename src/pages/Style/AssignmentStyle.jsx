@@ -171,10 +171,10 @@ export const SubmitBtn = styled.button`
 // Right Body 시작
 export const SettingBox = styled.div`
   margin-top: 20px;
-  margin-left: 45px;
-  width: 80%;
+  margin-left: 32px;
+  width: 416px;
   height: 60px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1.5px solid #ededff;
   display: flex;
   justify-items: center;
   flex-direction: column;
@@ -291,5 +291,33 @@ export const NoticeInfo = styled.div`
 `;
 
 export const AssignInfo = styled.div`
-display
+  display: flex;
+`;
+
+export const QuestionList = styled.div`
+  position: absolute;
+`;
+
+export const Qbtn = styled.button`
+  display: inline-flex;
+  width: 105px;
+  height: 40px;
+  padding: 11px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: 315px;
+  margin-top: -40px;
+
+  border-radius: 6px;
+  background: var(--Primary-Light-cobalt, #ededff);
+
+  color: #4849ff;
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
