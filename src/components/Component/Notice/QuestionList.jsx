@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import InputBox from './InputBox';
@@ -28,7 +29,7 @@ font-weight: 700;
 line-height: normal;
 `;
 
-const ListItem = styled.div`
+ const ListItem = styled.div`
   display: flex;
   width: 616px;
   align-items: center; 
@@ -69,6 +70,12 @@ border-radius: 6px;
 border: 1.5px solid var(--Primary-Cobalt, #4849FF);
 background: #4849FF;
 
+&:focus, &:hover, &:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+
 color: #FFF;
 text-align: center;
 font-family: Pretendard;
@@ -81,7 +88,6 @@ line-height: normal;
 const InputContainer = styled.div`
   display: flex;
   gap: 10px; 
-  
 `;
 
 const DateSpan = styled.p`
@@ -105,6 +111,12 @@ flex-shrink: 0;
 border-radius: 6px;
 background: #E6E8EE;
 
+&:focus, &:hover, &:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+
 color: #9EA4AA;
 text-align: center;
 font-family: Pretendard;
@@ -115,11 +127,34 @@ line-height: normal;
 `;
 
 
+const SpanContainer = styled.div`
+  display: flex;
+  gap: 220px; 
+`;
+
+const BtnContainer = styled.div`
+  display: inline-flex;
+  gap: 16px; 
+  justify-content: center;
+`;
+
+
+
+
 
 const QuestionList = () => {
     const [itemCount, setItemCount] = useState(''); 
     const [items, setItems] = useState(new Array(itemCount).fill('').map((_, i) => ({ id: i, value: '' })));
   
+
+    const [isVisible, setIsVisible] = useState(true);
+
+    
+    const handleClose = () => {
+      setIsVisible(false);
+    };
+ 
+
     const handleItemCountChange = (e) => {
         const value = e.target.value.trim(); 
         const count = value ? Math.floor(Number(value)) : 0; 
@@ -159,7 +194,7 @@ const QuestionList = () => {
     return (
         <>
         
-      <Container>
+      <Container style={{ display: isVisible ? 'block' : 'none' }}>
         <InputContainer>
         <Title>총 {itemCount}문제</Title>
         <DateSpan>{dateString}</DateSpan>
@@ -174,7 +209,14 @@ const QuestionList = () => {
           onChange={handleItemCountChange}
         />
       </InputContainer>
-        
+
+        {itemCount > 0 && (
+        <SpanContainer>
+        <NumberSpan>문항번호</NumberSpan>
+        <NumberSpan>정답</NumberSpan>
+        <NumberSpan>배점</NumberSpan>
+        </SpanContainer>
+    )}
         {items.map((item, index) => (
           <ListItem key={item.id}>
             <NumberSpan >{index + 1}</NumberSpan>
@@ -182,10 +224,10 @@ const QuestionList = () => {
             <InputBox adornment="점" type="number"/>
           </ListItem>
         ))}
-        <InputContainer>
-            <Cancle>취소</Cancle>
+        <BtnContainer>
+            <Cancle onClick={handleClose}>취소</Cancle>
             <Button>저장하기</Button>
-        </InputContainer>
+        </BtnContainer>
       </Container>
       </>
     );
