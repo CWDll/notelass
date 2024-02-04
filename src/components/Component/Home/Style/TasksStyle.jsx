@@ -6,7 +6,7 @@ export const TasksContainer = styled.div`
   height: 250px;
   width: 684px;
   flex-direction: column;
-  background-color: #F5F5FC;
+  background-color: #f5f5fc;
   margin-right: 363px;
   margin-top: 30px;
 `;
@@ -28,31 +28,25 @@ export const GroupHead = styled.div`
 `;
 // 그룹 컴포넌트 바디
 export const GroupBody = styled.div`
-  
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   padding-top: 30px;
 `;
 
-
-
 export const SubjectContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  
 `;
-
 
 export const TaskGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 327px);
   grid-gap: 30px;
-  `;
+`;
 
 export const Tasksubject = styled.p`
-  color: #4849FF;
+  color: #4849ff;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -60,7 +54,7 @@ export const Tasksubject = styled.p`
 `;
 
 export const TaskText = styled.p`
-  color: #26282B;
+  color: #26282b;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -68,21 +62,20 @@ export const TaskText = styled.p`
 `;
 
 export const Taskbody = styled.div`
-  display: flex;  
+  display: flex;
   flex-direction: column;
   padding-left: 17px;
 `;
 
 export const DetailText = styled.p`
-  
-  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-decoration-line: underline;
   margin-left: 505px;
-  margin-top: -5px;
+  margin-top: 5px;
 `;
 
 export const Img = styled.img`
@@ -91,4 +84,5 @@ export const Img = styled.img`
 
   margin-left: 2px;
   margin-right: 32px;
+  margin-top: 6px;
 `;

@@ -130,7 +130,7 @@ const SudentNum = styled.p`
 function GroupScoreDetail() {
   const navigate = useNavigate();
   const BackButton = () => {
-    navigate("/GroupDetailClass");
+    navigate(-1);
   };
 
   const studentScores = [

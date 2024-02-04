@@ -11,7 +11,7 @@ export const GroupContainer = styled.div`
 `;
 // bold 텍스트
 export const BoldText = styled.p`
-  color: var(--cool-grayscale-title, #26282B);
+  color: var(--cool-grayscale-title, #26282b);
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
@@ -19,21 +19,19 @@ export const BoldText = styled.p`
   line-height: normal;
 
   margin-top: 32px;
-  margin-left: 32px;
+  margin-left: 28px;
 `;
 // 회색 텍스트
 export const GrayText = styled.p`
-color: var(--cool-grayscale-placeholder, #9EA4AA);
-text-align: right;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
   margin-left: 208px;
   margin-top: 36px;
-
-
 `;
 // 그룹 컴포넌트 헤드
 export const GroupHead = styled.div`
@@ -50,38 +48,35 @@ export const GroupBody = styled.div`
 // 보라색 원
 
 export const CircleText = styled.div`
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background-color: var(--primary-light-cobalt, #EDEDFF);
-    border-width: 1.5px;
-    border-color: var(--primary-cobalt, #4849FF);
-    margin-left: 32px;
-    display: flex;
-    justify-content: center;
-
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--primary-light-cobalt, #ededff);
+  border-width: 1.5px;
+  border-color: var(--primary-cobalt, #4849ff);
+  margin-left: 32px;
+  display: flex;
+  justify-content: center;
 `;
 
-
 export const PurpleText = styled.p`
-    color: #4849FF;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    padding-top: 12px;
+  color: #4849ff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: 12px;
 `;
 
 export const Teacher = styled.p`
-  color: var(--cool-grayscale-placeholder, #9EA4AA);
+  color: var(--cool-grayscale-placeholder, #9ea4aa);
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   margin-top: 4px;
 `;
-
 
 // 과목 명, 선생님 성함 담는 container
 export const SubjectContainer = styled.div`
@@ -91,13 +86,13 @@ export const SubjectContainer = styled.div`
 `;
 
 export const SubjectText = styled.p`
-    color: var(--cool-grayscale-title, #26282B);
-    text-align: center;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin-top: 4px;
+  color: var(--cool-grayscale-title, #26282b);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 4px;
 `;
 
 export const Img = styled.img`

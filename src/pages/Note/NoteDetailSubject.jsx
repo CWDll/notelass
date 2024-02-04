@@ -132,6 +132,11 @@ function NoteDetailSubject() {
   const navigate = useNavigate();
   const [starredItems, setStarredItems] = useState({});
 
+  //뒤로가기
+  function goBack() {
+    navigate(-1);
+  }
+
   //노트별 즐겨 찾기 기능
   function handleStarClick(itemKey) {
     setStarredItems((prev) => ({
@@ -140,8 +145,6 @@ function NoteDetailSubject() {
     }));
   }
 
-
-
   function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
     navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
@@ -149,7 +152,7 @@ function NoteDetailSubject() {
 
   return (
     <div>
-      <Header>
+      <Header onClick={goBack}>
         <Img src={chevron_left} alt="chevron_left" />
         <BoldTitle>과제별 성적 열람</BoldTitle>
       </Header>
@@ -161,7 +164,6 @@ function NoteDetailSubject() {
           <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
         </MakeNoteBody>
 
-        
         <SubjectBodyWrapper>
           {starItems.map((item) => (
             <SubjectBody key={item.key}>
@@ -179,8 +181,6 @@ function NoteDetailSubject() {
             </SubjectBody>
           ))}
         </SubjectBodyWrapper>
-
-
       </NoteContainer>
     </div>
   );

@@ -17,7 +17,6 @@ const NoteContainer = styled.div`
   margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-top: 16px;
   max-width: 1194px; /* 최대 너비 제한 */
-
 `;
 
 const CircleText = styled.div`
@@ -356,24 +355,6 @@ function GroupDetail() {
           )}
         </SmallContainer>
       )}
-
-      {/* <NoteContainer>
-        <SubjectBodyWrapper>
-          <SubjectBody onClick={onClick}>
-            <CircleText>
-              <PurpleText>{letter}</PurpleText>
-            </CircleText>
-            <BoldText>{subjectInfo}</BoldText>
-          </SubjectBody>
-          <SubjectBody onClick={onClick}>
-            <CircleText>
-              <PurpleText>문</PurpleText>
-            </CircleText>
-            <BoldText>노트고등학교 3학년 2반 문학</BoldText>
-          </SubjectBody>
-
-        </SubjectBodyWrapper>
-      </NoteContainer>  */}
 
       <NoteContainer>
         <SubjectBodyWrapper>
