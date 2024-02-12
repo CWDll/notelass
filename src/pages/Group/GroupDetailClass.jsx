@@ -13,8 +13,6 @@ import fileDownload from "../../assets/fileDownload.svg";
 // api
 import instance from "../../assets/api/axios";
 
-// import axios from "../../assets/api/axios";
-
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
 
 const Header = styled.header`

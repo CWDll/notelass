@@ -7,6 +7,7 @@ import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetail
 function NoticeDetail() {
   const navigate = useNavigate();
   const [notices, setNotices] = useState([]);
+  const [searchCategory, setSearchCategory] = useState("제목");
 
   useEffect(() => {
     getAllNotice(setNotices);
@@ -15,6 +16,11 @@ function NoticeDetail() {
 
   function BackButton() {
     navigate(-1);
+  }
+
+  function handleCategoryClick(newCategory) {
+    setSearchCategory(newCategory);
+    setIsOpen(!isOpen);
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -32,12 +38,16 @@ function NoticeDetail() {
         <S.SearchInput>
           <S.DropdownContainer>
             <S.DropdownButton onClick={() => setIsOpen(!isOpen)}>
-              제목
+              {searchCategory}
               <S.DownIcon />
             </S.DropdownButton>
             <S.DropdownContent isOpen={isOpen}>
-              <S.DropdownItem>제목</S.DropdownItem>
-              <S.DropdownItem>내용</S.DropdownItem>
+              <S.DropdownItem onClick={() => handleCategoryClick("제목")}>
+                제목
+              </S.DropdownItem>
+              <S.DropdownItem onClick={() => handleCategoryClick("내용")}>
+                내용
+              </S.DropdownItem>
             </S.DropdownContent>
           </S.DropdownContainer>
           <S.Input />
@@ -45,8 +55,6 @@ function NoticeDetail() {
         </S.SearchInput>
       </S.TopBar>
       <S.ItemsContainer>
-        {/* 디자인 테스트용 컴포넌트
-        <NoticeDetailcard /> */}
         {notices.map((notice) => (
           <NoticeDetailcard
             key={notice.id}
