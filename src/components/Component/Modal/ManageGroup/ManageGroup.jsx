@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import StudentLine from "./StudentLine";
-import { groupAcceptAll } from "../../../../assets/api/apis/group/ApiGroup";
+import {
+  groupAcceptAll,
+  groupAccept,
+  groupReject,
+} from "../../../../assets/api/apis/group/ApiGroup";
 
 const ManageGroup = ({
   showSmallContainer,

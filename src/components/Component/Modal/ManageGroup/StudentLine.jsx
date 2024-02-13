@@ -1,5 +1,9 @@
 import React from "react";
 import * as S from "./style";
+import {
+  groupAccept,
+  groupReject,
+} from "../../../../assets/api/apis/group/ApiGroup";
 
 function StudentLine() {
   return (
