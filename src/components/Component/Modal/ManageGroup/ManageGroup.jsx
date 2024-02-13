@@ -21,7 +21,6 @@ const ManageGroup = ({
       try {
         // 데이터를 가져오는 API 호출
         const applyResponse = await groupRetrieveList(groupId);
-        console.log("check:", applyResponse);
 
         setApplyDtos(applyResponse.data.result.applyDtos);
         setGroupInfo(applyResponse.data.result.groupInfo);
