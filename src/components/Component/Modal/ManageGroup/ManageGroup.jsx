@@ -54,7 +54,12 @@ const ManageGroup = ({
       </S.TextContainer>
       {/* applyDtos 배열을 순회하여 각 학생에 대한 정보를 전달하고 StudentLine을 렌더링 */}
       {applyDtos.map((student, index) => (
-        <StudentLine key={index} student={student} index={index + 1} />
+        <StudentLine
+          key={index}
+          student={student}
+          index={index + 1}
+          groupId={groupId}
+        />
       ))}
     </S.SmallContainer>
   );

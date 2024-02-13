@@ -5,7 +5,7 @@ import {
   groupReject,
 } from "../../../../assets/api/apis/group/ApiGroup";
 
-function StudentLine({ student, index }) {
+function StudentLine({ student, index, groupId }) {
   return (
     <S.LineContainer>
       {/* 학생의 순서를 나타내는 index를 표시 */}
@@ -17,8 +17,12 @@ function StudentLine({ student, index }) {
           {student.school} / {student.grade}학년 {student.classNum}반
         </S.SchoolInfo>
       </S.StudentInfoText>
-      <S.RefuseButton>거절</S.RefuseButton>
-      <S.AcceptButton>수락</S.AcceptButton>
+      <S.RefuseButton onClick={groupReject(groupId, student.useId)}>
+        거절
+      </S.RefuseButton>
+      <S.AcceptButton onClick={groupAccept(groupId, student.useId)}>
+        수락
+      </S.AcceptButton>
     </S.LineContainer>
   );
 }
