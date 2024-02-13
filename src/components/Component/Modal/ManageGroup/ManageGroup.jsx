@@ -3,8 +3,7 @@ import * as S from "./style";
 import StudentLine from "./StudentLine";
 import {
   groupAcceptAll,
-  groupAccept,
-  groupReject,
+  groupRetrieveList,
 } from "../../../../assets/api/apis/group/ApiGroup";
 
 const ManageGroup = ({
@@ -12,23 +11,28 @@ const ManageGroup = ({
   setShowSmallContainer,
   groupId,
 }) => {
-  // 테스트용 예시 데이터
-  const applyDtos = [
-    {
-      userId: 1,
-      school: "노트고등학교",
-      grade: 3,
-      classNum: 1,
-      name: "학생1",
-    },
-    {
-      userId: 2,
-      school: "노트고등학교",
-      grade: 3,
-      classNum: 1,
-      name: "학생2",
-    },
-  ];
+  const [applyDtos, setApplyDtos] = useState([]);
+  const [groupInfo, setGroupInfo] = useState();
+  const [groupCode, setGroupCode] = useState();
+
+  useEffect(() => {
+    // 신청 데이터 가져오기
+    const fetchData = async () => {
+      try {
+        // 데이터를 가져오는 API 호출
+        const applyResponse = await groupRetrieveList(groupId);
+        console.log("check:", applyResponse);
+
+        setApplyDtos(applyResponse.data.result.applyDtos);
+        setGroupInfo(applyResponse.data.result.groupInfo);
+        setGroupCode(applyResponse.data.result.groupCode);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // 데이터를 가져오는 함수 호출
+  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
   // 그룹 일괄 수락
   const GroupAcceptAll = () => {
@@ -45,7 +49,7 @@ const ManageGroup = ({
       />
       <S.TextContainer>
         <S.GroupInfoText>
-          노트고등학교 3학년 1반 문학 <S.GroupNumber>• 536486</S.GroupNumber>
+          {groupInfo} <S.GroupNumber>• {groupCode}</S.GroupNumber>
         </S.GroupInfoText>
         <S.AcceptAll onClick={GroupAcceptAll}>한 번에 수락하기</S.AcceptAll>
       </S.TextContainer>

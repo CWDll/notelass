@@ -1,5 +1,20 @@
 import instance from "../../axios";
 
+export const groupRetrieveList = async (groupId) => {
+  try {
+    const res = await instance.get(`/api/group/applications/${groupId}`);
+
+    if (res.status === 200) {
+      console.log("그룹 신청 데이터 불러오기 성공"); // 데이터를 콜백함수를 통해 전달한다.
+      return res;
+    } else {
+      console.log("그룹 신청 데이터 불러오기 실패");
+    }
+  } catch (error) {
+    console.error("그룹 신청 데이터 불러오기에서 에러 발생", error);
+  }
+};
+
 export const groupAcceptAll = async (groupId, onSuccess) => {
   try {
     const res = await instance.post(`/api/group/approve/${groupId}`);
