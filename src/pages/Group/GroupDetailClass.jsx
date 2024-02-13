@@ -259,7 +259,6 @@ function GroupDetailClass() {
 
       if (response.data && response.data.result) {
         setStudents(response.data.result);
-        console.log("response.data.result: ", response.data.result);
       }
     } catch (error) {
       console.error("학생리스트를 가져오지 못했습니다.:", error.message);

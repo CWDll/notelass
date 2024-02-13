@@ -91,7 +91,6 @@ import {
   CustomDiv,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
-
 export function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();
@@ -119,8 +118,6 @@ export function GroupDetailWrite() {
   const [uploadStatus, setUploadStatus] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [studentBookEntries, setStudentBookEntries] = useState([]);
-
-
 
   // // 학생 수첩 관련 함수
   // // StudentBook 모달을 열기 위한 함수
@@ -171,7 +168,6 @@ export function GroupDetailWrite() {
   // };
   //
 
-
   // 생기부 다운로드 받기 GET 함수
   const exportToExcel = async () => {
     try {
@@ -186,8 +182,6 @@ export function GroupDetailWrite() {
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
-
-       
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -315,24 +309,18 @@ export function GroupDetailWrite() {
     });
   };
 
-
-
-
-
   const navigate = useNavigate();
   //뒤로 가기
   const BackButton = () => {
-
-      deleteFile(paramsGroupId);
+    deleteFile(paramsGroupId);
     navigate(-1);
   };
-
 
   useEffect(() => {
     return () => {
       deleteFile(paramsGroupId);
     };
-  }, [paramsGroupId]); 
+  }, [paramsGroupId]);
 
   //학생 수첩 체크 박스 토글 함수
   const [showCheckboxes, setShowCheckboxes] = useState(false);
@@ -418,7 +406,6 @@ export function GroupDetailWrite() {
 
         if (response.data && response.data.result) {
           setStudents(response.data.result);
-          console.log("response.data.result: ", response.data.result);
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -474,8 +461,6 @@ export function GroupDetailWrite() {
   //     console.error("삭제 중 오류가 발생했습니다:", error);
   //   }
   // };
-
-  
 
   // //생활기록부 내용 불러오기 함수
   // const fetchText = async () => {
@@ -546,9 +531,6 @@ export function GroupDetailWrite() {
     studentBookEntries,
   ]);
 
-
-
-
   // // 생활기록부 POST 함수
 
   // const saveData = async () => {
@@ -585,9 +567,10 @@ export function GroupDetailWrite() {
   const deleteFile = async (paramsGroupId) => {
     try {
       const response = await instance.delete(
-        `/api/record/excel/${paramsGroupId}`,{
+        `/api/record/excel/${paramsGroupId}`,
+        {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -628,19 +611,18 @@ export function GroupDetailWrite() {
     setContextMenu(null);
   };
 
-    //발표, 태도 점수 GET 함수
-    const [speechCount, setSpeechCount] = useState(0);
-    const [attitudeCount, setAttitudeCount] = useState(0);
-  
-    
-    useEffect(() => {
+  //발표, 태도 점수 GET 함수
+  const [speechCount, setSpeechCount] = useState(0);
+  const [attitudeCount, setAttitudeCount] = useState(0);
+
+  useEffect(() => {
     const fetchScores = async () => {
       try {
         const res = await instance.get(
           `/api/record/score/${paramsGroupId}/${paramsUserId}`
         );
         console.log("fetchScores res.data:", res.data);
-  
+
         if (res.status === 200) {
           console.log("fetchScores성공");
           setSpeechCount(res.data.result.presentationNum);
@@ -652,16 +634,15 @@ export function GroupDetailWrite() {
         console.error("fatchScores error:", error);
       }
     };
-  
-    
-      fetchScores();
-    }, [paramsGroupId, paramsUserId]);
+
+    fetchScores();
+  }, [paramsGroupId, paramsUserId]);
 
   // 과제데이터 양식 다운로드
   const handleHwDataDownload = () => {
     const link = document.createElement("a");
     link.href = HwDataFile;
-    link.setAttribute("download", "과제데이터양식.cell"); 
+    link.setAttribute("download", "과제데이터양식.cell");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -671,7 +652,7 @@ export function GroupDetailWrite() {
   const handleStuRecordDownload = () => {
     const link = document.createElement("a");
     link.href = RecordFile;
-    link.setAttribute("download", "생활기록부양식.xlsx"); 
+    link.setAttribute("download", "생활기록부양식.xlsx");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -773,13 +754,12 @@ export function GroupDetailWrite() {
           </div>
           {/* <SaveButton onClick={saveData}>저장하기</SaveButton> */}
           <ScoreList>
-            
             <ScoreTitle>발표 횟수: </ScoreTitle>
             <ScoreResult>{speechCount} 회</ScoreResult>
             <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>태도 점수: </ScoreTitle>
             <ScoreResult>{attitudeCount} 점</ScoreResult>
-            
+
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
@@ -807,7 +787,7 @@ export function GroupDetailWrite() {
           </ScoreList>
 
           <>
-          <InputText/>
+            <InputText />
             {/* <WritingBox
               onContextMenu={(event) => {
                 event.preventDefault();
@@ -817,9 +797,9 @@ export function GroupDetailWrite() {
                 }
               }}
             > */}
-              {/*생활기록부 입력창*/}
+            {/*생활기록부 입력창*/}
 
-              {/* <Textarea
+            {/* <Textarea
                 value={inputText}
                 spellCheck={false}
                 onChange={(e) => {
@@ -853,7 +833,7 @@ export function GroupDetailWrite() {
                 onClick={handleStuRecordDownload}
               />
             </CustomDiv>
-            <Synonym/>
+            <Synonym />
             {/* <SynonymsDisplay>
               {selectedWord && (
                 <>
@@ -889,9 +869,9 @@ export function GroupDetailWrite() {
                 학생 수첩 연동하기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </SyncButton>
-              <> 
+              <>
                 {/* *키워드 입력창 */}
-                 <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
+                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
                   단어를 입력하세요 :{" "}
                 </Text>
                 <div
@@ -900,8 +880,8 @@ export function GroupDetailWrite() {
                     alignItems: "center",
                     justifyItems: "center",
                   }}
-                > 
-                <SuggestWordContainer
+                >
+                  <SuggestWordContainer
                     style={{ display: "flex", flexWrap: "wrap" }}
                   >
                     {keywords.map((keyword, index) => (
@@ -930,7 +910,7 @@ export function GroupDetailWrite() {
                         </SuggestWord>
                       </div>
                     ))}
-                  </SuggestWordContainer> 
+                  </SuggestWordContainer>
 
                   <Keyword
                     type="text"
@@ -960,7 +940,7 @@ export function GroupDetailWrite() {
                 </KeywordContainer>
               </>
             </GuidelineContainer>
-             <GuidelineBox>
+            <GuidelineBox>
               {loading ? (
                 <div
                   style={{
@@ -975,22 +955,20 @@ export function GroupDetailWrite() {
               ) : (
                 <Text>{guideLineText}</Text>
               )}
-            </GuidelineBox> 
+            </GuidelineBox>
           </>
-          
-          
         </LeftContainer>
 
         <RightContainer>
-          <StudentMemo/>
+          <StudentMemo />
           {/* <Title>학생수첩</Title>
           {studentBookEntries.map((entry) => (
             <InfoContainer key={entry.id}>
               <TimeText>
                 {/* 날짜 형식을 년-월-일 */}
-                {/* {new Date(entry.createdDate).toLocaleDateString("ko-KR")} */}
-              {/* </TimeText> */}
-              {/* <div
+          {/* {new Date(entry.createdDate).toLocaleDateString("ko-KR")} */}
+          {/* </TimeText> */}
+          {/* <div
                 style={{
                   display: "flex",
                   gap: "10px",
@@ -999,7 +977,7 @@ export function GroupDetailWrite() {
                   marginTop: "-20PX",
                 }}
               > */}
-                {/* <TimeText
+          {/* <TimeText
                   onClick={() => {
                     handleStudentBookEdit(entry.id);
                     setShowStudentBook(!showStudentBook);
@@ -1014,7 +992,7 @@ export function GroupDetailWrite() {
               </div>
               <StudentBookText key={entry.id}>
                 <SavedText>{entry.content}</SavedText> */}
-                {/* {showCheckboxes && (
+          {/* {showCheckboxes && (
                   <div style={{ position: "absolute" }}>
                     <Checkbox
                       onClick={() => toggleCheck(entry.id)}
