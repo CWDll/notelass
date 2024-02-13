@@ -5,13 +5,17 @@ import {
   groupReject,
 } from "../../../../assets/api/apis/group/ApiGroup";
 
-function StudentLine() {
+function StudentLine({ student, index }) {
   return (
     <S.LineContainer>
-      <S.BoldTitle>1</S.BoldTitle>
+      {/* 학생의 순서를 나타내는 index를 표시 */}
+      <S.BoldTitle>{index}</S.BoldTitle>
       <S.StudentInfoText>
-        <S.BoldTitle>학생 이름</S.BoldTitle>
-        <S.SchoolInfo>노트고등학교 / 3학년 1반</S.SchoolInfo>
+        {/* 학생 정보 표시 */}
+        <S.BoldTitle>{student.name}</S.BoldTitle>
+        <S.SchoolInfo>
+          {student.school} / {student.grade}학년 {student.classNum}반
+        </S.SchoolInfo>
       </S.StudentInfoText>
       <S.RefuseButton>거절</S.RefuseButton>
       <S.AcceptButton>수락</S.AcceptButton>
