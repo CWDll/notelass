@@ -378,6 +378,7 @@ function GroupDetailClass() {
           <ManageGroup
             showSmallContainer={showSmallContainer}
             setShowSmallContainer={setShowSmallContainer}
+            groupId={id}
           />
         )}
       </Header>
