@@ -355,6 +355,10 @@ function GroupDetailClass() {
         <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
           그룹 정보
         </Button>
+        <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+          학생 등록
+        </Button>
+        {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
         <Button>
           <input
             type="file"
@@ -366,7 +370,7 @@ function GroupDetailClass() {
             }}
           />
           학생 등록
-        </Button>
+        </Button> */}
         <FileDownload
           src={fileDownload}
           alt="fileDownload"

@@ -1,5 +1,6 @@
 import instance from "../../axios";
 
+// 그룹 신청자 리스트 받아오기
 export const groupRetrieveList = async (groupId) => {
   try {
     const res = await instance.get(`/api/group/applications/${groupId}`);
@@ -15,6 +16,7 @@ export const groupRetrieveList = async (groupId) => {
   }
 };
 
+// 그룹 신청자 일괄 수락
 export const groupAcceptAll = async (groupId, onSuccess) => {
   try {
     const res = await instance.post(`/api/group/approve/${groupId}`);
@@ -29,7 +31,8 @@ export const groupAcceptAll = async (groupId, onSuccess) => {
   }
 };
 
-export const groupAccept = async (groupId, userId, onSuccess) => {
+// 그룹 신청자 개인 수락
+export const groupAccept = async (groupId, userId) => {
   try {
     const res = await instance.post(`/api/group/approve/${groupId}/${userId}`);
 
@@ -43,7 +46,8 @@ export const groupAccept = async (groupId, userId, onSuccess) => {
   }
 };
 
-export const groupReject = async (groupId, userId, onSuccess) => {
+// 그룹 신청 거절
+export const groupReject = async (groupId, userId) => {
   try {
     const res = await instance.delete(
       `/api/group/approve/${groupId}/${userId}`
