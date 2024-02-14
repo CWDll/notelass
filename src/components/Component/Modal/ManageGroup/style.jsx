@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import exit from "../../../../assets/exit.svg";
 
-export const SmallContainer = styled.div`
+export const ModalContainer = styled.div`
   width: 480px;
   height: 544px;
   flex-shrink: 0;

@@ -41,7 +41,7 @@ const ManageGroup = ({
   };
 
   return (
-    <S.SmallContainer>
+    <S.ModalContainer>
       <S.Exit
         alt="exit"
         onClick={() => setShowSmallContainer(!showSmallContainer)}
@@ -61,7 +61,7 @@ const ManageGroup = ({
           groupId={groupId}
         />
       ))}
-    </S.SmallContainer>
+    </S.ModalContainer>
   );
 };
 
