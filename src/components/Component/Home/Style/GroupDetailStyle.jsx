@@ -215,7 +215,7 @@ export const GuidelineContainer = styled.div`
   display: row;
   align-items: center;
   margin-left: 32px;
-  margin-top: 16px;
+  margin-top: -25px;
 `;
 
 export const GuidelineTitle = styled.p`

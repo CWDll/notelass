@@ -16,6 +16,7 @@ import instance from "../../assets/api/axios";
 // import axios from "../../assets/api/axios";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
+import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
 
 const Header = styled.header`
   display: flex;
@@ -209,6 +210,10 @@ function GroupDetailClass() {
   const info = location.state;
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
+  const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [showSmallContainer, setShowSmallContainer] = useState(false);
+  const [showSelfEvaluation, setshowSelfEvaluation] = useState(false);
+
 
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
@@ -238,9 +243,7 @@ function GroupDetailClass() {
     navigate("/GroupScoreDetail");
   };
 
-  const [clickedIndices, setClickedIndices] = useState(new Set());
-  const [showSmallContainer, setShowSmallContainer] = useState(false);
-
+  
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
       const newIndices = new Set(prevIndices);
@@ -318,15 +321,15 @@ function GroupDetailClass() {
 
   // 학생 등록 양식 다운로드
 
-  const handleStuExcelDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
-    const link = document.createElement("a");
-    link.href = StuExcel;
-    link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleStuExcelDownload = () => {
+  //   // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+  //   const link = document.createElement("a");
+  //   link.href = StuExcel;
+  //   link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   // 공지사항 GET API
 
@@ -358,23 +361,38 @@ function GroupDetailClass() {
         <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
           그룹 정보
         </Button>
-        <Button>
+        <Button style={{ position: 'relative' }}>
           <input
-            type="file"
-            onChange={uploadname}
-            accept=".xls,.xlsx,.csv,.cell"
-            style={{
-              position: "absolute",
-              opacity: 0,
-            }}
+              type="file"
+              onChange={uploadname}
+              accept=".xls,.xlsx,.csv,.cell"
+              style={{
+                  position: "absolute",
+                  opacity: 0,
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  width: 'auto', 
+                  height: 'auto',
+                  cursor: 'pointer', 
+              }}
           />
           학생 등록
-        </Button>
-        <FileDownload
+      </Button>
+        {/* <FileDownload
           src={fileDownload}
           alt="fileDownload"
           onClick={handleStuExcelDownload}
-        />
+        /> */}
+
+       
+
+        <Button onClick={() => setshowSelfEvaluation(!showSelfEvaluation)}>
+              자기 평가서 생성
+        </Button>
+            {showSelfEvaluation && <SelfEvaluation/>}
+
 
         {showSmallContainer && (
           <ManageGroup
@@ -382,6 +400,8 @@ function GroupDetailClass() {
             setShowSmallContainer={setShowSmallContainer}
           />
         )}
+
+        
       </Header>
       <MainContainer>
         <LeftSectionContainer>
