@@ -349,15 +349,15 @@ function GroupDetailClass() {
 
   // 학생 등록 양식 다운로드
 
-  const handleStuExcelDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
-    const link = document.createElement("a");
-    link.href = StuExcel;
-    link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleStuExcelDownload = () => {
+  //   // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+  //   const link = document.createElement("a");
+  //   link.href = StuExcel;
+  //   link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   // 공지사항 GET API
 
