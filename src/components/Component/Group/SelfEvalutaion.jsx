@@ -46,13 +46,27 @@ const SelfEvaluation = () => {
     const handleSave = async () => {
         try {
 
+            //그룹 선택 확인
+            if (!group) {
+                alert('그룹을 선택해주세요.');
+                return;
+            }
 
+            //공백 질문 확인
+            const hasEmptyQuestion = questions.some(q => !q || q.trim() === "");
+            if (hasEmptyQuestion) {
+                alert('모든 질문란을 채워주세요.');
+                return;
+            }
             const response = await instance.post(`/api/self-eval-question/${group}`, {
                 questions 
             });
 
             if (response.data.code === 201) {
-                console.log(`그룹 ID: ${group}, 질문 내용: ${questions}`);
+                console.log(`그룹 ID: ${group}`);
+                questions.forEach((question, index) => {
+                    console.log(`질문 ${index + 1}: ${question}`);
+                });
                 alert(response.data.message); 
             } else {
                 alert('자기 평가 질문 생성에 실패했습니다.');
