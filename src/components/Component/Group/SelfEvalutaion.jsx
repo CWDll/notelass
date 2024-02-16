@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import exit from '../../../assets/exit.svg';
 import * as S from 'src/components/Component/Group/Style/SelfEvaluationStyle';
+import instance from "src/assets/api/axios";
 
 const SelfEvaluation = () => {
     const [group, setGroup] = useState('');
     const [questions, setQuestions] = useState(['']); 
     const [isVisible, setIsVisible] = useState(true);
+
+    const { paramsGroupId, paramsUserId } = useParams();
+    const location = useLocation();
+    const info = location.state;
+  
 
     //그룹 선택
     const handleGroupChange = (event) => {
@@ -28,6 +35,25 @@ const SelfEvaluation = () => {
     };
 
     if (!isVisible) return null;
+
+    //저장하기
+    const handleSave = async () => {
+        try {
+            const response = await instance.post(`/api/self-eval-question/${paramsGroupId}`, {
+                question: questions
+            });
+
+            if (response.data.code === 201) {
+                alert(response.data.message); 
+                setIsVisible(false); // 성공하면 창 닫기
+            } else {
+                alert('자기 평가 질문 생성에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error("자기 평가 질문 생성에 실패했습니다.", error);
+            alert('자기 평가 질문 생성 중 문제가 발생했습니다.');
+        }
+    };
 
   
     return (
@@ -56,7 +82,7 @@ const SelfEvaluation = () => {
         <S.AddButton onClick={addQuestion}>문항 추가</S.AddButton>
         <div>
           <S.CancelButton onClick={handleClose} >취소</S.CancelButton>
-          <S.SaveButton>저장하기</S.SaveButton>
+          <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
         </div>
       </S.ButtonContainer>
       </S.SmallContainer>
