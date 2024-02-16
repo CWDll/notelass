@@ -749,7 +749,7 @@ export function GroupDetailWrite() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
             <>
-              <AssigncellButton>
+              {/* <AssigncellButton>
                 <input
                   type="file"
                   onChange={uploadAssignment}
@@ -759,16 +759,13 @@ export function GroupDetailWrite() {
                     opacity: 0,
                   }}
                 />
-                {/* 과제 데이터 불러오기 */}
-                준비 중
-                <img src={right} alt="right" />
-              </AssigncellButton>
-              <FileDownload
+              </AssigncellButton> */}
+              {/* <FileDownload
                 src={fileDownload}
                 style={{ marginTop: "5px" }}
                 alt="fileDownload"
                 onClick={handleHwDataDownload}
-              />
+              /> */}
             </>
           </div>
           {/* <SaveButton onClick={saveData}>저장하기</SaveButton> */}
@@ -847,11 +844,11 @@ export function GroupDetailWrite() {
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </HancellButton> */}
-              <FileDownload
+              {/* <FileDownload
                 src={fileDownload}
                 alt="fileDownload"
                 onClick={handleStuRecordDownload}
-              />
+              /> */}
             </CustomDiv>
             <Synonym/>
             {/* <SynonymsDisplay>
