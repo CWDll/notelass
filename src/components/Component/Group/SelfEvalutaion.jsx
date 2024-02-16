@@ -6,6 +6,7 @@ import instance from "src/assets/api/axios";
 
 const SelfEvaluation = () => {
     const [group, setGroup] = useState('');
+    const [groups, setGroups] = useState([]);
     const [questions, setQuestions] = useState(['']); 
     const [isVisible, setIsVisible] = useState(true);
 
@@ -36,7 +37,8 @@ const SelfEvaluation = () => {
 
     if (!isVisible) return null;
 
-    //저장하기
+    //저장하기 
+    //자기평가 질문 생성 POST API
     const handleSave = async () => {
         try {
             const response = await instance.post(`/api/self-eval-question/${paramsGroupId}`, {
@@ -55,14 +57,33 @@ const SelfEvaluation = () => {
         }
     };
 
+    //그룹 목록 GET 
+    useEffect(() => {
+        const fetchGroups = async () => {
+          try {
+            const response = await instance.get('/api/group');
+            if (response.data && response.data.result) {
+              const newGroups = response.data.result.map((g) => ({
+                id: g.id,
+                name: `${g.grade}학년 ${g.classNum}반` 
+              }));
+              setGroups(newGroups); 
+            }
+          } catch (error) {
+            console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
+          }
+        };
+  
+        fetchGroups();
+      }, []);
   
     return (
       <S.SmallContainer>
         <S.Dropdown onChange={handleGroupChange} value={group}>
           <option value="">그룹을 선택해주세요.</option>
-          <option value="group1">그룹 1</option>
-          <option value="group2">그룹 2</option>
-          <option value="group3">그룹 3</option>
+            {groups.map((g) => (
+             <option key={g.id} value={g.id}>{g.name}</option>
+          ))}
         </S.Dropdown>
 
         <S.ExitButton style ={{margin: "24px" }} src={exit} alt="exit" onClick={handleClose} />
