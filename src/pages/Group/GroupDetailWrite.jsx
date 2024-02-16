@@ -30,9 +30,7 @@ import RecordFile from "../../assets/excel/StuRecord.xlsx";
 import * as S from "../../components/Component/Home/Style/GroupDetailStyle";
 
 import InputText from "../../components/Component/Group/InputText";
-// import GuideLine from "../../components/Component/Group/GuideLine";
 import Synonym from "../../components/Component/Group/Synonym";
-import StudentMemo from "../../components/Component/Group/StudentMemo";
 
 import {
   Header,
@@ -118,7 +116,7 @@ export function GroupDetailWrite() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
-  const [studentBookEntries, setStudentBookEntries] = useState([]);
+  // const [studentBookEntries, setStudentBookEntries] = useState([]);
 
 
 
@@ -148,28 +146,28 @@ export function GroupDetailWrite() {
   //   return { groupId: null, userId: null };
   // };
 
-  // // 학생 수첩 수정 버튼 클릭 핸들러
-  // const handleStudentBookEdit = (entryId) => {
-  //   console.log("작동중입니다...");
-  //   const entry = studentBookEntries.find((e) => e.id === entryId);
-  //   console.log("entry", entry);
-  //   console.log("entry.id", entry.id);
-  //   console.log("entryIdType", typeof entry.id);
-  //   console.log("entryId", entryId);
+  // 학생 수첩 수정 버튼 클릭 핸들러
+  const handleStudentBookEdit = (entryId) => {
+    console.log("작동중입니다...");
+    const entry = studentBookEntries.find((e) => e.id === entryId);
+    console.log("entry", entry);
+    console.log("entry.id", entry.id);
+    console.log("entryIdType", typeof entry.id);
+    console.log("entryId", entryId);
 
-  //   if (entry) {
-  //     setSelectedGroupId(paramsGroupId);
-  //     setSelectedUserId(paramsUserId);
-  //     setShowStudentBook(true);
-  //     setContentId(entryId);
-  //     console.log("setShowStudentBook=true 만든 상태");
-  //   } else {
-  //     console.error("학생 정보를 찾을 수 없음");
-  //   }
-  //   console.log("작동 끝??");
-  //   console.log("showStudentBook의 상태: ", showStudentBook);
-  // };
-  //
+    if (entry) {
+      setSelectedGroupId(paramsGroupId);
+      setSelectedUserId(paramsUserId);
+      setShowStudentBook(true);
+      setContentId(entryId);
+      console.log("setShowStudentBook=true 만든 상태");
+    } else {
+      console.error("학생 정보를 찾을 수 없음");
+    }
+    console.log("작동 끝??");
+    console.log("showStudentBook의 상태: ", showStudentBook);
+  };
+  
 
 
   // 생기부 다운로드 받기 GET 함수
@@ -198,48 +196,48 @@ export function GroupDetailWrite() {
     }
   };
 
-  //과제 성적 파일 업로드 POST 함수
-  const uploadAssignment = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(formData);
+  // //과제 성적 파일 업로드 POST 함수
+  // const uploadAssignment = async (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     console.log(formData);
 
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
+  //     for (let [key, value] of formData.entries()) {
+  //       console.log(key, value);
+  //     }
 
-      try {
-        const response = await instance.post(
-          `/api/assignment/file/${paramsGroupId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+  //     try {
+  //       const response = await instance.post(
+  //         `/api/assignment/file/${paramsGroupId}`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
 
-        console.log(response); // 서버 응답 확인
+  //       console.log(response); // 서버 응답 확인
 
-        if (response.status === 201) {
-          console.log("과제 성적 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); // 상태 업데이트
-        } else {
-          console.error(
-            "예상치 못한 상태 코드:",
-            response.status,
-            response.data
-          );
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
-        }
-      } catch (error) {
-        console.error("과제 성적 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
-      }
-    }
-  };
+  //       if (response.status === 201) {
+  //         console.log("과제 성적 파일 업로드 성공!");
+  //         setUploadStatus("업로드 성공!"); // 상태 업데이트
+  //       } else {
+  //         console.error(
+  //           "예상치 못한 상태 코드:",
+  //           response.status,
+  //           response.data
+  //         );
+  //         setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+  //       }
+  //     } catch (error) {
+  //       console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+  //       setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+  //     }
+  //   }
+  // };
 
   // 과제 점수 조회 GET 함수
 
@@ -428,52 +426,52 @@ export function GroupDetailWrite() {
     fetchStudents();
   }, [paramsGroupId]);
 
-  // //학생 수첩 조회 Get 함수
-  // const [studentBookEntries, setStudentBookEntries] = useState([]);
+  //학생 수첩 조회 Get 함수
+  const [studentBookEntries, setStudentBookEntries] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchStudentBook = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `/api/handbook/${paramsGroupId}/${paramsUserId}`
-  //       );
-  //       console.log("학생 수첩 조회 내용:", response.data);
-  //       if (response.status === 200) {
-  //         setSavedTextFromStudentBook(response.data.result);
-  //         setStudentBookEntries(response.data.result);
-  //         console.log("학생 수첩 조회 내용2: ", response.data.result);
-  //       } else {
-  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
-  //       }
-  //     } catch (error) {
-  //       console.error("학생 수첩을 가져오지 못했습니다.:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchStudentBook = async () => {
+      try {
+        const response = await instance.get(
+          `/api/handbook/${paramsGroupId}/${paramsUserId}`
+        );
+        console.log("학생 수첩 조회 내용:", response.data);
+        if (response.status === 200) {
+          setSavedTextFromStudentBook(response.data.result);
+          setStudentBookEntries(response.data.result);
+          console.log("학생 수첩 조회 내용2: ", response.data.result);
+        } else {
+          console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+        }
+      } catch (error) {
+        console.error("학생 수첩을 가져오지 못했습니다.:", error);
+      }
+    };
 
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchStudentBook();
-  //   }
-  // }, [paramsGroupId, paramsUserId]);
+    if (paramsGroupId && paramsUserId) {
+      fetchStudentBook();
+    }
+  }, [paramsGroupId, paramsUserId]);
 
-  // // 학생 수첩 내용 DELETE 함수
-  // const deleteStudentBookEntry = async (handbookContentId) => {
-  //   try {
-  //     const response = await instance.delete(
-  //       `/api/handbook/${handbookContentId}`
-  //     );
-  //     if (response.status === 204) {
-  //       setStudentBookEntries((currentEntries) =>
-  //         currentEntries.filter((entry) => entry.id !== handbookContentId)
-  //       );
-  //       alert("항목이 성공적으로 삭제되었습니다.");
-  //     } else {
-  //       // 오류가 있을 경우
-  //       console.error("삭제에 실패했습니다:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("삭제 중 오류가 발생했습니다:", error);
-  //   }
-  // };
+  // 학생 수첩 내용 DELETE 함수
+  const deleteStudentBookEntry = async (handbookContentId) => {
+    try {
+      const response = await instance.delete(
+        `/api/handbook/${handbookContentId}`
+      );
+      if (response.status === 204) {
+        setStudentBookEntries((currentEntries) =>
+          currentEntries.filter((entry) => entry.id !== handbookContentId)
+        );
+        alert("항목이 성공적으로 삭제되었습니다.");
+      } else {
+        // 오류가 있을 경우
+        console.error("삭제에 실패했습니다:", response);
+      }
+    } catch (error) {
+      console.error("삭제 중 오류가 발생했습니다:", error);
+    }
+  };
 
   
 
@@ -601,28 +599,28 @@ export function GroupDetailWrite() {
     }
   };
 
-  // //유의어 추천 GET 함수
-  // const [selectedWord, setSelectedWord] = useState("");
-  // const [synonyms, setSynonyms] = useState([]);
-  // const [contextMenu, setContextMenu] = useState(null);
-  // const [synonymsLoading, setSynonymsLoading] = useState(false);
+  //유의어 추천 GET 함수
+  const [selectedWord, setSelectedWord] = useState("");
+  const [synonyms, setSynonyms] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [synonymsLoading, setSynonymsLoading] = useState(false);
 
-  // const fetchSynonyms = async (word) => {
-  //   setSynonymsLoading(true);
-  //   try {
-  //     const response = await axios.get(`/api/synonym?word=${word}`);
-  //     setSynonyms(response.data.result.slice(0, 4));
-  //   } catch (error) {
-  //     console.error("Error fetching synonyms:", error);
-  //   } finally {
-  //     setSynonymsLoading(false);
-  //   }
-  // };
+  const fetchSynonyms = async (word) => {
+    setSynonymsLoading(true);
+    try {
+      const response = await axios.get(`/api/synonym?word=${word}`);
+      setSynonyms(response.data.result.slice(0, 4));
+    } catch (error) {
+      console.error("Error fetching synonyms:", error);
+    } finally {
+      setSynonymsLoading(false);
+    }
+  };
 
-  // const handleWordSelection = (word) => {
-  //   setSelectedWord(word);
-  //   fetchSynonyms(word);
-  // };
+  const handleWordSelection = (word) => {
+    setSelectedWord(word);
+    fetchSynonyms(word);
+  };
 
   const closeContextMenu = () => {
     setContextMenu(null);
@@ -657,25 +655,25 @@ export function GroupDetailWrite() {
       fetchScores();
     }, [paramsGroupId, paramsUserId]);
 
-  // 과제데이터 양식 다운로드
-  const handleHwDataDownload = () => {
-    const link = document.createElement("a");
-    link.href = HwDataFile;
-    link.setAttribute("download", "과제데이터양식.cell"); 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // // 과제데이터 양식 다운로드
+  // const handleHwDataDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = HwDataFile;
+  //   link.setAttribute("download", "과제데이터양식.cell"); 
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
-  // 생기부 양식 다운로드
-  const handleStuRecordDownload = () => {
-    const link = document.createElement("a");
-    link.href = RecordFile;
-    link.setAttribute("download", "생활기록부양식.xlsx"); 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // // 생기부 양식 다운로드
+  // const handleStuRecordDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = RecordFile;
+  //   link.setAttribute("download", "생활기록부양식.xlsx"); 
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
     <>
@@ -851,33 +849,9 @@ export function GroupDetailWrite() {
               /> */}
             </CustomDiv>
             <Synonym/>
-            {/* <SynonymsDisplay>
-              {selectedWord && (
-                <>
-                  <SynonymTitle>
-                    <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
-                  </SynonymTitle>
-                  <div>
-                    {synonymsLoading ? (
-                      <div style={{ marginTop: "15px" }}>
-                        <BarLoader
-                          color="#4849ff"
-                          loading={synonymsLoading}
-                          height={4}
-                          width={100}
-                        />
-                      </div>
-                    ) : (
-                      synonyms.map((synonym, index) => (
-                        <Synonym key={index}>{synonym}</Synonym>
-                      ))
-                    )}
-                  </div>
-                </>
-              )}
-            </SynonymsDisplay> */}
+            
 
-            <Line />
+            
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
@@ -979,15 +953,15 @@ export function GroupDetailWrite() {
         </LeftContainer>
 
         <RightContainer>
-          <StudentMemo/>
-          {/* <Title>학생수첩</Title>
+          {/* <StudentMemo/> */}
+          <Title>학생수첩</Title>
           {studentBookEntries.map((entry) => (
             <InfoContainer key={entry.id}>
               <TimeText>
-                {/* 날짜 형식을 년-월-일 */}
-                {/* {new Date(entry.createdDate).toLocaleDateString("ko-KR")} */}
-              {/* </TimeText> */}
-              {/* <div
+                {/* 날짜 형식을 년-월-일*/}
+                {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
+              </TimeText>
+              <div
                 style={{
                   display: "flex",
                   gap: "10px",
@@ -995,8 +969,8 @@ export function GroupDetailWrite() {
                   marginRight: "35px",
                   marginTop: "-20PX",
                 }}
-              > */}
-                {/* <TimeText
+              >
+                <TimeText
                   onClick={() => {
                     handleStudentBookEdit(entry.id);
                     setShowStudentBook(!showStudentBook);
@@ -1010,8 +984,8 @@ export function GroupDetailWrite() {
                 </TimeText>
               </div>
               <StudentBookText key={entry.id}>
-                <SavedText>{entry.content}</SavedText> */}
-                {/* {showCheckboxes && (
+                <SavedText>{entry.content}</SavedText>
+                {showCheckboxes && (
                   <div style={{ position: "absolute" }}>
                     <Checkbox
                       onClick={() => toggleCheck(entry.id)}
@@ -1022,8 +996,8 @@ export function GroupDetailWrite() {
                 )}
               </StudentBookText>
             </InfoContainer>
-          ))} */}
-          {/* {showStudentBook && (
+          ))}
+          {showStudentBook && (
             <StudentBookContent
               show={showStudentBook}
               onClose={() => setShowStudentBook(false)}
@@ -1031,7 +1005,7 @@ export function GroupDetailWrite() {
               propsUserId={selectedUserId}
               contentId={contentId}
             />
-          )} */}
+          )}
         </RightContainer>
       </MainContainer>
       {/* </div> */}
