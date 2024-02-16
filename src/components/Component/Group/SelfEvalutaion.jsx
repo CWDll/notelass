@@ -9,10 +9,8 @@ const SelfEvaluation = () => {
     const [groups, setGroups] = useState([]);
     const [questions, setQuestions] = useState(['']); 
     const [isVisible, setIsVisible] = useState(true);
+    const [question, setQuestion] = useState('');
 
-    const { paramsGroupId, paramsUserId } = useParams();
-    const location = useLocation();
-    const info = location.state;
   
 
     //그룹 선택
@@ -39,15 +37,23 @@ const SelfEvaluation = () => {
 
     //저장하기 
     //자기평가 질문 생성 POST API
+    const handleQuestionChange = (value, index) => {
+        const newQuestions = [...questions];
+        newQuestions[index] = value;
+        setQuestions(newQuestions);
+    };
+
     const handleSave = async () => {
         try {
-            const response = await instance.post(`/api/self-eval-question/${paramsGroupId}`, {
-                question: questions
+
+
+            const response = await instance.post(`/api/self-eval-question/${group}`, {
+                questions 
             });
 
             if (response.data.code === 201) {
+                console.log(`그룹 ID: ${group}, 질문 내용: ${questions}`);
                 alert(response.data.message); 
-                setIsVisible(false); // 성공하면 창 닫기
             } else {
                 alert('자기 평가 질문 생성에 실패했습니다.');
             }
@@ -56,6 +62,7 @@ const SelfEvaluation = () => {
             alert('자기 평가 질문 생성 중 문제가 발생했습니다.');
         }
     };
+
 
     //그룹 목록 GET 
     useEffect(() => {
@@ -91,9 +98,14 @@ const SelfEvaluation = () => {
         
         <S.Label>질문</S.Label>
         <S.ContentContainer>
-        {questions.map((_, index) => (
+        {questions.map((question, index) => (
           <S.QuestionInputContainer key={index}>
-            <S.StyledInput type="text" placeholder={`질문 ${index + 1}을 입력해주세요.`} />
+            <S.StyledInput 
+                type="text" 
+                placeholder={`질문 ${index + 1}을 입력해주세요.`} 
+                value={question}
+                onChange={(e) => handleQuestionChange(e.target.value, index)} // 질문 입력 처리
+            />
             <S.ExitButton src={exit} alt="exit" onClick={() => removeQuestion(index)} />
           </S.QuestionInputContainer>
         ))}
