@@ -16,6 +16,7 @@ import instance from "../../assets/api/axios";
 // import axios from "../../assets/api/axios";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
+import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
 
 const Header = styled.header`
   display: flex;
@@ -234,6 +235,10 @@ function GroupDetailClass() {
   const info = location.state;
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
+  const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [showSmallContainer, setShowSmallContainer] = useState(false);
+  const [showSelfEvaluation, setshowSelfEvaluation] = useState(false);
+
 
 
   const navigate = useNavigate();
@@ -266,9 +271,7 @@ function GroupDetailClass() {
     navigate("/GroupScoreDetail");
   };
 
-  const [clickedIndices, setClickedIndices] = useState(new Set());
-  const [showSmallContainer, setShowSmallContainer] = useState(false);
-
+  
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
       const newIndices = new Set(prevIndices);
@@ -386,23 +389,38 @@ function GroupDetailClass() {
         <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
           그룹 정보
         </Button>
-        <Button>
+        <Button style={{ position: 'relative' }}>
           <input
-            type="file"
-            onChange={uploadname}
-            accept=".xls,.xlsx,.csv,.cell"
-            style={{
-              position: "absolute",
-              opacity: 0,
-            }}
+              type="file"
+              onChange={uploadname}
+              accept=".xls,.xlsx,.csv,.cell"
+              style={{
+                  position: "absolute",
+                  opacity: 0,
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  width: 'auto', 
+                  height: 'auto',
+                  cursor: 'pointer', 
+              }}
           />
           학생 등록
-        </Button>
-        <FileDownload
+      </Button>
+        {/* <FileDownload
           src={fileDownload}
           alt="fileDownload"
           onClick={handleStuExcelDownload}
-        />
+        /> */}
+
+       
+
+        <Button onClick={() => setshowSelfEvaluation(!showSelfEvaluation)}>
+              자기 평가서 생성
+        </Button>
+            {showSelfEvaluation && <SelfEvaluation/>}
+
 
         {showSmallContainer && (
           <SmallContainer>
@@ -413,6 +431,8 @@ function GroupDetailClass() {
             ></Exit>
           </SmallContainer>
         )}
+
+        
       </Header>
       <MainContainer>
         <LeftSectionContainer>
