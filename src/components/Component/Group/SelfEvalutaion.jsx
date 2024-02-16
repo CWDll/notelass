@@ -33,7 +33,6 @@ const SelfEvaluation = () => {
         setIsVisible(false);
     };
 
-    if (!isVisible) return null;
 
     //저장하기 
     //자기평가 질문 생성 POST API
@@ -96,7 +95,10 @@ const SelfEvaluation = () => {
         };
   
         fetchGroups();
-      }, []);
+    }, []);
+
+
+    if (!isVisible) return null;
   
     return (
       <S.SmallContainer>
@@ -107,7 +109,7 @@ const SelfEvaluation = () => {
           ))}
         </S.Dropdown>
 
-        <S.ExitButton style ={{margin: "24px" }} src={exit} alt="exit" onClick={handleClose} />
+        <S.ExitButton style ={{margin: "24px"}} src={exit} alt="exit" onClick={handleClose} />
 
         
         <S.Label>질문</S.Label>
