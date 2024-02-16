@@ -4,12 +4,13 @@ import exit from '../../../assets/exit.svg';
 import * as S from 'src/components/Component/Group/Style/SelfEvaluationStyle';
 import instance from "src/assets/api/axios";
 
-const SelfEvaluation = () => {
+const SelfEvaluation = ({setIsEditing }) => {
     const [group, setGroup] = useState('');
     const [groups, setGroups] = useState([]);
     const [questions, setQuestions] = useState(['']); 
     const [isVisible, setIsVisible] = useState(true);
     const [question, setQuestion] = useState('');
+    // const [isEditing, setIsEditing] = useState(false);
 
   
 
@@ -67,6 +68,11 @@ const SelfEvaluation = () => {
                     console.log(`질문 ${index + 1}: ${question}`);
                 });
                 alert(response.data.message); 
+                console.log(setIsEditing);
+                setIsEditing(true);
+                setIsVisible(false);
+                
+
             } else {
                 alert('자기 평가 질문 생성에 실패했습니다.');
             }

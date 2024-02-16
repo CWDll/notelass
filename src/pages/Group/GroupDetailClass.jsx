@@ -237,8 +237,8 @@ function GroupDetailClass() {
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
   const [clickedIndices, setClickedIndices] = useState(new Set());
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-  const [showSelfEvaluation, setshowSelfEvaluation] = useState(false);
-
+  const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); 
 
 
   const navigate = useNavigate();
@@ -416,11 +416,10 @@ function GroupDetailClass() {
 
        
 
-        <Button onClick={() => setshowSelfEvaluation(!showSelfEvaluation)}>
-              자기 평가서 생성
+        <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
+          {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
         </Button>
-            {showSelfEvaluation && <SelfEvaluation/>}
-
+        {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
         {showSmallContainer && (
           <SmallContainer>
