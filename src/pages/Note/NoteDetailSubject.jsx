@@ -1,13 +1,14 @@
-import React, { useState ,useEffect,useRef} from "react";
+import React, { useState ,useEffect} from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import plus_lg from "../../assets/plus_lg.svg";
 import paper from "../../assets/paper.svg";
 import chevron_down from "../../assets/chevron_down.svg";
 import star from "../../assets/star.svg";
 import FilledStar from "../../assets/FilledStar.svg";
-import * as S from 'src/components/Component/Note/Style/NoteDetailSubjectStyle';
+import instance   from "src/assets/api/axios";
+import * as S from "./Style/NoteDetailSubjectStyle";
 
 //노트 목록
 const starItems = [
@@ -17,18 +18,36 @@ const starItems = [
 ];
 
 function NoteDetailSubject() {
+
+  
   const navigate = useNavigate();
   const [starredItems, setStarredItems] = useState({});
   //const [dropdownVisible, setDropdownVisible] = useState(false); // 드롭다운 표시 상태 추가
   const [dropdownVisible, setDropdownVisible] = useState({});
+  const [files, setFiles] = useState([])
+  const [materials, setMaterials] = useState([]); 
 
-  //노트별 즐겨 찾기 기능
-  function handleStarClick(itemKey) {
-    setStarredItems((prev) => ({
-      ...prev,
-      [itemKey]: !prev[itemKey],
-    }));
-  }
+  const { id} = useParams();
+  const location = useLocation();
+  // console.log("location: ", location);
+  const info = location.state;
+  // console.log("info:", info);
+
+// 노트별 즐겨 찾기 기능
+function handleStarClick(materialId) {
+  setStarredItems((prev) => ({
+    ...prev,
+    [materialId]: !prev[materialId],
+  }));
+}
+
+  // 날짜 포맷 함수
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('ko-KR', options).format(date).replace(" ", "").replace(". ", ".").replace(". ", ".");
+  };
+
 
 
 
@@ -59,13 +78,33 @@ useEffect(() => {
 }, []);
 
   
-  // 드롭다운 토글 함수
-  const toggleDropdown = (itemKey) => {
-    setDropdownVisible((prev) => ({
-      ...prev,
-      [itemKey]: !prev[itemKey],
-    }));
-  };
+// 드롭다운 토글 함수
+const toggleDropdown = (materialId) => {
+  setDropdownVisible((prev) => ({
+    ...prev,
+    [materialId]: !prev[materialId],
+  }));
+};
+
+
+  //강의자료(노트) 목록 GET API
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await instance.get(`/api/material/${id}`);
+        if (response.data.code === 200) {
+          setMaterials(response.data.result); // 상태 업데이트
+          console.log("강의자료 목록 조회 결과:", response.data.result);
+        } else {
+          console.error("강의자료 목록을 불러오는 데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("강의자료 목록 조회 중 오류 발생:", error);
+      }
+    };
+
+    fetchMaterials();
+  }, [id]);
 
   return (
     <div>
@@ -83,16 +122,16 @@ useEffect(() => {
 
         
         <S.SubjectBodyWrapper>
-          {starItems.map((item) => (
-            <S.SubjectBody key={item.key}>
+        {materials.map((material) => (
+          <S.SubjectBody key={material.id}>
               <S.PaperImg src={paper} alt="paper" />
               <S.SubjectContainer>
-                <S.BoldText>{item.title}</S.BoldText>
-                <S.GrayText>{item.date}</S.GrayText>
+                <S.BoldText>{material.files.map(file => file.originalFileName).join(", ")}</S.BoldText>
+                <S.GrayText>{formatDate(material.createdDate)}</S.GrayText>
               </S.SubjectContainer>
               
-              <S.ChevronDownImg src={chevron_down} alt="chevron_down" onClick={() => toggleDropdown(item.key)}  />
-              {dropdownVisible[item.key] && ( 
+              <S.ChevronDownImg src={chevron_down} alt="chevron_down" onClick={() => toggleDropdown(material.id)}  />
+              {dropdownVisible[material.id] && (  
             <S.NavDropdownBox   className="dropdown-menu">
               <S.NavDropdownOptionUp
                 className="dropdown-item"
@@ -118,9 +157,9 @@ useEffect(() => {
 
 
 
-              <StarImg
-                onClick={() => handleStarClick(item.key)}
-                src={starredItems[item.key] ? FilledStar : star}
+              <S.StarImg
+                onClick={() => handleStarClick(material.id)}
+                src={starredItems[material.id] ? FilledStar : star}
                 alt="star"
               />
             </S.SubjectBody>
