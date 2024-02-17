@@ -89,6 +89,7 @@ import {
   SynonymTitle,
   CustomDiv,
   ViewButton,
+  BookTitle,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 
@@ -957,7 +958,7 @@ export function GroupDetailWrite() {
 
         <RightContainer>
           {/* <StudentMemo/> */}
-          <Title>학생수첩</Title>
+          <BookTitle>학생수첩</BookTitle>
           <ViewButton onClick={() => setShowEvaluationView(!showEvaluationView)}>학생의 자기평가서 보기</ViewButton>
           {showEvaluationView && <EvaluationView />}
 
