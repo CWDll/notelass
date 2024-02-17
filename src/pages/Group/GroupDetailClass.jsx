@@ -111,6 +111,11 @@ const DetailText = styled.p`
   right: 32px;
 `;
 
+const ShowAllText = styled(DetailText)`
+  top: 37px;
+  right: 100px;
+`;
+
 const SubjectContainer = styled.div`
   display: flex;
   width: 684px;
@@ -212,9 +217,13 @@ function GroupDetailClass() {
 
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
-  const onClick = () => {
-    navigate(`/GroupDetailClass/${id}/AssignmentDetail`);
+  const toWritePage = () => {
+    navigate(`/GroupDetailClass/${id}/MakeAssignment`);
   };
+  const toAllPage = () => {
+    navigate(`/GroupDetailClass/${id}/AllAssignments`);
+  };
+
   const GroupDetailWrite = (
     paramsGruopId,
     paramsUserId,
@@ -403,9 +412,15 @@ function GroupDetailClass() {
         <LeftSectionContainer>
           <NoticeContainer>
             <Title>공지/과제</Title>
+            <ShowAllText
+              style={{ "text-decoration": "underline" }}
+              onClick={toAllPage}
+            >
+              전체보기
+            </ShowAllText>
             <DetailText
               style={{ "text-decoration": "underline" }}
-              onClick={onClick}
+              onClick={toWritePage}
             >
               생성하기
             </DetailText>
@@ -448,7 +463,7 @@ function GroupDetailClass() {
             <Title>과제별 성적 열람</Title>
             <DetailText
               style={{ "text-decoration": "underline" }}
-              onClick={onClick}
+              onClick={toWritePage}
             >
               더보기
             </DetailText>
@@ -486,7 +501,7 @@ function GroupDetailClass() {
             <Title>학생별 성적 열람</Title>
             <DetailText
               style={{ "text-decoration": "underline" }}
-              onClick={onClick}
+              onClick={toWritePage}
             >
               더보기
             </DetailText>

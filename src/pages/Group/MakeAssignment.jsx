@@ -9,7 +9,7 @@ import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
 import * as S from "../Style/AssignmentStyle";
 
-function AssignmentDetail() {
+function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
@@ -258,4 +258,4 @@ function AssignmentDetail() {
   );
 }
 
-export default AssignmentDetail;
+export default MakeAssignment;

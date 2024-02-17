@@ -14,7 +14,7 @@ import NoteDetailSubject from "./pages/Note/NoteDetailSubject";
 import GroupDetailClass from "./pages/Group/GroupDetailClass";
 import GroupDetailWrite from "./pages/Group/GroupDetailWrite";
 import PdfViewer from "./pages/Note/PdfViewer";
-import AssignmentDetail from "./pages/Group/AssignmentDetail";
+import MakeAssignment from "./pages/Group/MakeAssignment";
 import StudentScoreDetail from "./pages/Student/StudentScoreDetail";
 import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
@@ -48,8 +48,8 @@ export const routes = [
         index: true,
       },
       {
-        path: "/GroupDetailClass/:paramsGroupId/AssignmentDetail",
-        element: <AssignmentDetail />,
+        path: "/GroupDetailClass/:paramsGroupId/MakeAssignment",
+        element: <MakeAssignment />,
       },
       {
         path: "/StudentScoreDetail",
