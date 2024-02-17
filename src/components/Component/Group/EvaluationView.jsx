@@ -17,7 +17,7 @@ const SelfEvaluation = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await instance.get(`/api/self-eval-question/${paramsGroupId}`);
+                const response = await instance.get(`/api/self-eval-question/${paramsGroupId}/${paramsUserId}`);
                 if (response.data.code === 200) {
                     setQuestions(response.data.result);
                     console.log('Fetched questions:', response.data.result);
@@ -30,7 +30,7 @@ const SelfEvaluation = () => {
         };
 
         fetchQuestions();
-    }, [paramsGroupId]); 
+    }, [paramsGroupId, paramsUserId]); 
 
     //창 닫기
     const handleClose = () => {
@@ -45,9 +45,9 @@ const SelfEvaluation = () => {
             <S.Label>자기평가서</S.Label>
             <S.Question>
             {questions.map((questionObj, index) => (
-                <div key={questionObj.id}>
-                    <h3>{index + 1}. {questionObj.question}</h3>
-                    <S.Box>답변</S.Box>
+                <div key={questionObj.questionId}>
+                    <S.Title>{index + 1}. {questionObj.question}</S.Title>
+                    <S.Box>{questionObj.answer || '답변이 등록되지 않았습니다.'}</S.Box>
                 </div>
             ))}
             </S.Question>
