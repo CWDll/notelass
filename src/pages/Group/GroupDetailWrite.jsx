@@ -32,6 +32,7 @@ import * as S from "../../components/Component/Home/Style/GroupDetailStyle";
 import InputText from "../../components/Component/Group/InputText";
 import Synonym from "../../components/Component/Group/Synonym";
 import EvaluationView from "src/components/Component/Group/EvaluationView";
+import DownloadSuccess from "../../components/Component/Etc/DownloadSuccess";
 
 import {
   Header,
@@ -91,6 +92,8 @@ import {
   ViewButton,
   BookTitle,
   ExitButton,
+  Wrap,
+  Main,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 
@@ -122,8 +125,8 @@ export function GroupDetailWrite() {
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   // const [studentBookEntries, setStudentBookEntries] = useState([]);
   const [showEvaluationView, setShowEvaluationView] = useState(false);
-
-
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // // 학생 수첩 관련 함수
   // // StudentBook 모달을 열기 위한 함수
@@ -189,6 +192,7 @@ export function GroupDetailWrite() {
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
+        setIsVisible(true);
 
        
       } else {
@@ -681,7 +685,9 @@ export function GroupDetailWrite() {
   // };
 
   return (
-    <>
+    <Wrap>
+      <Main>
+      {isVisible && <DownloadSuccess onExit={() => setIsVisible(false)} />}
       {/* //<div onClick={closeContextMenu}> */}
       <Header>
         <Img
@@ -808,28 +814,7 @@ export function GroupDetailWrite() {
 
           <>
           <InputText/>
-            {/* <WritingBox
-              onContextMenu={(event) => {
-                event.preventDefault();
-                const selectedText = window.getSelection().toString().trim();
-                if (selectedText) {
-                  handleWordSelection(selectedText);
-                }
-              }}
-            > */}
-              {/*생활기록부 입력창*/}
-
-              {/* <Textarea
-                value={inputText}
-                spellCheck={false}
-                onChange={(e) => {
-                  setInputText(e.target.value);
-                  setByteCount(calculateByteCount(e.target.value));
-                }}
-              />
-
-              <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-            </WritingBox> */}
+            
 
             <CustomDiv>
               {/* <HancellButton>
@@ -1021,8 +1006,10 @@ export function GroupDetailWrite() {
           )}
         </RightContainer>
       </MainContainer>
+      
       {/* </div> */}
-    </>
+      </Main>
+    </Wrap>
   );
 }
 

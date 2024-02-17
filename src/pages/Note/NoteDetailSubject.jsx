@@ -136,7 +136,8 @@ const toggleDropdown = (materialId) => {
   }, [id]);
 
   return (
-    <div>
+    <S.Wrap>
+      <S.Main>
 
       <S.Header>
         <S.Img src={chevron_left} alt="chevron_left" />
@@ -193,30 +194,6 @@ const toggleDropdown = (materialId) => {
                 onClick={() => handleStarClick(material.id)}
                 src={starredItems[material.id] ? FilledStar : star}
 
-      <Header onClick={goBack}>
-        <Img src={chevron_left} alt="chevron_left" />
-        <BoldTitle>과제별 성적 열람</BoldTitle>
-      </Header>
-      <NoteContainer>
-        <MakeNoteBody>
-          <AddNote>
-            <PlusImg src={plus_lg} alt="plus_lg" />
-          </AddNote>
-          <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
-        </MakeNoteBody>
-
-        <SubjectBodyWrapper>
-          {starItems.map((item) => (
-            <SubjectBody key={item.key}>
-              <PaperImg src={paper} alt="paper" />
-              <SubjectContainer>
-                <BoldText>{item.title}</BoldText>
-                <GrayText>{item.date}</GrayText>
-              </SubjectContainer>
-              <ChevronDownImg src={chevron_down} alt="chevron_down" />
-              <StarImg
-                onClick={() => handleStarClick(item.key)}
-                src={starredItems[item.key] ? FilledStar : star}
 
                 alt="star"
               />
@@ -227,11 +204,8 @@ const toggleDropdown = (materialId) => {
 
 
       </S.NoteContainer>
-
-        </SubjectBodyWrapper>
-      </NoteContainer>
-
-    </div>
+      </S.Main>
+    </S.Wrap>
   );
 }
 

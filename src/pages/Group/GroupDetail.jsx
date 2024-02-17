@@ -4,19 +4,20 @@ import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 import instance from "../../assets/api/axios";
 
-const NoteContainer = styled.div`
-  width: 100%;
-  height: 800px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  position: relative;
+const Warp = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
 
-  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-  margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-  margin-top: 16px;
-  max-width: 1194px; /* 최대 너비 제한 */
+const NoteContainer = styled.div`
+width: 1194px;
+height: 800px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #fff;
+box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+position: relative;
+margin-top: 16px;
 
 
   
@@ -82,18 +83,20 @@ const Button = styled.button`
   height: 54px;
   flex-shrink: 0;
   border-radius: 6px;
-  border: 2px dashed #4849ff;
-  background: #ededff;
+  background: #4849FF;
   margin-top: 74px;
-  margin-left: 1413px;
+  margin-left: 1050px;
+  
 
-  color: #4849ff;
+  color: #fff;
   text-align: center;
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+
 `;
 
 const SubjectBodyWrapper = styled.div`
@@ -307,7 +310,7 @@ function GroupDetail() {
   }, []);
 
   return (
-    <>
+    <Warp>
       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
         그룹생성
       </Button>
@@ -392,7 +395,7 @@ function GroupDetail() {
           ))}
         </SubjectBodyWrapper>
       </NoteContainer>
-    </>
+    </Warp>
   );
 }
 
