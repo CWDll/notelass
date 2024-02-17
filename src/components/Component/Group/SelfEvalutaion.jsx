@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import exit from '../../../assets/exit.svg';
@@ -44,43 +45,41 @@ const SelfEvaluation = ({setIsEditing }) => {
     };
 
     const handleSave = async () => {
-        try {
-
-            //그룹 선택 확인
-            if (!group) {
-                alert('그룹을 선택해주세요.');
-                return;
-            }
-
-            //공백 질문 확인
-            const hasEmptyQuestion = questions.some(q => !q || q.trim() === "");
-            if (hasEmptyQuestion) {
-                alert('모든 질문란을 채워주세요.');
-                return;
-            }
-            const response = await instance.post(`/api/self-eval-question/${group}`, {
-                questions 
-            });
-
-            if (response.data.code === 201) {
-                console.log(`그룹 ID: ${group}`);
-                questions.forEach((question, index) => {
-                    console.log(`질문 ${index + 1}: ${question}`);
-                });
-                alert(response.data.message); 
-                console.log(setIsEditing);
-                setIsEditing(true);
-                setIsVisible(false);
-                
-
-            } else {
-                alert('자기 평가 질문 생성에 실패했습니다.');
-            }
-        } catch (error) {
-            console.error("자기 평가 질문 생성에 실패했습니다.", error);
-            alert('자기 평가 질문 생성 중 문제가 발생했습니다.');
-        }
-    };
+      try {
+          // 그룹 선택 확인
+          if (!group) {
+              alert('그룹을 선택해주세요.');
+              return;
+          }
+  
+          // 공백 질문 확인
+          const hasEmptyQuestion = questions.some(q => !q || q.trim() === "");
+          if (hasEmptyQuestion) {
+              alert('모든 질문란을 채워주세요.');
+              return;
+          }
+  
+          const response = await instance.post(`/api/self-eval-question/${group}`, {
+            "question": questions.join(", ") 
+        });
+        
+          if (response.data.code === 201) {
+              console.log(`그룹 ID: ${group}`);
+              questions.forEach((question, index) => {
+                  console.log(`질문 ${index + 1}: ${question}`);
+              });
+              alert(response.data.message); 
+              console.log(setIsEditing);
+              setIsEditing(true);
+              setIsVisible(false);
+          } else {
+              alert('자기 평가 질문 생성에 실패했습니다.');
+          }
+      } catch (error) {
+          console.error("자기 평가 질문 생성에 실패했습니다.", error);
+          alert('자기 평가 질문 생성 중 문제가 발생했습니다.');
+      }
+  };
 
 
     //그룹 목록 GET 
@@ -120,12 +119,12 @@ const SelfEvaluation = ({setIsEditing }) => {
         
         <S.Label>질문</S.Label>
         <S.ContentContainer>
-        {questions.map((question, index) => (
+        {questions.map((questions, index) => (
           <S.QuestionInputContainer key={index}>
             <S.StyledInput 
                 type="text" 
                 placeholder={`질문 ${index + 1}을 입력해주세요.`} 
-                value={question}
+                value={questions}
                 onChange={(e) => handleQuestionChange(e.target.value, index)} // 질문 입력 처리
             />
             <S.ExitButton src={exit} alt="exit" onClick={() => removeQuestion(index)} />
