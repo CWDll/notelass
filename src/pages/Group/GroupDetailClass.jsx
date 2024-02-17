@@ -394,6 +394,8 @@ function GroupDetailClass() {
             showEditOrDeleteModal={showEditOrDeleteModal}
             setShowEditOrDeleteModal={setShowEditOrDeleteModal}
             groupId={id}
+            grade={info.grade}
+            classNum={info.classNum}
           />
         )}
       </Header>

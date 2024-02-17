@@ -7,6 +7,8 @@ function EditOrDeleteModal({
   showEditOrDeleteModal,
   setShowEditOrDeleteModal,
   groupId,
+  grade,
+  classNum,
 }) {
   const [showDeleteCheckModal, setShowDeleteCheckModal] = useState(false);
   const [showEditListModal, setShowEditListModal] = useState(false);
@@ -44,6 +46,8 @@ function EditOrDeleteModal({
           showEditListModal={showEditListModal}
           setShowEditListModal={setShowEditListModal}
           groupId={groupId}
+          grade={grade}
+          classNum={classNum}
         />
       )}
     </S.ModalContainer>

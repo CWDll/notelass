@@ -5,7 +5,13 @@ import {
   deleteStudentInList,
 } from "../../../../assets/api/apis/group/ApiGroup";
 
-function EditListModal({ showEditListModal, setShowEditListModal, groupId }) {
+function EditListModal({
+  showEditListModal,
+  setShowEditListModal,
+  groupId,
+  grade,
+  classNum,
+}) {
   const [studentList, setStudentList] = useState([]);
 
   // 목데이터. 나중에 삭제할 것.
@@ -33,14 +39,21 @@ function EditListModal({ showEditListModal, setShowEditListModal, groupId }) {
     setStudentList(mockStudentList);
   }, [groupId]); // 그룹id 바뀔 때마다 호출
 
+  const buttonClick = () => {
+    alert("무슨 기능인지 이해 필요");
+  };
+
   return (
     <S.EditModalContainer>
       <S.TopBar>
         <S.TextSection>
-          <S.ClassSpan>3학년 1반</S.ClassSpan>
+          <S.ClassSpan>
+            {grade}학년 {classNum}반
+          </S.ClassSpan>
+          {/* 학기 데이터를 어디서 가져오는지 확인 필요 */}
           <S.SemesSpan>2023-2학기</S.SemesSpan>
         </S.TextSection>
-        <S.AddButton>추가하기</S.AddButton>
+        <S.AddButton onClick={buttonClick}>추가하기</S.AddButton>
       </S.TopBar>
       <S.StudentListSection>
         <S.TopCategory>
@@ -60,8 +73,20 @@ function EditListModal({ showEditListModal, setShowEditListModal, groupId }) {
         ))}
       </S.StudentListSection>
       <S.ButtonContainer>
-        <S.GrayButton>취소</S.GrayButton>
-        <S.Button>저장하기</S.Button>
+        <S.GrayButton
+          onClick={() => {
+            setShowEditListModal(false);
+          }}
+        >
+          취소
+        </S.GrayButton>
+        <S.Button
+          onClick={() => {
+            setShowEditListModal(false);
+          }}
+        >
+          저장하기
+        </S.Button>
       </S.ButtonContainer>
     </S.EditModalContainer>
   );
