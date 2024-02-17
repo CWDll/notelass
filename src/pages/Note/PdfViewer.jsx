@@ -15,6 +15,7 @@ const PdfContainer = styled.div`
   height: 1080px;
   overflow: scroll;
   color: black;
+  overflow-x: hidden;
 `;
 
 const PdfBody = styled.div`

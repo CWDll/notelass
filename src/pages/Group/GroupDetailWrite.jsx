@@ -31,6 +31,7 @@ import * as S from "../../components/Component/Home/Style/GroupDetailStyle";
 
 import InputText from "../../components/Component/Group/InputText";
 import Synonym from "../../components/Component/Group/Synonym";
+import EvaluationView from "src/components/Component/Group/EvaluationView";
 
 import {
   Header,
@@ -87,6 +88,9 @@ import {
   SelectedWord,
   SynonymTitle,
   CustomDiv,
+  ViewButton,
+  BookTitle,
+  ExitButton,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 
@@ -117,6 +121,7 @@ export function GroupDetailWrite() {
   const [uploadStatus, setUploadStatus] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   // const [studentBookEntries, setStudentBookEntries] = useState([]);
+  const [showEvaluationView, setShowEvaluationView] = useState(false);
 
 
 
@@ -954,7 +959,15 @@ export function GroupDetailWrite() {
 
         <RightContainer>
           {/* <StudentMemo/> */}
-          <Title>학생수첩</Title>
+          <BookTitle>학생수첩</BookTitle>
+          <ViewButton onClick={() => setShowEvaluationView(!showEvaluationView)}>학생의 자기평가서 보기</ViewButton>
+          {showEvaluationView && <EvaluationView />}
+
+        
+        
+
+
+
           {studentBookEntries.map((entry) => (
             <InfoContainer key={entry.id}>
               <TimeText>

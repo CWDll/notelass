@@ -71,7 +71,7 @@ export const routes = [
       { path: "/Note", element: <Note />, index: true },
       { path: "/Notedetail", element: <NoteDetail />, index: true },
       {
-        path: "/NoteDetailSubject",
+        path: "/NoteDetailSubject/:id",
         element: <NoteDetailSubject />,
         index: true,
       },

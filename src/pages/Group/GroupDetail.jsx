@@ -17,6 +17,19 @@ const NoteContainer = styled.div`
   margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-top: 16px;
   max-width: 1194px; /* 최대 너비 제한 */
+
+
+  
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;
 
 const CircleText = styled.div`
