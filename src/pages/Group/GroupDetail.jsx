@@ -215,6 +215,23 @@ const Title2 = styled.p`
   flex-shrink: 0;
 `;
 
+const Notice = styled.p`
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
 // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
 const subjectInfo = "노트고등학교 3학년 1반 문학";
 // " "를 기준으로 나누고, 3번째인 과목 명을 가져와 subject에 저장
@@ -371,8 +388,10 @@ function GroupDetail() {
           )}
         </SmallContainer>
       )}
-
-      <NoteContainer>
+<NoteContainer>
+      {groupList.length === 0 ? (
+        <Notice>그룹이 존재하지 않습니다.</Notice>
+      ) : (
         <SubjectBodyWrapper>
           {groupList.map((group) => (
             <SubjectBody
@@ -394,7 +413,8 @@ function GroupDetail() {
             </SubjectBody>
           ))}
         </SubjectBodyWrapper>
-      </NoteContainer>
+      )}
+    </NoteContainer>
     </Warp>
   );
 }
