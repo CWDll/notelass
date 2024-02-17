@@ -19,7 +19,7 @@ import StudentScoreDetail from "./pages/Student/StudentScoreDetail";
 import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
 import CreateGroup from "./components/Component/Group/CreateGroup";
-import NoticeDetail from "./pages/Notice/NoticeDetail";
+import NoticeDetailList from "./pages/Notice/NoticeDetailList";
 //학생수첩
 import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
@@ -40,10 +40,10 @@ export const routes = [
       { path: "/TimeTable", element: <TimeTable />, index: true },
       { path: "/MealTable", element: <MealTable />, index: true },
       { path: "/Introduce", element: <Introduce />, index: true },
-      { path: "/NoticeDetail", element: <NoticeDetail />, index: true },
+      { path: "/NoticeDetailList", element: <NoticeDetailList />, index: true },
       {
-        path: "/NoticeDetail/:groupId",
-        element: <NoticeDetail />,
+        path: "/NoticeDetailList/:groupId",
+        element: <NoticeDetailList />,
         index: true,
       },
       { path: "/GroupDetail", element: <GroupDetail />, index: true },
