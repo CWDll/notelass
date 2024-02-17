@@ -20,6 +20,7 @@ import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
 import CreateGroup from "./components/Component/Group/CreateGroup";
 import NoticeDetailList from "./pages/Notice/NoticeDetailList";
+import NoticeDetail from "./pages/Notice/NoticeDetail";
 //학생수첩
 import StudentBook from "./pages/Student/StudentBook";
 // 로그인페이지
@@ -44,6 +45,11 @@ export const routes = [
       {
         path: "/NoticeDetailList/:groupId",
         element: <NoticeDetailList />,
+        index: true,
+      },
+      {
+        path: "/NoticeDetail/:groupId/:noticeId",
+        element: <NoticeDetail />,
         index: true,
       },
       { path: "/GroupDetail", element: <GroupDetail />, index: true },

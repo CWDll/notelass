@@ -221,7 +221,7 @@ function GroupDetailClass() {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
   };
   const toAllPage = () => {
-    navigate(`/NoticeDetail/${id}`);
+    navigate(`/NoticeDetailList/${id}`);
   };
 
   const GroupDetailWrite = (

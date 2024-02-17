@@ -7,13 +7,14 @@ import {
 } from "../../assets/api/apis/notice/ApiNotice";
 import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
-function NoticeDetail() {
+function NoticeDetailList() {
   const navigate = useNavigate();
   const { groupId } = useParams(); // groupId 매개변수 받기
   const [notices, setNotices] = useState([]);
   const [searchCategory, setSearchCategory] = useState("제목");
   const [isOpen, setIsOpen] = useState(false);
 
+  //groupId있으면 그룹 내 공지만, 아니면 전체 공지
   useEffect(() => {
     if (groupId) {
       getGroupNotice(groupId, setNotices);
@@ -21,14 +22,23 @@ function NoticeDetail() {
       getAllNotice(setNotices);
     }
   }, []);
-
+  //뒤로가기
   function BackButton() {
     navigate(-1);
   }
-
+  // 검색창 부분
   function handleCategoryClick(newCategory) {
     setSearchCategory(newCategory);
     setIsOpen(!isOpen);
+  }
+  //groupId있으면 NoticeDetail페이지로, 아니면 아무작동X
+  function handleListClick(listId) {
+    if (groupId) {
+      navigate(`/NoticeDetail/${groupId}/${listId}`);
+    } else {
+      alert("꽝");
+      return;
+    }
   }
 
   return (
@@ -68,6 +78,7 @@ function NoticeDetail() {
             content={notice.content}
             teacher={notice.teacher}
             createdDate={notice.createdDate}
+            onClick={handleListClick(notice.id)}
           />
         ))}
       </S.ItemsContainer>
@@ -75,4 +86,4 @@ function NoticeDetail() {
   );
 }
 
-export default NoticeDetail;
+export default NoticeDetailList;
