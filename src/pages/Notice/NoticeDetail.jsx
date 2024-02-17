@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./style";
-import { getAllNotice } from "../../assets/api/apis/notice/ApiNotice";
+import {
+  getAllNotice,
+  getGroupNotice,
+} from "../../assets/api/apis/notice/ApiNotice";
 import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
 function NoticeDetail() {
   const navigate = useNavigate();
+  const { groupId } = useParams(); // groupId 매개변수 받기
   const [notices, setNotices] = useState([]);
   const [searchCategory, setSearchCategory] = useState("제목");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    getAllNotice(setNotices);
-    console.log(notices);
+    if (groupId) {
+      getGroupNotice(groupId, setNotices);
+    } else {
+      getAllNotice(setNotices);
+    }
   }, []);
 
   function BackButton() {
@@ -22,8 +30,6 @@ function NoticeDetail() {
     setSearchCategory(newCategory);
     setIsOpen(!isOpen);
   }
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <S.Container>
@@ -69,4 +75,4 @@ function NoticeDetail() {
   );
 }
 
-export default NoticeDetail; // 'default' 키워드 확인
+export default NoticeDetail;

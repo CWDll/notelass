@@ -41,6 +41,11 @@ export const routes = [
       { path: "/MealTable", element: <MealTable />, index: true },
       { path: "/Introduce", element: <Introduce />, index: true },
       { path: "/NoticeDetail", element: <NoticeDetail />, index: true },
+      {
+        path: "/NoticeDetail/:groupId",
+        element: <NoticeDetail />,
+        index: true,
+      },
       { path: "/GroupDetail", element: <GroupDetail />, index: true },
       {
         path: "/GroupDetailClass/:id",
