@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+// modal
 import ManageGroup from "../../components/Component/Modal/ManageGroup/ManageGroup";
+import EditOrDeleteModal from "../../components/Component/Modal/GroupInformation/EditOrDeleteModal";
 
 import chevron_left from "../../assets/chevron_left.svg";
 import person from "../../assets/person.svg";
@@ -238,6 +240,7 @@ function GroupDetailClass() {
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
   const [showEnrollModal, setShowEnrollModal] = useState(false);
+  const [showEditOrDeleteModal, setShowEditOrDeleteModal] = useState(false);
 
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
@@ -352,7 +355,9 @@ function GroupDetailClass() {
         <BoldTitle>
           {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
         </BoldTitle>
-        <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
+        <Button
+          onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
+        >
           그룹 정보
         </Button>
         <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
@@ -376,11 +381,18 @@ function GroupDetailClass() {
           alt="fileDownload"
           onClick={handleStuExcelDownload}
         />
-
+        {/* 학생 등록 모달 */}
         {showEnrollModal && (
           <ManageGroup
             showEnrollModal={showEnrollModal}
             setShowSmallContainer={setShowEnrollModal}
+            groupId={id}
+          />
+        )}
+        {showEditOrDeleteModal && (
+          <EditOrDeleteModal
+            showEditOrDeleteModal={showEditOrDeleteModal}
+            setShowSmallContainer={setShowEditOrDeleteModal}
             groupId={id}
           />
         )}
