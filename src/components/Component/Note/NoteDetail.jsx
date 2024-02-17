@@ -15,6 +15,17 @@ const NoteContainer = styled.div`
   margin-left: 363px;
   margin-top: 72px;
 
+  
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;
 
 const MakeNoteBody = styled.div`
