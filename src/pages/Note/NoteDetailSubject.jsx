@@ -48,7 +48,15 @@ function handleStarClick(materialId) {
     return new Intl.DateTimeFormat('ko-KR', options).format(date).replace(" ", "").replace(". ", ".").replace(". ", ".");
   };
 
-
+// 노트 복제 함수
+function handleClone(materialId) {
+  setMaterials((prev) => {
+    const materialToClone = prev.find((material) => material.id === materialId);
+    if (!materialToClone) return prev;
+    const clonedMaterial = { ...materialToClone, id: Date.now() }; // 새로운 id를 생성
+    return [...prev, clonedMaterial];
+  });
+}
 
 
   function handleTitleClick() {
@@ -141,6 +149,7 @@ const toggleDropdown = (materialId) => {
               <hr />
               <S.NavDropdownOptionDown
                 className="dropdown-item"
+                onClick={() => handleClone(material.id)}
               >
                 복제하기
               </S.NavDropdownOptionDown>
