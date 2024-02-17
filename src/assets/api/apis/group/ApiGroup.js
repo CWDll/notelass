@@ -80,3 +80,19 @@ export const deleteGroup = async (groupId) => {
     console.error("그룹 삭제 실패", error);
   }
 };
+
+// 그룹 내에 이미 속해있는 명단 가져오기
+export const getStudentList = async (groupId) => {
+  try {
+    const res = await instance.get(`/api/group/students/${groupId}`);
+
+    if (res.status === 200) {
+      console.log("이미 속한 학생 리스트 가져오기 성공(ApiGroup.js)");
+      return res;
+    } else {
+      console.log("이미 속한 학생 리스트 가져오기에 실패하였습니다.");
+    }
+  } catch (error) {
+    console.error("이미 속한 학생 리스트 가져오기 실패", error);
+  }
+};
