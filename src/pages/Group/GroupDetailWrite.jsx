@@ -457,6 +457,7 @@ export function GroupDetailWrite() {
       }
     };
 
+    
     if (paramsGroupId && paramsUserId) {
       fetchStudentBook();
     }
@@ -687,7 +688,7 @@ export function GroupDetailWrite() {
   return (
     <Wrap>
       <Main>
-      {isVisible && <DownloadSuccess onExit={() => setIsVisible(false)} />}
+       {isVisible && <DownloadSuccess onExit={() => setIsVisible(false)} />}
       {/* //<div onClick={closeContextMenu}> */}
       <Header>
         <Img

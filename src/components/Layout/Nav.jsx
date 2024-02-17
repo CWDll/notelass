@@ -6,6 +6,7 @@ import personimg from "../../assets/personimg.svg";
 import bell from "../../assets/bell.svg";
 import searching from "../../assets/searching.svg";
 import instance from "../../assets/api/axios";
+import Logo from "../Component/Etc/Logo";
 
 const NavContainer = styled.div`
   width: 100vw;
@@ -26,8 +27,36 @@ const Notelass = styled.h2`
   font-weight: 700;
   line-height: normal;
   white-space: nowrap;
-  margin-left: -180px;
+  margin-right: 180px;
 `;
+
+const Header = styled.div`
+ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 0px 0px 20px;
+  gap: 10px; /* Add this line to create a gap between the components */
+`;
+
+
+const Imgbox = styled.div`
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: var(--primary-cobalt, #4849ff);
+  margin-left: 48px;
+`;
+
+const LogoImg = styled.img`
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+`;
+
 
 const NavItemContainer = styled.div`
   display: flex;
@@ -77,22 +106,6 @@ const SignUnBtn = styled(SignInBtn)`
   color: #9ea4aa;
 `;
 
-const Imgbox = styled.div`
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  border-radius: 4px;
-  background: var(--primary-cobalt, #4849ff);
-  margin-left: 48px;
-`;
-
-const LogoImg = styled.img`
-  margin-left: 5px;
-  margin-top: 5px;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-`;
 
 const Bell = styled.img`
   width: 40px;
@@ -158,6 +171,7 @@ const NavDropdownOptionUp = styled.div`
 const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
   border-radius: 0 0 10px 10px;
 `;
+
 
 export default function Nav() {
   const [show, setShow] = useState(false);
@@ -322,10 +336,8 @@ export default function Nav() {
 
   return (
     <NavContainer>
-      <Imgbox>
-        <LogoImg src={logo} alt="logo" onClick={navigateToHome} />
-      </Imgbox>
-      <Notelass> Note-lass</Notelass>
+       <Logo/>
+      
       <NavItemContainer>
         <NavItems
           isSelected={selectedItemIndex === 0}
