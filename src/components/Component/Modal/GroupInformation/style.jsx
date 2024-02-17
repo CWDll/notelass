@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import exit from "../../../../assets/exit.svg";
 
+// EditOrDeleteModal style
 export const ModalContainer = styled.div`
   width: 480px;
   height: 288px;
@@ -41,7 +42,7 @@ export const Text = styled.p`
   line-height: 32px;
 `;
 
-export const ColorText = styled.span`
+export const ColorSpan = styled.span`
   color: #4849ff;
 `;
 
@@ -60,4 +61,18 @@ export const Button = styled.button`
   width: 192px;
   height: 56px;
   background-color: #4849ff;
+`;
+
+// DeleteCheckModal style
+export const ColorText = styled(Text)`
+  color: #4849ff;
+`;
+
+export const GrayButton = styled(Button)`
+  background-color: #e6e8ee;
+  color: #9ea4aa;
+
+  &:hover {
+    border: none;
+  }
 `;
