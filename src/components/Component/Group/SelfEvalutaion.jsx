@@ -62,7 +62,7 @@ const SelfEvaluation = ({setIsEditing }) => {
           const response = await instance.post(`/api/self-eval-question/${group}`, {
             "question": questions.join(", ") 
         });
-        
+
           if (response.data.code === 201) {
               console.log(`그룹 ID: ${group}`);
               questions.forEach((question, index) => {
@@ -125,7 +125,7 @@ const SelfEvaluation = ({setIsEditing }) => {
                 type="text" 
                 placeholder={`질문 ${index + 1}을 입력해주세요.`} 
                 value={questions}
-                onChange={(e) => handleQuestionChange(e.target.value, index)} // 질문 입력 처리
+                onChange={(e) => handleQuestionChange(e.target.value, index)} 
             />
             <S.ExitButton src={exit} alt="exit" onClick={() => removeQuestion(index)} />
           </S.QuestionInputContainer>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import exit from '../../../assets/exit.svg';
-import * as S from 'src/components/Component/Group/Style/SelfEvaluationStyle';
+import * as S from 'src/components/Component/Group/Style/EvaluationViewStyle';
 import instance from "src/assets/api/axios";
 
 const SelfEvaluation = () => {
@@ -42,13 +42,15 @@ const SelfEvaluation = () => {
     return (
         <S.SmallContainer>
             <S.ExitButton style={{margin: "24px"}} src={exit} alt="exit" onClick={handleClose} />
-            
+            <S.Label>자기평가서</S.Label>
+            <S.Question>
             {questions.map((questionObj, index) => (
                 <div key={questionObj.id}>
-                    <h3>질문 {index + 1}</h3>
-                    <p>{questionObj.question}</p>
+                    <h3>{index + 1}. {questionObj.question}</h3>
+                    <S.Box>답변</S.Box>
                 </div>
             ))}
+            </S.Question>
         </S.SmallContainer>
     );
 };
