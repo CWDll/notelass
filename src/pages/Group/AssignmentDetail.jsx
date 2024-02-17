@@ -43,34 +43,16 @@ function AssignmentDetail() {
     imageInput.current.click();
   };
 
-  const handleButtonClick = (buttonType) => {
-    setSelectedButton(buttonType);
-  };
-
-  // 파일 업로드 핸들러
-  const handleFileChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
-    if (fileUploaded) {
-      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
-      console.log(files);
-    }
-  };
-
-
-  // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const formData = new FormData();
-    let response;
+    let response; // 한 번만 선언
     
     //공지 생성 POST API
     if (selectedButton === '공지') {
       try {
-        // 공지 생성 POST API
-        const formData = new FormData();
-
+        // JSON 데이터 준비
         const noticeDto = JSON.stringify({
           title: assignmentName,
           content: assignmentDesc,
@@ -80,11 +62,13 @@ function AssignmentDetail() {
         });
         formData.append('noticeDto', blob);
     
+        // 파일 데이터 추가
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
 
-        const response = await axios.post(
+        // API 요청
+        response = await axios.post( // 이미 선언된 response 변수를 사용
           `/api/notice/${paramsGroupId}`,
           formData,
           {
@@ -92,8 +76,9 @@ function AssignmentDetail() {
               "Content-Type": "multipart/form-data",
             },
           }
-        });
+        );
         
+        // 응답 처리
         const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
         console.log('공지 생성 완료:', response.data);
         console.log('생성된 공지의 ID:', noticeId);
@@ -107,6 +92,7 @@ function AssignmentDetail() {
     //강의자료 생성 POST API  
     } else if (selectedButton === '강의자료') {
       try {
+        // JSON 데이터 준비
         const materialDto = JSON.stringify({
           title: assignmentName,
           content: assignmentDesc,
@@ -116,16 +102,19 @@ function AssignmentDetail() {
         });
         formData.append('materialDto', blob);
     
+        // 파일 데이터 추가
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
     
+        // API 요청
         response = await axios.post(`/api/material/${paramsGroupId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
         
+        // 응답 처리
         const materialId = response.data.message.match(/강의자료 ID: (\d+)/)[1];
         console.log('강의 자료 생성 완료:', response.data);
         console.log('생성된 강의 자료의 ID:', materialId);
