@@ -1,19 +1,25 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import * as S from "./style";
+import { deleteGroup } from "../../../../assets/api/apis/group/ApiGroup";
 
 function DeleteConfirmModal({
   showDeleteConfirmModal,
-  showEditOrDeleteConfirmModal,
+  setShowDeleteConfirmModal,
   groupId,
 }) {
   const handleButtonClick = () => {
-    alert("버튼 클릭 이벤트 발생");
+    setShowDeleteConfirmModal(false);
   };
+  // 삭제 완료시 화면 이동을 위한 navigate
+  const navigate = useNavigate();
 
   const [checkText, setCheckText] = useState("");
   const DeleteButtonClick = (checkText) => {
     if (checkText === "그룹을 삭제합니다.") {
-      alert("삭제 api 발생");
+      deleteGroup(groupId);
+      navigate("/Groupdetail");
     } else {
       alert("문장이 일치하지 않습니다.");
       setCheckText("");
@@ -35,11 +41,9 @@ function DeleteConfirmModal({
             onChange={(event) => setCheckText(event.target.value)}
           />
         </S.TextContainer>
-        {/* <S.ButtonContainer> */}
         <S.GrayButton onClick={() => DeleteButtonClick(checkText)}>
           삭제하기
         </S.GrayButton>
-        {/* </S.ButtonContainer> */}
       </S.FlexContainer>
     </S.ModalContainer>
   );

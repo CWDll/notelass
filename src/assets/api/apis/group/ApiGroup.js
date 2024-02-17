@@ -37,7 +37,8 @@ export const groupAccept = async (groupId, userId) => {
     const res = await instance.post(`/api/group/approve/${groupId}/${userId}`);
 
     if (res.status === 200) {
-      onSuccess(res.data.result);
+      // onSuccess(res.data.result);
+      alert("그룹 신청을 수락하였습니다.");
     } else {
       console.log("그룹 수락에서 문제가 발생했습니다.");
     }
@@ -55,10 +56,27 @@ export const groupReject = async (groupId, userId) => {
 
     if (res.status === 200) {
       onSuccess(res.data.result); // 데이터를 콜백함수를 통해 전달한다.
+      alert("그룹 신청을 거절하였습니다.");
     } else {
       console.log("그룹 거절에서 문제가 발생했습니다.");
     }
   } catch (error) {
     console.error("그룹 일괄 수락 실패", error);
+  }
+};
+
+// 그룹 삭제
+export const deleteGroup = async (groupId) => {
+  try {
+    const res = await instance.delete(`/api/group/${groupId}`);
+
+    if (res.status === 200) {
+      console.log("res메시지", res.message);
+      alert("그룹을 삭제하였습니다.");
+    } else {
+      console.log("그룹 삭제에 실패하였습니다.");
+    }
+  } catch (error) {
+    console.error("그룹 삭제 실패", error);
   }
 };

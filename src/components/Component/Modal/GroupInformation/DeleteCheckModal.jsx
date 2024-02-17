@@ -34,7 +34,6 @@ function DeleteCheckModal({
         <DeleteConfirmModal
           showDeleteConfirmModal={showDeleteConfirmModal}
           setShowDeleteConfirmModal={setShowDeleteConfirmModal}
-          //   showEditOrDeleteConfirmModal={showEditOrDeleteConfirmModal}
           groupId={groupId}
         />
       )}
