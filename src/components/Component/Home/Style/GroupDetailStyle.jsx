@@ -688,3 +688,29 @@ export const CustomDiv = styled.div`
   padding-right: 35px;
   margin-top: -38px;
 `;
+
+export const ViewButton = styled.button`
+
+display: flex;
+height: 24px;
+background: #EDEDFF;
+top: 260px;
+left: 1373px;
+padding: 4px 12px; 
+border-radius: 6px;
+gap: 8px; 
+text-align: center;
+margin-left: 272px;
+margin-top: -24px;
+
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0em;
+  color: #4849FF;
+
+
+ 
+
+`;
