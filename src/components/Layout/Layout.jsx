@@ -21,11 +21,11 @@ export default function Layout() {
     location.pathname
   );
 
-  const shouldRenderFooter =
-    location.pathname !== "/NoteDetailSubject/pdf-viewer";
-  const shouldRenderStudentBook =
-    location.pathname !== "/NoteDetailSubject/pdf-viewer" ||
-    !isGroupDetailWritePath;
+  const isPDFViewerPath = location.pathname === "/NoteDetailSubject/pdf-viewer";
+
+  const shouldRenderFooter = !isPDFViewerPath;
+  const shouldRenderStudentBook = !isPDFViewerPath;
+
 
   return (
     <Container>
