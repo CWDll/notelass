@@ -7,150 +7,7 @@ import paper from "../../assets/paper.svg";
 import chevron_down from "../../assets/chevron_down.svg";
 import star from "../../assets/star.svg";
 import FilledStar from "../../assets/FilledStar.svg";
-
-const Header = styled.header`
-  display: flex;
-`;
-
-const Img = styled.img`
-  margin-left: 363px;
-  margin-top: 72px;
-`;
-
-const BoldTitle = styled.p`
-  color: #26282b;
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: 24px;
-  margin-top: 72px;
-`;
-
-const NoteContainer = styled.div`
-  width: 1194px;
-  height: 728px;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  margin-left: 370px;
-  margin-top: 48px;
-`;
-
-const MakeNoteBody = styled.div`
-  width: 1194px;
-  height: 72px;
-  margin-top: 32px;
-  display: flex;
-`;
-
-const AddNote = styled.div`
-  display: flex;
-  width: 48px;
-  height: 64px;
-  border-radius: 2px;
-  border: 1.5px dashed #4849ff;
-  margin-left: 32px;
-  margin-top: 36px;
-`;
-
-const PlusImg = styled.img`
-  width: 12px;
-  height: 12px;
-  margin-left: 18px;
-  margin-top: 26px;
-`;
-
-const Title = styled.p`
-  color: #4849ff;
-  font-size: 16px;
-  font-weight: 600;
-  padding-left: 26px;
-  padding-top: 59px;
-`;
-
-const PaperImg = styled.img`
-  width: 48px;
-  height: 64px;
-  margin-left: 32px;
-  margin-top: 4px;
-`;
-
-const ChevronDownImg = styled.img`
-  width: 16px;
-  height: 16px;
-  margin-left: 884px;
-  align-self: center;
-`;
-
-const StarImg = styled.img`
-  width: 16px;
-  height: 16px;
-  align-self: center;
-  margin-left: 24px;
-`;
-
-const BoldText = styled.p`
-  color: #26282b;
-  font-size: 16px;
-  font-weight: 600;
-`;
-
-const GrayText = styled.p`
-  color: #9ea4aa;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 4px;
-`;
-
-const SubjectBody = styled.div`
-  display: flex;
-  width: 1194px;
-  height: 72px;
-  margin-top: 16px;
-`;
-
-const SubjectContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 16px;
-  margin-top: 16px;
-`;
-
-const SubjectBodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-`;
-
-
-const NavDropdownBox = styled.div`
-  width: 150px;
-  background-color: white;
-
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  margin-left: 945px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.1);
-`;
-
-const NavDropdownOptionUp = styled.div`
-  &:hover {
-    background-color: #f5f5fc;
-  }
-  width: 100%;
-  border-radius: 10px 10px 0 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-`;
-const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
-  border-radius: 0 0 10px 10px;
-`;
+import * as S from 'src/components/Component/Note/Style/NoteDetailSubjectStyle';
 
 //노트 목록
 const starItems = [
@@ -212,49 +69,49 @@ useEffect(() => {
 
   return (
     <div>
-      <Header>
-        <Img src={chevron_left} alt="chevron_left" />
-        <BoldTitle>과제별 성적 열람</BoldTitle>
-      </Header>
-      <NoteContainer>
-        <MakeNoteBody>
-          <AddNote>
-            <PlusImg src={plus_lg} alt="plus_lg" />
-          </AddNote>
-          <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
-        </MakeNoteBody>
+      <S.Header>
+        <S.Img src={chevron_left} alt="chevron_left" />
+        <S.BoldTitle>과제별 성적 열람</S.BoldTitle>
+      </S.Header>
+      <S.NoteContainer>
+        <S.MakeNoteBody>
+          <S.AddNote>
+            <S.PlusImg src={plus_lg} alt="plus_lg" />
+          </S.AddNote>
+          <S.Title onClick={handleTitleClick}>신규 노트 만들기</S.Title>
+        </S.MakeNoteBody>
 
         
-        <SubjectBodyWrapper>
+        <S.SubjectBodyWrapper>
           {starItems.map((item) => (
-            <SubjectBody key={item.key}>
-              <PaperImg src={paper} alt="paper" />
-              <SubjectContainer>
-                <BoldText>{item.title}</BoldText>
-                <GrayText>{item.date}</GrayText>
-              </SubjectContainer>
+            <S.SubjectBody key={item.key}>
+              <S.PaperImg src={paper} alt="paper" />
+              <S.SubjectContainer>
+                <S.BoldText>{item.title}</S.BoldText>
+                <S.GrayText>{item.date}</S.GrayText>
+              </S.SubjectContainer>
               
-              <ChevronDownImg src={chevron_down} alt="chevron_down" onClick={() => toggleDropdown(item.key)}  />
+              <S.ChevronDownImg src={chevron_down} alt="chevron_down" onClick={() => toggleDropdown(item.key)}  />
               {dropdownVisible[item.key] && ( 
-            <NavDropdownBox   className="dropdown-menu">
-              <NavDropdownOptionUp
+            <S.NavDropdownBox   className="dropdown-menu">
+              <S.NavDropdownOptionUp
                 className="dropdown-item"
               >
                 다운로드
-              </NavDropdownOptionUp>
+              </S.NavDropdownOptionUp>
               <hr />
-              <NavDropdownOptionDown
+              <S.NavDropdownOptionDown
                 className="dropdown-item"
               >
                 복제하기
-              </NavDropdownOptionDown>
+              </S.NavDropdownOptionDown>
               <hr />
-              <NavDropdownOptionDown
+              <S.NavDropdownOptionDown
                 className="dropdown-item"
               >
                 휴지통으로 이동
-              </NavDropdownOptionDown>
-            </NavDropdownBox>
+              </S.NavDropdownOptionDown>
+            </S.NavDropdownBox>
           )}
         
 
@@ -266,12 +123,12 @@ useEffect(() => {
                 src={starredItems[item.key] ? FilledStar : star}
                 alt="star"
               />
-            </SubjectBody>
+            </S.SubjectBody>
           ))}
-        </SubjectBodyWrapper>
+        </S.SubjectBodyWrapper>
 
 
-      </NoteContainer>
+      </S.NoteContainer>
     </div>
   );
 }
