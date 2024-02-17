@@ -9,6 +9,11 @@ import instance from "../../assets/api/axios";
 
 import StudentBookContent from "./StudentBookContent";
 
+const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
+
 const StudentBookContainer = styled.div`
   width: 60px;
   height: 118px;
@@ -16,15 +21,14 @@ const StudentBookContainer = styled.div`
   border-radius: 30px;
   background: #4849ff;
   box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
-
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   position: fixed;
-  margin-top: 236px;
-  margin-left: 1650px;
+  margin-top: -1050px;
+  margin-left: 650px;
 `;
 
 const BookImg = styled.img`
@@ -212,14 +216,17 @@ function StudentBook({ show, onClose, groupId, userId }) {
   };
 
   return (
-    <StudentBookContainer
-      onClick={() => setShowSmallContainer(!showSmallContainer)}
-    >
-      <BookImg src={book} alt="book" />
-      <Text>학생 수첩</Text>
+  
+    <Wrap>
+      <StudentBookContainer
+        onClick={() => setShowSmallContainer(!showSmallContainer)}
+      >
+        <BookImg src={book} alt="book" />
+        <Text>학생 수첩</Text>
 
-      {showSmallContainer && <StudentBookContent onClose={handleClose} />}
-    </StudentBookContainer>
+        {showSmallContainer && <StudentBookContent onClose={handleClose} />}
+      </StudentBookContainer>
+    </Wrap>
   );
 }
 
