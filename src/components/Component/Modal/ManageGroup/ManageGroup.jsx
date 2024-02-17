@@ -6,7 +6,7 @@ import {
   groupRetrieveList,
 } from "../../../../assets/api/apis/group/ApiGroup";
 
-const ManageGroup = ({ showEnrollModal, setShowSmallContainer, groupId }) => {
+const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
   const [applyDtos, setApplyDtos] = useState([]);
   const [groupInfo, setGroupInfo] = useState();
   const [groupCode, setGroupCode] = useState();
@@ -38,10 +38,7 @@ const ManageGroup = ({ showEnrollModal, setShowSmallContainer, groupId }) => {
 
   return (
     <S.ModalContainer>
-      <S.Exit
-        alt="exit"
-        onClick={() => setShowSmallContainer(!showEnrollModal)}
-      />
+      <S.Exit alt="exit" onClick={() => setShowEnrollModal(!showEnrollModal)} />
       <S.TextContainer>
         <S.GroupInfoText>
           {groupInfo} <S.GroupNumber>• {groupCode}</S.GroupNumber>

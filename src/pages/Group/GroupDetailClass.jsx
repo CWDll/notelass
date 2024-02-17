@@ -385,14 +385,14 @@ function GroupDetailClass() {
         {showEnrollModal && (
           <ManageGroup
             showEnrollModal={showEnrollModal}
-            setShowSmallContainer={setShowEnrollModal}
+            setShowEnrollModal={setShowEnrollModal}
             groupId={id}
           />
         )}
         {showEditOrDeleteModal && (
           <EditOrDeleteModal
             showEditOrDeleteModal={showEditOrDeleteModal}
-            setShowSmallContainer={setShowEditOrDeleteModal}
+            setShowEditOrDeleteModal={setShowEditOrDeleteModal}
             groupId={id}
           />
         )}

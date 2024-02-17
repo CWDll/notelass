@@ -4,19 +4,19 @@ import DeleteCheckModal from "./DeleteCheckModal";
 
 function EditOrDeleteModal({
   showEditOrDeleteModal,
-  setShowSmallContainer,
+  setShowEditOrDeleteModal,
   groupId,
 }) {
   const [showDeleteCheckModal, setShowDeleteCheckModal] = useState(false);
   const handleButtonClick = () => {
-    setShowDeleteCheckModal(!showDeleteCheckModal);
-    // setShowSmallContainer(!showEditOrDeleteModal);
+    setShowDeleteCheckModal(true);
+    // setShowEditOrDeleteModal(false);
   };
   return (
     <S.ModalContainer>
       <S.Exit
         alt="exit"
-        onClick={() => setShowSmallContainer(!showEditOrDeleteModal)}
+        onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
       />
       <S.TextContainer>
         <S.Text>
@@ -30,8 +30,8 @@ function EditOrDeleteModal({
       </S.ButtonContainer>
       {showDeleteCheckModal && (
         <DeleteCheckModal
-          showDeleteCheckModal={showDeleteCheckModal}
           setShowDeleteCheckModal={setShowDeleteCheckModal}
+          setShowEditOrDeleteModal={setShowEditOrDeleteModal}
           groupId={groupId}
         />
       )}

@@ -76,3 +76,5 @@ export const GrayButton = styled(Button)`
     border: none;
   }
 `;
+
+// DeleteConfirmModal style
