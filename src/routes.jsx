@@ -40,6 +40,7 @@ export const routes = [
       { path: "/TimeTable", element: <TimeTable />, index: true },
       { path: "/MealTable", element: <MealTable />, index: true },
       { path: "/Introduce", element: <Introduce />, index: true },
+      { path: "/NoticeDetail", element: <NoticeDetail />, index: true },
       { path: "/GroupDetail", element: <GroupDetail />, index: true },
       {
         path: "/GroupDetailClass/:id",
@@ -50,8 +51,16 @@ export const routes = [
         path: "/GroupDetailClass/:paramsGroupId/AssignmentDetail",
         element: <AssignmentDetail />,
       },
-      { path: "/StudentScoreDetail", element: <StudentScoreDetail /> },
-      { path: "/StudentTaskDetail", element: <StudentTaskDetail /> },
+      {
+        path: "/StudentScoreDetail",
+        element: <StudentScoreDetail />,
+        index: true,
+      },
+      {
+        path: "/StudentTaskDetail",
+        element: <StudentTaskDetail />,
+        index: true,
+      },
       { path: "/GroupScoreDetail", element: <GroupScoreDetail />, index: true },
       {
         path: "/GroupDetailWrite/:paramsGroupId/:paramsUserId",
@@ -60,7 +69,7 @@ export const routes = [
       },
       { path: "/TasksDetail", element: <TasksDetail />, index: true },
       { path: "/Note", element: <Note />, index: true },
-      { path: "/Note", element: <NoteDetail />, index: true },
+      { path: "/Notedetail", element: <NoteDetail />, index: true },
       {
         path: "/NoteDetailSubject/:id",
         element: <NoteDetailSubject />,

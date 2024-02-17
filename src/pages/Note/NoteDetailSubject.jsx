@@ -41,6 +41,7 @@ function handleStarClick(materialId) {
   }));
 }
 
+
   // 날짜 포맷 함수
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true };
@@ -62,6 +63,21 @@ function handleClone(materialId) {
 function handleDelete(materialId) {
   setMaterials((prev) => prev.filter((material) => material.id !== materialId));
 }
+
+
+
+  //뒤로가기
+  function goBack() {
+    navigate(-1);
+  }
+
+  //노트별 즐겨 찾기 기능
+  function handleStarClick(itemKey) {
+    setStarredItems((prev) => ({
+      ...prev,
+      [itemKey]: !prev[itemKey],
+    }));
+  }
 
 
   function handleTitleClick() {
@@ -121,6 +137,7 @@ const toggleDropdown = (materialId) => {
 
   return (
     <div>
+
       <S.Header>
         <S.Img src={chevron_left} alt="chevron_left" />
         <S.BoldTitle>노트</S.BoldTitle>
@@ -175,14 +192,45 @@ const toggleDropdown = (materialId) => {
               <S.StarImg
                 onClick={() => handleStarClick(material.id)}
                 src={starredItems[material.id] ? FilledStar : star}
+
+      <Header onClick={goBack}>
+        <Img src={chevron_left} alt="chevron_left" />
+        <BoldTitle>과제별 성적 열람</BoldTitle>
+      </Header>
+      <NoteContainer>
+        <MakeNoteBody>
+          <AddNote>
+            <PlusImg src={plus_lg} alt="plus_lg" />
+          </AddNote>
+          <Title onClick={handleTitleClick}>신규 노트 만들기</Title>
+        </MakeNoteBody>
+
+        <SubjectBodyWrapper>
+          {starItems.map((item) => (
+            <SubjectBody key={item.key}>
+              <PaperImg src={paper} alt="paper" />
+              <SubjectContainer>
+                <BoldText>{item.title}</BoldText>
+                <GrayText>{item.date}</GrayText>
+              </SubjectContainer>
+              <ChevronDownImg src={chevron_down} alt="chevron_down" />
+              <StarImg
+                onClick={() => handleStarClick(item.key)}
+                src={starredItems[item.key] ? FilledStar : star}
+
                 alt="star"
               />
             </S.SubjectBody>
           ))}
+
         </S.SubjectBodyWrapper>
 
 
       </S.NoteContainer>
+
+        </SubjectBodyWrapper>
+      </NoteContainer>
+
     </div>
   );
 }

@@ -18,6 +18,7 @@ const NoteContainer = styled.div`
   margin-top: 16px;
   max-width: 1194px; /* 최대 너비 제한 */
 
+
   
   overflow-y: auto;
   overflow-x: hidden;
@@ -28,6 +29,7 @@ const NoteContainer = styled.div`
     border-radius: 2px;
     background: #ccc;
   }
+
 `;
 
 const CircleText = styled.div`
