@@ -136,16 +136,12 @@ const subject = subjectInfo.split(" ")[3];
 const letter = subject.substr(0, 1);
 
 function NoteDetail() {
-  const [groups, setGroups] = useState([]);
-  
   const [groupList, setGroupList] = useState([]);
 
   const navigate = useNavigate();
   
-  const handleGroupClick = (id, school, grade, classNum, subject) => {
-    navigate(`/NoteDetailSubject/${id}`, {
-      state: { school, grade, classNum, subject },
-    });
+  const handleGroupClick = (id) => {
+    navigate(`/NoteDetailSubject/${id}`);
   };
 
 
@@ -181,7 +177,7 @@ function NoteDetail() {
           {groupList.map((group) => (
             <SubjectBody
               key={group.id}
-              onClick={handleGroupClick}
+              onClick={() => handleGroupClick(group.id)}
             >
               <CircleText>
                 <PurpleText>{group.subject[0]}</PurpleText>
