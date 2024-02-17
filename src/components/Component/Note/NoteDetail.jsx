@@ -141,10 +141,12 @@ function NoteDetail() {
   const [groupList, setGroupList] = useState([]);
 
   const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/NoteDetailSubject");
+  
+  const handleGroupClick = (id, school, grade, classNum, subject) => {
+    navigate(`/NoteDetailSubject/${id}`, {
+      state: { school, grade, classNum, subject },
+    });
   };
-
 
 
   const fetchGroups = async () => {
@@ -179,6 +181,7 @@ function NoteDetail() {
           {groupList.map((group) => (
             <SubjectBody
               key={group.id}
+              onClick={handleGroupClick}
             >
               <CircleText>
                 <PurpleText>{group.subject[0]}</PurpleText>
