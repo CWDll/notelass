@@ -108,6 +108,9 @@ export const EditModalContainer = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  padding: 20px;
 `;
 
 export const TopBar = styled.div`
@@ -118,27 +121,67 @@ export const TopBar = styled.div`
 
 export const StudentListSection = styled.div`
   width: 90%;
-  height: 70%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
+export const AddButton = styled.button`
+  width: 103px;
+  height: 32px;
+  background-color: #ededff;
+  color: #4849ff;
+  text-align: center;
+  padding: 0;
 `;
 
 export const Category = styled.div`
-  flex: 3;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 10px 0 10px 0;
+`;
+
+export const TopCategory = styled(Category)`
+  color: #9ea4aa;
+  border-bottom: 1px solid #9ea4aa;
 `;
 
 export const Index = styled.div`
-  flex: 2;
+  margin-right: 120px;
 `;
 
 export const AboutStudent = styled.div`
-  flex: 1;
+  display: flex;
 `;
 
 export const StudentName = styled.p`
   font-weight: bold;
 `;
 
+export const CateStudentName = styled(StudentName)`
+  margin-right: 80px;
+  font-weight: 400;
+  color: #9ea4aa;
+`;
+
 export const DeleteButton = styled.p`
-  color: gray;
+  color: #9ea4aa;
+  margin-left: 30px;
+  border-bottom: 1px solid #9ea4aa;
 `;
 
 export const TextSection = styled.div``;
+
+export const ClassSpan = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  color: #26282b;
+`;
+export const SemesSpan = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  color: #9ea4aa;
+  margin-left: 8px;
+`;

@@ -96,3 +96,19 @@ export const getStudentList = async (groupId) => {
     console.error("이미 속한 학생 리스트 가져오기 실패", error);
   }
 };
+
+// 그룹 내에 이미 속해있는 학생 삭제하기
+export const deleteStudentInList = async (groupId, userId) => {
+  try {
+    const res = await instance.delete(`/api/group/${groupId}/${userId}`);
+
+    if (res.status === 200) {
+      console.log("그룹 내에 이미 속해있는 학생 삭제 성공");
+      alert("선택한 학생이 삭제되었습니다.");
+    } else {
+      console.log("그룹 내에 이미 속해있는 학생 삭제 실패");
+    }
+  } catch (error) {
+    console.error("그룹 내에 이미 속해있는 학생 삭제에서 에러 발생", error);
+  }
+};

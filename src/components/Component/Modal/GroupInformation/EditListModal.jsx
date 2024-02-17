@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
-import { getStudentList } from "../../../../assets/api/apis/group/ApiGroup";
+import {
+  getStudentList,
+  deleteStudentInList,
+} from "../../../../assets/api/apis/group/ApiGroup";
 
 function EditListModal({ showEditListModal, setShowEditListModal, groupId }) {
   const [studentList, setStudentList] = useState([]);
 
+  // 목데이터. 나중에 삭제할 것.
   const mockStudentList = [
     { id: 1, name: "김철수" },
     { id: 2, name: "이영희" },
@@ -33,18 +37,24 @@ function EditListModal({ showEditListModal, setShowEditListModal, groupId }) {
     <S.EditModalContainer>
       <S.TopBar>
         <S.TextSection>
-          <span>3학년 1반</span>
-          <span>2023-2학기</span>
+          <S.ClassSpan>3학년 1반</S.ClassSpan>
+          <S.SemesSpan>2023-2학기</S.SemesSpan>
         </S.TextSection>
-        <S.Button>추가하기</S.Button>
+        <S.AddButton>추가하기</S.AddButton>
       </S.TopBar>
       <S.StudentListSection>
+        <S.TopCategory>
+          <S.Index>번호</S.Index>
+          <S.CateStudentName>이름</S.CateStudentName>
+        </S.TopCategory>
         {studentList.map((student, index) => (
           <S.Category key={student.id}>
             <S.Index>{index + 1}</S.Index>
             <S.AboutStudent>
               <S.StudentName>{student.name}</S.StudentName>
-              <S.DeleteButton>삭제</S.DeleteButton>
+              <S.DeleteButton onClick={deleteStudentInList(student.id)}>
+                삭제
+              </S.DeleteButton>
             </S.AboutStudent>
           </S.Category>
         ))}
