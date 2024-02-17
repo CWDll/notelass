@@ -33,7 +33,7 @@ export const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 10rem;
+  height: 9rem;
 `;
 
 export const Text = styled.p`
@@ -78,3 +78,15 @@ export const GrayButton = styled(Button)`
 `;
 
 // DeleteConfirmModal style
+export const Input = styled.input`
+  width: 320px;
+  border-bottom: 1.5px solid #c9cdd280;
+  margin-top: 25px;
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
