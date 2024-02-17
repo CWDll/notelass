@@ -17,7 +17,7 @@ const SelfEvaluation = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await instance.get(`/api/self-eval-question/${paramsGroupId}/${paramsUserId}`);
+                const response = await instance.get(`/api/self-eval-answer/${paramsGroupId}/${paramsUserId}`);
                 if (response.data.code === 200) {
                     setQuestions(response.data.result);
                     console.log('Fetched questions:', response.data.result);
@@ -51,6 +51,7 @@ const SelfEvaluation = () => {
                 </div>
             ))}
             </S.Question>
+
         </S.SmallContainer>
     );
 };
