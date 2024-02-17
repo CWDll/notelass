@@ -90,6 +90,7 @@ import {
   CustomDiv,
   ViewButton,
   BookTitle,
+  ExitButton,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 

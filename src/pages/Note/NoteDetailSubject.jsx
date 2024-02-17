@@ -58,6 +58,11 @@ function handleClone(materialId) {
   });
 }
 
+// 노트 삭제 함수
+function handleDelete(materialId) {
+  setMaterials((prev) => prev.filter((material) => material.id !== materialId));
+}
+
 
   function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
@@ -118,7 +123,7 @@ const toggleDropdown = (materialId) => {
     <div>
       <S.Header>
         <S.Img src={chevron_left} alt="chevron_left" />
-        <S.BoldTitle>과제별 성적 열람</S.BoldTitle>
+        <S.BoldTitle>노트</S.BoldTitle>
       </S.Header>
       <S.NoteContainer>
         <S.MakeNoteBody>
@@ -156,6 +161,7 @@ const toggleDropdown = (materialId) => {
               <hr />
               <S.NavDropdownOptionDown
                 className="dropdown-item"
+                onClick={() => handleDelete(material.id)}
               >
                 휴지통으로 이동
               </S.NavDropdownOptionDown>

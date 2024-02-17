@@ -18,6 +18,7 @@ const SelfEvaluation = ({setIsEditing }) => {
     //그룹 선택
     const handleGroupChange = (event) => {
       setGroup(event.target.value);
+      fetchQuestions(event.target.value);
     };
 
     //질문 추가
@@ -101,6 +102,27 @@ const SelfEvaluation = ({setIsEditing }) => {
   
         fetchGroups();
     }, []);
+
+    
+    //질문 목록 GET API
+    const fetchQuestions = async (group) => {
+      try {
+        const response = await instance.get(`/api/self-eval-question/${group}`);
+        if (response.data.code === 200) {
+          const newQuestions = response.data.result.map(item => item.question);
+          setQuestions(newQuestions);
+        } else {
+          console.error("질문을 불러오는데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("질문 조회 중 오류 발생:", error);
+      }
+    };
+    
+    
+
+    
+
 
 
     if (!isVisible) return null;
