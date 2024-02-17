@@ -237,7 +237,7 @@ function GroupDetailClass() {
   };
 
   const [clickedIndices, setClickedIndices] = useState(new Set());
-  const [showSmallContainer, setShowSmallContainer] = useState(false);
+  const [showEnrollModal, setShowEnrollModal] = useState(false);
 
   const handleOnClick = (index) => {
     setClickedIndices((prevIndices) => {
@@ -352,10 +352,10 @@ function GroupDetailClass() {
         <BoldTitle>
           {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
         </BoldTitle>
-        <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+        <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
           그룹 정보
         </Button>
-        <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+        <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
           학생 등록
         </Button>
         {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
@@ -377,10 +377,10 @@ function GroupDetailClass() {
           onClick={handleStuExcelDownload}
         />
 
-        {showSmallContainer && (
+        {showEnrollModal && (
           <ManageGroup
-            showSmallContainer={showSmallContainer}
-            setShowSmallContainer={setShowSmallContainer}
+            showEnrollModal={showEnrollModal}
+            setShowSmallContainer={setShowEnrollModal}
             groupId={id}
           />
         )}
