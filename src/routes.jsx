@@ -9,7 +9,6 @@ import Introduce from "./pages/Introduce/Introduce";
 import Note from "./pages/Note/Note";
 import Setting from "./pages/Setting/Setting";
 import TasksDetail from "./pages/Task/TasksDetail";
-import NoteDetail from "./components/Component/Note/NoteDetail";
 import NoteDetailSubject from "./pages/Note/NoteDetailSubject";
 import GroupDetailClass from "./pages/Group/GroupDetailClass";
 import GroupDetailWrite from "./pages/Group/GroupDetailWrite";
@@ -60,7 +59,6 @@ export const routes = [
       },
       { path: "/TasksDetail", element: <TasksDetail />, index: true },
       { path: "/Note", element: <Note />, index: true },
-      { path: "/Note", element: <NoteDetail />, index: true },
       {
         path: "/NoteDetailSubject",
         element: <NoteDetailSubject />,

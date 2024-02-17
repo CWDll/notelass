@@ -240,7 +240,7 @@ useEffect(() => {
               <NavDropdownOptionUp
                 className="dropdown-item"
               >
-                내보내기
+                다운로드
               </NavDropdownOptionUp>
               <hr />
               <NavDropdownOptionDown
