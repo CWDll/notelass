@@ -88,7 +88,7 @@ const SelfEvaluation = ({setIsEditing }) => {
             if (response.data && response.data.result) {
               const newGroups = response.data.result.map((g) => ({
                 id: g.id,
-                name: `${g.grade}학년 ${g.classNum}반` 
+                name: `${g.grade}학년 ${g.classNum}반 ${g.subject}` 
               }));
               setGroups(newGroups); 
             }

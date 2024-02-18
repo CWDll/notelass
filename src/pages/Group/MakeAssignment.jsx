@@ -73,6 +73,12 @@ function MakeAssignment() {
     //공지 생성 POST API
     if (selectedButton === "공지") {
       try {
+        // 제목과 내용이 공백인지 확인
+        if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+          alert("제목과 내용을 입력해주세요.");
+          return;
+        }
+
         // JSON 데이터 준비
         const noticeDto = JSON.stringify({
           title: assignmentName,
@@ -112,6 +118,14 @@ function MakeAssignment() {
       //강의자료 생성 POST API
     } else if (selectedButton === "강의자료") {
       try {
+
+        // 제목과 내용이 공백인지 확인
+        if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+          alert("제목과 내용을 입력해주세요.");
+          return;
+        }
+
+        
         // JSON 데이터 준비
         const materialDto = JSON.stringify({
           title: assignmentName,
