@@ -129,13 +129,6 @@ line-height: 14px;
 letter-spacing: 0em;
 text-align: center;
 color: #9EA4AA;
-
-
-`;
-
-const ShowAllText = styled(DetailText)`
-  top: 37px;
-  right: 100px;
 `;
 
 const ShowAllText = styled(DetailText)`

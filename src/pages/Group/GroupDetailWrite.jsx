@@ -709,8 +709,8 @@ export function GroupDetailWrite() {
     <Wrap>
       <Main>
        {isVisible && <DownloadSuccess onExit={() => setIsVisible(false)} />}
-      {/* //<div onClick={closeContextMenu}> */}
-      <Header>
+       {/* //<div onClick={closeContextMenu}> */}
+        <Header>
         <Img
           src={chevron_left}
           alt="chevron_left"

@@ -54,14 +54,14 @@ function MakeAssignment() {
   };
 
   // 파일 업로드 핸들러
-  const handleFileChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
-    if (fileUploaded) {
-      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
-      console.log(files);
-    }
-  };
+  // const handleFileChange = (event) => {
+  //   const fileUploaded = event.target.files[0];
+  //   console.log(fileUploaded);
+  //   if (fileUploaded) {
+  //     setFiles((prevFiles) => [...prevFiles, fileUploaded]);
+  //     console.log(files);
+  //   }
+  // };
 
   // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
