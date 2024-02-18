@@ -30,9 +30,9 @@ import RecordFile from "../../assets/excel/StuRecord.xlsx";
 import * as S from "../../components/Component/Home/Style/GroupDetailStyle";
 
 import InputText from "../../components/Component/Group/InputText";
-// import GuideLine from "../../components/Component/Group/GuideLine";
 import Synonym from "../../components/Component/Group/Synonym";
-import StudentMemo from "../../components/Component/Group/StudentMemo";
+import EvaluationView from "src/components/Component/Group/EvaluationView";
+import DownloadSuccess from "../../components/Component/Etc/DownloadSuccess";
 
 import {
   Header,
@@ -89,6 +89,11 @@ import {
   SelectedWord,
   SynonymTitle,
   CustomDiv,
+  ViewButton,
+  BookTitle,
+  ExitButton,
+  Wrap,
+  Main,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 export function GroupDetailWrite() {
@@ -117,7 +122,10 @@ export function GroupDetailWrite() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [showExitConfirm, setShowExitConfirm] = useState(false);
-  const [studentBookEntries, setStudentBookEntries] = useState([]);
+  // const [studentBookEntries, setStudentBookEntries] = useState([]);
+  const [showEvaluationView, setShowEvaluationView] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // // 학생 수첩 관련 함수
   // // StudentBook 모달을 열기 위한 함수
@@ -145,28 +153,29 @@ export function GroupDetailWrite() {
   //   return { groupId: null, userId: null };
   // };
 
-  // // 학생 수첩 수정 버튼 클릭 핸들러
-  // const handleStudentBookEdit = (entryId) => {
-  //   console.log("작동중입니다...");
-  //   const entry = studentBookEntries.find((e) => e.id === entryId);
-  //   console.log("entry", entry);
-  //   console.log("entry.id", entry.id);
-  //   console.log("entryIdType", typeof entry.id);
-  //   console.log("entryId", entryId);
+  // 학생 수첩 수정 버튼 클릭 핸들러
+  const handleStudentBookEdit = (entryId) => {
+    console.log("작동중입니다...");
+    const entry = studentBookEntries.find((e) => e.id === entryId);
+    console.log("entry", entry);
+    console.log("entry.id", entry.id);
+    console.log("entryIdType", typeof entry.id);
+    console.log("entryId", entryId);
 
-  //   if (entry) {
-  //     setSelectedGroupId(paramsGroupId);
-  //     setSelectedUserId(paramsUserId);
-  //     setShowStudentBook(true);
-  //     setContentId(entryId);
-  //     console.log("setShowStudentBook=true 만든 상태");
-  //   } else {
-  //     console.error("학생 정보를 찾을 수 없음");
-  //   }
-  //   console.log("작동 끝??");
-  //   console.log("showStudentBook의 상태: ", showStudentBook);
-  // };
-  //
+    if (entry) {
+      setSelectedGroupId(paramsGroupId);
+      setSelectedUserId(paramsUserId);
+      setShowStudentBook(true);
+      setContentId(entryId);
+      console.log("setShowStudentBook=true 만든 상태");
+    } else {
+      console.error("학생 정보를 찾을 수 없음");
+    }
+    console.log("작동 끝??");
+    console.log("showStudentBook의 상태: ", showStudentBook);
+  };
+  
+
 
   // 생기부 다운로드 받기 GET 함수
   const exportToExcel = async () => {
@@ -182,6 +191,9 @@ export function GroupDetailWrite() {
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
+        setIsVisible(true);
+
+       
       } else {
         console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
         alert("생활기록부 파일을 가져오지 못했습니다.");
@@ -192,48 +204,48 @@ export function GroupDetailWrite() {
     }
   };
 
-  //과제 성적 파일 업로드 POST 함수
-  const uploadAssignment = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(formData);
+  // //과제 성적 파일 업로드 POST 함수
+  // const uploadAssignment = async (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     console.log(formData);
 
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
+  //     for (let [key, value] of formData.entries()) {
+  //       console.log(key, value);
+  //     }
 
-      try {
-        const response = await instance.post(
-          `/api/assignment/file/${paramsGroupId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+  //     try {
+  //       const response = await instance.post(
+  //         `/api/assignment/file/${paramsGroupId}`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
 
-        console.log(response); // 서버 응답 확인
+  //       console.log(response); // 서버 응답 확인
 
-        if (response.status === 201) {
-          console.log("과제 성적 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!"); // 상태 업데이트
-        } else {
-          console.error(
-            "예상치 못한 상태 코드:",
-            response.status,
-            response.data
-          );
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
-        }
-      } catch (error) {
-        console.error("과제 성적 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
-      }
-    }
-  };
+  //       if (response.status === 201) {
+  //         console.log("과제 성적 파일 업로드 성공!");
+  //         setUploadStatus("업로드 성공!"); // 상태 업데이트
+  //       } else {
+  //         console.error(
+  //           "예상치 못한 상태 코드:",
+  //           response.status,
+  //           response.data
+  //         );
+  //         setUploadStatus("업로드 실패: 예상치 못한 상태 코드"); // 상태 업데이트
+  //       }
+  //     } catch (error) {
+  //       console.error("과제 성적 파일 업로드 중 오류 발생:", error);
+  //       setUploadStatus("업로드 실패: 오류 발생"); // 상태 업데이트
+  //     }
+  //   }
+  // };
 
   // 과제 점수 조회 GET 함수
 
@@ -415,52 +427,55 @@ export function GroupDetailWrite() {
     fetchStudents();
   }, [paramsGroupId]);
 
-  // //학생 수첩 조회 Get 함수
-  // const [studentBookEntries, setStudentBookEntries] = useState([]);
+  //학생 수첩 조회 Get 함수
+  const [studentBookEntries, setStudentBookEntries] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchStudentBook = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `/api/handbook/${paramsGroupId}/${paramsUserId}`
-  //       );
-  //       console.log("학생 수첩 조회 내용:", response.data);
-  //       if (response.status === 200) {
-  //         setSavedTextFromStudentBook(response.data.result);
-  //         setStudentBookEntries(response.data.result);
-  //         console.log("학생 수첩 조회 내용2: ", response.data.result);
-  //       } else {
-  //         console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
-  //       }
-  //     } catch (error) {
-  //       console.error("학생 수첩을 가져오지 못했습니다.:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchStudentBook = async () => {
+      try {
+        const response = await instance.get(
+          `/api/handbook/${paramsGroupId}/${paramsUserId}`
+        );
+        console.log("학생 수첩 조회 내용:", response.data);
+        if (response.status === 200) {
+          setSavedTextFromStudentBook(response.data.result);
+          setStudentBookEntries(response.data.result);
+          console.log("학생 수첩 조회 내용2: ", response.data.result);
+        } else {
+          console.error("서버로부터 예상치 못한 응답을 받았습니다:", response);
+        }
+      } catch (error) {
+        console.error("학생 수첩을 가져오지 못했습니다.:", error);
+      }
+    };
 
-  //   if (paramsGroupId && paramsUserId) {
-  //     fetchStudentBook();
-  //   }
-  // }, [paramsGroupId, paramsUserId]);
+    
+    if (paramsGroupId && paramsUserId) {
+      fetchStudentBook();
+    }
+  }, [paramsGroupId, paramsUserId]);
 
-  // // 학생 수첩 내용 DELETE 함수
-  // const deleteStudentBookEntry = async (handbookContentId) => {
-  //   try {
-  //     const response = await instance.delete(
-  //       `/api/handbook/${handbookContentId}`
-  //     );
-  //     if (response.status === 204) {
-  //       setStudentBookEntries((currentEntries) =>
-  //         currentEntries.filter((entry) => entry.id !== handbookContentId)
-  //       );
-  //       alert("항목이 성공적으로 삭제되었습니다.");
-  //     } else {
-  //       // 오류가 있을 경우
-  //       console.error("삭제에 실패했습니다:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("삭제 중 오류가 발생했습니다:", error);
-  //   }
-  // };
+  // 학생 수첩 내용 DELETE 함수
+  const deleteStudentBookEntry = async (handbookContentId) => {
+    try {
+      const response = await instance.delete(
+        `/api/handbook/${handbookContentId}`
+      );
+      if (response.status === 204) {
+        setStudentBookEntries((currentEntries) =>
+          currentEntries.filter((entry) => entry.id !== handbookContentId)
+        );
+        alert("항목이 성공적으로 삭제되었습니다.");
+      } else {
+        // 오류가 있을 경우
+        console.error("삭제에 실패했습니다:", response);
+      }
+    } catch (error) {
+      console.error("삭제 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  
 
   // //생활기록부 내용 불러오기 함수
   // const fetchText = async () => {
@@ -584,82 +599,116 @@ export function GroupDetailWrite() {
     }
   };
 
-  // //유의어 추천 GET 함수
-  // const [selectedWord, setSelectedWord] = useState("");
-  // const [synonyms, setSynonyms] = useState([]);
-  // const [contextMenu, setContextMenu] = useState(null);
-  // const [synonymsLoading, setSynonymsLoading] = useState(false);
+  //유의어 추천 GET 함수
+  const [selectedWord, setSelectedWord] = useState("");
+  const [synonyms, setSynonyms] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [synonymsLoading, setSynonymsLoading] = useState(false);
 
-  // const fetchSynonyms = async (word) => {
-  //   setSynonymsLoading(true);
-  //   try {
-  //     const response = await axios.get(`/api/synonym?word=${word}`);
-  //     setSynonyms(response.data.result.slice(0, 4));
-  //   } catch (error) {
-  //     console.error("Error fetching synonyms:", error);
-  //   } finally {
-  //     setSynonymsLoading(false);
-  //   }
-  // };
+  const fetchSynonyms = async (word) => {
+    setSynonymsLoading(true);
+    try {
+      const response = await axios.get(`/api/synonym?word=${word}`);
+      setSynonyms(response.data.result.slice(0, 4));
+    } catch (error) {
+      console.error("Error fetching synonyms:", error);
+    } finally {
+      setSynonymsLoading(false);
+    }
+  };
 
-  // const handleWordSelection = (word) => {
-  //   setSelectedWord(word);
-  //   fetchSynonyms(word);
-  // };
+  const handleWordSelection = (word) => {
+    setSelectedWord(word);
+    fetchSynonyms(word);
+  };
 
   const closeContextMenu = () => {
     setContextMenu(null);
   };
 
-  //발표, 태도 점수 GET 함수
-  const [speechCount, setSpeechCount] = useState(0);
-  const [attitudeCount, setAttitudeCount] = useState(0);
+    //발표, 태도 점수 GET 함수
+    const [speechCount, setSpeechCount] = useState(0);
+    const [attitudeCount, setAttitudeCount] = useState(0);
+    const [speechRank, setSpeechRank] = useState(0);
+    const [attitudeRank, setAttitudeRank] = useState(0);
+  
+    
+    // useEffect(() => {
+    // const fetchScores = async () => {
+    //   try {
+    //     const res = await instance.get(
+    //       `/api/record/score/${paramsGroupId}/${paramsUserId}`
+    //     );
+    //     console.log("fetchScores res.data:", res.data);
+  
+    //     if (res.status === 200) {
+    //       console.log("fetchScores성공");
+    //       setSpeechCount(res.data.result.presentationNum);
+    //       setAttitudeCount(res.data.result.attitudeScore);
+    //     } else {
+    //       alert("fetchScores성공");
+    //     }
+    //   } catch (error) {
+    //     console.error("fatchScores error:", error);
+    //   }
+    // };
+  
+    
+    //   fetchScores();
+    // }, [paramsGroupId, paramsUserId]);
 
-  useEffect(() => {
-    const fetchScores = async () => {
-      try {
-        const res = await instance.get(
-          `/api/record/score/${paramsGroupId}/${paramsUserId}`
-        );
-        console.log("fetchScores res.data:", res.data);
 
-        if (res.status === 200) {
-          console.log("fetchScores성공");
+    
+    useEffect(() => {
+      const fetchDetail = async () => {
+        try {
+          const res = await instance.get(
+            `/api/record/detail/${paramsGroupId}/${paramsUserId}?percentage=40`
+          );
+          console.log("fetchDetail res.data:", res.data);
           setSpeechCount(res.data.result.presentationNum);
+          setSpeechRank(res.data.result.presentationRank);
           setAttitudeCount(res.data.result.attitudeScore);
-        } else {
-          alert("fetchScores성공");
+          setAttitudeRank(res.data.result.attitudeScoreRank);
+    
+          if (res.status === 200) {
+            console.log("fetchDetail성공");
+          } else {
+            alert("fetchDetail성공");
+          }
+        } catch (error) {
+          console.error("fetchDetail error:", error);
         }
-      } catch (error) {
-        console.error("fatchScores error:", error);
-      }
-    };
+      };
+    
+      
+      fetchDetail();
+      }, [paramsGroupId, paramsUserId]);
 
-    fetchScores();
-  }, [paramsGroupId, paramsUserId]);
+  // // 과제데이터 양식 다운로드
+  // const handleHwDataDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = HwDataFile;
+  //   link.setAttribute("download", "과제데이터양식.cell"); 
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
-  // 과제데이터 양식 다운로드
-  const handleHwDataDownload = () => {
-    const link = document.createElement("a");
-    link.href = HwDataFile;
-    link.setAttribute("download", "과제데이터양식.cell");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  // 생기부 양식 다운로드
-  const handleStuRecordDownload = () => {
-    const link = document.createElement("a");
-    link.href = RecordFile;
-    link.setAttribute("download", "생활기록부양식.xlsx");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // // 생기부 양식 다운로드
+  // const handleStuRecordDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = RecordFile;
+  //   link.setAttribute("download", "생활기록부양식.xlsx"); 
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
-    <>
+    <Wrap>
+      <Main>
+       {isVisible && <DownloadSuccess onExit={() => setIsVisible(false)} />}
       {/* //<div onClick={closeContextMenu}> */}
       <Header>
         <Img
@@ -690,6 +739,7 @@ export function GroupDetailWrite() {
           </SmallContainer>
         )}
 
+        
         <BlueTitle>학생 분석</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value="" disabled selected>
@@ -730,7 +780,7 @@ export function GroupDetailWrite() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Title>활동기록 총 정리</Title>
             <>
-              <AssigncellButton>
+              {/* <AssigncellButton>
                 <input
                   type="file"
                   onChange={uploadAssignment}
@@ -740,26 +790,25 @@ export function GroupDetailWrite() {
                     opacity: 0,
                   }}
                 />
-                {/* 과제 데이터 불러오기 */}
-                준비 중
-                <img src={right} alt="right" />
-              </AssigncellButton>
-              <FileDownload
+              </AssigncellButton> */}
+              {/* <FileDownload
                 src={fileDownload}
                 style={{ marginTop: "5px" }}
                 alt="fileDownload"
                 onClick={handleHwDataDownload}
-              />
+              /> */}
             </>
           </div>
           {/* <SaveButton onClick={saveData}>저장하기</SaveButton> */}
           <ScoreList>
-            <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>{speechCount} 회</ScoreResult>
-            <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>{attitudeCount} 점</ScoreResult>
-
+            <ScoreResult>{attitudeCount}점 (상위 {attitudeRank}%)</ScoreResult>
+            <ScoreTitle>&emsp;</ScoreTitle>
+            <ScoreTitle>발표 횟수: </ScoreTitle>
+            <ScoreResult>{speechCount}회 (상위 {speechRank}%)</ScoreResult>
+            
+            
+            
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
@@ -787,29 +836,8 @@ export function GroupDetailWrite() {
           </ScoreList>
 
           <>
-            <InputText />
-            {/* <WritingBox
-              onContextMenu={(event) => {
-                event.preventDefault();
-                const selectedText = window.getSelection().toString().trim();
-                if (selectedText) {
-                  handleWordSelection(selectedText);
-                }
-              }}
-            > */}
-            {/*생활기록부 입력창*/}
-
-            {/* <Textarea
-                value={inputText}
-                spellCheck={false}
-                onChange={(e) => {
-                  setInputText(e.target.value);
-                  setByteCount(calculateByteCount(e.target.value));
-                }}
-              />
-
-              <ByteCounting>{byteCount}/1500 byte</ByteCounting>
-            </WritingBox> */}
+          <InputText/>
+            
 
             <CustomDiv>
               {/* <HancellButton>
@@ -827,40 +855,16 @@ export function GroupDetailWrite() {
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </HancellButton> */}
-              <FileDownload
+              {/* <FileDownload
                 src={fileDownload}
                 alt="fileDownload"
                 onClick={handleStuRecordDownload}
-              />
+              /> */}
             </CustomDiv>
-            <Synonym />
-            {/* <SynonymsDisplay>
-              {selectedWord && (
-                <>
-                  <SynonymTitle>
-                    <SelectedWord>'{selectedWord}'</SelectedWord> 비슷한 유의어
-                  </SynonymTitle>
-                  <div>
-                    {synonymsLoading ? (
-                      <div style={{ marginTop: "15px" }}>
-                        <BarLoader
-                          color="#4849ff"
-                          loading={synonymsLoading}
-                          height={4}
-                          width={100}
-                        />
-                      </div>
-                    ) : (
-                      synonyms.map((synonym, index) => (
-                        <Synonym key={index}>{synonym}</Synonym>
-                      ))
-                    )}
-                  </div>
-                </>
-              )}
-            </SynonymsDisplay> */}
+            <Synonym/>
+            
 
-            <Line />
+            
 
             {/*가이드라인 문장 */}
             <GuidelineContainer>
@@ -959,16 +963,24 @@ export function GroupDetailWrite() {
           </>
         </LeftContainer>
 
-        <RightContainer>
-          <StudentMemo />
-          {/* <Title>학생수첩</Title>
+        </RightContainer>
+          {/* <StudentMemo/> */}
+          <BookTitle>학생수첩</BookTitle>
+          <ViewButton onClick={() => setShowEvaluationView(!showEvaluationView)}>학생의 자기평가서 보기</ViewButton>
+          {showEvaluationView && <EvaluationView />}
+
+        
+        
+
+
+
           {studentBookEntries.map((entry) => (
             <InfoContainer key={entry.id}>
               <TimeText>
-                {/* 날짜 형식을 년-월-일 */}
-          {/* {new Date(entry.createdDate).toLocaleDateString("ko-KR")} */}
-          {/* </TimeText> */}
-          {/* <div
+                {/* 날짜 형식을 년-월-일*/}
+                {new Date(entry.createdDate).toLocaleDateString("ko-KR")}
+              </TimeText>
+              <div
                 style={{
                   display: "flex",
                   gap: "10px",
@@ -976,8 +988,8 @@ export function GroupDetailWrite() {
                   marginRight: "35px",
                   marginTop: "-20PX",
                 }}
-              > */}
-          {/* <TimeText
+              >
+                <TimeText
                   onClick={() => {
                     handleStudentBookEdit(entry.id);
                     setShowStudentBook(!showStudentBook);
@@ -991,8 +1003,8 @@ export function GroupDetailWrite() {
                 </TimeText>
               </div>
               <StudentBookText key={entry.id}>
-                <SavedText>{entry.content}</SavedText> */}
-          {/* {showCheckboxes && (
+                <SavedText>{entry.content}</SavedText>
+                {showCheckboxes && (
                   <div style={{ position: "absolute" }}>
                     <Checkbox
                       onClick={() => toggleCheck(entry.id)}
@@ -1003,8 +1015,8 @@ export function GroupDetailWrite() {
                 )}
               </StudentBookText>
             </InfoContainer>
-          ))} */}
-          {/* {showStudentBook && (
+          ))}
+          {showStudentBook && (
             <StudentBookContent
               show={showStudentBook}
               onClose={() => setShowStudentBook(false)}
@@ -1012,11 +1024,13 @@ export function GroupDetailWrite() {
               propsUserId={selectedUserId}
               contentId={contentId}
             />
-          )} */}
+          )}
         </RightContainer>
       </MainContainer>
+      
       {/* </div> */}
-    </>
+      </Main>
+    </Wrap>
   );
 }
 

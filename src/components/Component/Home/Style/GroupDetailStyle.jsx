@@ -22,7 +22,7 @@ export const BlueTitle = styled.p`
   font-size: 20px;
   font-weight: 700;
   margin-left: 24px;
-  margin-top: 72px;
+  margin-top: 75px;
 `;
 
 export const StudentSelect = styled.select`
@@ -108,6 +108,18 @@ export const Title = styled.p`
   line-height: normal;
   margin-left: 32px;
   margin-top: 32px;
+`;
+
+export const BookTitle = styled.p`
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 32px;
+  margin-top: 32px;
+  margin-bottom: 16px;
 `;
 
 export const ScoreList = styled.div`
@@ -215,7 +227,7 @@ export const GuidelineContainer = styled.div`
   display: row;
   align-items: center;
   margin-left: 32px;
-  margin-top: 16px;
+  margin-top: -25px;
 `;
 
 export const GuidelineTitle = styled.p`
@@ -287,6 +299,7 @@ export const InfoContainer = styled.div`
   align-items: center;
   margin-left: 32px;
   margin-top: 16px;
+
 `;
 
 export const TimeText = styled.p`
@@ -430,7 +443,7 @@ export const Printexecl = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #4849ff;
-  margin-left: 260px;
+  margin-left: 630px;
   margin-top: 60px;
 
   /* 엑셀로 출력 글씨 */
@@ -688,3 +701,43 @@ export const CustomDiv = styled.div`
   padding-right: 35px;
   margin-top: -38px;
 `;
+
+export const ViewButton = styled.button`
+
+display: flex;
+
+height: 24px;
+background: #EDEDFF;
+top: 260px;
+left: 1373px;
+padding: 4px 12px; 
+border-radius: 6px;
+gap: 8px; 
+text-align: center;
+margin-left: 272px;
+margin-top: -44px;
+margin-bottom: 24px;
+align-items: center;
+
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0em;
+  color: #4849FF;
+
+
+ 
+
+`;
+
+export const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
+
+export const Main = styled.div`
+margin-left: -363px;
+`;
+
+

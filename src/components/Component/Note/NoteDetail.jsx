@@ -1,25 +1,40 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import plus_lg from "../../../assets/plus_lg.svg";
+import instance from "src/assets/api/axios";
 
 const NoteContainer = styled.div`
-  width: 1194px;
-  height: 800px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  position: relative;
-  margin-left: 363px;
-  margin-top: 72px;
+width: 100%;
+height: 800px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #fff;
+box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+position: relative;
+
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-top: 144px;
+max-width: 1194px; /* 최대 너비 제한 */
+
+  
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;
 
 const MakeNoteBody = styled.div`
   width: 1194px;
   height: 72px;
   flex-shrink: 0;
-  margin-top: 32px;
   display: flex;
 `;
 
@@ -124,10 +139,34 @@ const subject = subjectInfo.split(" ")[3];
 const letter = subject.substr(0, 1);
 
 function NoteDetail() {
+  const [groupList, setGroupList] = useState([]);
+
   const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/NoteDetailSubject");
+  
+  const handleGroupClick = (id) => {
+    navigate(`/NoteDetailSubject/${id}`);
   };
+
+
+  const fetchGroups = async () => {
+    try {
+      const response = await instance.get("/api/group");
+      if (response.status === 200 && Array.isArray(response.data.result)) {
+        setGroupList(response.data.result);
+      } else {
+        // 오류 처리
+        console.error("그룹 목록을 불러오는데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
+
 
   return (
     <NoteContainer>
@@ -138,34 +177,21 @@ function NoteDetail() {
         <Title>신규 노트 만들기</Title>
       </MakeNoteBody>
       <SubjectBodyWrapper>
-        <SubjectBody onClick={onClick}>
-          <CircleText>
-            <PurpleText>{letter}</PurpleText>
-          </CircleText>
-          <SubjectContainer>
-            <BoldText>{subjectInfo}</BoldText>
-            <GrayText>김태연 선생님</GrayText>
-          </SubjectContainer>
-        </SubjectBody>
-        <SubjectBody onClick={onClick}>
-          <CircleText>
-            <PurpleText>영</PurpleText>
-          </CircleText>
-          <SubjectContainer>
-            <BoldText>노트고등학교 3학년 1반 영어</BoldText>
-            <GrayText>티파니 선생님</GrayText>
-          </SubjectContainer>
-        </SubjectBody>
-        <SubjectBody onClick={onClick}>
-          <CircleText>
-            <PurpleText>확</PurpleText>
-          </CircleText>
-          <SubjectContainer>
-            <BoldText>노트고등학교 3학년 1반 확률과 통계</BoldText>
-            <GrayText>이순규 선생님</GrayText>
-          </SubjectContainer>
-        </SubjectBody>
-      </SubjectBodyWrapper>
+          {groupList.map((group) => (
+            <SubjectBody
+              key={group.id}
+              onClick={() => handleGroupClick(group.id)}
+            >
+              <CircleText>
+                <PurpleText>{group.subject[0]}</PurpleText>
+              </CircleText>
+              <SubjectContainer>
+              <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
+              <GrayText>{ `${group.teacher}선생님`} </GrayText>
+              </SubjectContainer>
+            </SubjectBody>
+          ))}
+        </SubjectBodyWrapper>
     </NoteContainer>
   );
 }

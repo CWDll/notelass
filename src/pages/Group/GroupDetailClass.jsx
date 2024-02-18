@@ -16,6 +16,16 @@ import fileDownload from "../../assets/fileDownload.svg";
 import instance from "../../assets/api/axios";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
+import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
+
+const Wrap = styled.div`
+  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-right: auto;
+`;
+
+const Main = styled.div`
+  margin-left: -363px;
+`;
 
 const Header = styled.header`
   display: flex;
@@ -98,17 +108,34 @@ const Title = styled.p`
   padding-left: 32px;
 `;
 
-const DetailText = styled.p`
-  color: var(--cool-grayscale-placeholder, #9ea4aa);
-  text-align: right;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-decoration-line: underline;
-  position: absolute;
+const DetailText = styled.button`
+display:flex;
+align-items: center;
+height: 21px;
+margin-top: -24px;
+
+margin-left:579px;
+border-radius: 16px
+gap: 8px;
+z-index: 1;
+background: #F5F5FC;
+padding:  6px, 8px;
+text-align: center;
+
+font-family: Pretendard;
+font-size: 12px;
+font-weight: 600;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #9EA4AA;
+
+
+`;
+
+const ShowAllText = styled(DetailText)`
   top: 37px;
-  right: 32px;
+  right: 100px;
 `;
 
 const ShowAllText = styled(DetailText)`
@@ -146,14 +173,15 @@ const NoticeImg = styled.img`
 `;
 
 //디자인 위치 다시 수정해야함. 임시로 배치
-const NoticeTitle = styled.div`
+const NoticeTitle = styled.p`
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   margin-left: 24px;
   margin-top: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  z-index: 1;
 `;
 
 const SudentNum = styled.p`
@@ -214,6 +242,10 @@ function GroupDetailClass() {
   const info = location.state;
   const { paramsGroupId, paramsUserId } = useParams(); // URL에서 id들의 매개변수의 값을 추출합니다.
   const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
+  const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [showSmallContainer, setShowSmallContainer] = useState(false);
+  const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
@@ -247,7 +279,7 @@ function GroupDetailClass() {
     navigate("/GroupScoreDetail");
   };
 
-  const [clickedIndices, setClickedIndices] = useState(new Set());
+  // const [clickedIndices, setClickedIndices] = useState(new Set());
   const [showEnrollModal, setShowEnrollModal] = useState(false);
   const [showEditOrDeleteModal, setShowEditOrDeleteModal] = useState(false);
 
@@ -327,240 +359,247 @@ function GroupDetailClass() {
 
   // 학생 등록 양식 다운로드
 
-  const handleStuExcelDownload = () => {
-    // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
-    const link = document.createElement("a");
-    link.href = StuExcel;
-    link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleStuExcelDownload = () => {
+  //   // Blob을 사용하지 않고, 정적 파일 경로를 이용합니다.
+  //   const link = document.createElement("a");
+  //   link.href = StuExcel;
+  //   link.setAttribute("download", "학생등록양식.xlsx"); // 파일 다운로드 시 사용될 기본 파일명을 설정합니다.
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
-  // 공지사항 GET API
-
+  // 공지사항 목록 조회 GET 함수
   const [notices, setNotices] = useState([]);
+
   const fetchNotices = async () => {
     try {
-      const response = await instance.get(`/api/notice/group/${paramsGroupId}`);
-      // API 응답에서 result 키의 값을 사용하여 상태를 설정합니다.
-      if (response.data && response.data.result) {
+      const response = await instance.get(`/api/notice/${id}`);
+      if (response.data.code === 200) {
         setNotices(response.data.result);
+        console.log("공지사항 목록 조회 성공", response.data.result);
+      } else {
+        console.error("공지사항 목록 조회 실패", response.data.message);
       }
     } catch (error) {
-      console.error("공지사항을 가져오지 못했습니다.:", error.message);
+      console.error("공지사항 목록 조회 중 오류 발생:", error);
     }
   };
 
   useEffect(() => {
-    fetchStudents();
     fetchNotices();
-  }, []);
+  }, [id]);
 
   return (
-    <>
-      <Header>
-        <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
-        <BoldTitle>
-          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
-        </BoldTitle>
-        <Button
-          onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
-        >
-          그룹 정보
-        </Button>
-        <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
-          학생 등록
-        </Button>
-        {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
+    <Wrap>
+      <Main>
+        <Header>
+          <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
+          <BoldTitle>
+            {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
+          </BoldTitle>
+          <Button
+            onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
+          >
+            그룹 정보
+          </Button>
+          <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
+            학생 등록
+          </Button>
+          {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
         <Button>
+        <Button style={{ position: 'relative' }}>
           <input
-            type="file"
-            onChange={uploadname}
-            accept=".xls,.xlsx,.csv,.cell"
-            style={{
-              position: "absolute",
-              opacity: 0,
-            }}
+              type="file"
+              onChange={uploadname}
+              accept=".xls,.xlsx,.csv,.cell"
+              style={{
+                  position: "absolute",
+                  opacity: 0,
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  width: 'auto', 
+                  height: 'auto',
+                  cursor: 'pointer', 
+              }}
           />
           학생 등록
+      </Button>
+        {/* <FileDownload
         </Button> */}
-        <FileDownload
-          src={fileDownload}
-          alt="fileDownload"
-          onClick={handleStuExcelDownload}
-        />
-        {/* 학생 등록 모달 */}
-        {showEnrollModal && (
-          <ManageGroup
-            showEnrollModal={showEnrollModal}
-            setShowEnrollModal={setShowEnrollModal}
-            groupId={id}
+          <FileDownload
+            src={fileDownload}
+            alt="fileDownload"
+            onClick={handleStuExcelDownload}
           />
-        )}
-        {showEditOrDeleteModal && (
-          <EditOrDeleteModal
-            showEditOrDeleteModal={showEditOrDeleteModal}
-            setShowEditOrDeleteModal={setShowEditOrDeleteModal}
-            groupId={id}
-            grade={info.grade}
-            classNum={info.classNum}
-          />
-        )}
-      </Header>
-      <MainContainer>
-        <LeftSectionContainer>
-          <NoticeContainer>
-            <Title>공지/과제</Title>
-            <ShowAllText
-              style={{ "text-decoration": "underline" }}
-              onClick={toAllPage}
-            >
-              전체보기
-            </ShowAllText>
-            <DetailText
-              style={{ "text-decoration": "underline" }}
-              onClick={toWritePage}
-            >
-              생성하기
-            </DetailText>
 
-            <Title
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "-50px",
-                height: "100%",
-              }}
-            ></Title>
+          <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
+            {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+          </Button>
+          {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
-            {/* 그룹별 공지사항 목록 조회*/}
+          {showSmallContainer && (
+            <ManageGroup
+              showEnrollModal={showEnrollModal}
+              setShowEnrollModal={setShowEnrollModal}
+              groupId={id}
+            />
+          )}
+          {showEditOrDeleteModal && (
+            <EditOrDeleteModal
+              showEditOrDeleteModal={showEditOrDeleteModal}
+              setShowEditOrDeleteModal={setShowEditOrDeleteModal}
+              groupId={id}
+              grade={info.grade}
+              classNum={info.classNum}
+            />
+          )}
+        </Header>
+        <MainContainer>
+          <LeftSectionContainer>
+            <NoticeContainer>
+              <Title>공지/과제</Title>
+              <ShowAllText
+                style={{ "text-decoration": "underline" }}
+                onClick={toAllPage}
+              >
+                전체보기
+              </ShowAllText>
+              <DetailText onClick={toWritePage}>생성하기</DetailText>
+
+              <Title
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "-50px",
+                  height: "100%",
+                }}
+              ></Title>
+
+              {/* 그룹별 공지사항 목록 조회*/}
+              <div style={{ marginTop: "-300px" }}>
+                <SubjectContainer>
+                  {notices.slice(0, 5).map((notice, index) => (
+                    <StyledNoticeItem
+                      key={notice.id}
+                      onClick={() => handleOnClick(index)}
+                    >
+                      <NoticeContent>
+                        <NoticeImg
+                          src={
+                            clickedIndices.has(index) ? envelopeOpen : envelope
+                          }
+                          alt="envelope"
+                        />
+                        <NoticeTitle>{notice.title}</NoticeTitle>
+                      </NoticeContent>
+                    </StyledNoticeItem>
+                  ))}
+                </SubjectContainer>
+              </div>
+            </NoticeContainer>
+
+            <GroupContainer>
+              <Title>과제별 성적 열람</Title>
+              <DetailText
+                style={{ "text-decoration": "underline" }}
+                onClick={toWritePage}
+              >
+                전체보기
+              </DetailText>
+              <SubjectContainer>
+                <NoticeContent>
+                  <NoticeImg src={file} alt="file" />
+                  <NoticeTitle>과제4</NoticeTitle>
+                </NoticeContent>
+                <NoticeContent>
+                  <NoticeImg src={file} alt="file" />
+                  <NoticeTitle>과제3</NoticeTitle>
+                </NoticeContent>
+                <NoticeContent>
+                  <NoticeImg src={file} alt="file" />
+                  <NoticeTitle>과제2</NoticeTitle>
+                </NoticeContent>
+                <NoticeContent>
+                  <NoticeImg src={file} alt="file" />
+                  <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
+                </NoticeContent>
+
+                <Title
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "50px",
+                    height: "100%",
+                  }}
+                ></Title>
+              </SubjectContainer>
+            </GroupContainer>
+
+            <GroupContainer>
+              <Title>학생별 성적 열람</Title>
+              <DetailText onClick={toWritePage}>전체보기</DetailText>
+              <SubjectContainer>
+                <NoticeContent onClick={StudentScoreDetail}>
+                  <NoticeImg src={person} alt="person" />
+                  <SudentNum>1</SudentNum>
+                  <NoticeTitle>김민수</NoticeTitle>
+                </NoticeContent>
+                <NoticeContent>
+                  <NoticeImg src={person} alt="person" />
+                  <SudentNum>2</SudentNum>
+                  <NoticeTitle>김민수</NoticeTitle>
+                </NoticeContent>
+                <NoticeContent>
+                  <NoticeImg src={person} alt="person" />
+                  <SudentNum>3</SudentNum>
+                  <NoticeTitle>김민수</NoticeTitle>
+                </NoticeContent>
+
+                <Title
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "50px",
+                    height: "100%",
+                  }}
+                ></Title>
+              </SubjectContainer>
+            </GroupContainer>
+          </LeftSectionContainer>
+
+          <ManagementContainer>
+            <Title>생기부 관리</Title>
             <SubjectContainer>
-              {notices.map((notice, index) => (
-                <StyledNoticeItem
-                  key={notice.id}
-                  onClick={() => handleOnClick(index)}
+              {students.map((student, index) => (
+                <NoticeContent
+                  key={student.id}
+                  onClick={() =>
+                    GroupDetailWrite(
+                      id,
+                      student.id,
+                      info.school,
+                      info.grade,
+                      info.classNum,
+                      info.subject
+                    )
+                  }
                 >
-                  <NoticeContent>
-                    <NoticeImg
-                      src={clickedIndices.has(index) ? envelopeOpen : envelope}
-                      alt="envelope"
-                    />
-                    <NoticeTitle>{notice.title}</NoticeTitle>
-                    {!clickedIndices.has(index) && (
-                      <NoticeDate>
-                        {new Date(notice.createdDate).toLocaleDateString()}
-                      </NoticeDate>
-                    )}
-                  </NoticeContent>
-                </StyledNoticeItem>
+                  <NoticeImg src={person} alt="person" />
+                  <SudentNum>{index + 1}</SudentNum>
+                  <NoticeTitle>{student.name}</NoticeTitle>
+                </NoticeContent>
               ))}
             </SubjectContainer>
-          </NoticeContainer>
-
-          <GroupContainer>
-            <Title>과제별 성적 열람</Title>
-            <DetailText
-              style={{ "text-decoration": "underline" }}
-              onClick={toWritePage}
-            >
-              더보기
-            </DetailText>
-            <SubjectContainer>
-              <NoticeContent>
-                <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제4</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제3</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={file} alt="file" />
-                <NoticeTitle>과제2</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={file} alt="file" />
-                <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-              </NoticeContent>
-
-              <Title
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "50px",
-                  height: "100%",
-                }}
-              ></Title>
-            </SubjectContainer>
-          </GroupContainer>
-
-          <GroupContainer>
-            <Title>학생별 성적 열람</Title>
-            <DetailText
-              style={{ "text-decoration": "underline" }}
-              onClick={toWritePage}
-            >
-              더보기
-            </DetailText>
-            <SubjectContainer>
-              <NoticeContent onClick={StudentScoreDetail}>
-                <NoticeImg src={person} alt="person" />
-                <SudentNum>1</SudentNum>
-                <NoticeTitle>김민수</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={person} alt="person" />
-                <SudentNum>2</SudentNum>
-                <NoticeTitle>김민수</NoticeTitle>
-              </NoticeContent>
-              <NoticeContent>
-                <NoticeImg src={person} alt="person" />
-                <SudentNum>3</SudentNum>
-                <NoticeTitle>김민수</NoticeTitle>
-              </NoticeContent>
-
-              <Title
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "50px",
-                  height: "100%",
-                }}
-              ></Title>
-            </SubjectContainer>
-          </GroupContainer>
-        </LeftSectionContainer>
-
-        <ManagementContainer>
-          <Title>생기부 관리</Title>
-          <SubjectContainer>
-            {students.map((student, index) => (
-              <NoticeContent
-                key={student.id}
-                onClick={() =>
-                  GroupDetailWrite(
-                    id,
-                    student.id,
-                    info.school,
-                    info.grade,
-                    info.classNum,
-                    info.subject
-                  )
-                }
-              >
-                <NoticeImg src={person} alt="person" />
-                <SudentNum>{index + 1}</SudentNum>
-                <NoticeTitle>{student.name}</NoticeTitle>
-              </NoticeContent>
-            ))}
-          </SubjectContainer>
-        </ManagementContainer>
-      </MainContainer>
-    </>
+          </ManagementContainer>
+        </MainContainer>
+      </Main>
+    </Wrap>
   );
 }
 

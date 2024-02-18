@@ -1,26 +1,37 @@
-import React from "react";
 
-import * as S from "src/pages/Style/AssignmentStyle"
+import React,{useEffect,useState} from "react";
+import { useParams } from 'react-router';
+import moment from "moment";
 
-export default function NoticeInfo()
-{
+import * as S from "src/pages/Style/AssignmentStyle";
+import instance from "src/assets/api/axios";
 
-    return (
-        <>
-        <S.SettingBox>
+export default function NoticeInfo({matchedGroup }) {
+  
+  const currentDate = moment().format("YYYY.MM.DD");
 
+   const [group, setGroup] = useState(matchedGroup || {});
+   console.log("추출한 정보!:", matchedGroup);
+ 
+   
+
+  return (
+    <>
+      
+          <S.SettingBox>
             <S.SmallTitle>작성자</S.SmallTitle>
-            <S.SubText>김태연 선생님</S.SubText>
+            <S.SubText>{matchedGroup &&`${matchedGroup.teacher}선생님`}</S.SubText>
           </S.SettingBox>
           <S.SettingBox>
             <S.SmallTitle>게시일</S.SmallTitle>
-            <S.SubText>2024.01.21</S.SubText>
+            <S.SubText>{currentDate}</S.SubText>
           </S.SettingBox>
           <S.SettingBox>
             <S.SmallTitle>할당된 그룹</S.SmallTitle>
-            <S.SubText>노트고등학교 3학년 1반 문학</S.SubText>
-        </S.SettingBox>
-        </>
-    )
-};
+            <S.SubText>{matchedGroup &&`${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}</S.SubText>
+          </S.SettingBox>
+   
+    </>
+  );
+}
 

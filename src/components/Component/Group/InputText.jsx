@@ -86,74 +86,74 @@ const calculateByteCount = (text) => {
 
 
     
-  //생활기록부 엑셀 파일 업로드 POST 함수
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
+  // //생활기록부 엑셀 파일 업로드 POST 함수
+  // const handleFileChange = async (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
       
 
-      // 서버에 파일 업로드
-      const formData = new FormData();
-      formData.append("file", file);
+  //     // 서버에 파일 업로드
+  //     const formData = new FormData();
+  //     formData.append("file", file);
 
-      try {
-        const response = await instance.post(
-          `/api/record/excel/${paramsGroupId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+  //     try {
+  //       const response = await instance.post(
+  //         `/api/record/excel/${paramsGroupId}`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
 
-        if (response.status === 201) {
-          console.log("생활기록부 파일 업로드 성공!");
-          setUploadStatus("업로드 성공!");
-          await fetchText();
-        } else {
-          console.error(
-            "예상치 못한 상태 코드:",
-            response.status,
-            response.data
-          );
-          setUploadStatus("업로드 실패: 예상치 못한 상태 코드");
-        }
-      } catch (error) {
-        console.error("생활기록부 파일 업로드 중 오류 발생:", error);
-        setUploadStatus("업로드 실패: 오류 발생");
-      }
-    }
-  };
+  //       if (response.status === 201) {
+  //         console.log("생활기록부 파일 업로드 성공!");
+  //         setUploadStatus("업로드 성공!");
+  //         await fetchText();
+  //       } else {
+  //         console.error(
+  //           "예상치 못한 상태 코드:",
+  //           response.status,
+  //           response.data
+  //         );
+  //         setUploadStatus("업로드 실패: 예상치 못한 상태 코드");
+  //       }
+  //     } catch (error) {
+  //       console.error("생활기록부 파일 업로드 중 오류 발생:", error);
+  //       setUploadStatus("업로드 실패: 오류 발생");
+  //     }
+  //   }
+  // };
 
   
 
-  //생활기록부 내용 불러오기 함수
-  const fetchText = async () => {
-    try {
-      const response = await instance.get(
-        `/api/record/excel/${paramsGroupId}/${paramsUserId}`
-      );
-      if (response.status == 200 || response.data.result) {
-        setInputText(response.data.result);
-        // await deleteFile(paramsGroupId);
-        console.log("생활기록부 내용:", response.data.result);
-      } else {
-        console.error(
-          "fetchText데이터를 가져오는 데 실패했습니다:",
-          response.status
-        );
-      }
-    } catch (error) {
-      console.error("데이터 불러오기 중 오류 발생:", error);
-    }
-  };
+  // //생활기록부 내용 불러오기 함수
+  // const fetchText = async () => {
+  //   try {
+  //     const response = await instance.get(
+  //       `/api/record/excel/${paramsGroupId}/${paramsUserId}`
+  //     );
+  //     if (response.status == 200 || response.data.result) {
+  //       setInputText(response.data.result);
+  //       // await deleteFile(paramsGroupId);
+  //       console.log("생활기록부 내용:", response.data.result);
+  //     } else {
+  //       console.error(
+  //         "fetchText데이터를 가져오는 데 실패했습니다:",
+  //         response.status
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("데이터 불러오기 중 오류 발생:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (paramsGroupId && paramsUserId) {
-      fetchText();
-    }
-  }, [paramsGroupId, paramsUserId]);
+  // useEffect(() => {
+  //   if (paramsGroupId && paramsUserId) {
+  //     fetchText();
+  //   }
+  // }, [paramsGroupId, paramsUserId]);
 
 
   // useEffect(() => {
@@ -210,7 +210,7 @@ const calculateByteCount = (text) => {
             <Synonym selectedWord={selectedWord} synonyms={synonyms} synonymsLoading={synonymsLoading} />
 
             
-            <S.HancellButton>
+            {/* <S.HancellButton>
                 <input
                   type="file"
                   onChange={handleFileChange}
@@ -224,7 +224,7 @@ const calculateByteCount = (text) => {
                 />
                 한셀에서 가져오기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
-              </S.HancellButton>
+              </S.HancellButton> */}
         </>
   );
 

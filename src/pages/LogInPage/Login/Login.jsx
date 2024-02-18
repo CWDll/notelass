@@ -36,7 +36,7 @@ export default function Login() {
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem("token", accessToken);
         // navigate("/");
-        navigate("/Home");
+        navigate("/GroupDetail");
       } else {
         alert("로그인 실패!");
       }
@@ -46,6 +46,7 @@ export default function Login() {
   };
 
   return (
+    
     <ThemeProvider theme={defaultTheme}>
       <S.ContainerBox>
         <CssBaseline />
@@ -127,5 +128,6 @@ export default function Login() {
         </Box>
       </S.ContainerBox>
     </ThemeProvider>
+    
   );
 }
