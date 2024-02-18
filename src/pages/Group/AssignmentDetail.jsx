@@ -4,6 +4,7 @@ import styled from "styled-components";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
+import exit from "../../assets/exit.svg";
 
 import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../../components/Component/Notice/AssignInfo";
@@ -165,6 +166,8 @@ function AssignmentDetail() {
   }, [paramsGroupId]);
   
 
+
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
@@ -193,10 +196,10 @@ function AssignmentDetail() {
       </S.Header>
       <S.Body>
         <S.AssigmentCreateForm>
-          <S.CreateTitle>공지/강의자료</S.CreateTitle>
+          <S.CreateTitle>공지/학습자료</S.CreateTitle>
           <S.Title>
             {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
-            {["공지", "강의자료"].map((value, index) => (
+            {["공지", "학습자료"].map((value, index) => (
               <S.Btn
                 key={value}
                 className={index === 0 ? "firstButton" : ""}
@@ -215,8 +218,8 @@ function AssignmentDetail() {
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                {selectedButton === "강의자료"
-                ? "강의자료 제목"
+                {selectedButton === "학습자료"
+                ? "학습자료 제목"
                 : "공지 제목"}
             </S.SmallTitle>
             <S.InputTitle
@@ -230,7 +233,7 @@ function AssignmentDetail() {
                   ? "과제 설명을 입력하세요."
                   : selectedButton === "공지"
                   ? "공지 내용을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
+                  : "학습자료 설명을 입력하세요."
               }
             />
           </S.HeadInput>
@@ -240,7 +243,7 @@ function AssignmentDetail() {
                 ? "과제 설정"
                 : selectedButton === "공지"
                 ? "공지 설정"
-                : "강의자료 설정"}
+                : "학습자료 설정"}
             </S.SmallTitle>
             <S.InputDesc
               type="text"
@@ -253,7 +256,7 @@ function AssignmentDetail() {
                   ? "과제 설명을 입력하세요."
                   : selectedButton === "공지"
                   ? "공지 내용을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
+                  : "학습자료 설명을 입력하세요."
               }
             />
           </S.BodyInput>
@@ -290,7 +293,7 @@ function AssignmentDetail() {
               ? "과제 설정"
               : selectedButton === "공지"
               ? "공지 설정"
-              : "강의자료 설정"}
+              : "학습자료 설정"}
           </S.CreateTitle>
           {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo matchedGroup={matchedGroup}/>}
         </S.AssignmentSettingForm>

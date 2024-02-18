@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
+import Group from "src/assets/icon/Group/Group.svg";
 import instance from "../../assets/api/axios";
+
 
 const Warp = styled.div`
 margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
@@ -232,6 +234,11 @@ const Notice = styled.p`
   height: 100%;
 `;
 
+const Img = styled.img`
+  display: flex;
+  margin-bottom: 26px;
+`;
+
 // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
 const subjectInfo = "노트고등학교 3학년 1반 문학";
 // " "를 기준으로 나누고, 3번째인 과목 명을 가져와 subject에 저장
@@ -390,7 +397,10 @@ function GroupDetail() {
       )}
 <NoteContainer>
       {groupList.length === 0 ? (
-        <Notice>그룹이 존재하지 않습니다.</Notice>
+          <Notice>
+          <Img src={Group} alt="Group" />
+          그룹이 존재하지 않습니다.
+          </Notice>
       ) : (
         <SubjectBodyWrapper>
           {groupList.map((group) => (
