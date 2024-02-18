@@ -204,8 +204,10 @@ const toggleDropdown = (materialId) => {
 
 
       </S.NoteContainer>
+
       </S.Main>
     </S.Wrap>
+
   );
 }
 
