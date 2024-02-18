@@ -99,12 +99,14 @@ export const getStudentList = async (groupId) => {
 
 // 그룹 내에 이미 속해있는 학생 삭제하기
 export const deleteStudentInList = async (groupId, userId) => {
+  console.log(groupId, userId);
   try {
     const res = await instance.delete(`/api/group/${groupId}/${userId}`);
 
     if (res.status === 200) {
       console.log("그룹 내에 이미 속해있는 학생 삭제 성공");
       alert("선택한 학생이 삭제되었습니다.");
+      window.location.reload();
     } else {
       console.log("그룹 내에 이미 속해있는 학생 삭제 실패");
     }
