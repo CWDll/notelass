@@ -286,7 +286,7 @@ position: absolute;
 const NotelassImage = styled.div`
   position: relative; 
   width: 1920px;
-  height: 100%;
+  height: 6000px;
   object-fit: cover;
   margin: 0 auto; // 수평 중앙 정렬
 `;
