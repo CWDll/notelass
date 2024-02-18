@@ -45,9 +45,9 @@ function MakeAssignment() {
     imageInput.current.click();
   };
 
-  const handleFileChange = (e) => {
-    setFiles([...e.target.files]);
-  };
+  // const handleFileChange = (e) => {
+  //   setFiles([...e.target.files]);
+  // };
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType);

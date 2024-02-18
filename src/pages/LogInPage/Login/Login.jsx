@@ -58,7 +58,7 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <S.NotelassIntro>태블릿 속 또다른 강의실</S.NotelassIntro>
+          <S.NotelassIntro>태블릿 속 또 다른 강의실</S.NotelassIntro>
           <S.Notelass>Note-lass</S.Notelass>
           <Box
             component="form"

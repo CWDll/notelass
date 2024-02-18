@@ -321,3 +321,11 @@ export const Qbtn = styled.button`
   font-weight: 600;
   line-height: normal;
 `;
+
+export const Cancle = styled.img`
+width: 15px;
+height: 15px;
+position:absolute;
+z-index: 1;
+margin-left: 575px;
+`;

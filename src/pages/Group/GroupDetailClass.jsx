@@ -129,11 +129,14 @@ line-height: 14px;
 letter-spacing: 0em;
 text-align: center;
 color: #9EA4AA;
+
+
 `;
 
 const ShowAllText = styled(DetailText)`
-  top: 37px;
-  right: 100px;
+  top: 35px;
+  margin-right: 105px;
+  margin-left: auto;
 `;
 
 const SubjectContainer = styled.div`
@@ -422,11 +425,11 @@ function GroupDetailClass() {
       </Button>
         {/* <FileDownload
         </Button> */}
-          <FileDownload
+          {/* <FileDownload
             src={fileDownload}
             alt="fileDownload"
             onClick={handleStuExcelDownload}
-          />
+          /> */}
 
           <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
             {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
