@@ -125,10 +125,7 @@ export const LegInput = styled(HeadInput)`
   margin-left: 30px;
 `;
 
-export const InputTitle = styled.input.attrs({
-  placeholder: "과제 제목을 입력하세요.",
-  placeholdertextcolor: "red",
-})`
+export const InputTitle = styled.input`
   width: ${(props) =>
     props.selectedButton === "강의자료" ? "493px" : "525px"};
   height: 40px;
@@ -323,9 +320,9 @@ export const Qbtn = styled.button`
 `;
 
 export const Cancle = styled.img`
-width: 15px;
-height: 15px;
-position:absolute;
-z-index: 1;
-margin-left: 575px;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  z-index: 1;
+  margin-left: 575px;
 `;

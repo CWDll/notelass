@@ -222,7 +222,7 @@ function MakeAssignment() {
           <S.HeadInput>
             <S.SmallTitle>
               {/* {selectedButton === "과제"
-                ? "과제 제목"
+                ? "과제 "
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
@@ -238,7 +238,7 @@ function MakeAssignment() {
                 selectedButton === "과제"
                   ? "과제 설명을 입력하세요."
                   : selectedButton === "공지"
-                  ? "공지 내용을 입력하세요."
+                  ? "공지 제목을 입력하세요."
                   : "강의자료 설명을 입력하세요."
               }
             />
