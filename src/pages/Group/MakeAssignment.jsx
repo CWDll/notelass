@@ -274,7 +274,7 @@ function MakeAssignment() {
               type="file"
               id="fileUpload"
               style={{ display: "none" }}
-              onChange={handleFileChange}
+              // onChange={handleFileChange}
               ref={imageInput}
               multiple
             />

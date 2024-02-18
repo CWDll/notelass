@@ -418,7 +418,7 @@ function GroupDetailClass() {
                   right: 0,
                   width: 'auto', 
                   height: 'auto',
-                  cursor: 'pointer', 
+                  cursor: 'pointer',
               }}
           />
           학생 등록
