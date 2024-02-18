@@ -26,10 +26,7 @@ const SelfEvaluation = ({setIsEditing }) => {
       setQuestions(questions.concat('')); 
     };
 
-     //질문 삭제
-    const removeQuestion = (index) => {
-        setQuestions(questions.filter((_, qIndex) => index !== qIndex));
-    };
+  
 
     //창 닫기
     const handleClose = () => {
@@ -149,7 +146,7 @@ const SelfEvaluation = ({setIsEditing }) => {
                 value={questions}
                 onChange={(e) => handleQuestionChange(e.target.value, index)} 
             />
-            <S.ExitButton src={exit} alt="exit" onClick={() => removeQuestion(index)} />
+         
           </S.QuestionInputContainer>
         ))}
       </S.ContentContainer>
