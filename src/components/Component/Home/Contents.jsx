@@ -29,7 +29,7 @@ function Contents() {
   const onClick = () => {
     switch (activeTab) {
       case "notices":
-        navigate("/NoticeDetail");
+        navigate("/NoticeDetailList");
         break;
       case "timetable":
         navigate("/TimeTableDetail");

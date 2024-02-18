@@ -31,14 +31,12 @@ const Notelass = styled.h2`
 `;
 
 const Header = styled.div`
- 
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 0px 0px 20px;
   gap: 10px; /* Add this line to create a gap between the components */
 `;
-
 
 const Imgbox = styled.div`
   width: 28px;
@@ -56,7 +54,6 @@ const LogoImg = styled.img`
   height: 18px;
   flex-shrink: 0;
 `;
-
 
 const NavItemContainer = styled.div`
   display: flex;
@@ -105,7 +102,6 @@ const SignInBtn = styled.span`
 const SignUnBtn = styled(SignInBtn)`
   color: #9ea4aa;
 `;
-
 
 const Bell = styled.img`
   width: 40px;
@@ -171,7 +167,6 @@ const NavDropdownOptionUp = styled.div`
 const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
   border-radius: 0 0 10px 10px;
 `;
-
 
 export default function Nav() {
   const [show, setShow] = useState(false);
@@ -336,8 +331,8 @@ export default function Nav() {
 
   return (
     <NavContainer>
-       <Logo/>
-      
+      <Logo />
+
       <NavItemContainer>
         <NavItems
           isSelected={selectedItemIndex === 0}
@@ -347,7 +342,7 @@ export default function Nav() {
         >
           소개
         </NavItems>
-
+        {/* 2024-02-18 QA를 위한 홈탭 제거
         <NavItems
           isSelected={selectedItemIndex === 1}
           onClick={() => {
@@ -355,7 +350,7 @@ export default function Nav() {
           }}
         >
           홈
-        </NavItems>
+        </NavItems> */}
 
         <NavItems
           isSelected={selectedItemIndex === 2}
