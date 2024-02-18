@@ -37,12 +37,12 @@ const FooterIconContent = styled.div`
 `;
 
 const BoldText = styled.p`
-color: var(--cool-grayscale-title, #26282B);
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: var(--cool-grayscale-title, #26282b);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const Img = styled.img`
@@ -53,7 +53,7 @@ const Img = styled.img`
 `;
 
 const Notelass = styled.p`
-  color: var(--primary-cobalt, #4849FF);
+  color: var(--primary-cobalt, #4849ff);
   font-family: SF Pro Rounded;
   font-size: 22px;
   font-style: normal;
@@ -65,7 +65,6 @@ const Icons = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
-
 `;
 
 const Hr = styled.hr`
@@ -89,7 +88,6 @@ const CCBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
 `;
 
 const CCBox2 = styled.div`
@@ -122,7 +120,7 @@ export default function Footer() {
           <BoldText>오류 제보 및 만족도 평가</BoldText>
         </FooterLeftContent>
         <FooterRightContent>
-          <CCBox>
+          {/* <CCBox>
             <BoldText>Developer</BoldText>
             <NameBox>
               <Name>강하현</Name>
@@ -140,16 +138,15 @@ export default function Footer() {
             <NameBox>
               <Name>박정주</Name>
             </NameBox>
-  
           </SmallCCBox>
 
           <SmallCCBox>
             <BoldText>Product Manager</BoldText>
             <NameBox>백지원</NameBox>
-          </SmallCCBox>
+          </SmallCCBox> */}
           <CCBox2>
             <BoldText>대표자: 조창익</BoldText>
-            <NameBox>E-mail: whckddlr00@ajou.ac.kr</NameBox>
+            <NameBox>E-mail: whckddlr99@gmail.com</NameBox>
           </CCBox2>
         </FooterRightContent>
       </FooterTextContent>

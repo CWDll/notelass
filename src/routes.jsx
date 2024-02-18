@@ -1,4 +1,4 @@
-// src/routes.jsx (js로 사용해도 무방)
+import { Navigate } from "react-router-dom";
 // import GlobalLayout from "./pages/_layout";
 import Home from "./pages/Home/Home";
 import Layout from "./components/Layout/Layout";
@@ -32,6 +32,7 @@ import SignupComplete from "./pages/LogInPage/SignupComplete";
 import FindPassword from "./pages/LogInPage/FindPassword/FindPassword";
 import ResetPassword from "./pages/LogInPage/FindPassword/ResetPassword";
 export const routes = [
+  { path: "/", element: <Navigate to="/introduce" replace={true} /> },
   {
     path: "/",
     element: <Layout />,

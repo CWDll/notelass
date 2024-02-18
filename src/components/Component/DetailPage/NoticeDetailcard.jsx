@@ -1,7 +1,16 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./style";
 
-function NoticeDetailcard({ title, content, teacher, createdDate }) {
+function NoticeDetailcard({
+  title,
+  content,
+  teacher,
+  createdDate,
+  groupId,
+  id,
+}) {
+  const navigate = useNavigate();
   // 날짜 형식을 원하는 형태로 변환하는 함수 (예: '2024-02-04T12:00:00' -> '2024.02.04')
   const formatDate = (date) => {
     const handledDate = new Date(date);
@@ -10,8 +19,12 @@ function NoticeDetailcard({ title, content, teacher, createdDate }) {
     }.${handledDate.getDate()}`;
   };
 
+  const MoveToDetail = () => {
+    navigate(`/NoticeDetail/${groupId}/${id}`);
+  };
+
   return (
-    <S.ItemWrapper>
+    <S.ItemWrapper onClick={MoveToDetail}>
       <S.ContentContainer>
         <S.Title>{title}</S.Title>
         <S.Content>{content}</S.Content>

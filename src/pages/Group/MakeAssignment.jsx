@@ -54,14 +54,14 @@ function MakeAssignment() {
   };
 
   // 파일 업로드 핸들러
-  const handleFileChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
-    if (fileUploaded) {
-      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
-      console.log(files);
-    }
-  };
+  // const handleFileChange = (event) => {
+  //   const fileUploaded = event.target.files[0];
+  //   console.log(fileUploaded);
+  //   if (fileUploaded) {
+  //     setFiles((prevFiles) => [...prevFiles, fileUploaded]);
+  //     console.log(files);
+  //   }
+  // };
 
   // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
@@ -236,7 +236,7 @@ function MakeAssignment() {
           <S.HeadInput>
             <S.SmallTitle>
               {/* {selectedButton === "과제"
-                ? "과제 제목"
+                ? "과제 "
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
@@ -252,7 +252,7 @@ function MakeAssignment() {
                 selectedButton === "과제"
                   ? "과제 설명을 입력하세요."
                   : selectedButton === "공지"
-                  ? "공지 내용을 입력하세요."
+                  ? "공지 제목을 입력하세요."
                   : "강의자료 설명을 입력하세요."
               }
             />
@@ -288,7 +288,7 @@ function MakeAssignment() {
               type="file"
               id="fileUpload"
               style={{ display: "none" }}
-              onChange={handleFileChange}
+              // onChange={handleFileChange}
               ref={imageInput}
               multiple
             />

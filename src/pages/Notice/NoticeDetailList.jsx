@@ -22,24 +22,28 @@ function NoticeDetailList() {
       getAllNotice(setNotices);
     }
   }, []);
+
   //뒤로가기
   function BackButton() {
     navigate(-1);
   }
+
   // 검색창 부분
   function handleCategoryClick(newCategory) {
     setSearchCategory(newCategory);
     setIsOpen(!isOpen);
   }
+
   //groupId있으면 NoticeDetail페이지로, 아니면 아무작동X
-  function handleListClick(listId) {
+  const handleListClick = (listId) => {
     if (groupId) {
-      navigate(`/NoticeDetail/${groupId}/${listId}`);
+      // navigate(`/NoticeDetail/${groupId}/${listId}`);
+      alert("id있음");
     } else {
       alert("꽝");
       return;
     }
-  }
+  };
 
   return (
     <S.Container>
@@ -78,7 +82,8 @@ function NoticeDetailList() {
             content={notice.content}
             teacher={notice.teacher}
             createdDate={notice.createdDate}
-            onClick={handleListClick(notice.id)}
+            groupId={groupId}
+            id={notice.id}
           />
         ))}
       </S.ItemsContainer>

@@ -139,8 +139,6 @@ const ShowAllText = styled(DetailText)`
   margin-left: auto;
 `;
 
-
-
 const SubjectContainer = styled.div`
   display: flex;
   width: 684px;
@@ -420,7 +418,7 @@ function GroupDetailClass() {
                   right: 0,
                   width: 'auto', 
                   height: 'auto',
-                  cursor: 'pointer', 
+                  cursor: 'pointer',
               }}
           />
           학생 등록
@@ -438,7 +436,7 @@ function GroupDetailClass() {
           </Button>
           {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
-          {showSmallContainer && (
+          {showEnrollModal && (
             <ManageGroup
               showEnrollModal={showEnrollModal}
               setShowEnrollModal={setShowEnrollModal}

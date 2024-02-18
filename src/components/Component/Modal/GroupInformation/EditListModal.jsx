@@ -14,13 +14,6 @@ function EditListModal({
 }) {
   const [studentList, setStudentList] = useState([]);
 
-  // 목데이터. 나중에 삭제할 것.
-  const mockStudentList = [
-    { id: 1, name: "김철수" },
-    { id: 2, name: "이영희" },
-    { id: 3, name: "박민수" },
-  ];
-
   useEffect(() => {
     // 신청 데이터 가져오기
     const fetchData = async () => {
@@ -29,19 +22,13 @@ function EditListModal({
         const studentResponse = await getStudentList(groupId);
 
         setStudentList(studentResponse.data.result);
+        colsole.log(studentList);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    // fetchData(); // 데이터를 가져오는 함수 호출
-
-    // 목데이터 테스트용
-    setStudentList(mockStudentList);
+    fetchData(); // 데이터를 가져오는 함수 호출
   }, [groupId]); // 그룹id 바뀔 때마다 호출
-
-  const buttonClick = () => {
-    alert("무슨 기능인지 이해 필요");
-  };
 
   return (
     <S.EditModalContainer>
@@ -53,7 +40,6 @@ function EditListModal({
           {/* 학기 데이터를 어디서 가져오는지 확인 필요 */}
           <S.SemesSpan>2023-2학기</S.SemesSpan>
         </S.TextSection>
-        <S.AddButton onClick={buttonClick}>추가하기</S.AddButton>
       </S.TopBar>
       <S.StudentListSection>
         <S.TopCategory>
@@ -65,7 +51,11 @@ function EditListModal({
             <S.Index>{index + 1}</S.Index>
             <S.AboutStudent>
               <S.StudentName>{student.name}</S.StudentName>
-              <S.DeleteButton onClick={deleteStudentInList(student.id)}>
+              <S.DeleteButton
+                onClick={() => {
+                  deleteStudentInList(groupId, student.id);
+                }}
+              >
                 삭제
               </S.DeleteButton>
             </S.AboutStudent>
