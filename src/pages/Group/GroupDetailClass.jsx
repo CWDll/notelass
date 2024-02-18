@@ -10,6 +10,7 @@ import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import fileDownload from "../../assets/fileDownload.svg";
 
+
 // api
 import instance from "../../assets/api/axios";
 
@@ -108,17 +109,29 @@ const Title = styled.p`
   padding-left: 32px;
 `;
 
-const DetailText = styled.p`
-  color: var(--cool-grayscale-placeholder, #9ea4aa);
-  text-align: right;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-decoration-line: underline;
-  position: absolute;
-  top: 37px;
-  right: 32px;
+const DetailText = styled.button`
+display:flex;
+align-items: center;
+height: 21px;
+margin-top: -24px;
+
+margin-left:579px;
+border-radius: 16px
+gap: 8px;
+z-index: 1;
+background: #F5F5FC;
+padding:  6px, 8px;
+text-align: center;
+
+font-family: Pretendard;
+font-size: 12px;
+font-weight: 600;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #9EA4AA;
+
+
 `;
 
 const SubjectContainer = styled.div`
@@ -151,14 +164,16 @@ const NoticeImg = styled.img`
 `;
 
 //디자인 위치 다시 수정해야함. 임시로 배치
-const NoticeTitle = styled.div`
+const NoticeTitle = styled.p`
+
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   margin-left: 24px;
   margin-top: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  z-index: 1;
 `;
 
 const SudentNum = styled.p`
@@ -340,25 +355,27 @@ function GroupDetailClass() {
   //   document.body.removeChild(link);
   // };
 
-  // 공지사항 GET API
-
+  // 공지사항 목록 조회 GET 함수
   const [notices, setNotices] = useState([]);
+
   const fetchNotices = async () => {
     try {
-      const response = await instance.get(`/api/notice/group/${paramsGroupId}`);
-      // API 응답에서 result 키의 값을 사용하여 상태를 설정합니다.
-      if (response.data && response.data.result) {
+      const response = await instance.get(`/api/notice/${id}`);
+      if (response.data.code === 200) {
         setNotices(response.data.result);
+        console.log("공지사항 목록 조회 성공", response.data.result);
+      } else {
+        console.error("공지사항 목록 조회 실패", response.data.message);
       }
     } catch (error) {
-      console.error("공지사항을 가져오지 못했습니다.:", error.message);
+      console.error("공지사항 목록 조회 중 오류 발생:", error);
     }
   };
 
   useEffect(() => {
-    fetchStudents();
-    fetchNotices();
-  }, []);
+    fetchNotices(); 
+  }, [id]);
+
 
   return (
     <Wrap>
@@ -417,7 +434,6 @@ function GroupDetailClass() {
           <NoticeContainer>
             <Title>공지/과제</Title>
             <DetailText
-              style={{ "text-decoration": "underline" }}
               onClick={onClick}
             >
               생성하기
@@ -434,36 +450,33 @@ function GroupDetailClass() {
             ></Title>
 
             {/* 그룹별 공지사항 목록 조회*/}
+            <div style={{marginTop:"-300px"}}>
             <SubjectContainer>
-              {notices.map((notice, index) => (
-                <StyledNoticeItem
-                  key={notice.id}
-                  onClick={() => handleOnClick(index)}
-                >
-                  <NoticeContent>
-                    <NoticeImg
-                      src={clickedIndices.has(index) ? envelopeOpen : envelope}
-                      alt="envelope"
-                    />
-                    <NoticeTitle>{notice.title}</NoticeTitle>
-                    {!clickedIndices.has(index) && (
-                      <NoticeDate>
-                        {new Date(notice.createdDate).toLocaleDateString()}
-                      </NoticeDate>
-                    )}
-                  </NoticeContent>
-                </StyledNoticeItem>
-              ))}
-            </SubjectContainer>
+                {notices.slice(0, 5).map((notice, index) => (
+                  <StyledNoticeItem
+                    key={notice.id}
+                    onClick={() => handleOnClick(index)}
+                  >
+                    <NoticeContent>
+                      <NoticeImg
+                        src={clickedIndices.has(index) ? envelopeOpen : envelope}
+                        alt="envelope"
+                      />
+                      <NoticeTitle>{notice.title}</NoticeTitle>
+                     
+                    </NoticeContent>
+                  </StyledNoticeItem>
+                ))}
+              </SubjectContainer>
+            </div>
           </NoticeContainer>
 
           <GroupContainer>
             <Title>과제별 성적 열람</Title>
             <DetailText
-              style={{ "text-decoration": "underline" }}
               onClick={onClick}
             >
-              더보기
+              전체보기
             </DetailText>
             <SubjectContainer>
               <NoticeContent>
@@ -498,10 +511,9 @@ function GroupDetailClass() {
           <GroupContainer>
             <Title>학생별 성적 열람</Title>
             <DetailText
-              style={{ "text-decoration": "underline" }}
               onClick={onClick}
             >
-              더보기
+              전체보기
             </DetailText>
             <SubjectContainer>
               <NoticeContent onClick={StudentScoreDetail}>

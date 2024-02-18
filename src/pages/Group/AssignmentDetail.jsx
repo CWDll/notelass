@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
+import instance from "../../assets/api/axios";
 
 import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../../components/Component/Notice/AssignInfo";
@@ -19,7 +20,7 @@ function AssignmentDetail() {
 
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
-  const [selectedButton, setSelectedButton] = useState("과제");
+  const [selectedButton, setSelectedButton] = useState("공지");
   // 파일 상태 추가
   const [files, setFiles] = useState([]);
 
@@ -90,9 +91,8 @@ function AssignmentDetail() {
         );
         
         // 응답 처리
-        const noticeId = response.data.message.match(/공지 ID: (\d+)/)[1];
+        
         console.log('공지 생성 완료:', response.data);
-        console.log('생성된 공지의 ID:', noticeId);
         alert('공지가 성공적으로 생성되었습니다.');
         
       } catch (error) {
@@ -138,7 +138,31 @@ function AssignmentDetail() {
     }
   };
 
-
+  
+  const [group, setGroup] = useState(null);
+  const [matchedGroup, setMatchedGroup] = useState(null);
+ 
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await instance.get(`/api/group`);
+        if (response.status === 200 && Array.isArray(response.data.result)) {
+          const matched = response.data.result.find(group => group.id.toString() === paramsGroupId);
+          if (matched) {
+            setMatchedGroup(matched); 
+            console.log("Matched 그룹 정보:", matched);
+          } else {
+            console.error("Matching group not found");
+          }
+        } else {
+          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      }
+    };
+    fetchGroups();
+  }, [paramsGroupId]);
   
 
   const renderFileList = () => (
@@ -161,11 +185,15 @@ function AssignmentDetail() {
           src={chevron_left}
           alt="chevron_left"
         />
-        <S.BoldTitle>노트고등학교 3학년 1반 문학</S.BoldTitle>
+       <S.BoldTitle>
+
+  {matchedGroup && `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
+</S.BoldTitle>
+
       </S.Header>
       <S.Body>
         <S.AssigmentCreateForm>
-          <S.CreateTitle>과제/공지</S.CreateTitle>
+          <S.CreateTitle>공지/강의자료</S.CreateTitle>
           <S.Title>
             {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
             {["공지", "강의자료"].map((value, index) => (
@@ -182,11 +210,14 @@ function AssignmentDetail() {
 
           <S.HeadInput>
             <S.SmallTitle>
-              {selectedButton === "과제"
+              {/* {selectedButton === "과제"
                 ? "과제 제목"
                 : selectedButton === "공지"
                 ? "공지 제목"
-                : "강의자료 제목"}
+                : "강의자료 제목"} */}
+                {selectedButton === "강의자료"
+                ? "강의자료 제목"
+                : "공지 제목"}
             </S.SmallTitle>
             <S.InputTitle
               type="text"
@@ -261,7 +292,7 @@ function AssignmentDetail() {
               ? "공지 설정"
               : "강의자료 설정"}
           </S.CreateTitle>
-          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo paramsGroupId={paramsGroupId}/>}
+          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo matchedGroup={matchedGroup}/>}
         </S.AssignmentSettingForm>
       </S.Body>
     </S.Wrapper>

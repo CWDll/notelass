@@ -22,7 +22,7 @@ export const BlueTitle = styled.p`
   font-size: 20px;
   font-weight: 700;
   margin-left: 24px;
-  margin-top: 72px;
+  margin-top: 75px;
 `;
 
 export const StudentSelect = styled.select`
@@ -330,7 +330,7 @@ export const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-top: -55px;
+  margin-top: -85px;
   margin-left: 432px;
   position: relative;
 
@@ -717,6 +717,7 @@ text-align: center;
 margin-left: 272px;
 margin-top: -44px;
 margin-bottom: 24px;
+align-items: center;
 
   font-family: 'Pretendard';
   font-size: 14px;

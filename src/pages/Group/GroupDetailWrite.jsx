@@ -749,6 +749,7 @@ export function GroupDetailWrite() {
           </SmallContainer>
         )}
 
+        
         <BlueTitle>학생 분석</BlueTitle>
         <StudentSelect value={selectedStudent} onChange={handleStudentChange}>
           <option value="" disabled selected>
@@ -814,7 +815,7 @@ export function GroupDetailWrite() {
             <ScoreResult>{attitudeCount}점 (상위 {attitudeRank}%)</ScoreResult>
             <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>{speechCount}회 (상위 {speechRank} %)</ScoreResult>
+            <ScoreResult>{speechCount}회 (상위 {speechRank}%)</ScoreResult>
             
             
             

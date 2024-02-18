@@ -222,9 +222,9 @@ export default function Nav() {
   //페이지 이동시키는 navigate
   const navigate = useNavigate();
 
-  const navigateToHome = () => {
-    navigate("/home");
-  };
+  // const navigateToHome = () => {
+  //   navigate("/home");
+  // };
   const navigateToIntroduce = () => {
     navigate("/introduce");
   };
@@ -234,9 +234,9 @@ export default function Nav() {
   const navigateToNote = () => {
     navigate("/note");
   };
-  const navigateTosetting = () => {
-    navigate("/setting");
-  };
+  // const navigateTosetting = () => {
+  //   navigate("/setting");
+  // };
   const navigateLogin = () => {
     navigate("/login");
   };
@@ -307,7 +307,7 @@ export default function Nav() {
             <NavDropdownBox ref={dropdownRef} className="dropdown-menu">
               <NavDropdownOptionUp
                 className="dropdown-item"
-                onClick={navigateTosetting}
+                // onClick={navigateTosetting}
               >
                 환경설정
               </NavDropdownOptionUp>
