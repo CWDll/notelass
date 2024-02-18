@@ -1,6 +1,5 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import styled from "styled-components";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
@@ -11,7 +10,7 @@ import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
 import * as S from "../Style/AssignmentStyle";
 
-function AssignmentDetail() {
+function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
@@ -25,8 +24,10 @@ function AssignmentDetail() {
   const [files, setFiles] = useState([]);
 
   const navigate = useNavigate();
-  // 헤더 클릭하여 뒤로가기
+
+  // Header를 클릭할 때 실행할 핸들러
   const handleHeaderClick = () => {
+    // 원하는 경로로 이동
     navigate(-1);
   };
 
@@ -48,21 +49,29 @@ function AssignmentDetail() {
     setFiles([...e.target.files]);
   };
 
-
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType);
   };
 
-  
+  // 파일 업로드 핸들러
+  const handleFileChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    console.log(fileUploaded);
+    if (fileUploaded) {
+      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
+      console.log(files);
+    }
+  };
 
+  // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     let response; // 한 번만 선언
-    
+
     //공지 생성 POST API
-    if (selectedButton === '공지') {
+    if (selectedButton === "공지") {
       try {
         // JSON 데이터 준비
         const noticeDto = JSON.stringify({
@@ -72,15 +81,16 @@ function AssignmentDetail() {
         const blob = new Blob([noticeDto], {
           type: "application/json",
         });
-        formData.append('noticeDto', blob);
-    
+        formData.append("noticeDto", blob);
+
         // 파일 데이터 추가
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
 
         // API 요청
-        response = await axios.post( // 이미 선언된 response 변수를 사용
+        response = await axios.post(
+          // 이미 선언된 response 변수를 사용
           `/api/notice/${paramsGroupId}`,
           formData,
           {
@@ -89,19 +99,18 @@ function AssignmentDetail() {
             },
           }
         );
-        
+
         // 응답 처리
-        
-        console.log('공지 생성 완료:', response.data);
-        alert('공지가 성공적으로 생성되었습니다.');
-        
+
+        console.log("공지 생성 완료:", response.data);
+        alert("공지가 성공적으로 생성되었습니다.");
       } catch (error) {
-        console.error('공지 생성 실패:', error);
-        alert('공지 생성에 실패했습니다.');
+        console.error("공지 생성 실패:", error);
+        alert("공지 생성에 실패했습니다.");
       }
 
-    //강의자료 생성 POST API  
-    } else if (selectedButton === '강의자료') {
+      //강의자료 생성 POST API
+    } else if (selectedButton === "강의자료") {
       try {
         // JSON 데이터 준비
         const materialDto = JSON.stringify({
@@ -109,47 +118,51 @@ function AssignmentDetail() {
           content: assignmentDesc,
         });
         const blob = new Blob([materialDto], {
-          type: 'application/json'
+          type: "application/json",
         });
-        formData.append('materialDto', blob);
-    
+        formData.append("materialDto", blob);
+
         // 파일 데이터 추가
         files.forEach((file, index) => {
           formData.append(`file`, file);
         });
-    
+
         // API 요청
-        response = await axios.post(`/api/material/${paramsGroupId}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        response = await axios.post(
+          `/api/material/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        });
-        
+        );
+
         // 응답 처리
         const materialId = response.data.message.match(/강의자료 ID: (\d+)/)[1];
-        console.log('강의 자료 생성 완료:', response.data);
-        console.log('생성된 강의 자료의 ID:', materialId);
-        alert('강의 자료가 성공적으로 생성되었습니다.');
-        
+        console.log("강의 자료 생성 완료:", response.data);
+        console.log("생성된 강의 자료의 ID:", materialId);
+        alert("강의 자료가 성공적으로 생성되었습니다.");
       } catch (error) {
-        console.error('강의 자료 생성 실패:', error);
-        alert('강의 자료 생성에 실패했습니다.');
+        console.error("강의 자료 생성 실패:", error);
+        alert("강의 자료 생성에 실패했습니다.");
       }
     }
   };
 
-  
   const [group, setGroup] = useState(null);
   const [matchedGroup, setMatchedGroup] = useState(null);
- 
+
   useEffect(() => {
     const fetchGroups = async () => {
       try {
         const response = await instance.get(`/api/group`);
         if (response.status === 200 && Array.isArray(response.data.result)) {
-          const matched = response.data.result.find(group => group.id.toString() === paramsGroupId);
+          const matched = response.data.result.find(
+            (group) => group.id.toString() === paramsGroupId
+          );
           if (matched) {
-            setMatchedGroup(matched); 
+            setMatchedGroup(matched);
             console.log("Matched 그룹 정보:", matched);
           } else {
             console.error("Matching group not found");
@@ -163,7 +176,6 @@ function AssignmentDetail() {
     };
     fetchGroups();
   }, [paramsGroupId]);
-  
 
   const renderFileList = () => (
     <S.FileList>
@@ -185,11 +197,10 @@ function AssignmentDetail() {
           src={chevron_left}
           alt="chevron_left"
         />
-       <S.BoldTitle>
-
-  {matchedGroup && `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
-</S.BoldTitle>
-
+        <S.BoldTitle>
+          {matchedGroup &&
+            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
+        </S.BoldTitle>
       </S.Header>
       <S.Body>
         <S.AssigmentCreateForm>
@@ -215,9 +226,7 @@ function AssignmentDetail() {
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                {selectedButton === "강의자료"
-                ? "강의자료 제목"
-                : "공지 제목"}
+              {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
             </S.SmallTitle>
             <S.InputTitle
               type="text"
@@ -292,11 +301,15 @@ function AssignmentDetail() {
               ? "공지 설정"
               : "강의자료 설정"}
           </S.CreateTitle>
-          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo matchedGroup={matchedGroup}/>}
+          {selectedButton === "과제" ? (
+            <AssignInfo />
+          ) : (
+            <NoticeInfo matchedGroup={matchedGroup} />
+          )}
         </S.AssignmentSettingForm>
       </S.Body>
     </S.Wrapper>
   );
 }
 
-export default AssignmentDetail;
+export default MakeAssignment;

@@ -1,16 +1,28 @@
 import React from "react";
 import * as S from "./style";
+import {
+  groupAccept,
+  groupReject,
+} from "../../../../assets/api/apis/group/ApiGroup";
 
-function StudentLine() {
+function StudentLine({ student, index, groupId }) {
   return (
     <S.LineContainer>
-      <S.BoldTitle>1</S.BoldTitle>
+      {/* 학생의 순서를 나타내는 index를 표시 */}
+      <S.BoldTitle>{index}</S.BoldTitle>
       <S.StudentInfoText>
-        <S.BoldTitle>학생 이름</S.BoldTitle>
-        <S.AcceptAll>노트고등학교 / 3학년 1반</S.AcceptAll>
+        {/* 학생 정보 표시 */}
+        <S.BoldTitle>{student.name}</S.BoldTitle>
+        <S.SchoolInfo>
+          {student.school} / {student.grade}학년 {student.classNum}반
+        </S.SchoolInfo>
       </S.StudentInfoText>
-      <S.RefuseButton>거절</S.RefuseButton>
-      <S.AcceptButton>수락</S.AcceptButton>
+      <S.RefuseButton onClick={groupReject(groupId, student.useId)}>
+        거절
+      </S.RefuseButton>
+      <S.AcceptButton onClick={groupAccept(groupId, student.useId)}>
+        수락
+      </S.AcceptButton>
     </S.LineContainer>
   );
 }

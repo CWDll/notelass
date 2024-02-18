@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import exit from "../../../../assets/exit.svg";
 
-export const SmallContainer = styled.div`
+export const ModalContainer = styled.div`
   width: 480px;
   height: 544px;
   flex-shrink: 0;
@@ -52,15 +52,24 @@ export const GroupNumber = styled.span`
   line-height: normal;
 `;
 
-export const AcceptAll = styled.p`
+export const AcceptAll = styled.div`
   color: var(--title_text, #9ea4aa);
   /* text-decoration-line: underline; */
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  padding-bottom: 10px;
+  width: 127px;
+  heigth: 25px;
+  padding: 8px;
+  background-color: #f5f5fc;
+`;
+
+export const SchoolInfo = styled(AcceptAll)`
+  width: auto;
+  padding: 0;
+  background-color: #ffffff;
 `;
 
 export const LineContainer = styled.div`

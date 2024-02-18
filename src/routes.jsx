@@ -14,11 +14,12 @@ import NoteDetailSubject from "./pages/Note/NoteDetailSubject";
 import GroupDetailClass from "./pages/Group/GroupDetailClass";
 import GroupDetailWrite from "./pages/Group/GroupDetailWrite";
 import PdfViewer from "./pages/Note/PdfViewer";
-import AssignmentDetail from "./pages/Group/AssignmentDetail";
+import MakeAssignment from "./pages/Group/MakeAssignment";
 import StudentScoreDetail from "./pages/Student/StudentScoreDetail";
 import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
 import CreateGroup from "./components/Component/Group/CreateGroup";
+import NoticeDetailList from "./pages/Notice/NoticeDetailList";
 import NoticeDetail from "./pages/Notice/NoticeDetail";
 //학생수첩
 import StudentBook from "./pages/Student/StudentBook";
@@ -35,20 +36,30 @@ export const routes = [
     path: "/",
     element: <Layout />,
     children: [
-      { path: "Home", element: <Home />, index: true },
-      { path: "TimeTable", element: <TimeTable />, index: true },
-      { path: "MealTable", element: <MealTable />, index: true },
-      { path: "Introduce", element: <Introduce />, index: true },
-      { path: "NoticeDetail", element: <NoticeDetail />, index: true },
-      { path: "GroupDetail", element: <GroupDetail />, index: true },
+      { path: "/Home", element: <Home />, index: true }, // path="/" index
+      { path: "/TimeTable", element: <TimeTable />, index: true },
+      { path: "/MealTable", element: <MealTable />, index: true },
+      { path: "/Introduce", element: <Introduce />, index: true },
+      { path: "/NoticeDetailList", element: <NoticeDetailList />, index: true },
+      {
+        path: "/NoticeDetailList/:groupId",
+        element: <NoticeDetailList />,
+        index: true,
+      },
+      {
+        path: "/NoticeDetail/:groupId/:noticeId",
+        element: <NoticeDetail />,
+        index: true,
+      },
+      { path: "/GroupDetail", element: <GroupDetail />, index: true },
       {
         path: "GroupDetailClass/:id",
         element: <GroupDetailClass />,
         index: true,
       },
       {
-        path: "GroupDetailClass/:paramsGroupId/AssignmentDetail",
-        element: <AssignmentDetail />,
+        path: "/GroupDetailClass/:paramsGroupId/MakeAssignment",
+        element: <MakeAssignment />,
       },
       {
         path: "StudentScoreDetail",
@@ -88,7 +99,9 @@ export const routes = [
   { path: "/ResetPassword", element: <ResetPassword /> },
   { path: "/SelectSchool", element: <SelectSchool /> },
   { path: "/SelectRole", element: <SelectRole /> },
-  { path: "/EmailVerificationAndPassword", element: <EmailVerificationAndPassword /> },
+  {
+    path: "/EmailVerificationAndPassword",
+    element: <EmailVerificationAndPassword />,
+  },
   { path: "/SignupComplete", element: <SignupComplete /> },
 ];
-

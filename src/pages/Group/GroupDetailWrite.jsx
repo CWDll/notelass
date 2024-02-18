@@ -96,7 +96,6 @@ import {
   Main,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
-
 export function GroupDetailWrite() {
   const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();
@@ -322,24 +321,18 @@ export function GroupDetailWrite() {
     });
   };
 
-
-
-
-
   const navigate = useNavigate();
   //뒤로 가기
   const BackButton = () => {
-
-      deleteFile(paramsGroupId);
+    deleteFile(paramsGroupId);
     navigate(-1);
   };
-
 
   useEffect(() => {
     return () => {
       deleteFile(paramsGroupId);
     };
-  }, [paramsGroupId]); 
+  }, [paramsGroupId]);
 
   //학생 수첩 체크 박스 토글 함수
   const [showCheckboxes, setShowCheckboxes] = useState(false);
@@ -425,7 +418,6 @@ export function GroupDetailWrite() {
 
         if (response.data && response.data.result) {
           setStudents(response.data.result);
-          console.log("response.data.result: ", response.data.result);
         }
       } catch (error) {
         console.error("학생리스트를 가져오지 못했습니다.:", error.message);
@@ -554,9 +546,6 @@ export function GroupDetailWrite() {
     studentBookEntries,
   ]);
 
-
-
-
   // // 생활기록부 POST 함수
 
   // const saveData = async () => {
@@ -593,9 +582,10 @@ export function GroupDetailWrite() {
   const deleteFile = async (paramsGroupId) => {
     try {
       const response = await instance.delete(
-        `/api/record/excel/${paramsGroupId}`,{
+        `/api/record/excel/${paramsGroupId}`,
+        {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -883,9 +873,9 @@ export function GroupDetailWrite() {
                 학생 수첩 연동하기
                 <img src={chevron_right_Blue} alt="chevron_right_Blue" />
               </SyncButton>
-              <> 
+              <>
                 {/* *키워드 입력창 */}
-                 <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
+                <Text style={{ marginLeft: "-25px", marginTop: "-8px" }}>
                   단어를 입력하세요 :{" "}
                 </Text>
                 <div
@@ -894,8 +884,8 @@ export function GroupDetailWrite() {
                     alignItems: "center",
                     justifyItems: "center",
                   }}
-                > 
-                <SuggestWordContainer
+                >
+                  <SuggestWordContainer
                     style={{ display: "flex", flexWrap: "wrap" }}
                   >
                     {keywords.map((keyword, index) => (
@@ -924,7 +914,7 @@ export function GroupDetailWrite() {
                         </SuggestWord>
                       </div>
                     ))}
-                  </SuggestWordContainer> 
+                  </SuggestWordContainer>
 
                   <Keyword
                     type="text"
@@ -954,7 +944,7 @@ export function GroupDetailWrite() {
                 </KeywordContainer>
               </>
             </GuidelineContainer>
-             <GuidelineBox>
+            <GuidelineBox>
               {loading ? (
                 <div
                   style={{
@@ -969,13 +959,11 @@ export function GroupDetailWrite() {
               ) : (
                 <Text>{guideLineText}</Text>
               )}
-            </GuidelineBox> 
+            </GuidelineBox>
           </>
-          
-          
         </LeftContainer>
 
-        <RightContainer>
+        </RightContainer>
           {/* <StudentMemo/> */}
           <BookTitle>학생수첩</BookTitle>
           <ViewButton onClick={() => setShowEvaluationView(!showEvaluationView)}>학생의 자기평가서 보기</ViewButton>
