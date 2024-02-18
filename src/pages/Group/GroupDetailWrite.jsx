@@ -639,31 +639,61 @@ export function GroupDetailWrite() {
     //발표, 태도 점수 GET 함수
     const [speechCount, setSpeechCount] = useState(0);
     const [attitudeCount, setAttitudeCount] = useState(0);
+    const [speechRank, setSpeechRank] = useState(0);
+    const [attitudeRank, setAttitudeRank] = useState(0);
   
+    
+    // useEffect(() => {
+    // const fetchScores = async () => {
+    //   try {
+    //     const res = await instance.get(
+    //       `/api/record/score/${paramsGroupId}/${paramsUserId}`
+    //     );
+    //     console.log("fetchScores res.data:", res.data);
+  
+    //     if (res.status === 200) {
+    //       console.log("fetchScores성공");
+    //       setSpeechCount(res.data.result.presentationNum);
+    //       setAttitudeCount(res.data.result.attitudeScore);
+    //     } else {
+    //       alert("fetchScores성공");
+    //     }
+    //   } catch (error) {
+    //     console.error("fatchScores error:", error);
+    //   }
+    // };
+  
+    
+    //   fetchScores();
+    // }, [paramsGroupId, paramsUserId]);
+
+
     
     useEffect(() => {
-    const fetchScores = async () => {
-      try {
-        const res = await instance.get(
-          `/api/record/score/${paramsGroupId}/${paramsUserId}`
-        );
-        console.log("fetchScores res.data:", res.data);
-  
-        if (res.status === 200) {
-          console.log("fetchScores성공");
+      const fetchDetail = async () => {
+        try {
+          const res = await instance.get(
+            `/api/record/detail/${paramsGroupId}/${paramsUserId}?percentage=40`
+          );
+          console.log("fetchDetail res.data:", res.data);
           setSpeechCount(res.data.result.presentationNum);
+          setSpeechRank(res.data.result.presentationRank);
           setAttitudeCount(res.data.result.attitudeScore);
-        } else {
-          alert("fetchScores성공");
-        }
-      } catch (error) {
-        console.error("fatchScores error:", error);
-      }
-    };
-  
+          setAttitudeRank(res.data.result.attitudeScoreRank);
     
-      fetchScores();
-    }, [paramsGroupId, paramsUserId]);
+          if (res.status === 200) {
+            console.log("fetchDetail성공");
+          } else {
+            alert("fetchDetail성공");
+          }
+        } catch (error) {
+          console.error("fetchDetail error:", error);
+        }
+      };
+    
+      
+      fetchDetail();
+      }, [paramsGroupId, paramsUserId]);
 
   // // 과제데이터 양식 다운로드
   // const handleHwDataDownload = () => {
@@ -780,12 +810,13 @@ export function GroupDetailWrite() {
           </div>
           {/* <SaveButton onClick={saveData}>저장하기</SaveButton> */}
           <ScoreList>
-            
-            <ScoreTitle>발표 횟수: </ScoreTitle>
-            <ScoreResult>{speechCount} 회</ScoreResult>
-            <ScoreTitle>&emsp;</ScoreTitle>
             <ScoreTitle>태도 점수: </ScoreTitle>
-            <ScoreResult>{attitudeCount} 점</ScoreResult>
+            <ScoreResult>{attitudeCount}점 (상위 {attitudeRank}%)</ScoreResult>
+            <ScoreTitle>&emsp;</ScoreTitle>
+            <ScoreTitle>발표 횟수: </ScoreTitle>
+            <ScoreResult>{speechCount}회 (상위 {speechRank} %)</ScoreResult>
+            
+            
             
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>

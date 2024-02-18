@@ -43,6 +43,17 @@ function AssignmentDetail() {
     imageInput.current.click();
   };
 
+  const handleFileChange = (e) => {
+    setFiles([...e.target.files]);
+  };
+
+
+  const handleButtonClick = (buttonType) => {
+    setSelectedButton(buttonType);
+  };
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -127,6 +138,9 @@ function AssignmentDetail() {
     }
   };
 
+
+  
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
@@ -151,9 +165,10 @@ function AssignmentDetail() {
       </S.Header>
       <S.Body>
         <S.AssigmentCreateForm>
-          <S.CreateTitle>과제/공지/강의자료 생성</S.CreateTitle>
+          <S.CreateTitle>과제/공지</S.CreateTitle>
           <S.Title>
-            {["과제", "공지", "강의자료"].map((value, index) => (
+            {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
+            {["공지", "강의자료"].map((value, index) => (
               <S.Btn
                 key={value}
                 className={index === 0 ? "firstButton" : ""}
@@ -221,6 +236,7 @@ function AssignmentDetail() {
               style={{ display: "none" }}
               onChange={handleFileChange}
               ref={imageInput}
+              multiple
             />
             <S.LibraryButton
               onClick={() => imageInput.current.click()}
@@ -245,7 +261,7 @@ function AssignmentDetail() {
               ? "공지 설정"
               : "강의자료 설정"}
           </S.CreateTitle>
-          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo />}
+          {selectedButton === "과제" ? <AssignInfo /> : <NoticeInfo paramsGroupId={paramsGroupId}/>}
         </S.AssignmentSettingForm>
       </S.Body>
     </S.Wrapper>
