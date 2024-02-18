@@ -963,7 +963,7 @@ export function GroupDetailWrite() {
           </>
         </LeftContainer>
 
-        </RightContainer>
+        <RightContainer>
           {/* <StudentMemo/> */}
           <BookTitle>학생수첩</BookTitle>
           <ViewButton onClick={() => setShowEvaluationView(!showEvaluationView)}>학생의 자기평가서 보기</ViewButton>
