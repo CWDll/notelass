@@ -330,7 +330,7 @@ export const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-top: -85px;
+  margin-top: -55px;
   margin-left: 432px;
   position: relative;
 
