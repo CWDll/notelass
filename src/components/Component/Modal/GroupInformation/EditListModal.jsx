@@ -39,10 +39,6 @@ function EditListModal({
     setStudentList(mockStudentList);
   }, [groupId]); // 그룹id 바뀔 때마다 호출
 
-  const buttonClick = () => {
-    alert("무슨 기능인지 이해 필요");
-  };
-
   return (
     <S.EditModalContainer>
       <S.TopBar>
@@ -53,7 +49,6 @@ function EditListModal({
           {/* 학기 데이터를 어디서 가져오는지 확인 필요 */}
           <S.SemesSpan>2023-2학기</S.SemesSpan>
         </S.TextSection>
-        <S.AddButton onClick={buttonClick}>추가하기</S.AddButton>
       </S.TopBar>
       <S.StudentListSection>
         <S.TopCategory>
