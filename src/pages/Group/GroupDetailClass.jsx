@@ -436,7 +436,7 @@ function GroupDetailClass() {
           </Button>
           {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
-          {showSmallContainer && (
+          {showEnrollModal && (
             <ManageGroup
               showEnrollModal={showEnrollModal}
               setShowEnrollModal={setShowEnrollModal}

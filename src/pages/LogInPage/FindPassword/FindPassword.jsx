@@ -57,8 +57,8 @@ export default function FindPassword() {
               회원가입
             </Link>
             <p>|</p>
-            <Link href="#" underline="none" color={"gray"}>
-              아이디 찾기
+            <Link href="/login" underline="none" color={"gray"}>
+              로그인 하기
             </Link>
             <p>|</p>
             <Link href="" underline="none" color={"black"}>
