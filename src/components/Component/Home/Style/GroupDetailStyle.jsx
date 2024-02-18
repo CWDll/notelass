@@ -330,7 +330,7 @@ export const HancellButton = styled.button`
   gap: 8px;
   border-radius: 6px;
   background: #ededff;
-  margin-top: -85px;
+  margin-top: -55px;
   margin-left: 432px;
   position: relative;
 
@@ -729,3 +729,14 @@ margin-bottom: 24px;
  
 
 `;
+
+export const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
+
+export const Main = styled.div`
+margin-left: -363px;
+`;
+
+

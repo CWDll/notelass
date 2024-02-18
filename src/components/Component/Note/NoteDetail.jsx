@@ -5,15 +5,18 @@ import plus_lg from "../../../assets/plus_lg.svg";
 import instance from "src/assets/api/axios";
 
 const NoteContainer = styled.div`
-  width: 1194px;
-  height: 800px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  position: relative;
-  margin-left: 363px;
-  margin-top: 72px;
+width: 100%;
+height: 800px;
+flex-shrink: 0;
+border-radius: 8px;
+background: #fff;
+box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+position: relative;
+
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-top: 144px;
+max-width: 1194px; /* 최대 너비 제한 */
 
   
   overflow-y: auto;

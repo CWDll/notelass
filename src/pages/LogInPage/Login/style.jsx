@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import Grid from "@mui/material/Grid";
 
+
 export const ContainerBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 1920px;
   height: 1080px;
+  
 `;
 
 export const GridContainer = styled(Grid)`

@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
+
+export const Main = styled.div`
+margin-left: -370px
+`;
 
 export const Header = styled.header`
   display: flex;

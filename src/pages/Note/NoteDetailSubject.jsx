@@ -136,7 +136,8 @@ const toggleDropdown = (materialId) => {
   }, [id]);
 
   return (
-    <div>
+    <S.Wrap>
+      <S.Main>
 
       <S.Header>
         <S.Img src={chevron_left} alt="chevron_left" />
@@ -204,7 +205,9 @@ const toggleDropdown = (materialId) => {
 
       </S.NoteContainer>
 
-    </div>
+      </S.Main>
+    </S.Wrap>
+
   );
 }
 

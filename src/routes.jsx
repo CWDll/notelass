@@ -30,72 +30,65 @@ import EmailVerificationAndPassword from "./pages/LogInPage/EmailVerificationAnd
 import SignupComplete from "./pages/LogInPage/SignupComplete";
 import FindPassword from "./pages/LogInPage/FindPassword/FindPassword";
 import ResetPassword from "./pages/LogInPage/FindPassword/ResetPassword";
-
 export const routes = [
   {
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/Home", element: <Home />, index: true }, // path="/" index
-      { path: "/TimeTable", element: <TimeTable />, index: true },
-      { path: "/MealTable", element: <MealTable />, index: true },
-      { path: "/Introduce", element: <Introduce />, index: true },
-      { path: "/NoticeDetail", element: <NoticeDetail />, index: true },
-      { path: "/GroupDetail", element: <GroupDetail />, index: true },
+      { path: "Home", element: <Home />, index: true },
+      { path: "TimeTable", element: <TimeTable />, index: true },
+      { path: "MealTable", element: <MealTable />, index: true },
+      { path: "Introduce", element: <Introduce />, index: true },
+      { path: "NoticeDetail", element: <NoticeDetail />, index: true },
+      { path: "GroupDetail", element: <GroupDetail />, index: true },
       {
-        path: "/GroupDetailClass/:id",
+        path: "GroupDetailClass/:id",
         element: <GroupDetailClass />,
         index: true,
       },
       {
-        path: "/GroupDetailClass/:paramsGroupId/AssignmentDetail",
+        path: "GroupDetailClass/:paramsGroupId/AssignmentDetail",
         element: <AssignmentDetail />,
       },
       {
-        path: "/StudentScoreDetail",
+        path: "StudentScoreDetail",
         element: <StudentScoreDetail />,
         index: true,
       },
       {
-        path: "/StudentTaskDetail",
+        path: "StudentTaskDetail",
         element: <StudentTaskDetail />,
         index: true,
       },
-      { path: "/GroupScoreDetail", element: <GroupScoreDetail />, index: true },
+      { path: "GroupScoreDetail", element: <GroupScoreDetail />, index: true },
       {
-        path: "/GroupDetailWrite/:paramsGroupId/:paramsUserId",
+        path: "GroupDetailWrite/:paramsGroupId/:paramsUserId",
         element: <GroupDetailWrite />,
         index: true,
       },
-      { path: "/TasksDetail", element: <TasksDetail />, index: true },
-      { path: "/Note", element: <Note />, index: true },
-      { path: "/Notedetail", element: <NoteDetail />, index: true },
+      { path: "TasksDetail", element: <TasksDetail />, index: true },
+      { path: "Note", element: <Note />, index: true },
+      { path: "Notedetail", element: <NoteDetail />, index: true },
       {
-        path: "/NoteDetailSubject/:id",
+        path: "NoteDetailSubject/:id",
         element: <NoteDetailSubject />,
         index: true,
       },
       {
-        path: "/NoteDetailSubject/pdf-viewer",
+        path: "NoteDetailSubject/pdf-viewer",
         element: <PdfViewer />,
         index: true,
       },
-      { path: "/Setting", element: <Setting />, index: true },
-      { path: "/Login", element: <Login />, index: true },
-      { path: "/FindPassword", element: <FindPassword />, index: true },
-      { path: "/ResetPassword", element: <ResetPassword />, index: true },
-      { path: "/SelectSchool", element: <SelectSchool />, index: true },
-      { path: "/SelectRole", element: <SelectRole />, index: true },
-      {
-        path: "/EmailVerificationAndPassword",
-        element: <EmailVerificationAndPassword />,
-        index: true,
-      },
-      {
-        path: "/SignupComplete",
-        element: <SignupComplete />,
-        index: true,
-      },
+      { path: "Setting", element: <Setting />, index: true },
     ],
   },
+  // Layout 컴포넌트 없이 직접 렌더링할 경로들
+  { path: "/Login", element: <Login /> },
+  { path: "/FindPassword", element: <FindPassword /> },
+  { path: "/ResetPassword", element: <ResetPassword /> },
+  { path: "/SelectSchool", element: <SelectSchool /> },
+  { path: "/SelectRole", element: <SelectRole /> },
+  { path: "/EmailVerificationAndPassword", element: <EmailVerificationAndPassword /> },
+  { path: "/SignupComplete", element: <SignupComplete /> },
 ];
+

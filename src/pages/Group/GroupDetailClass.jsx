@@ -18,6 +18,15 @@ import instance from "../../assets/api/axios";
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
 import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
 
+const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
+
+const Main = styled.div`
+margin-left:-363px;
+`;
+
 const Header = styled.header`
   display: flex;
 `;
@@ -352,7 +361,8 @@ function GroupDetailClass() {
   }, []);
 
   return (
-    <>
+    <Wrap>
+      <Main>
       <Header>
         <Img src={chevron_left} alt="chevron_left" onClick={BackButton} />
         <BoldTitle>
@@ -548,7 +558,8 @@ function GroupDetailClass() {
           </SubjectContainer>
         </ManagementContainer>
       </MainContainer>
-    </>
+      </Main>
+    </Wrap>
   );
 }
 
