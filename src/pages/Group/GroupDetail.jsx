@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
@@ -27,8 +27,14 @@ function GroupDetail() {
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
 
+  const [showEnterGroupModal, setShowEnterGroupModal] = useState(false);
+
   const { role } = useContext(RoleContext);
 
+  const accessToken = localStorage.getItem("token");
+
+  // 창준
+  // const role = useContext(RoleContext);
 
   const navigate = useNavigate();
 
@@ -60,18 +66,24 @@ function GroupDetail() {
   }, []);
 
   useEffect(() => {
-    console.log("로그인:" ,role);
-}, [role]);
+    console.log("로그인:", role);
+  }, [role]);
 
   return (
     <S.Warp>
       <S.Button onClick={handleButtonClick}>
-        {role === 'STUDENT' ? '그룹 입장' : '그룹 생성'}
+        {role === "STUDENT" ? "그룹 입장" : "그룹 생성"}
       </S.Button>
 
-      {showSmallContainer && (
-        role === 'STUDENT' ? <EnterGroup /> : <CreateGroup />
-      )}
+      {showSmallContainer &&
+        (role === "STUDENT" ? (
+          <EnterGroup
+            showSmallContainer={showSmallContainer}
+            setShowSmallContainer={setShowSmallContainer}
+          />
+        ) : (
+          <CreateGroup />
+        ))}
       <S.NoteContainer>
         {groupList.length === 0 ? (
           <S.Notice>

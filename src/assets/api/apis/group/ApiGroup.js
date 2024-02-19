@@ -114,3 +114,46 @@ export const deleteStudentInList = async (groupId, userId) => {
     console.error("그룹 내에 이미 속해있는 학생 삭제에서 에러 발생", error);
   }
 };
+
+//학생
+
+//학생 그룹 코드 입력
+export const enterGroupCode = async (code, setGroupId) => {
+  try {
+    const res = await instance.get(`/api/group/${code}`);
+    console.log(code);
+
+    if (res.status === 200) {
+      console.log("코드로 그룹 입장 성공 ");
+      alert("입력한 그룹에 입장하셨습니다.");
+      console.log(res.data.result.groupId);
+      const myGroupId = res.data.result.groupId;
+      console.log(res.data.result.groupInfo);
+      setGroupId(myGroupId);
+    } else {
+      console.log("코드로 그룹 입장 실패");
+    }
+  } catch (error) {
+    console.error("코드로 그룹 입장에서 에러", error);
+  }
+};
+
+//학생 그룹 입장 신청
+export const enterGroup = async (groupId) => {
+  try {
+    const res = await instance.get(`/api/group/join/${groupId}`);
+    console.log(groupId);
+
+    if (res.status === 201) {
+      console.log("그룹 입장 성공 ");
+      alert("입력한 그룹에 입장하셨습니다.");
+      console.log(res.data.result);
+      window.location.reload();
+    } else if (res.status === 400) {
+      console.log("이미 등록된 신청입니다.");
+      alert("X");
+    }
+  } catch (error) {
+    console.error("그룹 입장에서 에러", error);
+  }
+};

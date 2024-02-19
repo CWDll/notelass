@@ -10,8 +10,6 @@ import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
 import * as S from "../Style/AssignmentStyle";
 
-
-
 function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const location = useLocation();
@@ -33,9 +31,9 @@ function MakeAssignment() {
     navigate(-1);
   };
 
-  const handleCancleClick =() => {
-    navigate(`/GroupDetailClass/${paramsGroupId}`)
-  }
+  const handleCancleClick = () => {
+    navigate(`/GroupDetailClass/${paramsGroupId}`);
+  };
 
   const onChangeName = (e) => {
     setAssignmentName(e.target.value);
@@ -70,114 +68,119 @@ function MakeAssignment() {
   };
 
   // 과제, 공지, 강의자료 생성 POST API
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const formData = new FormData();
+    const formData = new FormData();
 
-  if (selectedButton === "공지") {
-    await createNotice();
-  } else if (selectedButton === "강의자료") {
-    await createMaterial();
-  }
-};
-
-//공지 생성 함수
-const createNotice = async () => {
-
-  const formData = new FormData();
-  try {
-    // 제목과 내용이 공백인지 확인
-    if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
-      alert("제목과 내용을 입력해주세요.");
-      return;
+    if (selectedButton === "공지") {
+      await createNotice();
+    } else if (selectedButton === "강의자료") {
+      await createMaterial();
     }
+  };
 
-    // JSON 데이터 준비
-    const noticeDto = JSON.stringify({
-      title: assignmentName,
-      content: assignmentDesc,
-    });
-    const blob = new Blob([noticeDto], {
-      type: "application/json",
-    });
-    formData.append("noticeDto", blob);
-
-    // 파일 데이터 추가
-    files.forEach((file, index) => {
-      formData.append(`file`, file);
-    });
-
-    // API 요청
-    const response = await instance.post(
-      `/api/notice/${paramsGroupId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+  //공지 생성 함수
+  const createNotice = async () => {
+    const formData = new FormData();
+    try {
+      // 제목과 내용이 공백인지 확인
+      if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+        alert("제목과 내용을 입력해주세요.");
+        return;
       }
-    );
 
-    // 응답 처리
-    console.log("공지 생성 완료:", response.data);
-    alert("공지가 성공적으로 생성되었습니다.");
-  } catch (error) {
-    console.error("공지 생성 실패:", error);
-    alert("공지 생성에 실패했습니다.");
-  }
-};
+      // JSON 데이터 준비
+      const noticeDto = JSON.stringify({
+        title: assignmentName,
+        content: assignmentDesc,
+      });
+      const blob = new Blob([noticeDto], {
+        type: "application/json",
+      });
+      formData.append("noticeDto", blob);
 
-//강의자료 생성 함수
-const createMaterial = async () => {
-  const formData = new FormData();
-  try {
-    // 제목, 내용, 파일이 공백인지 확인
-    if (assignmentName.trim() === "" || assignmentDesc.trim() === "" || files.length === 0) {
-      let alertMessage = "제목과 내용을 입력해주세요.";
-      if (files.length === 0) {
-        alertMessage = "최소 한 개의 파일을 첨부해주세요.";
+      // 파일 데이터 추가
+      files.forEach((file, index) => {
+        formData.append(`file`, file);
+      });
+
+      // API 요청
+      const response = await instance.post(
+        `/api/notice/${paramsGroupId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("test");
+        navigate("/login");
       }
-      alert(alertMessage);
-      return;
+
+      // 응답 처리
+      console.log("공지 생성 완료:", response.data);
+      alert("공지가 성공적으로 생성되었습니다.");
+    } catch (error) {
+      console.error("공지 생성 실패:", error);
+      alert("공지 생성에 실패했습니다.");
     }
+  };
 
-    // JSON 데이터 준비
-    const materialDto = JSON.stringify({
-      title: assignmentName,
-      content: assignmentDesc,
-    });
-
-    // JSON을 파일로 변환하여 FormData에 추가
-    const dtoFile = new Blob([materialDto], { type: "application/json" });
-    formData.append("materialDto", dtoFile);
-
-    // 파일 데이터 추가
-    files.forEach((file) => {
-      formData.append(`file`, file);
-    });
-
-    // API 요청
-    const response = await instance.post(
-      `/api/material/${paramsGroupId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+  //강의자료 생성 함수
+  const createMaterial = async () => {
+    const formData = new FormData();
+    try {
+      // 제목, 내용, 파일이 공백인지 확인
+      if (
+        assignmentName.trim() === "" ||
+        assignmentDesc.trim() === "" ||
+        files.length === 0
+      ) {
+        let alertMessage = "제목과 내용을 입력해주세요.";
+        if (files.length === 0) {
+          alertMessage = "최소 한 개의 파일을 첨부해주세요.";
+        }
+        alert(alertMessage);
+        return;
       }
-    );
 
-    // 응답 처리
-    console.log("강의자료 생성 완료:", response.data);
-    alert("강의자료가 성공적으로 생성되었습니다.");
-  } catch (error) {
-    console.error("강의자료 생성 실패:", error);
-    alert("강의자료 생성에 실패했습니다.");
-  }
-};
+      // JSON 데이터 준비
+      const materialDto = JSON.stringify({
+        title: assignmentName,
+        content: assignmentDesc,
+      });
 
-  
+      // JSON을 파일로 변환하여 FormData에 추가
+      const dtoFile = new Blob([materialDto], { type: "application/json" });
+      formData.append("materialDto", dtoFile);
+
+      // 파일 데이터 추가
+      files.forEach((file) => {
+        formData.append(`file`, file);
+      });
+
+      // API 요청
+      const response = await instance.post(
+        `/api/material/${paramsGroupId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // 응답 처리
+      console.log("강의자료 생성 완료:", response.data);
+      alert("강의자료가 성공적으로 생성되었습니다.");
+    } catch (error) {
+      console.error("강의자료 생성 실패:", error);
+      alert("강의자료 생성에 실패했습니다.");
+    }
+  };
 
   const [group, setGroup] = useState(null);
   const [matchedGroup, setMatchedGroup] = useState(null);
@@ -307,20 +310,23 @@ const createMaterial = async () => {
               ref={imageInput}
               multiple
             />
-            <S.LibraryButton onClick={() => imageInput.current.click()} style={{ marginLeft: "15px" }}>
+            <S.LibraryButton
+              onClick={() => imageInput.current.click()}
+              style={{ marginLeft: "15px" }}
+            >
               라이브러리에서 파일 탐색
             </S.LibraryButton>
           </S.LegInput>
 
-          <S.FileContainer>
-          {renderFileList()}
-          </S.FileContainer>
+          <S.FileContainer>{renderFileList()}</S.FileContainer>
           <S.Foot>
             <S.SubmitBtn type="submit" onClick={handleSubmit}>
               생성하기
             </S.SubmitBtn>
-          
-            <S.CancelBtn type="button" onClick={handleHeaderClick}>취소</S.CancelBtn>
+
+            <S.CancelBtn type="button" onClick={handleHeaderClick}>
+              취소
+            </S.CancelBtn>
           </S.Foot>
         </S.AssigmentCreateForm>
         <S.AssignmentSettingForm>
