@@ -38,7 +38,9 @@ export default function Login() {
       if (response.status === 200) {
         alert("로그인 성공!");
         const accessToken = response.data.result.token;
-        setRole(response.data.result.role); 
+        const userRole = response.data.result.role;
+        setRole(userRole);
+        localStorage.setItem('role', userRole);
         console.log("accessToken테스트:", accessToken);
 
         // 로컬 스토리지에 토큰 저장
