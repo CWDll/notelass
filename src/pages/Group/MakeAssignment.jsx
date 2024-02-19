@@ -70,105 +70,114 @@ function MakeAssignment() {
   };
 
   // 과제, 공지, 강의자료 생성 POST API
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    let response; // 한 번만 선언
+  const formData = new FormData();
 
-    //공지 생성 POST API
-    if (selectedButton === "공지") {
-      try {
-        // 제목과 내용이 공백인지 확인
-        if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
-          alert("제목과 내용을 입력해주세요.");
-          return;
-        }
+  if (selectedButton === "공지") {
+    await createNotice();
+  } else if (selectedButton === "강의자료") {
+    await createMaterial();
+  }
+};
 
-        // JSON 데이터 준비
-        const noticeDto = JSON.stringify({
-          title: assignmentName,
-          content: assignmentDesc,
-        });
-        const blob = new Blob([noticeDto], {
-          type: "application/json",
-        });
-        formData.append("noticeDto", blob);
+//공지 생성 함수
+const createNotice = async () => {
 
-        // 파일 데이터 추가
-        files.forEach((file, index) => {
-          formData.append(`file`, file);
-        });
-
-        // API 요청
-        response = await axios.post(
-          // 이미 선언된 response 변수를 사용
-          `/api/notice/${paramsGroupId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        // 응답 처리
-
-        console.log("공지 생성 완료:", response.data);
-        alert("공지가 성공적으로 생성되었습니다.");
-      } catch (error) {
-        console.error("공지 생성 실패:", error);
-        alert("공지 생성에 실패했습니다.");
-      }
-
-      //강의자료 생성 POST API
-    } else if (selectedButton === "강의자료") {
-      try {
-
-        // 제목과 내용이 공백인지 확인
-        if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
-          alert("제목과 내용을 입력해주세요.");
-          return;
-        }
-
-        
-        // JSON 데이터 준비
-        const materialDto = JSON.stringify({
-          title: assignmentName,
-          content: assignmentDesc,
-        });
-        const blob = new Blob([materialDto], {
-          type: "application/json",
-        });
-        formData.append("materialDto", blob);
-
-        // 파일 데이터 추가
-        files.forEach((file, index) => {
-          formData.append(`file`, file);
-        });
-
-        // API 요청
-        response = await axios.post(
-          `/api/material/${paramsGroupId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        // 응답 처리
-        const materialId = response.data.message.match(/강의자료 ID: (\d+)/)[1];
-        console.log("강의 자료 생성 완료:", response.data);
-        console.log("생성된 강의 자료의 ID:", materialId);
-        alert("강의 자료가 성공적으로 생성되었습니다.");
-      } catch (error) {
-        console.error("강의 자료 생성 실패:", error);
-        alert("강의 자료 생성에 실패했습니다.");
-      }
+  const formData = new FormData();
+  try {
+    // 제목과 내용이 공백인지 확인
+    if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+      alert("제목과 내용을 입력해주세요.");
+      return;
     }
-  };
+
+    // JSON 데이터 준비
+    const noticeDto = JSON.stringify({
+      title: assignmentName,
+      content: assignmentDesc,
+    });
+    const blob = new Blob([noticeDto], {
+      type: "application/json",
+    });
+    formData.append("noticeDto", blob);
+
+    // 파일 데이터 추가
+    files.forEach((file, index) => {
+      formData.append(`file`, file);
+    });
+
+    // API 요청
+    const response = await instance.post(
+      `/api/notice/${paramsGroupId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // 응답 처리
+    console.log("공지 생성 완료:", response.data);
+    alert("공지가 성공적으로 생성되었습니다.");
+  } catch (error) {
+    console.error("공지 생성 실패:", error);
+    alert("공지 생성에 실패했습니다.");
+  }
+};
+
+//강의자료 생성 함수
+const createMaterial = async () => {
+  const formData = new FormData();
+  try {
+    // 제목, 내용, 파일이 공백인지 확인
+    if (assignmentName.trim() === "" || assignmentDesc.trim() === "" || files.length === 0) {
+      let alertMessage = "제목과 내용을 입력해주세요.";
+      if (files.length === 0) {
+        alertMessage = "최소 한 개의 파일을 첨부해주세요.";
+      }
+      alert(alertMessage);
+      return;
+    }
+
+    // JSON 데이터 준비
+    const materialDto = JSON.stringify({
+      title: assignmentName,
+      content: assignmentDesc,
+    });
+
+    // JSON을 파일로 변환하여 FormData에 추가
+    const dtoFile = new Blob([materialDto], { type: "application/json" });
+    formData.append("materialDto", dtoFile);
+
+    // 파일 데이터 추가
+    files.forEach((file) => {
+      formData.append(`file`, file);
+    });
+
+    // API 요청
+    const response = await instance.post(
+      `/api/material/${paramsGroupId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // 응답 처리
+    console.log("강의자료 생성 완료:", response.data);
+    alert("강의자료가 성공적으로 생성되었습니다.");
+  } catch (error) {
+    console.error("강의자료 생성 실패:", error);
+    alert("강의자료 생성에 실패했습니다.");
+  }
+};
+
+  
 
   const [group, setGroup] = useState(null);
   const [matchedGroup, setMatchedGroup] = useState(null);
