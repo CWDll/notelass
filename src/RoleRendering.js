@@ -1,10 +1,9 @@
 function RoleRendering() {
-    const role = useContext(RoleContext);
+    const { role } = useContext(RoleContext);
   
     if (role === 'teacher') {
       return (
         <>
-        <Layoyt/>
           <GroupDetail />
           <Note />
         </>
@@ -12,9 +11,9 @@ function RoleRendering() {
     } else if (role === 'student') {
       return (
         <>
+          <GroupDetail />
           <GroupDetailClass />
         </>
       );
     } 
-  }
-  
+}

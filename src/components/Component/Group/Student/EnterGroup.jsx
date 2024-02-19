@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GroupCode = () => {
+const EnterGroup = () => {
     return (
         <div  style={{ width: '500px', height: '500px' }}>
             그룹 코드
@@ -8,4 +8,4 @@ const GroupCode = () => {
     );
 };
 
-export default GroupCode;
+export default EnterGroup;
