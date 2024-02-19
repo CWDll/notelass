@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext} from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import instance from "../../../assets/api/axios";
@@ -15,13 +15,9 @@ import Grid from "@mui/material/Grid";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const { setRole } = useContext(RoleContext);
-
-const defaultTheme = createTheme();
-
 export default function Login() {
-  const [role, setRole] = useState(''); 
-
+  const { setRole } = useContext(RoleContext);
+  const defaultTheme = createTheme();
 
   const navigate = useNavigate();
   const navagateSignup = () => {
@@ -38,12 +34,12 @@ export default function Login() {
       if (response.status === 200) {
         alert("로그인 성공!");
         const accessToken = response.data.result.token;
-        setRole(response.data.result.role); 
+        const UpperRole = response.data.result.role;
+        setRole(UpperRole.toLowerCase());
         console.log("accessToken테스트:", accessToken);
 
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem("token", accessToken);
-        // navigate("/");
         navigate("/GroupDetail");
       } else {
         alert("로그인 실패!");
@@ -55,88 +51,87 @@ export default function Login() {
 
   return (
     <RoleContext.Provider value={role}>
-    <ThemeProvider theme={defaultTheme}>
-      <S.ContainerBox>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <S.NotelassIntro>태블릿 속 또 다른 강의실</S.NotelassIntro>
-          <S.Notelass>Note-lass</S.Notelass>
+      <ThemeProvider theme={defaultTheme}>
+        <S.ContainerBox>
+          <CssBaseline />
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="이메일을 입력해주세요"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="비밀번호를 입력해주세요"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-
-            <S.GridContainer>
-              <Grid>
-                <Link
-                  underline="none"
-                  color={"gray"}
-                  style={{ marginLeft: "40px" }}
-                  onClick={navagateSignup}
-                >
-                  회원가입
-                </Link>
-              </Grid>
-              <p>|</p>
-              <Grid>
-                <Link href="#" underline="none" color={"gray"}>
-                  아이디 찾기
-                </Link>
-              </Grid>
-              <p>|</p>
-              <Grid>
-                <Link
-                  href="/FindPassword"
-                  underline="none"
-                  color={"gray"}
-                  style={{ marginRight: "30px" }}
-                >
-                  비밀번호 찾기
-                </Link>
-              </Grid>
-            </S.GridContainer>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <S.NotelassIntro>태블릿 속 또 다른 강의실</S.NotelassIntro>
+            <S.Notelass>Note-lass</S.Notelass>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              로그인
-            </Button>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="이메일을 입력해주세요"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="비밀번호를 입력해주세요"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+
+              <S.GridContainer>
+                <Grid>
+                  <Link
+                    underline="none"
+                    color={"gray"}
+                    style={{ marginLeft: "40px" }}
+                    onClick={navagateSignup}
+                  >
+                    회원가입
+                  </Link>
+                </Grid>
+                <p>|</p>
+                <Grid>
+                  <Link href="#" underline="none" color={"gray"}>
+                    아이디 찾기
+                  </Link>
+                </Grid>
+                <p>|</p>
+                <Grid>
+                  <Link
+                    href="/FindPassword"
+                    underline="none"
+                    color={"gray"}
+                    style={{ marginRight: "30px" }}
+                  >
+                    비밀번호 찾기
+                  </Link>
+                </Grid>
+              </S.GridContainer>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                로그인
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </S.ContainerBox>
-    </ThemeProvider>
+        </S.ContainerBox>
+      </ThemeProvider>
     </RoleContext.Provider>
-    
   );
 }

@@ -31,10 +31,8 @@ function GroupDetail() {
 
   const accessToken = localStorage.getItem("token");
 
-  ///////////////////////////////////////////
+  // 창준
   // const role = useContext(RoleContext);
-
-  ///////////////////////////////////////////////
 
   const navigate = useNavigate();
 
