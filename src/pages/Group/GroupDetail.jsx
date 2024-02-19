@@ -27,6 +27,8 @@ function GroupDetail() {
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
 
+  const [showEnterGroupModal, setShowEnterGroupModal] = useState(false);
+
   const { role } = useContext(RoleContext);
 
   const accessToken = localStorage.getItem("token");
@@ -70,11 +72,15 @@ function GroupDetail() {
   return (
     <S.Warp>
       <S.Button onClick={handleButtonClick}>
-        {role === "student" ? "그룹 입장" : "그룹 생성"}
+        {role === "STUDENT" ? "그룹 입장" : "그룹 생성"}
       </S.Button>
 
       {showSmallContainer &&
-        (role === "student" ? <EnterGroup /> : <CreateGroup />)}
+        (role === "STUDENT" ? (
+          <EnterGroup setShowSmallContainer={setShowSmallContainer} />
+        ) : (
+          <CreateGroup />
+        ))}
       <S.NoteContainer>
         {groupList.length === 0 ? (
           <S.Notice>

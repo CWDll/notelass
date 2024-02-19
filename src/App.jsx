@@ -10,9 +10,6 @@ import ReactGA from "react-ga4";
 ReactGA.initialize("G-QSTTQEGWWQ");
 
 function App() {
-  const role = useContext(RoleContext);
-  // const { role, setRole } = useContext(RoleContext);
-
   // useRoutes를 호출해 라우트 구성을 가져옴. 앞으로 모든 route 경로는 ./route.jsx에 추가하여 사용 !
   const routeElement = useRoutes(routes);
   const [role, setRole] = useState(localStorage.getItem("role") || "teacher");
