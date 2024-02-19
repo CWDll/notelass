@@ -15,12 +15,12 @@ import Grid from "@mui/material/Grid";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const { setRole } = useContext(RoleContext);
+
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const [role, setRole] = useState(''); 
+  const { setRole } = useContext(RoleContext);
 
 
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ export default function Login() {
   };
 
   return (
-    <RoleContext.Provider value={role}>
+    <RoleContext.Provider value={setRole}>
     <ThemeProvider theme={defaultTheme}>
       <S.ContainerBox>
         <CssBaseline />
