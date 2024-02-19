@@ -4,236 +4,13 @@ import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 import Group from "src/assets/icon/Group/Group.svg";
 import instance from "../../assets/api/axios";
+
+import CreateGroup from "../../components/Component/Group/CreateGroup";
+import EnterGroup from "../../components/Component/Group/Student/EnterGroup";
+import * as S from "./Style/GroupDetailStyle";
 ////////////////////////////
 import RoleContext from "../../RoleContext";
 /////////////////////////////
-
-const Warp = styled.div`
-  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-  margin-right: auto;
-`;
-
-const NoteContainer = styled.div`
-  width: 1194px;
-  height: 800px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  position: relative;
-  margin-top: 16px;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #ccc;
-  }
-`;
-
-const CircleText = styled.div`
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background-color: var(--primary-light-cobalt, #ededff);
-  border-width: 1.5px;
-  border-color: var(--primary-cobalt, #4849ff);
-  border-style: solid;
-  margin-left: 32px;
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-`;
-
-const PurpleText = styled.p`
-  color: #4849ff;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  padding-top: 12px;
-`;
-
-const BoldText = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
-  align-self: center;
-`;
-
-const SubjectBody = styled.div`
-  display: flex;
-
-  width: 1194px;
-  height: 72px;
-  flex-shrink: 0;
-  margin-top: 16px;
-  gap: 16px;
-`;
-
-const Button = styled.button`
-  width: 144px;
-  height: 54px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  background: #4849ff;
-  margin-top: 74px;
-  margin-left: 1050px;
-
-  color: #fff;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
-const SubjectBodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 16px;
-`;
-
-const SmallContainer = styled.div`
-  width: 480px;
-  height: 544px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-
-  display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-left: 40px;
-  text-align: left;
-
-  flex-shrink: 0;
-`;
-
-const TextBox = styled.input`
-  display: flex;
-  width: 400px;
-  height: 56px;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  margin-top: 16px;
-  margin-bottom: 32px;
-  margin-left: 40px;
-
-  width: 400px;
-  height: 56px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1.5px solid rgba(201, 205, 210, 0.5);
-  background: #fff;
-
-  color: var(--cool-grayscale-line, #c9cdd2);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  padding-left: 16px;
-`;
-
-const Button2 = styled.button`
-  width: 400px;
-  height: 56px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: var(--primary-cobalt, #4849ff);
-  margin-left: 40px;
-
-  color: #fff;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-top: 15px;
-`;
-
-const Exit = styled.img`
-  margin-top: 24px;
-  margin-right: 24px;
-  margin-left: 432px;
-  width: 24px;
-`;
-
-const Code = styled.p`
-  color: var(--primary-cobalt, #4849ff);
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  justify-content: center;
-  margin-top: 32px;
-  margin-left: 20px;
-  margin-bottom: 140px;
-`;
-
-const Title2 = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-top: 126px;
-  margin-left: 184px;
-
-  flex-shrink: 0;
-`;
-
-const Notice = styled.p`
-  color: var(--cool-grayscale-title, #26282b);
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const Img = styled.img`
-  display: flex;
-  margin-bottom: 16px;
-`;
 
 // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
 const subjectInfo = "노트고등학교 3학년 1반 문학";
@@ -244,77 +21,32 @@ const letter = subject.substr(0, 1);
 
 function GroupDetail() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-  // const [content, setContent] = useState("form");
   const [groupCode, setGroupCode] = useState("");
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
 
+  const { role } = useContext(RoleContext);
+
   const accessToken = localStorage.getItem("token");
 
   ///////////////////////////////////////////
-  const role = useContext(RoleContext);
+  // const role = useContext(RoleContext);
 
   ///////////////////////////////////////////////
 
   const navigate = useNavigate();
+
   const handleGroupClick = (id, school, grade, classNum, subject) => {
     navigate(`/GroupDetailClass/${id}`, {
       state: { school, grade, classNum, subject },
     });
   };
 
-  // 그룹 생성 POST 함수
-  const generateGroup = async () => {
-    // 대상 필드 중 하나라도 비어 있는지 확인
-    if (!grade || !classNum || !subject) {
-      // Button2의 배경색을 회색(Gray)으로 설정
-      // 실제로 사용 중인 스타일에 따라 실제 CSS 속성을 조절해야 할 수 있습니다
-      document.getElementById("Button2").style.backgroundColor = "gray";
-      return;
-    }
-
-    let code = "";
-    for (let i = 0; i < 6; i++) {
-      code += Math.floor(Math.random() * 10);
-    }
-    setGroupCode(code);
-
-    const requestBody = {
-      grade: parseInt(grade),
-      classNum: parseInt(classNum),
-      subject: subject,
-    };
-
-    console.log(
-      "grade: " + grade + ", type: " + `Type: ${typeof parseInt(grade)}`
-    );
-    console.log(
-      "grade: " + classNum + ", type: " + `Type: ${typeof parseInt(classNum)}`
-    );
-    console.log("grade: " + subject + ", type: " + `Type: ${typeof subject}`);
-    console.log(requestBody);
-    try {
-      const response = await instance.post("/api/group", requestBody);
-
-      // 응답이 성공적이면 groupCode 상태 업데이트
-      if (response.status === 201) {
-        setGroupCode(response.data.result);
-        setContent("code");
-        await fetchGroups();
-      } else {
-        console.error(
-          "서버로부터 예상치 못한 응답을 받았습니다:",
-          response.data
-        );
-      }
-    } catch (error) {
-      console.error("그룹 생성 중 오류가 발생했습니다:", error);
-    }
+  const handleButtonClick = () => {
+    setShowSmallContainer(true);
   };
-
-  // 속한 그룹 목록 GET
 
   const fetchGroups = async () => {
     try {
@@ -322,7 +54,6 @@ function GroupDetail() {
       if (response.status === 200 && Array.isArray(response.data.result)) {
         setGroupList(response.data.result);
       } else {
-        // 오류 처리
         console.error("그룹 목록을 불러오는데 실패했습니다.");
       }
     } catch (error) {
@@ -334,78 +65,28 @@ function GroupDetail() {
     fetchGroups();
   }, []);
 
-  return (
-    <Warp>
-      <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
-        {role === "TEACHER" ? "그룹 생성" : "그룹 입장"}
-      </Button>
+  useEffect(() => {
+    console.log("로그인:", role);
+  }, [role]);
 
-      {showSmallContainer && (
-        <SmallContainer>
-          <Exit
-            src={exit}
-            alt="exit"
-            onClick={() => setShowSmallContainer(!showSmallContainer)}
-          ></Exit>
-          {content === "form" ? (
-            <>
-              <Title>대상 학년 선택</Title>
-              <TextBox
-                type="text"
-                value={grade}
-                placeholder="숫자만 적으세요 ex) 1"
-                onChange={(e) => setGrade(e.target.value)}
-              ></TextBox>
-              <Title>대상 반 선택</Title>
-              <TextBox
-                type="text"
-                value={classNum}
-                placeholder="숫자만 적으세요 ex) 1"
-                onChange={(e) => setClassNum(e.target.value)}
-              ></TextBox>
-              <Title>과목 선택</Title>
-              <TextBox
-                type="text"
-                value={subject}
-                placeholder="담당하시는 과목을 입력해 주세요"
-                onChange={(e) => setSubject(e.target.value)}
-              ></TextBox>
-              <Button2
-                onClick={generateGroup}
-                style={{
-                  // 대상 필드 중 하나라도 비어 있다면 배경색을 회색(Gray)으로 변경
-                  backgroundColor:
-                    !grade || !classNum || !subject
-                      ? "#E6E8EE"
-                      : "var(--primary-cobalt, #4849ff)",
-                }}
-              >
-                다음
-              </Button2>
-            </>
-          ) : (
-            <>
-              <Title2>그룹 입장 코드</Title2>
-              <Code>{groupCode}</Code>
-              <Button2
-                onClick={() => setShowSmallContainer(!showSmallContainer)}
-              >
-                완료
-              </Button2>
-            </>
-          )}
-        </SmallContainer>
-      )}
-      <NoteContainer>
+  return (
+    <S.Warp>
+      <S.Button onClick={handleButtonClick}>
+        {role === "student" ? "그룹 입장" : "그룹 생성"}
+      </S.Button>
+
+      {showSmallContainer &&
+        (role === "student" ? <EnterGroup /> : <CreateGroup />)}
+      <S.NoteContainer>
         {groupList.length === 0 ? (
-          <Notice>
-            <Img src={Group} alt="Group" />
+          <S.Notice>
+            <S.Img src={Group} alt="Group" />
             그룹이 존재하지 않습니다.
-          </Notice>
+          </S.Notice>
         ) : (
-          <SubjectBodyWrapper>
+          <S.SubjectBodyWrapper>
             {groupList.map((group) => (
-              <SubjectBody
+              <S.SubjectBody
                 key={group.id}
                 onClick={() =>
                   handleGroupClick(
@@ -417,16 +98,16 @@ function GroupDetail() {
                   )
                 }
               >
-                <CircleText>
-                  <PurpleText>{group.subject[0]}</PurpleText>
-                </CircleText>
-                <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
-              </SubjectBody>
+                <S.CircleText>
+                  <S.PurpleText>{group.subject[0]}</S.PurpleText>
+                </S.CircleText>
+                <S.BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</S.BoldText>
+              </S.SubjectBody>
             ))}
-          </SubjectBodyWrapper>
+          </S.SubjectBodyWrapper>
         )}
-      </NoteContainer>
-    </Warp>
+      </S.NoteContainer>
+    </S.Warp>
   );
 }
 
