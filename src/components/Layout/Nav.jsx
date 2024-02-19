@@ -179,6 +179,11 @@ export default function Nav() {
     setIsLoggedIn(loggedIn);
   };
 
+  const handleNavItemClick = (index) => {
+    setSelectedItemIndex(index);
+  };
+
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -210,9 +215,6 @@ export default function Nav() {
     };
   }, []);
 
-  const handleNavItemClick = (index) => {
-    setSelectedItemIndex(index);
-  };
 
   //페이지 이동시키는 navigate
   const navigate = useNavigate();
@@ -239,6 +241,9 @@ export default function Nav() {
     navigate("/selectSchool");
   };
 
+
+  
+
   const handleLogout = async () => {
     try {
       await deleteFile(paramsGroupId);
@@ -246,6 +251,8 @@ export default function Nav() {
 
       if (res.status === 200) {
         alert("로그아웃 되었습니다");
+        localStorage.removeItem("token"); 
+        setIsLoggedIn(false); 
         navigate("/login");
       }
     } catch (error) {
