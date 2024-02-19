@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import {
-  enterGroupCode,
-  enterGroup,
-} from "../../../../assets/api/apis/group/ApiGroup";
+import { enterGroupCode } from "../../../../assets/api/apis/group/ApiGroup";
 import ConfirmSchoolInfo from "./ConfirmSchoolInfo";
 
 const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
@@ -16,13 +13,12 @@ const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
   const [groupId, setGroupId] = useState("");
   // 입장하려는 그룹 정보
   const [groupInfo, setGroupInfo] = useState("");
-
+  // 그룹 정보 확인 모달 여부
   const [shwoConfirmSchoolInfo, setShwoConfirmSchoolInfo] = useState(false);
 
   return (
     <S.ModalContainer>
       <S.Exit alt="exit" onClick={handleButtonClick} />
-      {/* <S.SmallButton onClick={handleButtonClick}>닫기</S.SmallButton> */}
       <S.FlexContainer>
         <S.TextContainer>
           <S.Text>입장 코드 입력 </S.Text>

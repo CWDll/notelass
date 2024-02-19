@@ -14,7 +14,6 @@ function ConfirmSchoolInfo({
   return (
     <S.ModalContainer>
       <S.Exit alt="exit" onClick={handleButtonClick} />
-      {/* <S.SmallButton onClick={handleButtonClick}>닫기</S.SmallButton> */}
       <S.FlexContainer>
         <S.ConFirmTextContainer>
           <p>
