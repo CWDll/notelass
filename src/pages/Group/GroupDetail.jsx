@@ -70,11 +70,11 @@ function GroupDetail() {
   return (
     <S.Warp>
       <S.Button onClick={handleButtonClick}>
-        {role === "STUDENT" ? "그룹 입장" : "그룹 생성"}
+        {role === "student" ? "그룹 입장" : "그룹 생성"}
       </S.Button>
 
       {showSmallContainer &&
-        (role === "STUDENT" ? <EnterGroup /> : <CreateGroup />)}
+        (role === "student" ? <EnterGroup /> : <CreateGroup />)}
       <S.NoteContainer>
         {groupList.length === 0 ? (
           <S.Notice>

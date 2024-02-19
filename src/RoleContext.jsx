@@ -1,23 +1,23 @@
-// import React from 'react';
+import React from "react";
 
-// const RoleContext = React.createContext();
+const RoleContext = React.createContext();
 
-// export default RoleContext;
+export default RoleContext;
 
-import React, { createContext, useState, useContext } from "react";
+// import React, { createContext, useState, useContext } from "react";
 
-const RoleContext = createContext();
+// const RoleContext = createContext();
 
-function RoleProvider({ children }) {
-  const [role, setRole] = useState(null);
+// function RoleProvider({ children }) {
+//   const [role, setRole] = useState(null);
 
-  // 값과 함께 설정 함수도 전달
-  const value = { role, setRole };
+//   // 값과 함께 설정 함수도 전달
+//   const value = { role, setRole };
 
-  return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
-}
+//   return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
+// }
 
-export default RoleProvider;
+// export default RoleProvider;
 
 // Custom Hookk
 // export default function useRole() {
