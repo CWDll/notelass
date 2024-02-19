@@ -21,8 +21,8 @@ const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
 
   return (
     <S.ModalContainer>
-      {/* <S.Exit alt="exit" onClick={handleButtonClick} /> */}
-      <S.SmallButton onClick={handleButtonClick}>닫기</S.SmallButton>
+      <S.Exit alt="exit" onClick={handleButtonClick} />
+      {/* <S.SmallButton onClick={handleButtonClick}>닫기</S.SmallButton> */}
       <S.FlexContainer>
         <S.TextContainer>
           <S.Text>입장 코드 입력 </S.Text>
@@ -50,13 +50,6 @@ const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
               groupInfo={groupInfo}
             />
           )}
-          {/* <S.Button
-            onClick={() => {
-              enterGroup(groupId);
-            }}
-          >
-            입장하기 최종
-          </S.Button> */}
         </S.ButtonContainer>
       </S.FlexContainer>
     </S.ModalContainer>

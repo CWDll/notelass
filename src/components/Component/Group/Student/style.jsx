@@ -37,10 +37,10 @@ export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  margin-left: 80px;
+  align-items: center;
+  /* margin-left: 80px;
   margin-top: -30px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; */
   width: 100%;
   height: 9rem;
 `;
@@ -82,9 +82,9 @@ export const ButtonContainer = styled.div`
   font-weight: 700;
 `;
 export const Button = styled.button`
-  width: 230px;
+  width: 400px;
   height: 56px;
-  background-color: #e6e8ee;
+  background-color: #4849ff;
   color: #9ea4aa;
   &:hover {
     border: none;
@@ -95,7 +95,6 @@ export const SmallButton = styled.button`
   margin-left: auto;
   witdh: 40px;
   heigth: 20px;
-  border: 1px solid black;
   margin-right: 30px;
 `;
 
@@ -104,7 +103,7 @@ export const ColorSmallButton = styled(SmallButton)`
   height: 56px;
   flex-shrink: 0;
   background-color: #4849ff;
-  color: #ffffff;
+  color: #9ea4aa;
 `;
 export const ColorSpan = styled.span`
   color: #4849ff;
