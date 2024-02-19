@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import * as S from "./style";
 import { enterGroup } from "../../../../assets/api/apis/group/ApiGroup";
 
-const EnterGroup = ({ setShowSmallContainer }) => {
+const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
   const handleButtonClick = () => {
-    setShowSmallContainer(false);
+    setShowSmallContainer(!showSmallContainer);
   };
   const [code, setCode] = useState("");
 
   return (
     <S.ModalContainer>
-      <S.Exit ale="exit" onClick={handleButtonClick} />
+      {/* <S.Exit alt="exit" onClick={handleButtonClick} /> */}
+      <S.SmallButton onClick={handleButtonClick}>닫기</S.SmallButton>
       <S.FlexContainer>
         <S.TextContainer>
           <S.Text>입장 코드 입력 </S.Text>

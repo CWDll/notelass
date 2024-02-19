@@ -24,6 +24,7 @@ export const Exit = styled.img.attrs({ src: exit })`
   margin-right: 24px;
   margin-left: 432px;
   width: 24px;
+  border: 1px solid black;
 `;
 
 export const FlexContainer = styled.div`
@@ -74,4 +75,12 @@ export const Button = styled.button`
   &:hover {
     border: none;
   }
+`;
+
+export const SmallButton = styled.button`
+  margin-left: auto;
+  witdh: 40px;
+  heigth: 20px;
+  border: 1px solid black;
+  margin-right: 30px;
 `;

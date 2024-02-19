@@ -77,7 +77,10 @@ function GroupDetail() {
 
       {showSmallContainer &&
         (role === "STUDENT" ? (
-          <EnterGroup setShowSmallContainer={setShowSmallContainer} />
+          <EnterGroup
+            showSmallContainer={showSmallContainer}
+            setShowSmallContainer={setShowSmallContainer}
+          />
         ) : (
           <CreateGroup />
         ))}

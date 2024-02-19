@@ -120,7 +120,8 @@ export const deleteStudentInList = async (groupId, userId) => {
 //학생 그룹 입장 신청
 export const enterGroup = async (code) => {
   try {
-    const res = await instance.delete(`/api/group/${code}`);
+    const res = await instance.get(`/api/group/${code}`);
+    console.log(code);
 
     if (res.status === 200) {
       console.log("코드로 그룹 입장 성공 ");
