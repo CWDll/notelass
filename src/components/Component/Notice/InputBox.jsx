@@ -11,7 +11,7 @@ const FormControl = styled.div`
 `;
 
 const OutlinedInput = styled.input`
-  font-size: 16px;
+  font-size: 50px;
   border: 1px solid #EDEDFF;
   border-radius: 4px;
   width: 56px;

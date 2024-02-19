@@ -266,18 +266,76 @@ position: absolute;
 const F2 = styled.img`
 width: 10px;
 height: 78px;
-top: 5095px;
+top: 5135px;
 left: 50%;
 transform: translateX(-50%);
 position: absolute;
 `;
 
+const P1 = styled.div`
+top: 5245px;
+left: 50%;
+transform: translateX(-50%);
+position: absolute;
+margin-top:20px;
 
+font-family: Pretendard;
+font-size: 36px;
+font-weight: 400;
+line-height: 43px;
+letter-spacing: 0em;
+text-align: center;
 
+`;
 
+const P2 = styled.div`
+top: 5335px;
+left: 50%;
+transform: translateX(-50%);
+position: absolute;
+margin-top:20px;
 
+font-family: Pretendard;
+font-size: 36px;
+font-weight: 400;
+line-height: 43px;
+letter-spacing: 0em;
+text-align: center;
 
+`;
 
+const P3 = styled.div`
+top: 5380px;
+left: 50%;
+transform: translateX(-50%);
+position: absolute;
+margin-top:20px;
+
+font-family: Pretendard;
+font-size: 36px;
+font-weight: 400;
+line-height: 43px;
+letter-spacing: 0em;
+text-align: center;
+
+`;
+
+const P4 = styled.div`
+width:100%;
+top: 5490px;
+left: 50%;
+transform: translateX(-50%);
+position: absolute;
+margin-top:20px;
+
+font-family: Pretendard;
+font-size: 36px;
+font-weight: 400;
+line-height: 43px;
+letter-spacing: 0em;
+text-align: center;
+
+`;
 
 
 
@@ -303,6 +361,7 @@ function Introduce() {
   };
 
   return (
+  
    <NotelassImage >
     
 
@@ -330,12 +389,22 @@ function Introduce() {
     <E2 src={e2} alt="e2" />
     <E3 src={e3} alt="e3" />
     <E4 src={e4} alt="e4" />
-    <E5 src={e5} alt="e5" />
+    <a href="https://notelass.site/showcase/">
+      <E5 src={e5} alt="e5" />
+    </a>
     <E6 src={e6} alt="e6" />
     <E7 src={e7} alt="e7" />
 
     <F1 src={f1} alt="f1" />
     <F2 src={f2} alt="f2" />
+
+    
+    <P1> 궁금한 부분은 언제든 편하게 문의해주세요!</P1>
+    <P2> 오픈채팅 문의 : https://open.kakao.com/o/sK1oZEpf</P2>
+    <P3> 이메일 문의 : whckddlr99@gmail.com</P3>
+
+    <P4> 매일 밤 11시~12시에 업데이트를 진행해 해당 시간에는 접속이 안될 수 있으니 유의 부탁드립니다.</P4>
+    
 
    
 
