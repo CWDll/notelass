@@ -239,6 +239,18 @@ export default function Nav() {
     navigate("/selectSchool");
   };
 
+  
+    // 로그인 상태에 따라 페이지 이동 또는 로그인 페이지로 리다이렉트
+    const handlePageRedirect = (redirectTo) => {
+      if (isLoggedIn) {
+        navigate(redirectTo);
+      } else {
+        navigate("/login");
+      }
+    };
+
+   
+
   const handleLogout = async () => {
     try {
       await deleteFile(paramsGroupId);
@@ -355,7 +367,7 @@ export default function Nav() {
         <NavItems
           isSelected={selectedItemIndex === 2}
           onClick={() => {
-            handleNavItemClick(2), navigateToGroupDetail();
+            handleNavItemClick(2), navigateToGroupDetail(),handlePageRedirect("/login");
           }}
         >
           그룹
@@ -364,7 +376,7 @@ export default function Nav() {
         <NavItems
           isSelected={selectedItemIndex === 3}
           onClick={() => {
-            handleNavItemClick(3), navigateToNote();
+            handleNavItemClick(3), navigateToNote(),handlePageRedirect("/login");
           }}
         >
           노트
@@ -373,7 +385,7 @@ export default function Nav() {
         <NavItems
           isSelected={selectedItemIndex === 4}
           onClick={() => {
-            handleNavItemClick(4), navigateTosetting();
+            handleNavItemClick(4), navigateTosetting(),handlePageRedirect("/login");
           }}
         >
           환경설정
