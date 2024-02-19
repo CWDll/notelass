@@ -99,6 +99,10 @@ function MakeAssignment() {
             },
           }
         );
+        if (response.status === 201) {
+          alert("ㅋㅋ");
+          navigate("/login");
+        }
 
         // 응답 처리
 
