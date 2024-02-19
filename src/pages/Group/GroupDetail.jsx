@@ -4,7 +4,9 @@ import styled from "styled-components";
 import exit from "../../assets/exit.svg";
 import Group from "src/assets/icon/Group/Group.svg";
 import instance from "../../assets/api/axios";
-
+////////////////////////////
+import RoleContext from "../../RoleContext";
+/////////////////////////////
 
 const Warp = styled.div`
 margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
@@ -236,7 +238,7 @@ const Notice = styled.p`
 
 const Img = styled.img`
   display: flex;
-  margin-bottom: 26px;
+  margin-bottom: 16px;
 `;
 
 // 학교, 학년, 반, 과목 명이 들어갈 변수집단 subjectInfo
@@ -248,7 +250,7 @@ const letter = subject.substr(0, 1);
 
 function GroupDetail() {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
-  const [content, setContent] = useState("form");
+  // const [content, setContent] = useState("form");
   const [groupCode, setGroupCode] = useState("");
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
@@ -256,6 +258,13 @@ function GroupDetail() {
   const [groupList, setGroupList] = useState([]);
 
   const accessToken = localStorage.getItem("token");
+
+///////////////////////////////////////////
+  const role = useContext(RoleContext); 
+  
+///////////////////////////////////////////////
+
+
 
   const navigate = useNavigate();
   const handleGroupClick = (id, school, grade, classNum, subject) => {
@@ -335,8 +344,9 @@ function GroupDetail() {
 
   return (
     <Warp>
-      <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
-        그룹생성
+      
+       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+        {role === 'teacher' ? '그룹생성' : '그룹 입장'}
       </Button>
 
       {showSmallContainer && (

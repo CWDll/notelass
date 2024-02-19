@@ -179,6 +179,11 @@ export default function Nav() {
     setIsLoggedIn(loggedIn);
   };
 
+  const handleNavItemClick = (index) => {
+    setSelectedItemIndex(index);
+  };
+
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -210,9 +215,6 @@ export default function Nav() {
     };
   }, []);
 
-  const handleNavItemClick = (index) => {
-    setSelectedItemIndex(index);
-  };
 
   //페이지 이동시키는 navigate
   const navigate = useNavigate();
@@ -238,6 +240,7 @@ export default function Nav() {
   const navigateSignup = () => {
     navigate("/selectSchool");
   };
+
 
   
 
