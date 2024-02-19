@@ -144,25 +144,44 @@ export const InputDesc = styled.textarea`
   border: 1px solid #c9cdd2;
   margin-top: 10px;
   padding: 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;
 
 export const CancelBtn = styled.button`
+position: absolute;
+
   width: 64px;
   height: 40px;
   border-radius: 6px;
   background-color: #e6e8ee;
   font-size: 14px;
-  margin-right: 20px;
+  margin-right: -80px;
+  
+  margin-top: -10px;
 `;
 
 export const SubmitBtn = styled.button`
-  width: 120px;
+position: absolute;
+
+  width: 100px;
   height: 40px;
   border-radius: 6px;
   background-color: #4849ff;
   color: white;
   font-size: 14px;
   font-weight: 600;
+  margin-right: -295px;
+  margin-top: -10px;
 `;
 // Left Body 끝
 // Right Body 시작
@@ -236,12 +255,12 @@ export const Title = styled.div`
 `;
 
 export const FileList = styled.div`
-  margin-top: 15px;
-  margin-left: -300px;
+ 
+  margin-left: -330px;
 `;
 
 export const FileItem = styled.div`
-  width: 620px;
+  width: 590px;
   height: 40px;
   background: #f5f5fc;
   border: 1px solid #e6e8ee;
@@ -325,4 +344,29 @@ export const Cancle = styled.img`
   position: absolute;
   z-index: 1;
   margin-left: 575px;
+`;
+
+export const FileContainer = styled.div`
+  display: flex;
+  height: 110px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border: 1px solid #e6e8ee;
+  border-radius: 8px;
+  padding: 10px;
+  width: 620px;
+  margin-left:30px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+
 `;

@@ -10,6 +10,8 @@ import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 
 import * as S from "../Style/AssignmentStyle";
 
+
+
 function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const location = useLocation();
@@ -30,6 +32,10 @@ function MakeAssignment() {
     // 원하는 경로로 이동
     navigate(-1);
   };
+
+  const handleCancleClick =() => {
+    navigate(`/GroupDetailClass/${paramsGroupId}`)
+  }
 
   const onChangeName = (e) => {
     setAssignmentName(e.target.value);
@@ -53,15 +59,15 @@ function MakeAssignment() {
     setSelectedButton(buttonType);
   };
 
-  // 파일 업로드 핸들러
-  // const handleFileChange = (event) => {
-  //   const fileUploaded = event.target.files[0];
-  //   console.log(fileUploaded);
-  //   if (fileUploaded) {
-  //     setFiles((prevFiles) => [...prevFiles, fileUploaded]);
-  //     console.log(files);
-  //   }
-  // };
+  //파일 업로드 핸들러
+  const handleFileChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    console.log(fileUploaded);
+    if (fileUploaded) {
+      setFiles((prevFiles) => [...prevFiles, fileUploaded]);
+      console.log(files);
+    }
+  };
 
   // 과제, 공지, 강의자료 생성 POST API
   const handleSubmit = async (e) => {
@@ -288,23 +294,24 @@ function MakeAssignment() {
               type="file"
               id="fileUpload"
               style={{ display: "none" }}
-              // onChange={handleFileChange}
+              onChange={handleFileChange}
               ref={imageInput}
               multiple
             />
-            <S.LibraryButton
-              onClick={() => imageInput.current.click()}
-              style={{ marginLeft: "15px" }}
-            >
+            <S.LibraryButton onClick={() => imageInput.current.click()} style={{ marginLeft: "15px" }}>
               라이브러리에서 파일 탐색
             </S.LibraryButton>
           </S.LegInput>
+
+          <S.FileContainer>
           {renderFileList()}
+          </S.FileContainer>
           <S.Foot>
             <S.SubmitBtn type="submit" onClick={handleSubmit}>
               생성하기
             </S.SubmitBtn>
-            <S.CancelBtn type="submit">취소</S.CancelBtn>
+          
+            <S.CancelBtn type="button" onClick={handleHeaderClick}>취소</S.CancelBtn>
           </S.Foot>
         </S.AssigmentCreateForm>
         <S.AssignmentSettingForm>
