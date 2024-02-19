@@ -295,6 +295,7 @@ function GroupDetail() {
     fetchGroups();
   }, []);
 
+<<<<<<< HEAD
   // 그룹 생성 POST 함수
   const generateGroup = async () => {
     // 대상 필드 중 하나라도 비어 있는지 확인
@@ -344,6 +345,12 @@ function GroupDetail() {
     }
   };
 
+=======
+  useEffect(() => {
+    console.log("로그인:", role);
+    fetchGroups();
+  }, [role]);
+>>>>>>> e4f378e53e1cc459b08c28f67a8c6d24b95f6506
 
   return (
     <Warp>

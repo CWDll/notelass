@@ -10,6 +10,7 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
   const [applyDtos, setApplyDtos] = useState([]);
   const [groupInfo, setGroupInfo] = useState();
   const [groupCode, setGroupCode] = useState();
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     // 신청 데이터 가져오기
@@ -43,7 +44,13 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
         <S.GroupInfoText>
           {groupInfo} <S.GroupNumber>• {groupCode}</S.GroupNumber>
         </S.GroupInfoText>
-        <S.AcceptAll onClick={GroupAcceptAll}>한 번에 수락하기</S.AcceptAll>
+        <S.AcceptAll
+          onClick={() => {
+            GroupAcceptAll;
+          }}
+        >
+          한 번에 수락하기
+        </S.AcceptAll>
       </S.TextContainer>
       {/* applyDtos 배열을 순회하여 각 학생에 대한 정보를 전달하고 StudentLine을 렌더링 */}
       {applyDtos.map((student, index) => (
@@ -52,6 +59,7 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
           student={student}
           index={index + 1}
           groupId={groupId}
+          userId={student.userId}
         />
       ))}
     </S.ModalContainer>

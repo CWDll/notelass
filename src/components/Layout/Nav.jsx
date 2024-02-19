@@ -183,7 +183,6 @@ export default function Nav() {
     setSelectedItemIndex(index);
   };
 
-
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -215,7 +214,6 @@ export default function Nav() {
     };
   }, []);
 
-
   //페이지 이동시키는 navigate
   const navigate = useNavigate();
 
@@ -241,9 +239,6 @@ export default function Nav() {
     navigate("/selectSchool");
   };
 
-
-  
-
   const handleLogout = async () => {
     try {
       await deleteFile(paramsGroupId);
@@ -251,8 +246,8 @@ export default function Nav() {
 
       if (res.status === 200) {
         alert("로그아웃 되었습니다");
-        localStorage.removeItem("token"); 
-        setIsLoggedIn(false); 
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
         navigate("/login");
       }
     } catch (error) {
@@ -377,14 +372,14 @@ export default function Nav() {
           노트
         </NavItems>
 
-        <NavItems
+        {/* <NavItems
           isSelected={selectedItemIndex === 4}
           onClick={() => {
             handleNavItemClick(4), navigateTosetting();
           }}
         >
           환경설정
-        </NavItems>
+        </NavItems> */}
       </NavItemContainer>
       <SignBtnContainer>{renderAuthButtons()}</SignBtnContainer>
     </NavContainer>
