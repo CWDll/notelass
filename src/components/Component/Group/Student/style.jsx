@@ -66,9 +66,18 @@ export const Input = styled.input`
   background: #fff;
   padding: 4px;
 `;
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 
+  // 내부 폰트
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+`;
 export const Button = styled.button`
-  width: 400px;
+  width: 230px;
   height: 56px;
   background-color: #e6e8ee;
   color: #9ea4aa;

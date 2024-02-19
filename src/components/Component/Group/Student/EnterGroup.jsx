@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import { enterGroup } from "../../../../assets/api/apis/group/ApiGroup";
+import {
+  enterGroupCode,
+  enterGroup,
+} from "../../../../assets/api/apis/group/ApiGroup";
 
 const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
   const handleButtonClick = () => {
     setShowSmallContainer(!showSmallContainer);
   };
   const [code, setCode] = useState("");
+  const [groupId, setGroupId] = useState("");
 
   return (
     <S.ModalContainer>
@@ -22,13 +26,22 @@ const EnterGroup = ({ showSmallContainer, setShowSmallContainer }) => {
             onChange={(event) => setCode(event.target.value)}
           />
         </S.TextContainer>
-        <S.Button
-          onClick={() => {
-            enterGroup(code);
-          }}
-        >
-          입장하기
-        </S.Button>
+        <S.ButtonContainer>
+          <S.Button
+            onClick={() => {
+              enterGroupCode(code, setGroupId);
+            }}
+          >
+            입장하기
+          </S.Button>
+          <S.Button
+            onClick={() => {
+              enterGroup(groupId);
+            }}
+          >
+            입장하기 최종
+          </S.Button>
+        </S.ButtonContainer>
       </S.FlexContainer>
     </S.ModalContainer>
   );
