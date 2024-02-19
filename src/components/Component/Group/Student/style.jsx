@@ -24,7 +24,6 @@ export const Exit = styled.img.attrs({ src: exit })`
   margin-right: 24px;
   margin-left: 432px;
   width: 24px;
-  border: 1px solid black;
 `;
 
 export const FlexContainer = styled.div`
@@ -44,6 +43,12 @@ export const TextContainer = styled.div`
   margin-bottom: 30px;
   width: 100%;
   height: 9rem;
+`;
+
+export const ConFirmTextContainer = styled(TextContainer)`
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 `;
 
 export const Text = styled.p`
@@ -92,4 +97,19 @@ export const SmallButton = styled.button`
   heigth: 20px;
   border: 1px solid black;
   margin-right: 30px;
+`;
+
+export const ColorSmallButton = styled(SmallButton)`
+  width: 400px;
+  height: 56px;
+  flex-shrink: 0;
+  background-color: #4849ff;
+  color: #ffffff;
+`;
+export const ColorSpan = styled.span`
+  color: #4849ff;
+`;
+
+export const Span = styled.span`
+  color: black;
 `;
