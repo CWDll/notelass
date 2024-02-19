@@ -67,6 +67,7 @@ function GroupDetail() {
 
   useEffect(() => {
     console.log("로그인:", role);
+    fetchGroups();
   }, [role]);
 
   return (

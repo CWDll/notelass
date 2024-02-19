@@ -15,16 +15,13 @@ export const Container = styled.div`
 
 export default function Layout() {
   const location = useLocation();
-  
+
   // 렌더링하지 않을 경로들을 배열로 관리
-  const excludePaths1 = ["/NoteDetailSubject/pdf-viewer", "/introduce","/"];
-  
+  const excludePaths1 = ["/NoteDetailSubject/pdf-viewer", "/introduce", "/"];
 
   // 현재 경로가 excludePaths 배열에 있는지 확인하여 렌더링 여부 결정
   const shouldRenderFooter = !excludePaths1.includes(location.pathname);
   const shouldRenderStudentBook = !excludePaths1.includes(location.pathname);
-
-  
 
   return (
     <Container>
