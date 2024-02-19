@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import exit from "../../assets/exit.svg";
@@ -9,22 +9,20 @@ import RoleContext from "../../RoleContext";
 /////////////////////////////
 
 const Warp = styled.div`
-margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-margin-right: auto;
+  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-right: auto;
 `;
 
 const NoteContainer = styled.div`
-width: 1194px;
-height: 800px;
-flex-shrink: 0;
-border-radius: 8px;
-background: #fff;
-box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-position: relative;
-margin-top: 16px;
+  width: 1194px;
+  height: 800px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  position: relative;
+  margin-top: 16px;
 
-
-  
   overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
@@ -34,7 +32,6 @@ margin-top: 16px;
     border-radius: 2px;
     background: #ccc;
   }
-
 `;
 
 const CircleText = styled.div`
@@ -87,10 +84,9 @@ const Button = styled.button`
   height: 54px;
   flex-shrink: 0;
   border-radius: 6px;
-  background: #4849FF;
+  background: #4849ff;
   margin-top: 74px;
   margin-left: 1050px;
-  
 
   color: #fff;
   text-align: center;
@@ -99,8 +95,6 @@ const Button = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-
-
 `;
 
 const SubjectBodyWrapper = styled.div`
@@ -259,12 +253,10 @@ function GroupDetail() {
 
   const accessToken = localStorage.getItem("token");
 
-///////////////////////////////////////////
-  const role = useContext(RoleContext); 
-  
-///////////////////////////////////////////////
+  ///////////////////////////////////////////
+  const role = useContext(RoleContext);
 
-
+  ///////////////////////////////////////////////
 
   const navigate = useNavigate();
   const handleGroupClick = (id, school, grade, classNum, subject) => {
@@ -344,9 +336,8 @@ function GroupDetail() {
 
   return (
     <Warp>
-      
-       <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
-        {role === 'teacher' ? '그룹생성' : '그룹 입장'}
+      <Button onClick={() => setShowSmallContainer(!showSmallContainer)}>
+        {role === "TEACHER" ? "그룹 생성" : "그룹 입장"}
       </Button>
 
       {showSmallContainer && (
@@ -405,36 +396,36 @@ function GroupDetail() {
           )}
         </SmallContainer>
       )}
-<NoteContainer>
-      {groupList.length === 0 ? (
+      <NoteContainer>
+        {groupList.length === 0 ? (
           <Notice>
-          <Img src={Group} alt="Group" />
-          그룹이 존재하지 않습니다.
+            <Img src={Group} alt="Group" />
+            그룹이 존재하지 않습니다.
           </Notice>
-      ) : (
-        <SubjectBodyWrapper>
-          {groupList.map((group) => (
-            <SubjectBody
-              key={group.id}
-              onClick={() =>
-                handleGroupClick(
-                  group.id,
-                  group.school,
-                  group.grade,
-                  group.classNum,
-                  group.subject
-                )
-              }
-            >
-              <CircleText>
-                <PurpleText>{group.subject[0]}</PurpleText>
-              </CircleText>
-              <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
-            </SubjectBody>
-          ))}
-        </SubjectBodyWrapper>
-      )}
-    </NoteContainer>
+        ) : (
+          <SubjectBodyWrapper>
+            {groupList.map((group) => (
+              <SubjectBody
+                key={group.id}
+                onClick={() =>
+                  handleGroupClick(
+                    group.id,
+                    group.school,
+                    group.grade,
+                    group.classNum,
+                    group.subject
+                  )
+                }
+              >
+                <CircleText>
+                  <PurpleText>{group.subject[0]}</PurpleText>
+                </CircleText>
+                <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
+              </SubjectBody>
+            ))}
+          </SubjectBodyWrapper>
+        )}
+      </NoteContainer>
     </Warp>
   );
 }
