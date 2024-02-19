@@ -1,8 +1,10 @@
 import * as React from "react";
+import {useContext} from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import instance from "../../../assets/api/axios";
 import * as S from "./style";
+import RoleContext from "../../../RoleContext";
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,9 +15,14 @@ import Grid from "@mui/material/Grid";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const { setRole } = useContext(RoleContext);
+
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const [role, setRole] = useState(''); 
+
+
   const navigate = useNavigate();
   const navagateSignup = () => {
     navigate("/selectSchool");
@@ -31,6 +38,7 @@ export default function Login() {
       if (response.status === 200) {
         alert("로그인 성공!");
         const accessToken = response.data.result.token;
+        setRole(response.data.result.role); 
         console.log("accessToken테스트:", accessToken);
 
         // 로컬 스토리지에 토큰 저장
@@ -46,7 +54,7 @@ export default function Login() {
   };
 
   return (
-    
+    <RoleContext.Provider value={role}>
     <ThemeProvider theme={defaultTheme}>
       <S.ContainerBox>
         <CssBaseline />
@@ -128,6 +136,7 @@ export default function Login() {
         </Box>
       </S.ContainerBox>
     </ThemeProvider>
+    </RoleContext.Provider>
     
   );
 }
