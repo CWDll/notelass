@@ -50,9 +50,7 @@ export const groupAccept = async (groupId, userId) => {
 // 그룹 신청 거절
 export const groupReject = async (groupId, userId) => {
   try {
-    const res = await instance.delete(
-      `/api/group/approve/${groupId}/${userId}`
-    );
+    const res = await instance.delete(`/api/group/reject/${groupId}/${userId}`);
 
     if (res.status === 200) {
       alert("그룹 신청을 거절하였습니다.");
