@@ -50,9 +50,7 @@ export const groupAccept = async (groupId, userId) => {
 // 그룹 신청 거절
 export const groupReject = async (groupId, userId) => {
   try {
-    const res = await instance.delete(
-      `/api/group/approve/${groupId}/${userId}`
-    );
+    const res = await instance.delete(`/api/group/reject/${groupId}/${userId}`);
 
     if (res.status === 200) {
       alert("그룹 신청을 거절하였습니다.");
@@ -117,18 +115,17 @@ export const deleteStudentInList = async (groupId, userId) => {
 //학생
 
 //학생 그룹 코드 입력
-export const enterGroupCode = async (code, setGroupId) => {
+export const enterGroupCode = async (code, setGroupId, setGroupInfo) => {
   try {
     const res = await instance.get(`/api/group/${code}`);
     console.log(code);
 
     if (res.status === 200) {
       console.log("코드로 그룹 입장 성공 ");
-      alert("입력한 그룹에 입장하셨습니다.");
       console.log(res.data.result.groupId);
       const myGroupId = res.data.result.groupId;
-      console.log(res.data.result.groupInfo);
       setGroupId(myGroupId);
+      setGroupInfo(res.data.result.groupInfo);
     } else {
       console.log("코드로 그룹 입장 실패");
     }
@@ -145,7 +142,7 @@ export const enterGroup = async (groupId) => {
 
     if (res.status === 201) {
       console.log("그룹 입장 성공 ");
-      alert("입력한 그룹에 입장하셨습니다.");
+      alert("그룹 입장을 신청하였습니다.");
       console.log(res.data.result);
       window.location.reload();
     } else if (res.status === 400) {
