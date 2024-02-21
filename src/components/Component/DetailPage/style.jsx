@@ -55,5 +55,89 @@ export const AssigmentCreateForm = styled.div`
   width: 684px;
   height: 800px;
   background-color: white;
-  margin-right: 30px;
+  dislay: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 8px;
+`;
+
+export const Line = styled.hr`
+  background: #ededff;
+  height: 2px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+`;
+
+export const ContentBox = styled.div`
+min-height: 100px;
+height; auto; `;
+
+export const FileList = styled.div`
+  margin-left: -330px;
+`;
+
+export const FileItem = styled.div`
+  width: 590px;
+  height: 40px;
+  background: #f5f5fc;
+  border: 1px solid #e6e8ee;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-left: 330px;
+`;
+
+export const FileName = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+export const FileSize = styled.span`
+  color: var(--Cool-Grayscale-Placeholder, #9ea4aa);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+// 파일 아이콘을 표시하기 위한 스타일 컴포넌트
+export const FileIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+`;
+
+export const FileContainer = styled.div`
+  display: flex;
+  height: 110px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  border: 1px solid #e6e8ee;
+  border-radius: 8px;
+  padding: 10px;
+  width: 620px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
