@@ -9,18 +9,20 @@ function NoticeDetailcard({
   createdDate,
   groupId,
   id,
+  info,
 }) {
+  console.log("info입니다 !!:", info);
   const navigate = useNavigate();
+  const MoveToDetail = () => {
+    navigate(`/NoticeDetail/${groupId}/${id}`, { state: info });
+  };
+
   // 날짜 형식을 원하는 형태로 변환하는 함수 (예: '2024-02-04T12:00:00' -> '2024.02.04')
   const formatDate = (date) => {
     const handledDate = new Date(date);
     return `${handledDate.getFullYear()}.${
       handledDate.getMonth() + 1
     }.${handledDate.getDate()}`;
-  };
-
-  const MoveToDetail = () => {
-    navigate(`/NoticeDetail/${groupId}/${id}`);
   };
 
   return (

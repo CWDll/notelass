@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 // modal
@@ -248,8 +248,10 @@ function GroupDetailClass() {
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
   };
-  const toAllPage = () => {
-    navigate(`/NoticeDetailList/${id}`);
+  const toAllPage = (school, grade, classNum, subject) => {
+    navigate(`/NoticeDetailList/${id}`, {
+      state: { school, grade, classNum, subject },
+    });
   };
 
   const GroupDetailWrite = (
@@ -459,7 +461,14 @@ function GroupDetailClass() {
               <Title>공지/과제</Title>
               <ShowAllText
                 style={{ "text-decoration": "underline" }}
-                onClick={toAllPage}
+                onClick={() => {
+                  toAllPage(
+                    info.school,
+                    info.grade,
+                    info.classNum,
+                    info.subject
+                  );
+                }}
               >
                 전체보기
               </ShowAllText>

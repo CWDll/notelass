@@ -59,6 +59,7 @@ export const AssigmentCreateForm = styled.div`
   flex-direction: column;
   padding: 30px;
   border-radius: 8px;
+  margin-right: 30px;
 `;
 
 export const Line = styled.hr`
@@ -140,4 +141,17 @@ export const FileContainer = styled.div`
     border-radius: 2px;
     background: #ccc;
   }
+`;
+
+export const RowDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Button = styled.button`
+  position: relative;
+  left: 520px;
+  bottom: -300px;
+  background-color: #4849ff;
+  color: white;
 `;

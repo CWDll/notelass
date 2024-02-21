@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import * as S from "./style";
 import {
   getAllNotice,
@@ -13,6 +13,10 @@ function NoticeDetailList() {
   const [notices, setNotices] = useState([]);
   const [searchCategory, setSearchCategory] = useState("제목");
   const [isOpen, setIsOpen] = useState(false);
+
+  const location = useLocation();
+  const info = location.state;
+  console.log("gg", info);
 
   //groupId있으면 그룹 내 공지만, 아니면 전체 공지
   useEffect(() => {
@@ -33,17 +37,6 @@ function NoticeDetailList() {
     setSearchCategory(newCategory);
     setIsOpen(!isOpen);
   }
-
-  //groupId있으면 NoticeDetail페이지로, 아니면 아무작동X
-  const handleListClick = (listId) => {
-    if (groupId) {
-      // navigate(`/NoticeDetail/${groupId}/${listId}`);
-      alert("id있음");
-    } else {
-      alert("꽝");
-      return;
-    }
-  };
 
   return (
     <S.Container>
@@ -84,6 +77,7 @@ function NoticeDetailList() {
             createdDate={notice.createdDate}
             groupId={groupId}
             id={notice.id}
+            info={info}
           />
         ))}
       </S.ItemsContainer>

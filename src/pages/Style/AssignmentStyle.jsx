@@ -96,6 +96,7 @@ export const AssignmentSettingForm = styled.div`
   width: 480px;
   height: 800px;
   background-color: white;
+  border-radius: 8px;
 `;
 
 export const HeadInput = styled.div`
