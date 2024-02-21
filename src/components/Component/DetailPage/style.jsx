@@ -49,3 +49,11 @@ export const Views = styled.div`
 export const SmallText = styled(Content)`
   color: #9ea4aa;
 `;
+
+// NoticeDetailContent style
+export const AssigmentCreateForm = styled.div`
+  width: 684px;
+  height: 800px;
+  background-color: white;
+  margin-right: 30px;
+`;

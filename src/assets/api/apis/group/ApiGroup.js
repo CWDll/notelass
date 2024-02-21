@@ -41,6 +41,7 @@ export const groupAccept = async (groupId, userId) => {
       alert("그룹 신청을 수락하였습니다.");
     } else {
       alert("그룹 수락에서 문제가 발생했습니다.");
+      return;
     }
   } catch (error) {
     console.error("그룹 개인 수락 실패", error);
@@ -56,6 +57,7 @@ export const groupReject = async (groupId, userId) => {
       alert("그룹 신청을 거절하였습니다.");
     } else {
       console.log("그룹 거절에서 문제가 발생했습니다.");
+      return;
     }
   } catch (error) {
     console.error("그룹 일괄 수락 실패", error);

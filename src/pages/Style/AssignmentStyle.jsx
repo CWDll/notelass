@@ -154,11 +154,10 @@ export const InputDesc = styled.textarea`
     border-radius: 2px;
     background: #ccc;
   }
-
 `;
 
 export const CancelBtn = styled.button`
-position: absolute;
+  position: absolute;
 
   width: 64px;
   height: 40px;
@@ -166,12 +165,12 @@ position: absolute;
   background-color: #e6e8ee;
   font-size: 14px;
   margin-right: -80px;
-  
+
   margin-top: -10px;
 `;
 
 export const SubmitBtn = styled.button`
-position: absolute;
+  position: absolute;
 
   width: 100px;
   height: 40px;
@@ -255,7 +254,6 @@ export const Title = styled.div`
 `;
 
 export const FileList = styled.div`
- 
   margin-left: -330px;
 `;
 
@@ -357,7 +355,7 @@ export const FileContainer = styled.div`
   border-radius: 8px;
   padding: 10px;
   width: 620px;
-  margin-left:30px;
+  margin-left: 30px;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -368,5 +366,4 @@ export const FileContainer = styled.div`
     border-radius: 2px;
     background: #ccc;
   }
-
 `;
