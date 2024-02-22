@@ -13,6 +13,7 @@ function NoticeDetailContent(noticeId) {
   const [files, setFiles] = useState([]);
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
+  const [groupId, setGroupId] = useState("");
   console.log("sd", noticeId);
 
   useEffect(() => {
@@ -24,8 +25,7 @@ function NoticeDetailContent(noticeId) {
 
         if (res.status === 200) {
           console.log("머지", res.data.result);
-
-          // setResultData(res.data.result);
+          setGroupId(res.data.result.groupId);
           setTitle(res.data.result.title);
           setContent(res.data.result.content);
           setFiles(res.data.result.files);
@@ -46,12 +46,10 @@ function NoticeDetailContent(noticeId) {
   const info = location.state;
   console.log("ND의 info in NDC:", info);
 
+  const navigate = useNavigate();
   function callConsole() {
-    alert("작동");
-    console.log("타이틀", title);
-    console.log("콘텐트", content);
-    console.log("파일들", files);
-    console.log(teacher);
+    console.log("마마", noticeId);
+    navigate(`/GroupDetailClass/${groupId}/MakeAssignment`);
   }
 
   const renderFileList = () => (
