@@ -9,7 +9,9 @@ function NoticeDetail() {
   const { groupId, noticeId } = useParams(); // groupId 매개변수 받기
 
   const location = useLocation();
-  const info = location;
+  // 학교, 학년, 반, 과목 들어있는 데이터
+  const info = location.state;
+  console.log("ND의 info:", info);
 
   //뒤로가기
   function BackButton() {
@@ -22,7 +24,7 @@ function NoticeDetail() {
         <S.Img alt="chevron_left" onClick={BackButton} />
         <S.BoldText onClick={BackButton}>공지/과제/강의자료</S.BoldText>
       </S.Breadcrumb>
-      <NoticeDetailContent noticeId={noticeId} />
+      <NoticeDetailContent noticeId={noticeId} info={info} />
     </S.Container>
   );
 }

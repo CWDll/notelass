@@ -11,6 +11,8 @@ function NoticeDetailContent(noticeId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
+  const [teacher, setTeacher] = useState("");
+  const [creDate, setCreDate] = useState("");
   console.log("sd", noticeId);
 
   useEffect(() => {
@@ -21,12 +23,14 @@ function NoticeDetailContent(noticeId) {
         );
 
         if (res.status === 200) {
-          console.log("hi");
           console.log("머지", res.data.result);
-          const resultData = res.data.result;
-          setTitle(resultData.title);
-          setContent(resultData.content);
-          setFiles(resultData.files);
+
+          // setResultData(res.data.result);
+          setTitle(res.data.result.title);
+          setContent(res.data.result.content);
+          setFiles(res.data.result.files);
+          setTeacher(res.data.result.teacher);
+          setCreDate(res.data.result.createdDate);
         } else {
           console.log("테스트 실패");
         }
@@ -36,6 +40,19 @@ function NoticeDetailContent(noticeId) {
     };
     getStudentList();
   }, [noticeId]);
+
+  const location = useLocation();
+  // 학교, 학년, 반, 과목 들어있는 데이터
+  const info = location.state;
+  console.log("ND의 info in NDC:", info);
+
+  function callConsole() {
+    alert("작동");
+    console.log("타이틀", title);
+    console.log("콘텐트", content);
+    console.log("파일들", files);
+    console.log(teacher);
+  }
 
   const renderFileList = () => (
     <S.FileList>
@@ -60,7 +77,7 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        <S.Button>수정하기</S.Button>
+        <S.Button onClick={callConsole}>수정하기</S.Button>
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
@@ -77,7 +94,12 @@ function NoticeDetailContent(noticeId) {
           ) : (
             <NoticeInfo matchedGroup={matchedGroup} />
           )} */}
-        <NoticeInfo noticeId={noticeId} />
+        <NoticeInfo
+          noticeId={noticeId}
+          teacher={teacher}
+          info={info}
+          creDate={creDate}
+        />
       </A.AssignmentSettingForm>
     </S.RowDiv>
   );
