@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
-import exit from '../../../assets/exit.svg';
+import exit from 'src/assets/exit.svg';
+import instance from 'src/assets/api/axios';
 
 
 const SmallContainer = styled.div`
@@ -114,14 +115,15 @@ const Title2 = styled.p`
 `;
 
 
-const CreateGroup = () => {
-    const [showSmallContainer, setShowSmallContainer] = useState(false);
+const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
+    //const [showSmallContainer, setShowSmallContainer] = useState(false);
     // const [content, setContent] = useState("form");
     const [groupCode, setGroupCode] = useState("");
     const [grade, setGrade] = useState("");
     const [classNum, setClassNum] = useState("");
     const [subject, setSubject] = useState("");
     const [groupList, setGroupList] = useState([])
+    const [content, setContent] = useState("form");
 
 
     // 그룹 생성 POST 함수
@@ -170,6 +172,24 @@ const CreateGroup = () => {
     }
   };
 
+  const fetchGroups = async () => {
+    try {
+      const response = await instance.get("/api/group");
+      if (response.status === 200 && Array.isArray(response.data.result)) {
+        setGroupList(response.data.result);
+      } else {
+        console.error("그룹 목록을 불러오는데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
+
 
     return (
         <div>
@@ -179,6 +199,7 @@ const CreateGroup = () => {
         alt="exit"
         onClick={() => setShowSmallContainer(!showSmallContainer)}
       ></Exit>
+
       {content === "form" ? (
         <>
           <Title>대상 학년 선택</Title>
@@ -219,7 +240,7 @@ const CreateGroup = () => {
         <>
           <Title2>그룹 입장 코드</Title2>
           <Code>{groupCode}</Code>
-          <Button2 >
+          <Button2 onClick={() => setShowSmallContainer(!showSmallContainer)}>
             완료
           </Button2>
         </>

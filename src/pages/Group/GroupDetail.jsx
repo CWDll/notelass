@@ -5,7 +5,7 @@ import exit from "../../assets/exit.svg";
 import Group from "src/assets/icon/Group/Group.svg";
 import instance from "../../assets/api/axios";
 
-import CreateGroup from "../../components/Component/Group/CreateGroup";
+import CreateGroup from "../../components/Component/Group/Teacher/CreateGroup";
 import EnterGroup from "../../components/Component/Group/Student/EnterGroup";
 import * as S from "./Style/GroupDetailStyle";
 ////////////////////////////
@@ -83,7 +83,10 @@ function GroupDetail() {
             setShowSmallContainer={setShowSmallContainer}
           />
         ) : (
-          <CreateGroup />
+          <CreateGroup 
+          showSmallContainer={showSmallContainer}
+          setShowSmallContainer={setShowSmallContainer}
+          />
         ))}
       <S.NoteContainer>
         {groupList.length === 0 ? (
