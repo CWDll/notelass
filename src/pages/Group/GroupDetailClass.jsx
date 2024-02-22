@@ -473,13 +473,23 @@ function GroupDetailClass() {
         <LeftSectionContainer>
             <NoticeContainer>
               <Title>공지/과제</Title>
+
+              {role === "STUDENT" ?  (
+              <DetailText
+                onClick={toAllPage}
+              >
+                전체보기
+              </DetailText>
+              ) : ( 
+                <>
               <ShowAllText
-                style={{ "text-decoration": "underline" }}
                 onClick={toAllPage}
               >
                 전체보기
               </ShowAllText>
               <DetailText onClick={toWritePage}>생성하기</DetailText>
+              </>
+              )}
 
               <Title
                 style={{
@@ -522,7 +532,6 @@ function GroupDetailClass() {
             <GroupContainer>
               <Title>과제별 성적 열람</Title>
               <DetailText
-                style={{ "text-decoration": "underline" }}
                 onClick={toWritePage}
               >
                 전체보기

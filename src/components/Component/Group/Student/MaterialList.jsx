@@ -9,6 +9,8 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 // api
 import instance from "src/assets/api/axios";
+import { saveAs } from 'file-saver';
+import { Document, Page, Text, View, PDFViewer } from '@react-pdf/renderer';
 
 
 
@@ -298,7 +300,8 @@ async function handleLoadToNoteTab(materialId) {
     }
 }
     
-  
+
+
    
   
     const navigate = useNavigate();
@@ -359,7 +362,7 @@ async function handleLoadToNoteTab(materialId) {
                 />
                 {dropdownVisible[material.id] && (
                   <NavDropdownBox className="dropdown-menu">
-                    <NavDropdownOptionUp className="dropdown-item">
+                    <NavDropdownOptionUp className="dropdown-item" >
                     PDF로 내보내기
                     </NavDropdownOptionUp>
                     <hr />
