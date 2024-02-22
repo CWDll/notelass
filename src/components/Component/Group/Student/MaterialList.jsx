@@ -179,6 +179,7 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [materials, setMaterials] = useState([]); // 강의자료 목록을 저장할 상태
     const [dropdownVisible, setDropdownVisible] = useState({});
+    const dropdownRef = React.useRef(null);
 
     console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId,id);
 
@@ -277,6 +278,25 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
     fetchMaterials();
   }, [id]);
 
+  // 노트탭에 불러오기 함수 추가
+async function handleLoadToNoteTab(materialId) {
+    try {
+        const response = await instance.post(`/api/material?fileId=${materialId}`);
+        if (response.data.code === 201) {
+            alert('노트 탭에 성공적으로 업로드했습니다.');
+            console.log('노트 탭에 업로드 성공 ', response.data.message);
+            setDropdownVisible((prev) => ({
+                ...prev,
+                [materialId]: false,
+              }));
+        } else {
+            alert('노트 탭에 업로드에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
+}
     
   
    
@@ -345,7 +365,7 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
                     <hr />
                     <NavDropdownOptionDown
                       className="dropdown-item"
-                      onClick={() => handleClone(material.id)}
+                      onClick={() => handleLoadToNoteTab(material.id)}
                     >
                       노트탭에 불러오기
                     </NavDropdownOptionDown>
