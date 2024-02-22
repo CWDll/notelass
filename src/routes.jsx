@@ -18,7 +18,7 @@ import MakeAssignment from "./pages/Group/MakeAssignment";
 import StudentScoreDetail from "./pages/Student/StudentScoreDetail";
 import StudentTaskDetail from "./pages/Student/StudentTaskDetail";
 import GroupScoreDetail from "./pages/Group/GroupScoreDetail";
-import CreateGroup from "./components/Component/Group/CreateGroup";
+import CreateGroup from "./components/Component/Group/Teacher/CreateGroup";
 import NoticeDetailList from "./pages/Notice/NoticeDetailList";
 import NoticeDetail from "./pages/Notice/NoticeDetail";
 //학생수첩
