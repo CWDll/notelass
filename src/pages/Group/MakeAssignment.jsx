@@ -15,7 +15,7 @@ function MakeAssignment() {
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
-  // console.log("info:", info);
+  console.log("필요한 info:", info);
 
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
@@ -105,19 +105,38 @@ function MakeAssignment() {
         formData.append(`file`, file);
       });
 
-      // API 요청
-      const response = await instance.post(
-        `/api/notice/${paramsGroupId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      let response;
+      // 수정 API
+      if (info) {
+        response = await instance.put(
+          `/api/notice/${paramsGroupId}/${info}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        // 생성 API
+        response = await instance.post(
+          `/api/notice/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
       if (response.status === 201) {
-        alert("test");
-        navigate("/login");
+        alert("공지 생성 완료 ! ");
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
+      } else if (response.status === 200) {
+        alert("공지 수정이 완료되었습니다.");
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
       }
 
       // 응답 처리
@@ -187,23 +206,36 @@ function MakeAssignment() {
 
   useEffect(() => {
     const fetchGroups = async () => {
-      try {
-        const response = await instance.get(`/api/group`);
-        if (response.status === 200 && Array.isArray(response.data.result)) {
-          const matched = response.data.result.find(
-            (group) => group.id.toString() === paramsGroupId
-          );
-          if (matched) {
-            setMatchedGroup(matched);
-            console.log("Matched 그룹 정보:", matched);
+      if (info) {
+        try {
+          const res = await instance.get(`/api/notice/detail?noticeId=${info}`);
+          if (res.status === 200) {
+            // set 함수들 들어갈 자리
           } else {
-            console.error("Matching group not found");
+            console.log("테스트 실패");
           }
-        } else {
-          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        } catch (error) {
+          console.error("fetchGroups에서 오류 발생", error);
         }
-      } catch (error) {
-        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      } else {
+        try {
+          const response = await instance.get(`/api/group`);
+          if (response.status === 200 && Array.isArray(response.data.result)) {
+            const matched = response.data.result.find(
+              (group) => group.id.toString() === paramsGroupId
+            );
+            if (matched) {
+              setMatchedGroup(matched);
+              console.log("Matched 그룹 정보:", matched);
+            } else {
+              console.error("Matching group not found");
+            }
+          } else {
+            console.error("그룹 목록을 불러오는데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+        }
       }
     };
     fetchGroups();

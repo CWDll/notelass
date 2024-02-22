@@ -49,7 +49,9 @@ function NoticeDetailContent(noticeId) {
   const navigate = useNavigate();
   function callConsole() {
     console.log("마마", noticeId);
-    navigate(`/GroupDetailClass/${groupId}/MakeAssignment`);
+    navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
+      state: noticeId.noticeId,
+    });
   }
 
   const renderFileList = () => (
