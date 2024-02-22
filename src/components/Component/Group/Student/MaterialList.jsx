@@ -2,75 +2,15 @@ import React, { useState, useEffect,useContext   } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
-import chevron_left from "src/assets/chevron_left.svg";
-import person from "src/assets/person.svg";
-import file from "src/assets/file.svg";
-import envelope from "src/assets/envelope.svg";
-import envelopeOpen from "src/assets/envelopeOpen.svg";
-import fileDownload from "src/assets/fileDownload.svg";
+import plus_lg from "src/assets/plus_lg.svg";
+import paper from "src/assets/paper.svg";
+import chevron_down from "src/assets/chevron_down.svg";
+import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 // api
 import instance from "src/assets/api/axios";
 
 
-const Wrap = styled.div`
-  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-  margin-right: auto;
-`;
-
-const Main = styled.div`
-  margin-left: -363px;
-`;
-
-const Header = styled.header`
-  display: flex;
-`;
-
-const Img = styled.img`
-  margin-left: 363px;
-  margin-top: 72px;
-`;
-
-const BoldTitle = styled.p`
-  color: #26282b;
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: 24px;
-  margin-top: 72px;
-`;
-
-const LeftSectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-`;
-
-const NoticeContainer = styled.div`
-  width: 684px;
-  height: 360px;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  margin-left: 363px;
-  margin-top: 33px;
-  position: relative;
-  align-items: center;
-`;
-
-const GroupContainer = styled.div`
-  width: 684px;
-  height: 360px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-  margin-left: 363px;
-  margin-top: 30px;
-  position: relative;
-`;
 
 const ManagementContainer = styled.div`
   width: 480px;
@@ -134,7 +74,7 @@ const ShowAllText = styled(DetailText)`
   margin-left: auto;
 `;
 
-const SubjectContainer = styled.div`
+const MainContainer = styled.div`
   display: flex;
   width: 684px;
   height: 48px;
@@ -144,88 +84,86 @@ const SubjectContainer = styled.div`
   margin-top: 24px;
 `;
 
-const StyledNoticeItem = styled.li`
-  list-style: none;
-  cursor: pointer;
-  border-radius: 4px;
-  color: ${({ isClicked }) => (isClicked ? "#9EA4AA" : "inherit")};
-`;
 
-const NoticeContent = styled.div`
+const SubjectBody = styled.div`
   display: flex;
+  width: 1194px;
+  height: 72px;
+  margin-top: 16px;
 `;
 
-const NoticeImg = styled.img`
-  margin-top: 13px;
+const SubjectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  margin-top: 16px;
+`;
+
+const SubjectBodyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+`;
+
+
+const NavDropdownBox = styled.div`
+  width: 150px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 285px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.1);
+`;
+
+const NavDropdownOptionUp = styled.div`
+  &:hover {
+    background-color: #f5f5fc;
+  }
+  width: 100%;
+  border-radius: 10px 10px 0 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+`;
+
+const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
+  border-radius: 0 0 10px 10px;
+`;
+
+
+const PaperImg = styled.img`
+  width: 48px;
+  height: 64px;
   margin-left: 32px;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
+  margin-top: 4px;
 `;
 
-//디자인 위치 다시 수정해야함. 임시로 배치
-const NoticeTitle = styled.p`
+const ChevronDownImg = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-left: 440px;
+  align-self: center;
+  position: absolute;
+`;
+
+const BoldText = styled.p`
+  color: #26282b;
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
-  line-height: normal;
-  margin-left: 24px;
-  margin-top: 14px;
-  margin-bottom: 10px;
-  z-index: 1;
 `;
 
-const SudentNum = styled.p`
-  font-size: 16px;
-  font-style: normal;
+const GrayText = styled.p`
+  color: #9ea4aa;
+  font-size: 12px;
   font-weight: 600;
-  line-height: normal;
-  margin-left: 24px;
-  margin-top: 14px;
-  margin-bottom: 15px;
-`;
-
-const NoticeDate = styled.div`
-  width: 132px;
-  height: 20px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  background: var(--primary-light-cobalt, #ededff);
-  margin-left: 16px;
-  margin-top: 14px;
-
-  color: var(--primary-cobalt, #4849ff);
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-align: center;
-`;
-
-const Button = styled.button`
-  height: 54px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  background: #4849ff;
-  margin-left: 16px;
-  margin-top: 57px;
-
-  color: #fff;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
-const FileDownload = styled.img`
-  position: relative;
-  top: 24px;
-  left: 3px;
-  width: 24px;
-  cursor: pointer;
+  margin-top: 4px;
 `;
 
 
@@ -239,8 +177,105 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
     const [showSmallContainer, setShowSmallContainer] = useState(false);
     const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [materials, setMaterials] = useState([]); // 강의자료 목록을 저장할 상태
+    const [dropdownVisible, setDropdownVisible] = useState({});
 
     console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId,id);
+
+      // 날짜 포맷 함수
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("ko-KR", options)
+      .format(date)
+      .replace(" ", "")
+      .replace(". ", ".")
+      .replace(". ", ".");
+  };
+
+  // 노트 복제 함수
+  function handleClone(materialId) {
+    setMaterials((prev) => {
+      const materialToClone = prev.find(
+        (material) => material.id === materialId
+      );
+      if (!materialToClone) return prev;
+      const clonedMaterial = { ...materialToClone, id: Date.now() }; // 새로운 id를 생성
+      return [...prev, clonedMaterial];
+    });
+  }
+
+  // 노트 삭제 함수
+  function handleDelete(materialId) {
+    setMaterials((prev) =>
+      prev.filter((material) => material.id !== materialId)
+    );
+  }
+
+  //뒤로가기
+  function goBack() {
+    navigate(-1);
+  }
+
+
+  function handleTitleClick() {
+    // Title 클릭 시 PDF 뷰어 페이지로 이동
+    navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
+  }
+
+  // 외부 클릭 감지 함수
+  const handleClickOutside = (event, itemKey) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible((prev) => ({
+        ...prev,
+        [itemKey]: false,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    // 외부 클릭 이벤트 리스너 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // 클린업 함수에서 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // 드롭다운 토글 함수
+  const toggleDropdown = (materialId) => {
+    setDropdownVisible((prev) => ({
+      ...prev,
+      [materialId]: !prev[materialId],
+    }));
+  };
+
+  //강의자료(노트) 목록 GET API
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await instance.get(`/api/material/${id}`);
+        if (response.data.code === 200) {
+          setMaterials(response.data.result); // 상태 업데이트
+          console.log("강의자료 목록 조회 결과:", response.data.result);
+        } else {
+          console.error("강의자료 목록을 불러오는 데 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("강의자료 목록 조회 중 오류 발생:", error);
+      }
+    };
+
+    fetchMaterials();
+  }, [id]);
 
     
   
@@ -283,9 +318,50 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
         <div>
             <ManagementContainer>
             <Title>학습 자료</Title>
-            <SubjectContainer>
-              
-            </SubjectContainer>
+            <MainContainer>
+            {materials.map((material) => (
+              <SubjectBody key={material.id} >
+                
+                <PaperImg src={paper} alt="paper" />
+                <SubjectContainer onClick={handleTitleClick}>
+                  <BoldText>
+                    {material.files
+                      .map((file) => file.originalFileName)
+                      .join(", ")}
+                  </BoldText>
+                  <GrayText>{formatDate(material.createdDate)}</GrayText>
+                </SubjectContainer>
+
+                <ChevronDownImg
+                  src={buttonstyle}
+                  alt="buttonstyle"
+                  onClick={() => toggleDropdown(material.id)}
+                />
+                {dropdownVisible[material.id] && (
+                  <NavDropdownBox className="dropdown-menu">
+                    <NavDropdownOptionUp className="dropdown-item">
+                    PDF로 내보내기
+                    </NavDropdownOptionUp>
+                    <hr />
+                    <NavDropdownOptionDown
+                      className="dropdown-item"
+                      onClick={() => handleClone(material.id)}
+                    >
+                      노트탭에 불러오기
+                    </NavDropdownOptionDown>
+                    {/* <hr />
+                    <NavDropdownOptionDown
+                      className="dropdown-item"
+                      onClick={() => handleDelete(material.id)}
+                    >
+                      자료 보기
+                    </NavDropdownOptionDown> */}
+                  </NavDropdownBox>
+                )}
+
+              </SubjectBody>
+            ))}
+            </MainContainer>
           </ManagementContainer>
            
         </div>
