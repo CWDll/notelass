@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect,useContext   } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 // modal
@@ -14,6 +14,7 @@ import fileDownload from "../../assets/fileDownload.svg";
 
 // api
 import instance from "../../assets/api/axios";
+import RoleContext from "../../RoleContext";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
 import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
@@ -243,6 +244,8 @@ function GroupDetailClass() {
   const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  const role = useContext(RoleContext);
+
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
@@ -394,14 +397,14 @@ function GroupDetailClass() {
           <BoldTitle>
             {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
           </BoldTitle>
-          <Button
-            onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
-          >
-            그룹 정보
-          </Button>
-          <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
-            학생 등록
-          </Button>
+          {role === "teacher" ? ( // 선생님 역할일 때
+          <>
+            <Button onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}>
+              그룹 정보
+            </Button>
+            <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
+              학생 등록
+            </Button>
           {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
         <Button>
         <Button style={{ position: 'relative' }}>
@@ -430,10 +433,17 @@ function GroupDetailClass() {
             alt="fileDownload"
             onClick={handleStuExcelDownload}
           /> */}
-
           <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
-            {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+              {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+            </Button>
+          </>
+        ) : ( // 학생 역할일 때
+        <>
+          <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
+            자기평가
           </Button>
+        </>
+      )}
           {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
           {showEnrollModal && (
