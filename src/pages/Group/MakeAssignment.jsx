@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
+import RoleContext from "../../RoleContext";
 
 import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../../components/Component/Notice/AssignInfo";
 import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
+import ShowAssignment from "../../components/Component/Group/Student/ShowAssignment";
 
 import * as S from "../Style/AssignmentStyle";
 
@@ -16,6 +18,7 @@ function MakeAssignment() {
   // console.log("location: ", location);
   const info = location.state;
   // console.log("info:", info);
+  const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
@@ -234,7 +237,11 @@ function MakeAssignment() {
             `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
         </S.BoldTitle>
       </S.Header>
+
       <S.Body>
+      {role === "STUDENT" ? (
+        <ShowAssignment />  
+      ) : (
         <S.AssigmentCreateForm>
           <S.CreateTitle>공지/강의자료</S.CreateTitle>
           <S.Title>
@@ -329,6 +336,8 @@ function MakeAssignment() {
             </S.CancelBtn>
           </S.Foot>
         </S.AssigmentCreateForm>
+
+      )}
         <S.AssignmentSettingForm>
           <S.CreateTitle>
             {selectedButton === "과제"
