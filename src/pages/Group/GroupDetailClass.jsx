@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect,useContext   } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 // modal
@@ -14,9 +14,12 @@ import fileDownload from "../../assets/fileDownload.svg";
 
 // api
 import instance from "../../assets/api/axios";
+import RoleContext from "../../RoleContext";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
 import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
+import StudentNotice from "../../components/Component/Group/Student/StudentNotice";
+import MaterialList from "../../components/Component/Group/Student/MaterialList";
 
 const Wrap = styled.div`
   margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
@@ -243,6 +246,8 @@ function GroupDetailClass() {
   const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  const { role } = useContext(RoleContext);
+
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
@@ -394,14 +399,20 @@ function GroupDetailClass() {
           <BoldTitle>
             {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
           </BoldTitle>
-          <Button
-            onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
-          >
-            그룹 정보
+          {role === "STUDENT" ?  (
+          <>
+          <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
+            자기평가
           </Button>
-          <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
-            학생 등록
-          </Button>
+        </>
+           ) : ( 
+          <>
+            <Button onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}>
+              그룹 정보
+            </Button>
+            <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
+              학생 등록
+            </Button>
           {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
         <Button>
         <Button style={{ position: 'relative' }}>
@@ -430,10 +441,14 @@ function GroupDetailClass() {
             alt="fileDownload"
             onClick={handleStuExcelDownload}
           /> */}
-
           <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
-            {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
-          </Button>
+              {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+            </Button>
+          </>
+          )}
+       
+       
+     
           {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
           {showEnrollModal && (
@@ -454,16 +469,27 @@ function GroupDetailClass() {
           )}
         </Header>
         <MainContainer>
-          <LeftSectionContainer>
+        
+        <LeftSectionContainer>
             <NoticeContainer>
               <Title>공지/과제</Title>
+
+              {role === "STUDENT" ?  (
+              <DetailText
+                onClick={toAllPage}
+              >
+                전체보기
+              </DetailText>
+              ) : ( 
+                <>
               <ShowAllText
-                style={{ "text-decoration": "underline" }}
                 onClick={toAllPage}
               >
                 전체보기
               </ShowAllText>
               <DetailText onClick={toWritePage}>생성하기</DetailText>
+              </>
+              )}
 
               <Title
                 style={{
@@ -498,10 +524,14 @@ function GroupDetailClass() {
               </div>
             </NoticeContainer>
 
+            {role === "STUDENT" ?  (
+              <StudentNotice paramsGroupId={paramsGroupId} paramsUserId={paramsUserId} id={id}/>
+             
+             ) : ( 
+              <>
             <GroupContainer>
               <Title>과제별 성적 열람</Title>
               <DetailText
-                style={{ "text-decoration": "underline" }}
                 onClick={toWritePage}
               >
                 전체보기
@@ -567,9 +597,18 @@ function GroupDetailClass() {
                 ></Title>
               </SubjectContainer>
             </GroupContainer>
+            </>
+           )}
           </LeftSectionContainer>
 
-          <ManagementContainer>
+         
+
+        {role === "STUDENT" ?  (
+          <MaterialList paramsGroupId={paramsGroupId} paramsUserId={paramsUserId} id={id}/>
+          
+          ) : ( 
+          <>
+            <ManagementContainer>
             <Title>생기부 관리</Title>
             <SubjectContainer>
               {students.map((student, index) => (
@@ -593,6 +632,8 @@ function GroupDetailClass() {
               ))}
             </SubjectContainer>
           </ManagementContainer>
+          </>
+        )}
         </MainContainer>
       </Main>
     </Wrap>
