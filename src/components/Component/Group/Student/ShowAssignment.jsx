@@ -3,30 +3,6 @@ import instance from "src/assets/api/axios";
 
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  width: 1920px;
-  min-height: 1080px;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
-`;
-
-// Left Body 시작
-const Header = styled.header`
-  display: flex;
-  margin-bottom: 50px;
-  /* justify-content: center; */
-  /* margin: 70px 0 55px 357px; */
-  /* align-items: center; */
-  /* flex-direction: row; */
-`;
-
-const Body = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
 
 const Foot = styled.div`
   display: flex;
@@ -39,10 +15,7 @@ const Foot = styled.div`
   margin-bottom: 30px;
 `;
 
-const Img = styled.img`
-  margin-left: 363px;
-  margin-top: 72px;
-`;
+
 
 const BigTitle = styled.p`
   color: #26282b;
@@ -50,15 +23,6 @@ const BigTitle = styled.p`
   font-weight: bold;
   /* margin-left: 24px;
   margin-top: 72px; */
-  font-family: Pretendard;
-`;
-
-const BoldTitle = styled.p`
-  color: #26282b;
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: 24px;
-  margin-top: 72px;
   font-family: Pretendard;
 `;
 
@@ -77,16 +41,6 @@ const SmallTitle = styled.p`
   line-height: normal;
 `;
 
-const SubText = styled.p`
-  color: var(--primary-cobalt, #4849ff);
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-decoration-line: underline;
-  margin-top: 5px;
-`;
 
 const AssigmentCreateForm = styled.div`
   width: 684px;
@@ -97,11 +51,7 @@ const AssigmentCreateForm = styled.div`
   border-radius: 16px;
 `;
 
-const AssignmentSettingForm = styled.div`
-  width: 480px;
-  height: 800px;
-  background-color: white;
-`;
+
 
 const HeadInput = styled.div`
   display: flex;
@@ -114,53 +64,11 @@ const HeadInput = styled.div`
   padding-left: 32px; // 왼쪽 패딩 추가
 `;
 
-const BodyInput = styled.div`
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-  margin-left: 29.5px;
-  margin-top: 25px;
-`;
-
 const LegInput = styled(HeadInput)`
   justify-content: flex-start;
   margin-left: 30px;
 `;
 
-const InputTitle = styled.input`
-  width: ${(props) =>
-    props.selectedButton === "강의자료" ? "493px" : "525px"};
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #c9cdd2;
-  padding: 10px;
-  margin-left: 24px;
-`;
-
-const InputDesc = styled.textarea`
-  width: 620px;
-  height: 320px;
-  /* background-color: purple; */
-  border-radius: 8px;
-  resize: none;
-  border: 1px solid #c9cdd2;
-  margin-top: 10px;
-  padding: 10px;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #ccc;
-  }
-
-`;
 
 const CancelBtn = styled.button`
 position: absolute;
@@ -189,16 +97,6 @@ position: absolute;
   margin-top: -10px;
 `;
 
-const SettingBox = styled.div`
-  margin-top: 20px;
-  margin-left: 32px;
-  width: 416px;
-  height: 60px;
-  border-bottom: 1.5px solid #ededff;
-  display: flex;
-  justify-items: center;
-  flex-direction: column;
-`;
 
 const LibraryButton = styled.button`
   display: inline-flex;
@@ -532,7 +430,7 @@ const ShowAssignment = () => {
           <CreateTitle>공지/강의자료</CreateTitle>
           <Title>
            
-          과제 리스트
+        
           </Title>
 
           <LegInput>
