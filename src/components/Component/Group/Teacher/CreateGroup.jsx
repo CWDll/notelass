@@ -53,7 +53,7 @@ const TextBox = styled.input`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
 
-  color: var(--cool-grayscale-line, #c9cdd2);
+  color: black;
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -129,7 +129,8 @@ const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
     // 그룹 생성 POST 함수
   const generateGroup = async () => {
     if (!grade || !classNum || !subject) {
-      document.getElementById("Button2").style.backgroundColor = "gray";
+      //document.getElementById("Button2").style.backgroundColor = "gray";
+      alert("모든 항목을 입력해주세요.");
       return;
     }
 
