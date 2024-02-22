@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
-import exit from '../../../assets/exit.svg';
+import exit from 'src/assets/exit.svg';
+import instance from 'src/assets/api/axios';
 
 
 const SmallContainer = styled.div`
@@ -52,7 +53,7 @@ const TextBox = styled.input`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
 
-  color: var(--cool-grayscale-line, #c9cdd2);
+  color: black;
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -114,20 +115,23 @@ const Title2 = styled.p`
 `;
 
 
-const CreateGroup = () => {
-    const [showSmallContainer, setShowSmallContainer] = useState(false);
+const CreateGroup = ({ showSmallContainer, setShowSmallContainer, fetchGroups }) => {
+    //const [showSmallContainer, setShowSmallContainer] = useState(false);
     // const [content, setContent] = useState("form");
     const [groupCode, setGroupCode] = useState("");
     const [grade, setGrade] = useState("");
     const [classNum, setClassNum] = useState("");
     const [subject, setSubject] = useState("");
     const [groupList, setGroupList] = useState([])
+    const [content, setContent] = useState("form");
+    
 
 
     // 그룹 생성 POST 함수
   const generateGroup = async () => {
     if (!grade || !classNum || !subject) {
-      document.getElementById("Button2").style.backgroundColor = "gray";
+      //document.getElementById("Button2").style.backgroundColor = "gray";
+      alert("모든 항목을 입력해주세요.");
       return;
     }
 
@@ -155,10 +159,10 @@ const CreateGroup = () => {
       const response = await instance.post("/api/group", requestBody);
 
       // 응답이 성공적이면 groupCode 상태 업데이트
-      if (response.status === 201) {
+       if (response.status === 201) {
         setGroupCode(response.data.result);
         setContent("code");
-        await fetchGroups();
+        
       } else {
         console.error(
           "서버로부터 예상치 못한 응답을 받았습니다:",
@@ -170,6 +174,12 @@ const CreateGroup = () => {
     }
   };
 
+  useEffect(() => {
+    if (groupCode) {
+      fetchGroups();
+    }
+  }, [groupCode]);
+
 
     return (
         <div>
@@ -179,6 +189,7 @@ const CreateGroup = () => {
         alt="exit"
         onClick={() => setShowSmallContainer(!showSmallContainer)}
       ></Exit>
+
       {content === "form" ? (
         <>
           <Title>대상 학년 선택</Title>
@@ -219,7 +230,7 @@ const CreateGroup = () => {
         <>
           <Title2>그룹 입장 코드</Title2>
           <Code>{groupCode}</Code>
-          <Button2 >
+          <Button2 onClick={() => setShowSmallContainer(!showSmallContainer)}>
             완료
           </Button2>
         </>
