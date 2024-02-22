@@ -19,13 +19,14 @@ const subject = subjectInfo.split(" ")[3];
 // subject에서 앞 1글자만 가져와 저장하는 letter
 const letter = subject.substr(0, 1);
 
-function GroupDetail() {
+function GroupDetail({generateGroup}) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [groupCode, setGroupCode] = useState("");
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
+  
 
   const [showEnterGroupModal, setShowEnterGroupModal] = useState(false);
 
@@ -86,6 +87,7 @@ function GroupDetail() {
           <CreateGroup 
           showSmallContainer={showSmallContainer}
           setShowSmallContainer={setShowSmallContainer}
+          fetchGroups={fetchGroups}
           />
         ))}
       <S.NoteContainer>

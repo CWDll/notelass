@@ -115,7 +115,7 @@ const Title2 = styled.p`
 `;
 
 
-const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
+const CreateGroup = ({ showSmallContainer, setShowSmallContainer, fetchGroups }) => {
     //const [showSmallContainer, setShowSmallContainer] = useState(false);
     // const [content, setContent] = useState("form");
     const [groupCode, setGroupCode] = useState("");
@@ -124,6 +124,7 @@ const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
     const [subject, setSubject] = useState("");
     const [groupList, setGroupList] = useState([])
     const [content, setContent] = useState("form");
+    
 
 
     // 그룹 생성 POST 함수
@@ -158,10 +159,10 @@ const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
       const response = await instance.post("/api/group", requestBody);
 
       // 응답이 성공적이면 groupCode 상태 업데이트
-      if (response.status === 201) {
+       if (response.status === 201) {
         setGroupCode(response.data.result);
         setContent("code");
-        await fetchGroups();
+        
       } else {
         console.error(
           "서버로부터 예상치 못한 응답을 받았습니다:",
@@ -173,23 +174,11 @@ const CreateGroup = ({ showSmallContainer, setShowSmallContainer }) => {
     }
   };
 
-  const fetchGroups = async () => {
-    try {
-      const response = await instance.get("/api/group");
-      if (response.status === 200 && Array.isArray(response.data.result)) {
-        setGroupList(response.data.result);
-      } else {
-        console.error("그룹 목록을 불러오는데 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchGroups();
-  }, []);
-
+    if (groupCode) {
+      fetchGroups();
+    }
+  }, [groupCode]);
 
 
     return (
