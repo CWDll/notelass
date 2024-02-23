@@ -145,6 +145,9 @@ function MakeAssignment() {
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
+      navigate(-1);
+      // 2024-02-23
+      // 현재 수정이 완료되었음에도 Error code: 500 을 반환하며 error가 나오는 현상이 발견됨.
     }
   };
 
