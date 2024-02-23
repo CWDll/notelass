@@ -48,7 +48,7 @@ position: absolute;
 const A2 = styled.img`
 width: 354px;
 height: 95px;
-top: 357px;
+top: 390px;
 left: 590px;
 transform: translateX(-50%);
 position: absolute;
