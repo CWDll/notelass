@@ -50,7 +50,12 @@ function NoticeDetailContent(noticeId) {
   function callConsole() {
     console.log("마마", noticeId);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
-      state: noticeId.noticeId,
+      state: {
+        noticeId: noticeId.noticeId,
+        info: info,
+        creDate: creDate,
+        teacher: teacher,
+      },
     });
   }
 

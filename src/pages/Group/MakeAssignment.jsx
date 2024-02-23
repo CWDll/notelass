@@ -12,6 +12,7 @@ import * as S from "../Style/AssignmentStyle";
 
 function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
@@ -22,8 +23,6 @@ function MakeAssignment() {
   const [selectedButton, setSelectedButton] = useState("공지");
   // 파일 상태 추가
   const [files, setFiles] = useState([]);
-
-  const navigate = useNavigate();
 
   // Header를 클릭할 때 실행할 핸들러
   const handleHeaderClick = () => {
@@ -109,7 +108,7 @@ function MakeAssignment() {
       // 수정 API
       if (info) {
         response = await instance.put(
-          `/api/notice/${paramsGroupId}/${info}`,
+          `/api/notice/${paramsGroupId}/${info.noticeId}`,
           formData,
           {
             headers: {
@@ -211,7 +210,9 @@ function MakeAssignment() {
     const fetchGroups = async () => {
       if (info) {
         try {
-          const res = await instance.get(`/api/notice/detail?noticeId=${info}`);
+          const res = await instance.get(
+            `/api/notice/detail?noticeId=${info.noticeId}`
+          );
           if (res.status === 200) {
             setAssignmentName(res.data.result.title);
             setAssignmentDesc(res.data.result.content);
@@ -377,7 +378,12 @@ function MakeAssignment() {
           {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
-            <NoticeInfo matchedGroup={matchedGroup} />
+            <NoticeInfo
+              matchedGroup={matchedGroup}
+              info={info.info}
+              creDate={info.creDate}
+              teacher={info.teacher}
+            />
           )}
         </S.AssignmentSettingForm>
       </S.Body>
