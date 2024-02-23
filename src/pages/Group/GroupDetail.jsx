@@ -87,10 +87,12 @@ function GroupDetail({ generateGroup }) {
     if (isLoggedIn) {
     } else {
       return (
-        <S.Notice>
-          <S.Img src={Group} alt="Group" />
-          로그인이 필요합니다.
-        </S.Notice>
+        <S.NoteContainer>
+          <S.Notice>
+            <S.Img src={Group} alt="Group" />
+            로그인이 필요합니다.
+          </S.Notice>
+        </S.NoteContainer>
       );
     }
   };
