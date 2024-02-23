@@ -72,6 +72,29 @@ function GroupDetail({ generateGroup }) {
     fetchGroups();
   }, [role]);
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // 비로그인시 그룹 탭에 띄울 화면
+  const renderNeedLogin = () => {
+    if (isLoggedIn) {
+    } else {
+      return (
+        <S.Notice>
+          <S.Img src={Group} alt="Group" />
+          로그인이 필요합니다.
+        </S.Notice>
+      );
+    }
+  };
+
   return (
     <S.Warp>
       <S.Button onClick={handleButtonClick}>
@@ -91,36 +114,40 @@ function GroupDetail({ generateGroup }) {
             fetchGroups={fetchGroups}
           />
         ))}
-      <S.NoteContainer>
-        {groupList.length === 0 ? (
-          <S.Notice>
-            <S.Img src={Group} alt="Group" />
-            그룹이 존재하지 않습니다.
-          </S.Notice>
-        ) : (
-          <S.SubjectBodyWrapper>
-            {groupList.map((group) => (
-              <S.SubjectBody
-                key={group.id}
-                onClick={() =>
-                  handleGroupClick(
-                    group.id,
-                    group.school,
-                    group.grade,
-                    group.classNum,
-                    group.subject
-                  )
-                }
-              >
-                <S.CircleText>
-                  <S.PurpleText>{group.subject[0]}</S.PurpleText>
-                </S.CircleText>
-                <S.BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</S.BoldText>
-              </S.SubjectBody>
-            ))}
-          </S.SubjectBodyWrapper>
-        )}
-      </S.NoteContainer>
+      {isLoggedIn ? (
+        <S.NoteContainer>
+          {groupList.length === 0 ? (
+            <S.Notice>
+              <S.Img src={Group} alt="Group" />
+              그룹이 존재하지 않습니다.
+            </S.Notice>
+          ) : (
+            <S.SubjectBodyWrapper>
+              {groupList.map((group) => (
+                <S.SubjectBody
+                  key={group.id}
+                  onClick={() =>
+                    handleGroupClick(
+                      group.id,
+                      group.school,
+                      group.grade,
+                      group.classNum,
+                      group.subject
+                    )
+                  }
+                >
+                  <S.CircleText>
+                    <S.PurpleText>{group.subject[0]}</S.PurpleText>
+                  </S.CircleText>
+                  <S.BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</S.BoldText>
+                </S.SubjectBody>
+              ))}
+            </S.SubjectBodyWrapper>
+          )}
+        </S.NoteContainer>
+      ) : (
+        renderNeedLogin()
+      )}
     </S.Warp>
   );
 }

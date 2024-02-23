@@ -1,24 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import plus_lg from "../../../assets/plus_lg.svg";
 import instance from "src/assets/api/axios";
+import Group from "../../../assets/icon/Group/Group.svg";
+import * as G from "../../../pages/Group/Style/GroupDetailStyle";
 
 const NoteContainer = styled.div`
-width: 100%;
-height: 800px;
-flex-shrink: 0;
-border-radius: 8px;
-background: #fff;
-box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
-position: relative;
+  width: 100%;
+  height: 800px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
+  position: relative;
 
-margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-margin-top: 144px;
-max-width: 1194px; /* 최대 너비 제한 */
+  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-right: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-top: 144px;
+  max-width: 1194px; /* 최대 너비 제한 */
 
-  
   overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
@@ -28,7 +29,6 @@ max-width: 1194px; /* 최대 너비 제한 */
     border-radius: 2px;
     background: #ccc;
   }
-
 `;
 
 const MakeNoteBody = styled.div`
@@ -140,13 +140,13 @@ const letter = subject.substr(0, 1);
 
 function NoteDetail() {
   const [groupList, setGroupList] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
 
   const navigate = useNavigate();
-  
+
   const handleGroupClick = (id) => {
     navigate(`/NoteDetailSubject/${id}`);
   };
-
 
   const fetchGroups = async () => {
     try {
@@ -166,32 +166,59 @@ function NoteDetail() {
     fetchGroups();
   }, []);
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
+  // 비로그인시 그룹 탭에 띄울 화면
+  const renderNeedLogin = () => {
+    if (isLoggedIn) {
+    } else {
+      return (
+        <G.Notice>
+          <G.Img src={Group} alt="Group" />
+          로그인이 필요합니다.
+        </G.Notice>
+      );
+    }
+  };
 
   return (
     <NoteContainer>
-      <MakeNoteBody>
-        <AddNote>
-          <PlusImg src={plus_lg} alt="plus_lg" />
-        </AddNote>
-        <Title>신규 노트 만들기</Title>
-      </MakeNoteBody>
-      <SubjectBodyWrapper>
-          {groupList.map((group) => (
-            <SubjectBody
-              key={group.id}
-              onClick={() => handleGroupClick(group.id)}
-            >
-              <CircleText>
-                <PurpleText>{group.subject[0]}</PurpleText>
-              </CircleText>
-              <SubjectContainer>
-              <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
-              <GrayText>{ `${group.teacher}선생님`} </GrayText>
-              </SubjectContainer>
-            </SubjectBody>
-          ))}
-        </SubjectBodyWrapper>
+      {isLoggedIn ? (
+        <>
+          <MakeNoteBody>
+            <AddNote>
+              <PlusImg src={plus_lg} alt="plus_lg" />
+            </AddNote>
+            <Title>신규 노트 만들기</Title>
+          </MakeNoteBody>
+          <SubjectBodyWrapper>
+            {groupList.map((group) => (
+              <SubjectBody
+                key={group.id}
+                onClick={() => handleGroupClick(group.id)}
+              >
+                <CircleText>
+                  <PurpleText>{group.subject[0]}</PurpleText>
+                </CircleText>
+                <SubjectContainer>
+                  <BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</BoldText>
+                  <GrayText>{`${group.teacher}선생님`} </GrayText>
+                </SubjectContainer>
+              </SubjectBody>
+            ))}
+          </SubjectBodyWrapper>
+        </>
+      ) : (
+        renderNeedLogin()
+      )}
     </NoteContainer>
   );
 }
