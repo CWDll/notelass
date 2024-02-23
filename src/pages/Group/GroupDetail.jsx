@@ -19,14 +19,15 @@ const subject = subjectInfo.split(" ")[3];
 // subject에서 앞 1글자만 가져와 저장하는 letter
 const letter = subject.substr(0, 1);
 
-function GroupDetail({generateGroup}) {
+function GroupDetail({ generateGroup }) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [groupCode, setGroupCode] = useState("");
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
-  
+  // 로그인 하지 않으면 로그인 먼저 하라는 문구 띄우기위한 상태
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
 
   const [showEnterGroupModal, setShowEnterGroupModal] = useState(false);
 
@@ -71,6 +72,29 @@ function GroupDetail({generateGroup}) {
     fetchGroups();
   }, [role]);
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // 비로그인시 그룹 탭에 띄울 화면
+  const renderNeedLogin = () => {
+    if (isLoggedIn) {
+    } else {
+      return (
+        <S.Notice>
+          <S.Img src={Group} alt="Group" />
+          로그인이 필요합니다.
+        </S.Notice>
+      );
+    }
+  };
+
   return (
     <S.Warp>
       <S.Button onClick={handleButtonClick}>
@@ -84,42 +108,46 @@ function GroupDetail({generateGroup}) {
             setShowSmallContainer={setShowSmallContainer}
           />
         ) : (
-          <CreateGroup 
-          showSmallContainer={showSmallContainer}
-          setShowSmallContainer={setShowSmallContainer}
-          fetchGroups={fetchGroups}
+          <CreateGroup
+            showSmallContainer={showSmallContainer}
+            setShowSmallContainer={setShowSmallContainer}
+            fetchGroups={fetchGroups}
           />
         ))}
-      <S.NoteContainer>
-        {groupList.length === 0 ? (
-          <S.Notice>
-            <S.Img src={Group} alt="Group" />
-            그룹이 존재하지 않습니다.
-          </S.Notice>
-        ) : (
-          <S.SubjectBodyWrapper>
-            {groupList.map((group) => (
-              <S.SubjectBody
-                key={group.id}
-                onClick={() =>
-                  handleGroupClick(
-                    group.id,
-                    group.school,
-                    group.grade,
-                    group.classNum,
-                    group.subject
-                  )
-                }
-              >
-                <S.CircleText>
-                  <S.PurpleText>{group.subject[0]}</S.PurpleText>
-                </S.CircleText>
-                <S.BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</S.BoldText>
-              </S.SubjectBody>
-            ))}
-          </S.SubjectBodyWrapper>
-        )}
-      </S.NoteContainer>
+      {isLoggedIn ? (
+        <S.NoteContainer>
+          {groupList.length === 0 ? (
+            <S.Notice>
+              <S.Img src={Group} alt="Group" />
+              그룹이 존재하지 않습니다.
+            </S.Notice>
+          ) : (
+            <S.SubjectBodyWrapper>
+              {groupList.map((group) => (
+                <S.SubjectBody
+                  key={group.id}
+                  onClick={() =>
+                    handleGroupClick(
+                      group.id,
+                      group.school,
+                      group.grade,
+                      group.classNum,
+                      group.subject
+                    )
+                  }
+                >
+                  <S.CircleText>
+                    <S.PurpleText>{group.subject[0]}</S.PurpleText>
+                  </S.CircleText>
+                  <S.BoldText>{`${group.school} ${group.grade}학년 ${group.classNum}반 ${group.subject}`}</S.BoldText>
+                </S.SubjectBody>
+              ))}
+            </S.SubjectBodyWrapper>
+          )}
+        </S.NoteContainer>
+      ) : (
+        renderNeedLogin()
+      )}
     </S.Warp>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext   } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
@@ -9,10 +9,8 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 // api
 import instance from "src/assets/api/axios";
-import { saveAs } from 'file-saver';
-import { Document, Page, Text, View, PDFViewer } from '@react-pdf/renderer';
-
-
+import { saveAs } from "file-saver";
+import { Document, Page, Text, View, PDFViewer } from "@react-pdf/renderer";
 
 const ManagementContainer = styled.div`
   width: 480px;
@@ -86,7 +84,6 @@ const MainContainer = styled.div`
   margin-top: 24px;
 `;
 
-
 const SubjectBody = styled.div`
   display: flex;
   width: 1194px;
@@ -106,7 +103,6 @@ const SubjectBodyWrapper = styled.div`
   flex-direction: column;
   margin-top: 30px;
 `;
-
 
 const NavDropdownBox = styled.div`
   width: 150px;
@@ -139,7 +135,6 @@ const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
   border-radius: 0 0 10px 10px;
 `;
 
-
 const PaperImg = styled.img`
   width: 48px;
   height: 64px;
@@ -168,24 +163,21 @@ const GrayText = styled.p`
   margin-top: 4px;
 `;
 
+const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
+  const location = useLocation();
+  const info = location.state;
+  const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
+  const [clickedIndices, setClickedIndices] = useState(new Set());
+  const [showSmallContainer, setShowSmallContainer] = useState(false);
+  const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [materials, setMaterials] = useState([]); // 강의자료 목록을 저장할 상태
+  const [dropdownVisible, setDropdownVisible] = useState({});
+  const dropdownRef = React.useRef(null);
 
+  console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId, id);
 
-
-const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
-    const location = useLocation();
-    const info = location.state;
-    const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태를 저장할 상태
-    const [clickedIndices, setClickedIndices] = useState(new Set());
-    const [showSmallContainer, setShowSmallContainer] = useState(false);
-    const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [materials, setMaterials] = useState([]); // 강의자료 목록을 저장할 상태
-    const [dropdownVisible, setDropdownVisible] = useState({});
-    const dropdownRef = React.useRef(null);
-
-    console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId,id);
-
-      // 날짜 포맷 함수
+  // 날짜 포맷 함수
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -226,7 +218,6 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
   function goBack() {
     navigate(-1);
   }
-
 
   function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
@@ -281,114 +272,107 @@ const MaterialList = ({ paramsGroupId, paramsUserId,id }) => {
   }, [id]);
 
   // 노트탭에 불러오기 함수 추가
-async function handleLoadToNoteTab(materialId) {
+  async function handleLoadToNoteTab(materialId) {
     try {
-        const response = await instance.post(`/api/material?fileId=${materialId}`);
-        if (response.data.code === 201) {
-            alert('노트 탭에 성공적으로 업로드했습니다.');
-            console.log('노트 탭에 업로드 성공 ', response.data.message);
-            setDropdownVisible((prev) => ({
-                ...prev,
-                [materialId]: false,
-              }));
-        } else {
-            alert('노트 탭에 업로드에 실패했습니다.');
-        }
+      const response = await instance.post(
+        `/api/material?fileId=${materialId}`
+      );
+      if (response.data.code === 201) {
+        alert("노트 탭에 성공적으로 업로드했습니다.");
+        console.log("노트 탭에 업로드 성공 ", response.data.message);
+        setDropdownVisible((prev) => ({
+          ...prev,
+          [materialId]: false,
+        }));
+      } else {
+        alert("노트 탭에 업로드에 실패했습니다.");
+      }
     } catch (error) {
-        console.error(error);
-        alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      console.error(error);
+      alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
-}
-    
+  }
 
+  const navigate = useNavigate();
+  const toWritePage = () => {
+    navigate(`/GroupDetailClass/${id}/MakeAssignment`);
+  };
+  const toAllPage = () => {
+    navigate(`/NoticeDetailList/${id}`);
+  };
 
-   
-  
-    const navigate = useNavigate();
-    const toWritePage = () => {
-      navigate(`/GroupDetailClass/${id}/MakeAssignment`);
-    };
-    const toAllPage = () => {
-      navigate(`/NoticeDetailList/${id}`);
-    };
-  
-    const GroupDetailWrite = (
-      paramsGruopId,
-      paramsUserId,
-      school,
-      grade,
-      classNum,
-      subject
-    ) => {
-      navigate(`/GroupDetailWrite/${paramsGruopId}/${paramsUserId}`, {
-        state: { school, grade, classNum, subject },
-      });
-    };
-  
-    const BackButton = () => {
-      navigate("/GroupDetail");
-    };
-    const StudentScoreDetail = () => {
-      navigate("/StudentScoreDetail");
-    };
-    const TaskClick = () => {
-      navigate("/GroupScoreDetail");
-    };
-    
+  const GroupDetailWrite = (
+    paramsGruopId,
+    paramsUserId,
+    school,
+    grade,
+    classNum,
+    subject
+  ) => {
+    navigate(`/GroupDetailWrite/${paramsGruopId}/${paramsUserId}`, {
+      state: { school, grade, classNum, subject },
+    });
+  };
 
+  const BackButton = () => {
+    navigate("/GroupDetail");
+  };
+  const StudentScoreDetail = () => {
+    navigate("/StudentScoreDetail");
+  };
+  const TaskClick = () => {
+    navigate("/GroupScoreDetail");
+  };
 
-    return (
-        <div>
-            <ManagementContainer>
-            <Title>학습 자료</Title>
-            <MainContainer>
-            {materials.map((material) => (
-              <SubjectBody key={material.id} >
-                
-                <PaperImg src={paper} alt="paper" />
-                <SubjectContainer onClick={handleTitleClick}>
-                  <BoldText>
-                    {material.files
-                      .map((file) => file.originalFileName)
-                      .join(", ")}
-                  </BoldText>
-                  <GrayText>{formatDate(material.createdDate)}</GrayText>
-                </SubjectContainer>
+  return (
+    <div>
+      <ManagementContainer>
+        <Title>학습 자료</Title>
+        <MainContainer>
+          {materials.map((material) => (
+            <SubjectBody key={material.id}>
+              <PaperImg src={paper} alt="paper" />
+              <SubjectContainer onClick={handleTitleClick}>
+                <BoldText>
+                  {material.files
+                    .map((file) => file.originalFileName)
+                    .join(", ")}
+                </BoldText>
+                <GrayText>{formatDate(material.createdDate)}</GrayText>
+              </SubjectContainer>
 
-                <ChevronDownImg
-                  src={buttonstyle}
-                  alt="buttonstyle"
-                  onClick={() => toggleDropdown(material.id)}
-                />
-                {dropdownVisible[material.id] && (
-                  <NavDropdownBox className="dropdown-menu">
-                    <NavDropdownOptionUp className="dropdown-item" >
+              <ChevronDownImg
+                src={buttonstyle}
+                alt="buttonstyle"
+                onClick={() => toggleDropdown(material.id)}
+              />
+              {dropdownVisible[material.id] && (
+                <NavDropdownBox className="dropdown-menu">
+                  <NavDropdownOptionUp className="dropdown-item">
                     PDF로 내보내기
-                    </NavDropdownOptionUp>
-                    <hr />
-                    <NavDropdownOptionDown
-                      className="dropdown-item"
-                      onClick={() => handleLoadToNoteTab(material.id)}
-                    >
-                      노트탭에 불러오기
-                    </NavDropdownOptionDown>
-                    {/* <hr />
+                  </NavDropdownOptionUp>
+                  <hr />
+                  <NavDropdownOptionDown
+                    className="dropdown-item"
+                    onClick={() => handleLoadToNoteTab(material.id)}
+                  >
+                    노트탭에 불러오기
+                  </NavDropdownOptionDown>
+                  {/* <hr />
                     <NavDropdownOptionDown
                       className="dropdown-item"
                       onClick={() => handleDelete(material.id)}
                     >
                       자료 보기
                     </NavDropdownOptionDown> */}
-                  </NavDropdownBox>
-                )}
-
-              </SubjectBody>
-            ))}
-            </MainContainer>
-          </ManagementContainer>
-           
-        </div>
-    );
+                </NavDropdownBox>
+              )}
+            </SubjectBody>
+          ))}
+        </MainContainer>
+      </ManagementContainer>
+    </div>
+  );
 };
 
 export default MaterialList;

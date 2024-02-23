@@ -1,10 +1,32 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import * as S from "./style";
+import NoticeDetailContent from "../../components/Component/DetailPage/NoticeDetailContent";
+import { useEffect } from "react";
 
 function NoticeDetail() {
+  const navigate = useNavigate();
   const { groupId, noticeId } = useParams(); // groupId 매개변수 받기
 
-  return <div>NoticeDetail</div>;
+  const location = useLocation();
+  // 학교, 학년, 반, 과목 들어있는 데이터
+  const info = location.state;
+  console.log("ND의 info:", info);
+
+  //뒤로가기
+  function BackButton() {
+    navigate(-1);
+  }
+
+  return (
+    <S.Container>
+      <S.Breadcrumb onClick={BackButton}>
+        <S.Img alt="chevron_left" onClick={BackButton} />
+        <S.BoldText onClick={BackButton}>공지/과제/강의자료</S.BoldText>
+      </S.Breadcrumb>
+      <NoticeDetailContent noticeId={noticeId} info={info} />
+    </S.Container>
+  );
 }
 
 export default NoticeDetail;

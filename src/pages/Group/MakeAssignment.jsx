@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
@@ -14,10 +14,11 @@ import * as S from "../Style/AssignmentStyle";
 
 function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
-  // console.log("info:", info);
+  console.log("필요한 info:", info);
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -25,8 +26,6 @@ function MakeAssignment() {
   const [selectedButton, setSelectedButton] = useState("공지");
   // 파일 상태 추가
   const [files, setFiles] = useState([]);
-
-  const navigate = useNavigate();
 
   // Header를 클릭할 때 실행할 핸들러
   const handleHeaderClick = () => {
@@ -108,19 +107,38 @@ function MakeAssignment() {
         formData.append(`file`, file);
       });
 
-      // API 요청
-      const response = await instance.post(
-        `/api/notice/${paramsGroupId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      if (response.status === 201) {
-        alert("test");
-        navigate("/login");
+      let response;
+      // 수정 API
+      if (info) {
+        response = await instance.put(
+          `/api/notice/${paramsGroupId}/${info.noticeId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        // 생성 API
+        response = await instance.post(
+          `/api/notice/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
+      if (response.status == 201) {
+        alert("공지 생성 완료 ! ");
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
+      } else if (response.status == 200) {
+        alert("공지 수정이 완료되었습니다.");
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
       }
 
       // 응답 처리
@@ -129,6 +147,9 @@ function MakeAssignment() {
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
+      navigate(-1);
+      // 2024-02-23
+      // 현재 수정이 완료되었음에도 Error code: 500 을 반환하며 error가 나오는 현상이 발견됨.
     }
   };
 
@@ -190,23 +211,40 @@ function MakeAssignment() {
 
   useEffect(() => {
     const fetchGroups = async () => {
-      try {
-        const response = await instance.get(`/api/group`);
-        if (response.status === 200 && Array.isArray(response.data.result)) {
-          const matched = response.data.result.find(
-            (group) => group.id.toString() === paramsGroupId
+      if (info) {
+        try {
+          const res = await instance.get(
+            `/api/notice/detail?noticeId=${info.noticeId}`
           );
-          if (matched) {
-            setMatchedGroup(matched);
-            console.log("Matched 그룹 정보:", matched);
+          if (res.status === 200) {
+            setAssignmentName(res.data.result.title);
+            setAssignmentDesc(res.data.result.content);
+            setFiles(res.data.result.files);
           } else {
-            console.error("Matching group not found");
+            console.log("테스트 실패");
           }
-        } else {
-          console.error("그룹 목록을 불러오는데 실패했습니다.");
+        } catch (error) {
+          console.error("fetchGroups에서 오류 발생", error);
         }
-      } catch (error) {
-        console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+      } else {
+        try {
+          const response = await instance.get(`/api/group`);
+          if (response.status === 200 && Array.isArray(response.data.result)) {
+            const matched = response.data.result.find(
+              (group) => group.id.toString() === paramsGroupId
+            );
+            if (matched) {
+              setMatchedGroup(matched);
+              console.log("Matched 그룹 정보:", matched);
+            } else {
+              console.error("Matching group not found");
+            }
+          } else {
+            console.error("그룹 목록을 불러오는데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+        }
       }
     };
     fetchGroups();
@@ -239,105 +277,104 @@ function MakeAssignment() {
       </S.Header>
 
       <S.Body>
-      {role === "STUDENT" ? (
-        <ShowAssignment />  
-      ) : (
-        <S.AssigmentCreateForm>
-          <S.CreateTitle>공지/강의자료</S.CreateTitle>
-          <S.Title>
-            {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
-            {["공지", "강의자료"].map((value, index) => (
-              <S.Btn
-                key={value}
-                className={index === 0 ? "firstButton" : ""}
-                onClick={() => handleButtonClick(value)}
-                selected={selectedButton === value}
-              >
-                {value}
-              </S.Btn>
-            ))}
-          </S.Title>
+        {role === "STUDENT" ? (
+          <ShowAssignment />
+        ) : (
+          <S.AssigmentCreateForm>
+            <S.CreateTitle>공지/강의자료</S.CreateTitle>
+            <S.Title>
+              {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
+              {["공지", "강의자료"].map((value, index) => (
+                <S.Btn
+                  key={value}
+                  className={index === 0 ? "firstButton" : ""}
+                  onClick={() => handleButtonClick(value)}
+                  selected={selectedButton === value}
+                >
+                  {value}
+                </S.Btn>
+              ))}
+            </S.Title>
 
-          <S.HeadInput>
-            <S.SmallTitle>
-              {/* {selectedButton === "과제"
+            <S.HeadInput>
+              <S.SmallTitle>
+                {/* {selectedButton === "과제"
                 ? "과제 "
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-              {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
-            </S.SmallTitle>
-            <S.InputTitle
-              type="text"
-              name="username"
-              value={assignmentName}
-              onChange={onChangeName}
-              selectedButton={selectedButton}
-              placeholder={
-                selectedButton === "과제"
-                  ? "과제 설명을 입력하세요."
+                {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
+              </S.SmallTitle>
+              <S.InputTitle
+                type="text"
+                name="username"
+                value={assignmentName}
+                onChange={onChangeName}
+                selectedButton={selectedButton}
+                placeholder={
+                  selectedButton === "과제"
+                    ? "과제 설명을 입력하세요."
+                    : selectedButton === "공지"
+                    ? "공지 제목을 입력하세요."
+                    : "강의자료 설명을 입력하세요."
+                }
+              />
+            </S.HeadInput>
+            <S.BodyInput>
+              <S.SmallTitle>
+                {selectedButton === "과제"
+                  ? "과제 설정"
                   : selectedButton === "공지"
-                  ? "공지 제목을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
-              }
-            />
-          </S.HeadInput>
-          <S.BodyInput>
-            <S.SmallTitle>
-              {selectedButton === "과제"
-                ? "과제 설정"
-                : selectedButton === "공지"
-                ? "공지 설정"
-                : "강의자료 설정"}
-            </S.SmallTitle>
-            <S.InputDesc
-              type="text"
-              name="username"
-              value={assignmentDesc}
-              onChange={onChangeDesc}
-              selectedButton={selectedButton}
-              placeholder={
-                selectedButton === "과제"
-                  ? "과제 설명을 입력하세요."
-                  : selectedButton === "공지"
-                  ? "공지 내용을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
-              }
-            />
-          </S.BodyInput>
-          <S.LegInput>
-            <S.SmallTitle style={{ marginLeft: "-30px" }}>
-              파일 첨부
-            </S.SmallTitle>
-            <input
-              type="file"
-              id="fileUpload"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              ref={imageInput}
-              multiple
-            />
-            <S.LibraryButton
-              onClick={() => imageInput.current.click()}
-              style={{ marginLeft: "15px" }}
-            >
-              라이브러리에서 파일 탐색
-            </S.LibraryButton>
-          </S.LegInput>
+                  ? "공지 설정"
+                  : "강의자료 설정"}
+              </S.SmallTitle>
+              <S.InputDesc
+                type="text"
+                name="username"
+                value={assignmentDesc}
+                onChange={onChangeDesc}
+                selectedButton={selectedButton}
+                placeholder={
+                  selectedButton === "과제"
+                    ? "과제 설명을 입력하세요."
+                    : selectedButton === "공지"
+                    ? "공지 내용을 입력하세요."
+                    : "강의자료 설명을 입력하세요."
+                }
+              />
+            </S.BodyInput>
+            <S.LegInput>
+              <S.SmallTitle style={{ marginLeft: "-30px" }}>
+                파일 첨부
+              </S.SmallTitle>
+              <input
+                type="file"
+                id="fileUpload"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+                ref={imageInput}
+                multiple
+              />
+              <S.LibraryButton
+                onClick={() => imageInput.current.click()}
+                style={{ marginLeft: "15px" }}
+              >
+                라이브러리에서 파일 탐색
+              </S.LibraryButton>
+            </S.LegInput>
 
-          <S.FileContainer>{renderFileList()}</S.FileContainer>
-          <S.Foot>
-            <S.SubmitBtn type="submit" onClick={handleSubmit}>
-              생성하기
-            </S.SubmitBtn>
+            <S.FileContainer>{renderFileList()}</S.FileContainer>
+            <S.Foot>
+              <S.SubmitBtn type="submit" onClick={handleSubmit}>
+                {info ? "수정하기" : "생성하기"}
+              </S.SubmitBtn>
 
-            <S.CancelBtn type="button" onClick={handleHeaderClick}>
-              취소
-            </S.CancelBtn>
-          </S.Foot>
-        </S.AssigmentCreateForm>
-
-      )}
+              <S.CancelBtn type="button" onClick={handleHeaderClick}>
+                취소
+              </S.CancelBtn>
+            </S.Foot>
+          </S.AssigmentCreateForm>
+        )}
         <S.AssignmentSettingForm>
           <S.CreateTitle>
             {selectedButton === "과제"
@@ -349,7 +386,12 @@ function MakeAssignment() {
           {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
-            <NoticeInfo matchedGroup={matchedGroup} />
+            <NoticeInfo
+              matchedGroup={matchedGroup}
+              info={info.info}
+              creDate={info.creDate}
+              teacher={info.teacher}
+            />
           )}
         </S.AssignmentSettingForm>
       </S.Body>

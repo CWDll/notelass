@@ -185,8 +185,7 @@ export default function Nav() {
 
   useEffect(() => {
     const handleStorageChange = () => {
-     
-      setIsLoggedIn(!!localStorage.getItem("token"));
+      setIsLoggedIn(!localStorage.getItem("token"));
     };
     window.addEventListener("storage", handleStorageChange);
     return () => {
@@ -344,7 +343,7 @@ export default function Nav() {
 
   return (
     <NavContainer>
-      <Logo/>
+      <Logo />
 
       <NavItemContainer>
         <NavItems
