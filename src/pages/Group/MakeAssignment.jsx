@@ -129,11 +129,11 @@ function MakeAssignment() {
           }
         );
       }
-      if (response.status === 201) {
+      if (response.status == 201) {
         alert("공지 생성 완료 ! ");
         // 추후 네비게이트 수정 필요
         navigate(-1);
-      } else if (response.status === 200) {
+      } else if (response.status == 200) {
         alert("공지 수정이 완료되었습니다.");
         // 추후 네비게이트 수정 필요
         navigate(-1);
@@ -355,7 +355,7 @@ function MakeAssignment() {
           <S.FileContainer>{renderFileList()}</S.FileContainer>
           <S.Foot>
             <S.SubmitBtn type="submit" onClick={handleSubmit}>
-              생성하기
+              {info ? "수정하기" : "생성하기"}
             </S.SubmitBtn>
 
             <S.CancelBtn type="button" onClick={handleHeaderClick}>
