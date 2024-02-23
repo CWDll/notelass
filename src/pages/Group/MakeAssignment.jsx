@@ -210,7 +210,9 @@ function MakeAssignment() {
         try {
           const res = await instance.get(`/api/notice/detail?noticeId=${info}`);
           if (res.status === 200) {
-            // set 함수들 들어갈 자리
+            setAssignmentName(res.data.result.title);
+            setAssignmentDesc(res.data.result.content);
+            setFiles(res.data.result.files);
           } else {
             console.log("테스트 실패");
           }
