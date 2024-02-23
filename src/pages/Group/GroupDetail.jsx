@@ -19,14 +19,15 @@ const subject = subjectInfo.split(" ")[3];
 // subject에서 앞 1글자만 가져와 저장하는 letter
 const letter = subject.substr(0, 1);
 
-function GroupDetail({generateGroup}) {
+function GroupDetail({ generateGroup }) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
   const [groupCode, setGroupCode] = useState("");
   const [grade, setGrade] = useState("");
   const [classNum, setClassNum] = useState("");
   const [subject, setSubject] = useState("");
   const [groupList, setGroupList] = useState([]);
-  
+  // 로그인 하지 않으면 로그인 먼저 하라는 문구 띄우기위한 상태
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
 
   const [showEnterGroupModal, setShowEnterGroupModal] = useState(false);
 
@@ -84,10 +85,10 @@ function GroupDetail({generateGroup}) {
             setShowSmallContainer={setShowSmallContainer}
           />
         ) : (
-          <CreateGroup 
-          showSmallContainer={showSmallContainer}
-          setShowSmallContainer={setShowSmallContainer}
-          fetchGroups={fetchGroups}
+          <CreateGroup
+            showSmallContainer={showSmallContainer}
+            setShowSmallContainer={setShowSmallContainer}
+            fetchGroups={fetchGroups}
           />
         ))}
       <S.NoteContainer>
