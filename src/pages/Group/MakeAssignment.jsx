@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import chevron_left from "../../assets/chevron_left.svg";
 import axios from "../../assets/api/axios";
 import instance from "../../assets/api/axios";
+import RoleContext from "../../RoleContext";
 
 import FileEarmarkZip from "../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../../components/Component/Notice/AssignInfo";
 import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
+import ShowAssignment from "../../components/Component/Group/Student/ShowAssignment";
 
 import * as S from "../Style/AssignmentStyle";
 
@@ -17,6 +19,7 @@ function MakeAssignment() {
   // console.log("location: ", location);
   const info = location.state;
   console.log("필요한 info:", info);
+  const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDesc, setAssignmentDesc] = useState("");
@@ -272,101 +275,106 @@ function MakeAssignment() {
             `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
         </S.BoldTitle>
       </S.Header>
-      <S.Body>
-        <S.AssigmentCreateForm>
-          <S.CreateTitle>공지/강의자료</S.CreateTitle>
-          <S.Title>
-            {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
-            {["공지", "강의자료"].map((value, index) => (
-              <S.Btn
-                key={value}
-                className={index === 0 ? "firstButton" : ""}
-                onClick={() => handleButtonClick(value)}
-                selected={selectedButton === value}
-              >
-                {value}
-              </S.Btn>
-            ))}
-          </S.Title>
 
-          <S.HeadInput>
-            <S.SmallTitle>
-              {/* {selectedButton === "과제"
+      <S.Body>
+        {role === "STUDENT" ? (
+          <ShowAssignment />
+        ) : (
+          <S.AssigmentCreateForm>
+            <S.CreateTitle>공지/강의자료</S.CreateTitle>
+            <S.Title>
+              {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
+              {["공지", "강의자료"].map((value, index) => (
+                <S.Btn
+                  key={value}
+                  className={index === 0 ? "firstButton" : ""}
+                  onClick={() => handleButtonClick(value)}
+                  selected={selectedButton === value}
+                >
+                  {value}
+                </S.Btn>
+              ))}
+            </S.Title>
+
+            <S.HeadInput>
+              <S.SmallTitle>
+                {/* {selectedButton === "과제"
                 ? "과제 "
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-              {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
-            </S.SmallTitle>
-            <S.InputTitle
-              type="text"
-              name="username"
-              value={assignmentName}
-              onChange={onChangeName}
-              selectedButton={selectedButton}
-              placeholder={
-                selectedButton === "과제"
-                  ? "과제 설명을 입력하세요."
+                {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
+              </S.SmallTitle>
+              <S.InputTitle
+                type="text"
+                name="username"
+                value={assignmentName}
+                onChange={onChangeName}
+                selectedButton={selectedButton}
+                placeholder={
+                  selectedButton === "과제"
+                    ? "과제 설명을 입력하세요."
+                    : selectedButton === "공지"
+                    ? "공지 제목을 입력하세요."
+                    : "강의자료 설명을 입력하세요."
+                }
+              />
+            </S.HeadInput>
+            <S.BodyInput>
+              <S.SmallTitle>
+                {selectedButton === "과제"
+                  ? "과제 설정"
                   : selectedButton === "공지"
-                  ? "공지 제목을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
-              }
-            />
-          </S.HeadInput>
-          <S.BodyInput>
-            <S.SmallTitle>
-              {selectedButton === "과제"
-                ? "과제 설정"
-                : selectedButton === "공지"
-                ? "공지 설정"
-                : "강의자료 설정"}
-            </S.SmallTitle>
-            <S.InputDesc
-              type="text"
-              name="username"
-              value={assignmentDesc}
-              onChange={onChangeDesc}
-              selectedButton={selectedButton}
-              placeholder={
-                selectedButton === "과제"
-                  ? "과제 설명을 입력하세요."
-                  : selectedButton === "공지"
-                  ? "공지 내용을 입력하세요."
-                  : "강의자료 설명을 입력하세요."
-              }
-            />
-          </S.BodyInput>
-          <S.LegInput>
-            <S.SmallTitle style={{ marginLeft: "-30px" }}>
-              파일 첨부
-            </S.SmallTitle>
-            <input
-              type="file"
-              id="fileUpload"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              ref={imageInput}
-              multiple
-            />
-            <S.LibraryButton
-              onClick={() => imageInput.current.click()}
-              style={{ marginLeft: "15px" }}
-            >
-              라이브러리에서 파일 탐색
-            </S.LibraryButton>
-          </S.LegInput>
+                  ? "공지 설정"
+                  : "강의자료 설정"}
+              </S.SmallTitle>
+              <S.InputDesc
+                type="text"
+                name="username"
+                value={assignmentDesc}
+                onChange={onChangeDesc}
+                selectedButton={selectedButton}
+                placeholder={
+                  selectedButton === "과제"
+                    ? "과제 설명을 입력하세요."
+                    : selectedButton === "공지"
+                    ? "공지 내용을 입력하세요."
+                    : "강의자료 설명을 입력하세요."
+                }
+              />
+            </S.BodyInput>
+            <S.LegInput>
+              <S.SmallTitle style={{ marginLeft: "-30px" }}>
+                파일 첨부
+              </S.SmallTitle>
+              <input
+                type="file"
+                id="fileUpload"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+                ref={imageInput}
+                multiple
+              />
+              <S.LibraryButton
+                onClick={() => imageInput.current.click()}
+                style={{ marginLeft: "15px" }}
+              >
+                라이브러리에서 파일 탐색
+              </S.LibraryButton>
+            </S.LegInput>
 
-          <S.FileContainer>{renderFileList()}</S.FileContainer>
-          <S.Foot>
-            <S.SubmitBtn type="submit" onClick={handleSubmit}>
-              {info ? "수정하기" : "생성하기"}
-            </S.SubmitBtn>
+            <S.FileContainer>{renderFileList()}</S.FileContainer>
+            <S.Foot>
+              <S.SubmitBtn type="submit" onClick={handleSubmit}>
+                {info ? "수정하기" : "생성하기"}
+              </S.SubmitBtn>
 
-            <S.CancelBtn type="button" onClick={handleHeaderClick}>
-              취소
-            </S.CancelBtn>
-          </S.Foot>
-        </S.AssigmentCreateForm>
+              <S.CancelBtn type="button" onClick={handleHeaderClick}>
+                취소
+              </S.CancelBtn>
+            </S.Foot>
+          </S.AssigmentCreateForm>
+        )}
         <S.AssignmentSettingForm>
           <S.CreateTitle>
             {selectedButton === "과제"

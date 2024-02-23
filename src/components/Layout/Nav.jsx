@@ -184,6 +184,17 @@ export default function Nav() {
   };
 
   useEffect(() => {
+    const handleStorageChange = () => {
+     
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
       if (window.scrollY > 50) {
@@ -333,7 +344,7 @@ export default function Nav() {
 
   return (
     <NavContainer>
-      <Logo />
+      <Logo/>
 
       <NavItemContainer>
         <NavItems

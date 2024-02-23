@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../../assets/logo.svg';
 
@@ -11,6 +12,7 @@ const Notelass = styled.h2`
   font-weight: 700;
   line-height: normal;
   white-space: nowrap;
+  use-select: none;
 `;
 
 const Header = styled.div`
@@ -41,8 +43,18 @@ const LogoImg = styled.img`
 `;
 
 const Logo = () => {
+
+
+  
+  const navigate = useNavigate();
+
+  const navigateToIntroduce = () => {
+    navigate("/introduce");
+  };
+
+  
     return (
-        <Header >
+        <Header onClick= {navigateToIntroduce}>
             <Imgbox>
         <LogoImg src={logo} alt="logo"  />
       </Imgbox>

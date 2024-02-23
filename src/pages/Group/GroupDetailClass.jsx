@@ -14,9 +14,12 @@ import fileDownload from "../../assets/fileDownload.svg";
 
 // api
 import instance from "../../assets/api/axios";
+import RoleContext from "../../RoleContext";
 
 import StuExcel from "../../assets/excel/StuExcel.xlsx";
 import SelfEvaluation from "../../components/Component/Group/SelfEvalutaion";
+import StudentNotice from "../../components/Component/Group/Student/StudentNotice";
+import MaterialList from "../../components/Component/Group/Student/MaterialList";
 
 const Wrap = styled.div`
   margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
@@ -243,6 +246,8 @@ function GroupDetailClass() {
   const [showSelfEvaluation, setShowSelfEvaluation] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  const { role } = useContext(RoleContext);
+
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
@@ -396,15 +401,25 @@ function GroupDetailClass() {
           <BoldTitle>
             {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
           </BoldTitle>
-          <Button
-            onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
-          >
-            그룹 정보
-          </Button>
-          <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
-            학생 등록
-          </Button>
-          {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
+          {role === "STUDENT" ? (
+            <>
+              <Button
+                onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}
+              >
+                자기평가
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => setShowEditOrDeleteModal(!showEditOrDeleteModal)}
+              >
+                그룹 정보
+              </Button>
+              <Button onClick={() => setShowEnrollModal(!showEnrollModal)}>
+                학생 등록
+              </Button>
+              {/* 2024-02-14 변경 이전 프로세스(파일 업로드를 통해 학생을 등록)
         <Button>
         <Button style={{ position: 'relative' }}>
           <input
@@ -427,15 +442,19 @@ function GroupDetailClass() {
       </Button>
         {/* <FileDownload
         </Button> */}
-          {/* <FileDownload
+              {/* <FileDownload
             src={fileDownload}
             alt="fileDownload"
             onClick={handleStuExcelDownload}
           /> */}
+              <Button
+                onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}
+              >
+                {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+              </Button>
+            </>
+          )}
 
-          <Button onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}>
-            {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
-          </Button>
           {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
 
           {showEnrollModal && (
@@ -459,20 +478,27 @@ function GroupDetailClass() {
           <LeftSectionContainer>
             <NoticeContainer>
               <Title>공지/과제</Title>
-              <ShowAllText
-                style={{ "text-decoration": "underline" }}
-                onClick={() => {
-                  toAllPage(
-                    info.school,
-                    info.grade,
-                    info.classNum,
-                    info.subject
-                  );
-                }}
-              >
-                전체보기
-              </ShowAllText>
-              <DetailText onClick={toWritePage}>생성하기</DetailText>
+
+              {role === "STUDENT" ? (
+                <DetailText onClick={toAllPage}>전체보기</DetailText>
+              ) : (
+                <>
+                  <ShowAllText
+                    style={{ "text-decoration": "underline" }}
+                    onClick={() => {
+                      toAllPage(
+                        info.school,
+                        info.grade,
+                        info.classNum,
+                        info.subject
+                      );
+                    }}
+                  >
+                    전체보기
+                  </ShowAllText>
+                  <DetailText onClick={toWritePage}>생성하기</DetailText>
+                </>
+              )}
 
               <Title
                 style={{
@@ -507,101 +533,116 @@ function GroupDetailClass() {
               </div>
             </NoticeContainer>
 
-            <GroupContainer>
-              <Title>과제별 성적 열람</Title>
-              <DetailText
-                style={{ "text-decoration": "underline" }}
-                onClick={toWritePage}
-              >
-                전체보기
-              </DetailText>
-              <SubjectContainer>
-                <NoticeContent>
-                  <NoticeImg src={file} alt="file" />
-                  <NoticeTitle>과제4</NoticeTitle>
-                </NoticeContent>
-                <NoticeContent>
-                  <NoticeImg src={file} alt="file" />
-                  <NoticeTitle>과제3</NoticeTitle>
-                </NoticeContent>
-                <NoticeContent>
-                  <NoticeImg src={file} alt="file" />
-                  <NoticeTitle>과제2</NoticeTitle>
-                </NoticeContent>
-                <NoticeContent>
-                  <NoticeImg src={file} alt="file" />
-                  <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-                </NoticeContent>
+            {role === "STUDENT" ? (
+              <StudentNotice
+                paramsGroupId={paramsGroupId}
+                paramsUserId={paramsUserId}
+                id={id}
+              />
+            ) : (
+              <>
+                <GroupContainer>
+                  <Title>과제별 성적 열람</Title>
+                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  <SubjectContainer>
+                    <NoticeContent>
+                      <NoticeImg src={file} alt="file" />
+                      <NoticeTitle>과제4</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                      <NoticeImg src={file} alt="file" />
+                      <NoticeTitle>과제3</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                      <NoticeImg src={file} alt="file" />
+                      <NoticeTitle>과제2</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                      <NoticeImg src={file} alt="file" />
+                      <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
+                    </NoticeContent>
 
-                <Title
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "50px",
-                    height: "100%",
-                  }}
-                ></Title>
-              </SubjectContainer>
-            </GroupContainer>
+                    <Title
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "50px",
+                        height: "100%",
+                      }}
+                    ></Title>
+                  </SubjectContainer>
+                </GroupContainer>
 
-            <GroupContainer>
-              <Title>학생별 성적 열람</Title>
-              <DetailText onClick={toWritePage}>전체보기</DetailText>
-              <SubjectContainer>
-                <NoticeContent onClick={StudentScoreDetail}>
-                  <NoticeImg src={person} alt="person" />
-                  <SudentNum>1</SudentNum>
-                  <NoticeTitle>김민수</NoticeTitle>
-                </NoticeContent>
-                <NoticeContent>
-                  <NoticeImg src={person} alt="person" />
-                  <SudentNum>2</SudentNum>
-                  <NoticeTitle>김민수</NoticeTitle>
-                </NoticeContent>
-                <NoticeContent>
-                  <NoticeImg src={person} alt="person" />
-                  <SudentNum>3</SudentNum>
-                  <NoticeTitle>김민수</NoticeTitle>
-                </NoticeContent>
+                <GroupContainer>
+                  <Title>학생별 성적 열람</Title>
+                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  <SubjectContainer>
+                    <NoticeContent onClick={StudentScoreDetail}>
+                      <NoticeImg src={person} alt="person" />
+                      <SudentNum>1</SudentNum>
+                      <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                      <NoticeImg src={person} alt="person" />
+                      <SudentNum>2</SudentNum>
+                      <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
+                    <NoticeContent>
+                      <NoticeImg src={person} alt="person" />
+                      <SudentNum>3</SudentNum>
+                      <NoticeTitle>김민수</NoticeTitle>
+                    </NoticeContent>
 
-                <Title
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "50px",
-                    height: "100%",
-                  }}
-                ></Title>
-              </SubjectContainer>
-            </GroupContainer>
+                    <Title
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "50px",
+                        height: "100%",
+                      }}
+                    ></Title>
+                  </SubjectContainer>
+                </GroupContainer>
+              </>
+            )}
           </LeftSectionContainer>
 
-          <ManagementContainer>
-            <Title>생기부 관리</Title>
-            <SubjectContainer>
-              {students.map((student, index) => (
-                <NoticeContent
-                  key={student.id}
-                  onClick={() =>
-                    GroupDetailWrite(
-                      id,
-                      student.id,
-                      info.school,
-                      info.grade,
-                      info.classNum,
-                      info.subject
-                    )
-                  }
-                >
-                  <NoticeImg src={person} alt="person" />
-                  <SudentNum>{index + 1}</SudentNum>
-                  <NoticeTitle>{student.name}</NoticeTitle>
-                </NoticeContent>
-              ))}
-            </SubjectContainer>
-          </ManagementContainer>
+          {role === "STUDENT" ? (
+            <MaterialList
+              paramsGroupId={paramsGroupId}
+              paramsUserId={paramsUserId}
+              id={id}
+            />
+          ) : (
+            <>
+              <ManagementContainer>
+                <Title>생기부 관리</Title>
+                <SubjectContainer>
+                  {students.map((student, index) => (
+                    <NoticeContent
+                      key={student.id}
+                      onClick={() =>
+                        GroupDetailWrite(
+                          id,
+                          student.id,
+                          info.school,
+                          info.grade,
+                          info.classNum,
+                          info.subject
+                        )
+                      }
+                    >
+                      <NoticeImg src={person} alt="person" />
+                      <SudentNum>{index + 1}</SudentNum>
+                      <NoticeTitle>{student.name}</NoticeTitle>
+                    </NoticeContent>
+                  ))}
+                </SubjectContainer>
+              </ManagementContainer>
+            </>
+          )}
         </MainContainer>
       </Main>
     </Wrap>
