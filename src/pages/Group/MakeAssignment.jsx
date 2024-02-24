@@ -18,7 +18,7 @@ function MakeAssignment() {
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
-  console.log("필요한 info:", info);
+  // console.log("필요한 info:", info);
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -387,10 +387,10 @@ function MakeAssignment() {
             <AssignInfo />
           ) : (
             <NoticeInfo
-              matchedGroup={matchedGroup}
-              info={info.info}
-              creDate={info.creDate}
-              teacher={info.teacher}
+              // matchedGroup={matchedGroup}
+              // info={info.info}
+              // creDate={info.creDate}
+              // teacher={info.teacher}
             />
           )}
         </S.AssignmentSettingForm>

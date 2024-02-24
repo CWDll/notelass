@@ -22,9 +22,8 @@ const SelfEvaluation = ({id}) => {
 
   //질문 추가
   const addQuestion = () => {
-    setQuestions([...questions, { id: null, question: "" }]);
+    setQuestions([...questions, { id: Date.now(), question: "" }]);
   };
-  
 
   //창 닫기
   const handleClose = () => {
@@ -162,16 +161,16 @@ const editQuestion = async () => {
 
       <S.Label>질문</S.Label>
       <S.ContentContainer>
-        {questions.map((item, index) => (
-          <S.QuestionInputContainer key={index}>
-            <S.StyledInput
-              type="text"
-              placeholder={`질문 ${index + 1}을 입력해주세요.`}
-              value={item.question} 
-              onChange={(e) => handleQuestionChange(e.target.value, item.id)}
-            />
-          </S.QuestionInputContainer>
-        ))}
+      {questions.map((item, index) => (
+  <S.QuestionInputContainer key={item.id}>
+    <S.StyledInput
+      type="text"
+      placeholder={`질문 ${index + 1}을 입력해주세요.`}
+      value={item.question} 
+      onChange={(e) => handleQuestionChange(e.target.value, item.id)}
+    />
+  </S.QuestionInputContainer>
+))}
       </S.ContentContainer>
 
       <S.ButtonContainer>

@@ -83,7 +83,7 @@ function StudentSelfEvalContent({
       const res = await instance.put(`/api/self-eval-answer/${groupId}`, payload);
       if (res.data.code === 200) {
         console.log("자기평가 답변 수정이 완료되었습니다.");
-        setIsEditing(false);
+        alert("자기평가 답변 수정이 완료되었습니다.");
       } else {
         console.log("자기평가 답변 수정 실패");
       }
