@@ -65,6 +65,7 @@ function StudentSelfEvalContent({
       );
       if (res.status === 201) {
         console.log("답변 저장 성공");
+        alert("자기평가 답변 저장이 완료되었습니다.");
       } else {
         console.log("답변 저장 실패");
       }
@@ -73,6 +74,7 @@ function StudentSelfEvalContent({
     }
   };
 
+  //답변 수정
    const handleEdit = async () => {
     const payload = evalList.map((question) => ({
       id: question.answerId,
@@ -83,6 +85,7 @@ function StudentSelfEvalContent({
       const res = await instance.put(`/api/self-eval-answer/${groupId}`, payload);
       if (res.data.code === 200) {
         console.log("자기평가 답변 수정이 완료되었습니다.");
+        alert("자기평가 답변 수정이 완료되었습니다.");
         setIsEditing(false);
       } else {
         console.log("자기평가 답변 수정 실패");

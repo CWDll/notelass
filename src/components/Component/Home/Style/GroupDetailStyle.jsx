@@ -169,6 +169,11 @@ export const Textarea = styled.textarea`
   border: none;
   resize: none;
   padding: 16px;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 
   &:focus {
     outline: none;
@@ -740,4 +745,14 @@ export const Main = styled.div`
 margin-left: -363px;
 `;
 
-
+export const Copy = styled.p`
+position: absolute;
+  margin-left: 590px;
+  margin-top: 8px;
+  color: #9ea4aa;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-family: 'Pretendard';
+`;
