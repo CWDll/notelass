@@ -77,37 +77,53 @@ const SelfEvaluation = ({id}) => {
 
 
   //질문 수정하기
-  const editQuestion = async () => {
-    try {
-      // 공백 질문 확인
-      const hasEmptyQuestion = questions.some((q) => !q.question || q.question.trim() === "");
+const editQuestion = async () => {
+  try {
+    // 공백 질문 확인
+    const hasEmptyQuestion = questions.some((q) => !q.question || q.question.trim() === "");
     if (hasEmptyQuestion) {
       alert("모든 질문란을 채워주세요.");
       return;
     }
 
-    const formattedQuestions = questions.map((question) => ({ id: question.id, question: question.question }));
+    const newQuestions = questions.filter((question) => question.id === null);
+    const existingQuestions = questions.filter((question) => question.id !== null);
 
+    const formattedNewQuestions = newQuestions.map((question) => ({ question: question.question }));
+    const formattedExistingQuestions = existingQuestions.map((question) => ({ id: question.id, question: question.question }));
 
-      const response = await instance.put(
+    if (newQuestions.length > 0) {
+      const postResponse = await instance.post(
         `/api/self-eval-question/${id}`,
-        formattedQuestions
+        formattedNewQuestions
       );
-
-      if (response.data.code === 200) {
-        console.log(`수정한 질문: `, formattedQuestions)
-        alert(response.data.message);
-        console.log(setIsEditing);
-        setIsEditing(true);
-        setIsVisible(false);
-      } else {
-        alert("자기 평가 질문 수정에 실패했습니다.");
+      if (postResponse.data.code !== 201) {
+        alert("새로운 질문 생성에 실패했습니다.");
+        return;
       }
-    } catch (error) {
-      console.error("자기 평가 질문 수정에 실패했습니다.", error);
-      alert("자기 평가 질문 수정 중 문제가 발생했습니다.");
     }
-  };
+
+    if (existingQuestions.length > 0) {
+      const putResponse = await instance.put(
+        `/api/self-eval-question/${id}`,
+        formattedExistingQuestions
+      );
+      if (putResponse.data.code !== 200) {
+        alert("기존의 질문 수정에 실패했습니다.");
+        return;
+      }
+    }
+
+    console.log(`수정한 질문: `, formattedExistingQuestions)
+    alert("질문이 성공적으로 수정되었습니다.");
+    console.log(setIsEditing);
+    setIsEditing(true);
+    setIsVisible(false);
+  } catch (error) {
+    console.error("질문 수정에 실패했습니다.", error);
+    alert("질문 수정 중 문제가 발생했습니다.");
+  }
+};
 
 
   //질문 목록 GET API
