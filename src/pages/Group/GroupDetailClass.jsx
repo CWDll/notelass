@@ -450,7 +450,7 @@ function GroupDetailClass() {
               <Button
                 onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}
               >
-                {isEditing ? "자기 평가서 수정" : "자기 평가서 생성"}
+                자기 평가서
               </Button>
             </>
           )}
