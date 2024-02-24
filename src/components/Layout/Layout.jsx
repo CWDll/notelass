@@ -1,8 +1,11 @@
+import React, { useContext } from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 import StudentBook from "../../pages/Student/StudentBook";
+import StudentSelfEval from "../Component/Modal/StudentSelfEval/StudentSelfEval";
+import RoleContext from "../../RoleContext";
 
 export const Container = styled.div`
   display: flex;
@@ -15,6 +18,7 @@ export const Container = styled.div`
 
 export default function Layout() {
   const location = useLocation();
+  const { role } = useContext(RoleContext);
 
   // 렌더링하지 않을 경로들을 배열로 관리
   const excludePaths1 = ["/NoteDetailSubject/pdf-viewer", "/introduce", "/"];
@@ -28,7 +32,8 @@ export default function Layout() {
       <Nav />
       <Outlet />
       {shouldRenderFooter && <Footer />}
-      {shouldRenderStudentBook && <StudentBook />}
+      {shouldRenderStudentBook &&
+        (role === "STUDENT" ? <StudentSelfEval /> : <StudentBook />)}
     </Container>
   );
 }
