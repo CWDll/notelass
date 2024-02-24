@@ -58,6 +58,7 @@ export const Text = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  padding: 5px;
 `;
 
 export const Input = styled.input`
@@ -70,6 +71,8 @@ export const Input = styled.input`
   border: 1.5px solid rgba(201, 205, 210, 0.5);
   background: #fff;
   padding: 4px;
+  font-family: Pretendard;
+  font-weight: 400;
 `;
 export const ButtonContainer = styled.div`
   display: flex;
@@ -80,15 +83,17 @@ export const ButtonContainer = styled.div`
   color: #ffffff;
   font-size: 20px;
   font-weight: 700;
+  font-family: Pretendard;
 `;
 export const Button = styled.button`
   width: 400px;
   height: 56px;
   background-color: #4849ff;
-  color: #9ea4aa;
+  color: #fff;
   &:hover {
     border: none;
   }
+  font-family: Pretendard;
 `;
 
 export const SmallButton = styled.button`
@@ -103,7 +108,8 @@ export const ColorSmallButton = styled(SmallButton)`
   height: 56px;
   flex-shrink: 0;
   background-color: #4849ff;
-  color: #9ea4aa;
+  color: #fff;
+  font-family: Pretendard;
 `;
 export const ColorSpan = styled.span`
   color: #4849ff;
