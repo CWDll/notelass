@@ -224,7 +224,12 @@ function StudentBook({ show, onClose, groupId, userId }) {
         <BookImg src={book} alt="book" />
         <Text>학생 수첩</Text>
 
-        {showSmallContainer && <StudentBookContent onClose={handleClose} />}
+        {showSmallContainer && (
+          <StudentBookContent
+            onClose={handleClose}
+            setShowSmallContainer={setShowSmallContainer}
+          />
+        )}
       </StudentBookContainer>
     </Wrap>
   );
