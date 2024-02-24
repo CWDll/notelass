@@ -8,6 +8,8 @@ import searching from "../../assets/searching.svg";
 import instance from "../../assets/api/axios";
 import Logo from "../Component/Etc/Logo";
 
+import WithdrawalModal from "../Component/Modal/Auth/WithdrawalModal";
+
 const NavContainer = styled.div`
   width: 100vw;
   height: 84px;
@@ -148,7 +150,7 @@ const NavDropdownBox = styled.div`
   position: fixed;
   align-items: center;
   justify-content: center;
-  margin-top: 130px;
+  margin-top: 200px;
   margin-left: 180px;
   border-radius: 10px;
 `;
@@ -172,6 +174,7 @@ export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
+  const [shwoWithdrawalModal, setShwoWithdrawalModal] = useState(false);
   const { paramsGroupId } = useParams();
   console.log(paramsGroupId);
 
@@ -325,6 +328,20 @@ export default function Nav() {
               >
                 로그아웃
               </NavDropdownOptionDown>
+              <hr />
+              <NavDropdownOptionDown
+                className="dropdown-item"
+                onClick={() => setShwoWithdrawalModal(!shwoWithdrawalModal)}
+              >
+                회원탈퇴
+              </NavDropdownOptionDown>
+
+              {shwoWithdrawalModal && (
+                <WithdrawalModal
+                  setShwoWithdrawalModal={setShwoWithdrawalModal}
+                  shwoWithdrawalModal={shwoWithdrawalModal}
+                />
+              )}
             </NavDropdownBox>
           )}
         </>
