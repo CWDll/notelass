@@ -10,15 +10,6 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 // api
 import instance from "src/assets/api/axios";
 import { saveAs } from "file-saver";
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  PDFViewer,
-  StyleSheet,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
 
 const ManagementContainer = styled.div`
   width: 480px;
@@ -170,60 +161,6 @@ const GrayText = styled.p`
   font-weight: 600;
   margin-top: 4px;
 `;
-
-// pdf 관련
-const DownloadLink = styled.div`
-  margin-top: 20px;
-  cursor: pointer;
-  color: blue;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-// @react-pdf/renderer 스타일
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "column",
-    backgroundColor: "#FFFFFF",
-    padding: 10,
-  },
-  section: {
-    margin: 10,
-    padding: 5,
-    flexGrow: 1,
-  },
-});
-
-// PDF 문서 컴포넌트
-const MaterialPDFDocument = ({ material }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>제목: {material.title}</Text>
-        {/* <Text>생성 날짜: {formatDate(material.createdDate)}</Text> */}
-        <Text>생성 날짜: 231</Text>
-        {material.files.map((file, index) => (
-          <Text key={index}>파일 이름: {file.originalFileName}</Text>
-        ))}
-      </View>
-    </Page>
-  </Document>
-);
-
-// PDF 다운로드 링크 컴포넌트
-const PDFDownloadLinkComponent = ({ material }) => (
-  <DownloadLink>
-    <PDFDownloadLink
-      document={<MyDocument material={material} />}
-      fileName="material.pdf"
-    >
-      {({ blob, url, loading, error }) =>
-        loading ? "문서 준비 중..." : "PDF로 내보내기"
-      }
-    </PDFDownloadLink>
-  </DownloadLink>
-);
 
 const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
   const location = useLocation();
