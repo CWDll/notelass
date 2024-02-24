@@ -12,6 +12,9 @@ import envelope from "../../assets/envelope.svg";
 import envelopeOpen from "../../assets/envelopeOpen.svg";
 import fileDownload from "../../assets/fileDownload.svg";
 
+// 자기 평가
+import StudentSelfEval from "../../components/Component/Modal/StudentSelfEval/StudentSelfEval";
+
 // api
 import instance from "../../assets/api/axios";
 import RoleContext from "../../RoleContext";
@@ -402,13 +405,7 @@ function GroupDetailClass() {
             {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
           </BoldTitle>
           {role === "STUDENT" ? (
-            <>
-              <Button
-                onClick={() => setShowSelfEvaluation(!showSelfEvaluation)}
-              >
-                자기평가
-              </Button>
-            </>
+            <StudentSelfEval />
           ) : (
             <>
               <Button
