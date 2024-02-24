@@ -18,6 +18,32 @@ const SelfEvaluation = ({id}) => {
 
   console.log("자기평가 반 id: ", id);
 
+     
+ //test 드래그 관련 상태
+ const [isDragging, setIsDragging] = useState(false);
+ const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+ const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+ const handleMouseDown = (e) => {
+   setIsDragging(true);
+   setOffset({
+     x: e.clientX - position.x,
+     y: e.clientY - position.y,
+   });
+ };
+
+ const handleMouseMove = (e) => {
+   if (isDragging) {
+     const newX = e.clientX - offset.x;
+     const newY = e.clientY - offset.y;
+     setPosition({ x: newX, y: newY });
+   }
+ };
+
+ const handleMouseUp = () => {
+   setIsDragging(false);
+ };
+
  
 
   //질문 추가
@@ -82,6 +108,7 @@ const editQuestion = async () => {
     const hasEmptyQuestion = questions.some((q) => !q.question || q.question.trim() === "");
     if (hasEmptyQuestion) {
       alert("모든 질문란을 채워주세요.");
+      
       return;
     }
 
@@ -150,7 +177,17 @@ const editQuestion = async () => {
   if (!isVisible) return null;
 
   return (
-    <S.SmallContainer>
+    <S.SmallContainer
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={handleMouseDown}
+      onMouseMove={isDragging ? handleMouseMove : null}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp} // 드래그 중 컴포넌트를 벗어났을 때
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+    >
       
       <S.ExitButton
         style={{ margin: "24px" }}

@@ -89,7 +89,7 @@ export const SaveButton = styled.button`
   height: 40px;
   border-radius: 6px;
   border: none;
-  background-color:  #ccc;
+  background: ${props => props.disabled ? '#ccc' : '#4849ff'};
   color: white;
   cursor: pointer;
   margin-left: 16px;
