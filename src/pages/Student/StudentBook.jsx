@@ -10,8 +10,8 @@ import instance from "../../assets/api/axios";
 import StudentBookContent from "./StudentBookContent";
 
 const Wrap = styled.div`
-margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
-margin-right: auto;
+  margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+  margin-right: auto;
 `;
 
 const StudentBookContainer = styled.div`
@@ -27,6 +27,7 @@ const StudentBookContainer = styled.div`
   align-items: center;
 
   position: fixed;
+  z-index: 12;
   margin-top: -1050px;
   margin-left: 650px;
 `;
@@ -216,7 +217,6 @@ function StudentBook({ show, onClose, groupId, userId }) {
   };
 
   return (
-  
     <Wrap>
       <StudentBookContainer
         onClick={() => setShowSmallContainer(!showSmallContainer)}

@@ -15,12 +15,12 @@ const StudentBookContainer = styled.div`
   background: #4849ff;
   box-shadow: 0px 0px 8px 0px rgba(38, 40, 43, 0.2);
 
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  position: fixed;
+  /* position: fixed; */
   margin-top: 236px;
   margin-left: 1589px;
 `;
@@ -51,6 +51,7 @@ const SmallContainer = styled.div`
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed;
+  z-index: 20000;
   margin-left: 900px;
   margin-top: 450px;
   top: 500px;
