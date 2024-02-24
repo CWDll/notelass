@@ -94,6 +94,7 @@ import {
   ExitButton,
   Wrap,
   Main,
+  Copy,
 } from "../../components/Component/Home/Style/GroupDetailStyle";
 
 export function GroupDetailWrite() {
@@ -944,6 +945,7 @@ export function GroupDetailWrite() {
                 </KeywordContainer>
               </>
             </GuidelineContainer>
+            {/* <Copy>복사하기</Copy> */}
             <GuidelineBox>
               {loading ? (
                 <div
@@ -957,9 +959,13 @@ export function GroupDetailWrite() {
                   <BeatLoader color="#4849ff" loading={loading} size={10} />
                 </div>
               ) : (
+                <>
                 <Text>{guideLineText}</Text>
+                
+                </>
               )}
             </GuidelineBox>
+            
           </>
         </LeftContainer>
 
