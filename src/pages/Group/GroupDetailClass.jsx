@@ -455,7 +455,7 @@ function GroupDetailClass() {
             </>
           )}
 
-          {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} />}
+          {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} id={id}/>}
 
           {showEnrollModal && (
             <ManageGroup

@@ -4,13 +4,15 @@ import exit from "../../../assets/exit.svg";
 import * as S from "src/components/Component/Group/Style/SelfEvaluationStyle";
 import instance from "src/assets/api/axios";
 
-const SelfEvaluation = ({ setIsEditing }) => {
+const SelfEvaluation = ({ setIsEditing ,id}) => {
   const [group, setGroup] = useState("");
   const [groups, setGroups] = useState([]);
   const [questions, setQuestions] = useState([""]);
   const [isVisible, setIsVisible] = useState(true);
   const [question, setQuestion] = useState("");
   // const [isEditing, setIsEditing] = useState(false);
+
+  console.log("자기평가 반 id: ", id);
 
   //그룹 선택
   const handleGroupChange = (event) => {
@@ -55,12 +57,12 @@ const SelfEvaluation = ({ setIsEditing }) => {
       const formattedQuestions = questions.map((question) => ({ question }));
 
       const response = await instance.post(
-        `/api/self-eval-question/${group}`,
+        `/api/self-eval-question/${id}`,
         formattedQuestions
       );
 
       if (response.data.code === 201) {
-        console.log(`그룹 ID: ${group}`);
+        console.log(`그룹 ID: ${id}`);
         questions.forEach((question, index) => {
           console.log(`질문 ${index + 1}: ${question}`);
         });
@@ -77,30 +79,12 @@ const SelfEvaluation = ({ setIsEditing }) => {
     }
   };
 
-  //그룹 목록 GET
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const response = await instance.get("/api/group");
-        if (response.data && response.data.result) {
-          const newGroups = response.data.result.map((g) => ({
-            id: g.id,
-            name: `${g.grade}학년 ${g.classNum}반 ${g.subject}`,
-          }));
-          setGroups(newGroups);
-        }
-      } catch (error) {
-        console.error("그룹 데이터를 가져오는 중 오류 발생:", error);
-      }
-    };
 
-    fetchGroups();
-  }, []);
 
   //질문 목록 GET API
-  const fetchQuestions = async (group) => {
+  const fetchQuestions = async (id) => {
     try {
-      const response = await instance.get(`/api/self-eval-question/${group}`);
+      const response = await instance.get(`/api/self-eval-question/${id}`);
       if (response.data.code === 200) {
         const newQuestions = response.data.result.map((item) => item.question);
         setQuestions(newQuestions);
@@ -111,6 +95,10 @@ const SelfEvaluation = ({ setIsEditing }) => {
       console.error("질문 조회 중 오류 발생:", error);
     }
   };
+
+  useEffect(() => {
+    fetchQuestions(id);
+}, [id]);
 
   if (!isVisible) return null;
 
