@@ -116,15 +116,7 @@ const SelfEvaluation = ({ setIsEditing }) => {
 
   return (
     <S.SmallContainer>
-      <S.Dropdown onChange={handleGroupChange} value={group}>
-        <option value="">그룹을 선택해주세요.</option>
-        {groups.map((g) => (
-          <option key={g.id} value={g.id}>
-            {g.name}
-          </option>
-        ))}
-      </S.Dropdown>
-
+      
       <S.ExitButton
         style={{ margin: "24px" }}
         src={exit}
