@@ -10,7 +10,15 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 // api
 import instance from "src/assets/api/axios";
 import { saveAs } from "file-saver";
-import { Document, Page, Text, View, PDFViewer } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  PDFViewer,
+  StyleSheet,
+  PDFDownloadLink,
+} from "@react-pdf/renderer";
 
 const ManagementContainer = styled.div`
   width: 480px;
@@ -163,6 +171,60 @@ const GrayText = styled.p`
   margin-top: 4px;
 `;
 
+// pdf 관련
+const DownloadLink = styled.div`
+  margin-top: 20px;
+  cursor: pointer;
+  color: blue;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+// @react-pdf/renderer 스타일
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    padding: 10,
+  },
+  section: {
+    margin: 10,
+    padding: 5,
+    flexGrow: 1,
+  },
+});
+
+// PDF 문서 컴포넌트
+const MaterialPDFDocument = ({ material }) => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      <View style={styles.section}>
+        <Text>제목: {material.title}</Text>
+        {/* <Text>생성 날짜: {formatDate(material.createdDate)}</Text> */}
+        <Text>생성 날짜: 231</Text>
+        {material.files.map((file, index) => (
+          <Text key={index}>파일 이름: {file.originalFileName}</Text>
+        ))}
+      </View>
+    </Page>
+  </Document>
+);
+
+// PDF 다운로드 링크 컴포넌트
+const PDFDownloadLinkComponent = ({ material }) => (
+  <DownloadLink>
+    <PDFDownloadLink
+      document={<MyDocument material={material} />}
+      fileName="material.pdf"
+    >
+      {({ blob, url, loading, error }) =>
+        loading ? "문서 준비 중..." : "PDF로 내보내기"
+      }
+    </PDFDownloadLink>
+  </DownloadLink>
+);
+
 const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
   const location = useLocation();
   const info = location.state;
@@ -293,6 +355,26 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
     }
   }
 
+  // 파일 다운로드 함수
+  const downloadFile = async (fileId, originalFileName) => {
+    try {
+      const response = await instance.get(`/api/file/${fileId}`, {
+        responseType: "blob", // 서버로부터 받은 데이터를 Blob으로 처리
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", originalFileName); // 다운로드 파일명 설정
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // 다운로드 후 링크 요소 제거
+    } catch (error) {
+      console.error("파일 다운로드 중 오류 발생:", error);
+      alert("파일을 다운로드하는 중 문제가 발생했습니다.");
+    }
+  };
+
   const navigate = useNavigate();
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
@@ -347,10 +429,19 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
                 onClick={() => toggleDropdown(material.id)}
               />
               {dropdownVisible[material.id] && (
-                <NavDropdownBox className="dropdown-menu">
-                  <NavDropdownOptionUp className="dropdown-item">
-                    PDF로 내보내기
-                  </NavDropdownOptionUp>
+                <NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
+                  {material.files.map((file) => (
+                    <NavDropdownOptionUp
+                      key={file.id}
+                      className="dropdown-item"
+                      onClick={() => {
+                        downloadFile(file.id, file.originalFileName);
+                        toggleDropdown(material.id);
+                      }}
+                    >
+                      PDF로 내보내기
+                    </NavDropdownOptionUp>
+                  ))}
                   <hr />
                   <NavDropdownOptionDown
                     className="dropdown-item"
@@ -358,13 +449,6 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
                   >
                     노트탭에 불러오기
                   </NavDropdownOptionDown>
-                  {/* <hr />
-                    <NavDropdownOptionDown
-                      className="dropdown-item"
-                      onClick={() => handleDelete(material.id)}
-                    >
-                      자료 보기
-                    </NavDropdownOptionDown> */}
                 </NavDropdownBox>
               )}
             </SubjectBody>

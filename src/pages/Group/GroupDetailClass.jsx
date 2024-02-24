@@ -260,7 +260,9 @@ function GroupDetailClass() {
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
-    navigate(`/GroupDetailClass/${id}/MakeAssignment`);
+    navigate(`/GroupDetailClass/${id}/MakeAssignment`, {
+      state: info,
+    });
   };
   const toAllPage = (school, grade, classNum, subject) => {
     navigate(`/NoticeDetailList/${id}`, {
