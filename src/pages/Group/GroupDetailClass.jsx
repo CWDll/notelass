@@ -128,7 +128,7 @@ margin-top: -24px;
 margin-left:579px;
 border-radius: 16px
 gap: 8px;
-z-index: 5000;
+z-index: 10;
 background: #F5F5FC;
 padding:  6px, 8px;
 text-align: center;

@@ -148,6 +148,7 @@ const NavDropdownBox = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
+  z-index: 11;
   align-items: center;
   justify-content: center;
   margin-top: 200px;
@@ -297,9 +298,11 @@ export default function Nav() {
     // 이미 드롭다운이 보이는 상태에서 프로필 사진을 클릭하면 드롭다운을 닫습니다.
     if (dropdownVisible) {
       setDropdownVisible(false);
+      setShwoWithdrawalModal(false);
     } else {
       // 드롭다운이 보이지 않는 상태에서 프로필 사진을 클릭하면 드롭다운을 엽니다.
       setDropdownVisible(true);
+      setShwoWithdrawalModal(false);
     }
   };
 
