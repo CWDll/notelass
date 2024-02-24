@@ -202,17 +202,17 @@ const CountContainer = styled.div`
   padding: 5px;
 `;
 
-function StudentSelfEval({ show, onClose, groupId, userId }) {
+function StudentSelfEval({ groupId }) {
   const [showSmallContainer, setShowSmallContainer] = useState(false);
 
   // useEffect를 사용하여 외부에서 받은 show 상태에 따라 내부의 showSmallContainer 상태를 조절
-  useEffect(() => {
-    setShowSmallContainer(show);
-    console.log(show, onclose, groupId, userId);
-  }, [show]);
+  //   useEffect(() => {
+  //     setShowSmallContainer(show);
+  //     console.log("확인용", show, onclose, groupId, userId);
+  //   }, [show]);
 
   const handleClose = () => {
-    setShowSmallContainer(false); // `showSmallContainer` 상태를 false로 설정하여 컴포넌트를 숨김
+    setShowSmallContainer(false);
   };
 
   return (
@@ -223,7 +223,14 @@ function StudentSelfEval({ show, onClose, groupId, userId }) {
         <BookImg src={book} alt="book" />
         <Text>자기 평가</Text>
 
-        {showSmallContainer && <StudentSelfEvalContent onClose={handleClose} />}
+        {showSmallContainer && (
+          <StudentSelfEvalContent
+            // onClose={handleClose}
+            groupId={groupId}
+            setShowSmallContainer={setShowSmallContainer}
+            showSmallContainer={showSmallContainer}
+          />
+        )}
       </StudentBookContainer>
     </Wrap>
   );

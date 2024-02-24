@@ -27,6 +27,8 @@ import MaterialList from "../../components/Component/Group/Student/MaterialList"
 const Wrap = styled.div`
   margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-right: auto;
+  position: relative;
+  z-index: 10000;
 `;
 
 const Main = styled.div`
@@ -35,6 +37,8 @@ const Main = styled.div`
 
 const Header = styled.header`
   display: flex;
+  position: relative;
+  z-index: 1001;
 `;
 
 const Img = styled.img`
@@ -69,6 +73,7 @@ const NoticeContainer = styled.div`
   margin-top: 33px;
   position: relative;
   align-items: center;
+  z-index: 1000;
 `;
 
 const GroupContainer = styled.div`
@@ -123,7 +128,7 @@ margin-top: -24px;
 margin-left:579px;
 border-radius: 16px
 gap: 8px;
-z-index: 1;
+z-index: 5000;
 background: #F5F5FC;
 padding:  6px, 8px;
 text-align: center;
@@ -405,7 +410,7 @@ function GroupDetailClass() {
             {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
           </BoldTitle>
           {role === "STUDENT" ? (
-            <StudentSelfEval />
+            <StudentSelfEval groupId={id} />
           ) : (
             <>
               <Button
