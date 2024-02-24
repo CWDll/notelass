@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SelfEvalModalContainer = styled.div`
-  width: 580px;
-  height: 658px;
+  width: 480px;
+  height: 476px;
   flex-shrink: 0;
   border-radius: 8px;
   background: #fff;
@@ -34,12 +34,14 @@ export const BigTitle = styled.span`
 `;
 
 export const SelfEvalList = styled.div`
-  width: 420px;
-  height: 400px;
+  /* width: 420px; */
+  /* height: 400px; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   overflow-y: auto;
+  padding-top: 20px;
 `;
 
 export const SelfEvalContent = styled.div`
