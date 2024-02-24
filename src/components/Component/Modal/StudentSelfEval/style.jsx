@@ -67,6 +67,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
+  margin-top: 10px;
 
   // 내부 폰트
   color: #ffffff;
