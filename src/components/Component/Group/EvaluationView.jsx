@@ -4,14 +4,16 @@ import exit from '../../../assets/exit.svg';
 import * as S from 'src/components/Component/Group/Style/EvaluationViewStyle';
 import instance from "src/assets/api/axios";
 
-const SelfEvaluation = () => {
+const EvaluationView = ({paramsGroupId,paramsUserId}) => {
     const [questions, setQuestions] = useState([]); 
     const [isVisible, setIsVisible] = useState(true);
-    const { paramsGroupId, paramsUserId } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
   const info = location.state;
   // console.log("info:", info);
+
+  console.log("paramsGroupId:", paramsGroupId);
+    console.log("paramsUserId:", paramsUserId);
 
     //질문 조회 GET API 
     useEffect(() => {
@@ -56,4 +58,4 @@ const SelfEvaluation = () => {
     );
 };
 
-export default SelfEvaluation;
+export default EvaluationView;
