@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import * as S from "../EmailVerificationAndPassword/style";
 import instance from "../../../assets/api/axios";
 import { setUserInput } from "../../../action/userInputActions";
-import { resetPassword } from "../../../assets/api/apis/auth/resetPassword";
-import { sendPasswordResetEmail } from "../../../assets/api/apis/auth/sendPasswordResetEmail";
+import {
+  resetPassword,
+  sendPasswordResetEmail,
+} from "../../../assets/api/apis/auth/ApiAuth";
 
 import FormControl from "@mui/material/FormControl";
 // 비밀번호 숨김/공개 입력창
