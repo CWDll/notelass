@@ -16,8 +16,8 @@ function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
   const [checkText, setCheckText] = useState("");
   const DeleteButtonClick = (checkText) => {
     if (checkText === "회원 탈퇴합니다") {
-      deleteGroup(groupId);
-      navigate("/introduce");
+      // deleteGroup(groupId);
+      navigate("/SignupComplete");
     } else {
       alert("문장이 일치하지 않습니다.");
       setCheckText("");
@@ -31,7 +31,7 @@ function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
       <S.FlexContainer>
         <S.ColorText>회원 탈퇴시 그룹 내 모든 데이터가 삭제됩니다.</S.ColorText>
         <S.TextContainer>
-          <S.Text>그룹을 삭제합니다.</S.Text>
+          <S.Text>회원 탈퇴합니다</S.Text>
           <S.Input
             type="text"
             placeholder="위의 문장을 적어주세요"
