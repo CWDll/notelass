@@ -223,7 +223,10 @@ function StudentSelfEval({ groupId }) {
         <BookImg src={book} alt="book" />
         <Text>자기 평가</Text>
 
-        {showSmallContainer && (
+        
+      </StudentBookContainer>
+
+      {showSmallContainer && (
           <StudentSelfEvalContent
             // onClose={handleClose}
             groupId={groupId}
@@ -231,7 +234,6 @@ function StudentSelfEval({ groupId }) {
             showSmallContainer={showSmallContainer}
           />
         )}
-      </StudentBookContainer>
     </Wrap>
   );
 }
