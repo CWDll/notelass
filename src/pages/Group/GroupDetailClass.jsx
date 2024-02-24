@@ -28,7 +28,7 @@ const Wrap = styled.div`
   margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
   margin-right: auto;
   position: relative;
-  z-index: 10000;
+  z-index: 10;
 `;
 
 const Main = styled.div`
@@ -38,7 +38,7 @@ const Main = styled.div`
 const Header = styled.header`
   display: flex;
   position: relative;
-  z-index: 1001;
+  z-index: 11;
 `;
 
 const Img = styled.img`
@@ -73,7 +73,7 @@ const NoticeContainer = styled.div`
   margin-top: 33px;
   position: relative;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
 `;
 
 const GroupContainer = styled.div`
@@ -128,7 +128,7 @@ margin-top: -24px;
 margin-left:579px;
 border-radius: 16px
 gap: 8px;
-z-index: 5000;
+z-index: 10;
 background: #F5F5FC;
 padding:  6px, 8px;
 text-align: center;
@@ -169,6 +169,7 @@ const StyledNoticeItem = styled.li`
 
 const NoticeContent = styled.div`
   display: flex;
+  max-width: 300px;
 `;
 
 const NoticeImg = styled.img`
@@ -457,7 +458,9 @@ function GroupDetailClass() {
             </>
           )}
 
-          {showSelfEvaluation && <SelfEvaluation setIsEditing={setIsEditing} id={id}/>}
+          {showSelfEvaluation && (
+            <SelfEvaluation setIsEditing={setIsEditing} id={id} />
+          )}
 
           {showEnrollModal && (
             <ManageGroup
