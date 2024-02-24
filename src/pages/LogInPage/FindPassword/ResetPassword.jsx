@@ -4,7 +4,7 @@ import * as S from "../EmailVerificationAndPassword/style";
 import {
   checkCode,
   resetPassword,
-} from "../../../assets/api/apis/auth/resetPassword";
+} from "../../../assets/api/apis/auth/ApiAuth";
 
 import { setUserInput } from "../../../action/userInputActions";
 
