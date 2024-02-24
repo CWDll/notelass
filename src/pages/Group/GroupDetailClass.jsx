@@ -482,7 +482,7 @@ function GroupDetailClass() {
         <MainContainer>
           <LeftSectionContainer>
             <NoticeContainer>
-              <Title>공지/과제</Title>
+              <Title>공지/학습자료</Title>
 
               {role === "STUDENT" ? (
                 <DetailText onClick={toAllPage}>전체보기</DetailText>
