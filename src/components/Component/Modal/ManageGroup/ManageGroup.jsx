@@ -60,6 +60,7 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
           index={index + 1}
           groupId={groupId}
           userId={student.userId}
+          setShowEnrollModal={setShowEnrollModal}
         />
       ))}
     </S.ModalContainer>
