@@ -16,7 +16,8 @@ export default function NoticeInfo({
   const postDate = moment(creDate).format("YYYY.MM.DD");
 
   const [group, setGroup] = useState(matchedGroup || {});
-  console.log("공지 생성 페이지 추출한 정보!:", matchedGroup);
+  console.log("추출한 정보!:", matchedGroup);
+  console.log("teacher", teacher);
 
   // info가 있으면 info를 사용하고, 없으면 matchedGroup을 사용
   const displayGroup = info || matchedGroup;
