@@ -259,18 +259,16 @@ function GroupDetailClass() {
 
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
-  
+  const toWritePage = () => {
+    navigate(`/GroupDetailClass/${id}/MakeAssignment`);
+  };
   const toAllPage = (school, grade, classNum, subject) => {
     navigate(`/NoticeDetailList/${id}`, {
       state: { school, grade, classNum, subject },
     });
   };
 
-  const toWritePage = (school, grade, classNum, subject) => {
-    navigate(`/GroupDetailClass/${id}/MakeAssignment`, {
-      state: { school, grade, classNum, subject },
-    });
-  };
+  
 
   const GroupDetailWrite = (
     paramsGruopId,
@@ -585,7 +583,16 @@ function GroupDetailClass() {
 
                 <GroupContainer>
                   <Title>학생별 성적 열람</Title>
-                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  <DetailText onClick={() =>
+                        toWritePage(
+                          id,
+                          student.id,
+                          info.school,
+                          info.grade,
+                          info.classNum,
+                          info.subject
+                        )
+                      }>전체보기</DetailText>
                   <SubjectContainer>
                     <NoticeContent onClick={StudentScoreDetail}>
                       <NoticeImg src={person} alt="person" />
