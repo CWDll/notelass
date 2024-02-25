@@ -149,6 +149,7 @@ function MakeAssignment() {
       // 응답 처리
       console.log("공지 생성 완료:", response.data);
       alert("공지가 성공적으로 생성되었습니다.");
+      handleHeaderClick();
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
@@ -205,6 +206,7 @@ function MakeAssignment() {
       // 응답 처리
       console.log("강의자료 생성 완료:", response.data);
       alert("강의자료가 성공적으로 생성되었습니다.");
+      handleHeaderClick();
     } catch (error) {
       console.error("강의자료 생성 실패:", error);
       alert("강의자료 생성에 실패했습니다.");
@@ -351,7 +353,7 @@ function MakeAssignment() {
             <AssignInfo />
           ) : (
             <NoticeInfo
-              
+              paramsGroupId={paramsGroupId}
               info={info}
             />
           )}

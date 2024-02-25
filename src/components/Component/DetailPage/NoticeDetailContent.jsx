@@ -50,13 +50,11 @@ function NoticeDetailContent(noticeId) {
   const navigate = useNavigate();
   function callConsole() {
     console.log("마마", noticeId);
+    console.log("마마", teacher);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,
-        info: info,
-        creDate: creDate,
-        teacher: teacher,
-        editMode: isEditMode,
+        teacher : teacher,
       },
     });
   }
