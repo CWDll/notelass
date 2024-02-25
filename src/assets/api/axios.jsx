@@ -13,14 +13,10 @@ instance.interceptors.request.use(
   (config) => {
     // 로컬 스토리지에서 토큰 가져오기
     const token = localStorage.getItem("token");
-    
-
     // 헤더에 토큰 추가
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
-      // console.log("axsios.jsx: token 존재:" + token);
     }
-
     return config;
   },
   (error) => {
@@ -28,4 +24,18 @@ instance.interceptors.request.use(
   }
 );
 
-export default instance; //이 파일 밖에서도 사용가능하게 함
+// 응답 인터셉터 추가
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // 로그인 토큰이 만료되었거나 유효하지 않으면
+      localStorage.removeItem("token"); // 토큰 삭제
+      alert("로그아웃 되었습니다.");
+      window.location.href = "/login"; // 페이지 리다이렉트
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default instance;

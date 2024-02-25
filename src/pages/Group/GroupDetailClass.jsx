@@ -280,7 +280,7 @@ function GroupDetailClass() {
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`, {
-      state: info,
+      state: { info, from: "post" },
     });
   };
   const toAllPage = (school, grade, classNum, subject) => {
@@ -288,8 +288,6 @@ function GroupDetailClass() {
       state: { school, grade, classNum, subject },
     });
   };
-
-  
 
   const GroupDetailWrite = (
     paramsGruopId,
@@ -508,18 +506,21 @@ function GroupDetailClass() {
               <Title>공지/학습자료</Title>
 
               {role === "STUDENT" ? (
-                <DetailText onClick={() => {
-                  toAllPage(
-                    info.school,
-                    info.grade,
-                    info.classNum,
-                    info.subject
-                  );
-                }}>전체보기</DetailText>
+                <DetailText
+                  onClick={() => {
+                    toAllPage(
+                      info.school,
+                      info.grade,
+                      info.classNum,
+                      info.subject
+                    );
+                  }}
+                >
+                  전체보기
+                </DetailText>
               ) : (
                 <>
                   <ShowAllText
-                    
                     onClick={() => {
                       toAllPage(
                         info.school,
@@ -607,7 +608,9 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    >준비 중입니다.</Title>
+                    >
+                      준비 중입니다.
+                    </Title>
                   </SubjectContainer>
                 </GroupContainer>
 
@@ -648,7 +651,9 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    >준비 중입니다.</Title>
+                    >
+                      준비 중입니다.
+                    </Title>
                   </SubjectContainer>
                 </GroupContainer>
               </>

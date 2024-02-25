@@ -48,13 +48,15 @@ function NoticeDetailContent(noticeId) {
   console.log("ND의 info in NDC:", info);
 
   const navigate = useNavigate();
-  function callConsole() {
-    console.log("마마", noticeId);
+  function toReWrite() {
     console.log("마마", teacher);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,
-        teacher : teacher,
+        info: info,
+        creDate: creDate,
+        teacher: teacher,
+        intent: "corr",
       },
     });
   }
@@ -82,8 +84,7 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        <S.Button onClick={callConsole}
-        >수정하기</S.Button>
+        <S.Button onClick={toReWrite}>수정하기</S.Button>
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
