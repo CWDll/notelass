@@ -109,7 +109,7 @@ function MakeAssignment() {
 
       let response;
       // 수정 API
-      if (info) {
+      if (info.intent == "corr") {
         response = await instance.put(
           `/api/notice/${paramsGroupId}/${info.noticeId}`,
           formData,
@@ -211,7 +211,7 @@ function MakeAssignment() {
 
   useEffect(() => {
     const fetchGroups = async () => {
-      if (info) {
+      if (info.intent == "corr") {
         try {
           const res = await instance.get(
             `/api/notice/detail?noticeId=${info.noticeId}`
@@ -366,7 +366,7 @@ function MakeAssignment() {
             <S.FileContainer>{renderFileList()}</S.FileContainer>
             <S.Foot>
               <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                {info ? "수정하기" : "생성하기"}
+                {info.intent === "corr" ? "수정하기" : "생성하기"}
               </S.SubmitBtn>
 
               <S.CancelBtn type="button" onClick={handleHeaderClick}>

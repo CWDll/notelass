@@ -262,7 +262,7 @@ function GroupDetailClass() {
   const { id } = useParams(); // URL에서 id 매개변수의 값을 추출합니다.
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`, {
-      state: info,
+      state: { info, from: "post" },
     });
   };
   const toAllPage = (school, grade, classNum, subject) => {
