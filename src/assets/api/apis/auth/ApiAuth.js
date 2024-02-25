@@ -61,3 +61,5 @@ export const sendPasswordResetEmail = async (email) => {
     alert("이메일을 다시 확인해주세요.");
   }
 };
+
+// 회원 탈퇴 로직 필요 !!
