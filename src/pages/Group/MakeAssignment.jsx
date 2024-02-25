@@ -18,7 +18,12 @@ function MakeAssignment() {
   const location = useLocation();
   // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
-  console.log("MA의 info:", info);;
+  console.log("MA의 info:", info);
+  const editinfo = location.state.editinfo;
+  const editcreDate = location.state.editcreDate;
+  const editteacher = location.state.editteacher;
+
+    console.log("MA의 editinfo:", editinfo, editcreDate, editteacher);
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -205,6 +210,8 @@ function MakeAssignment() {
       alert("강의자료 생성에 실패했습니다.");
     }
   };
+
+  
   
   const renderFileList = () => (
     <S.FileList>
