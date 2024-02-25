@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 
 import * as S from "src/pages/Style/AssignmentStyle";
@@ -14,9 +14,14 @@ export default function NoticeInfo({
 }) {
   // const currentDate = moment().format("YYYY.MM.DD");
   const postDate = moment(creDate).format("YYYY.MM.DD");
+  const location = useLocation();
+  // 학교, 학년, 반, 과목 들어있는 데이터
+  const infos = location.state;
+  console.log("NI의 info in NDC:", infos);
 
   const [group, setGroup] = useState(matchedGroup || {});
-  console.log("공지 생성 페이지 추출한 정보!:", matchedGroup);
+  console.log("추출한 정보!:", matchedGroup);
+  console.log("teacher", teacher);
 
   // info가 있으면 info를 사용하고, 없으면 matchedGroup을 사용
   const displayGroup = info || matchedGroup;

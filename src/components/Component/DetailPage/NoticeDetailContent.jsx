@@ -14,6 +14,7 @@ function NoticeDetailContent(noticeId) {
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
   const [groupId, setGroupId] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", noticeId);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function NoticeDetailContent(noticeId) {
         info: info,
         creDate: creDate,
         teacher: teacher,
+        editMode: isEditMode,
       },
     });
   }
@@ -82,7 +84,8 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        <S.Button onClick={callConsole}>수정하기</S.Button>
+        <S.Button onClick={callConsole}
+        >수정하기</S.Button>
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>

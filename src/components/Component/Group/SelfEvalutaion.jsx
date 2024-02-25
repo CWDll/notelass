@@ -18,6 +18,10 @@ const SelfEvaluation = ({id}) => {
 
   console.log("자기평가 반 id: ", id);
 
+  const allQuestionsFilled = () => {
+    return questions.every((q) => q.question && q.question.trim() !== "");
+  };
+
      
  //test 드래그 관련 상태
  const [isDragging, setIsDragging] = useState(false);
@@ -58,15 +62,6 @@ const addQuestion = () => {
 
  
   //저장하기
-  //자기평가 질문 생성 POST API
-  // const handleQuestionChange = (value, id) => {
-  //   const newQuestions = questions.map((item) =>
-  //     item.id === id ? { ...item, question: value } : item
-  //   );
-  //   setQuestions(newQuestions);
-  // };
-
-  // 질문 내용이 변경될 때마다 상태를 업데이트합니다.
 const handleQuestionChange = (value, id) => {
   const newQuestions = questions.map((item) =>
     item.id === id ? { ...item, question: value, isModified: true } : item
@@ -217,9 +212,9 @@ const editQuestion = async () => {
         <div>
           <S.CancelButton onClick={handleClose}>취소</S.CancelButton>
           {isEditing ? (
-            <S.SaveButton onClick={editQuestion}>수정하기</S.SaveButton>
+            <S.SaveButton onClick={editQuestion} disabled={!allQuestionsFilled()}>수정하기</S.SaveButton>
           ) : (
-            <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
+            <S.SaveButton onClick={handleSave} disabled={!allQuestionsFilled()}>저장하기</S.SaveButton>
           )}
         </div>
       </S.ButtonContainer>
