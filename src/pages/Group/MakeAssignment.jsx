@@ -16,9 +16,9 @@ function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log("location: ", location);
+  // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
-  console.log("필요한 info:", info);
+  console.log("MA의 info:", info);;
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -205,51 +205,7 @@ function MakeAssignment() {
       alert("강의자료 생성에 실패했습니다.");
     }
   };
-
-  const [group, setGroup] = useState(null);
-  const [matchedGroup, setMatchedGroup] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchGroups = async () => {
-  //     if (info) {
-  //       try {
-  //         const res = await instance.get(
-  //           `/api/notice/detail?noticeId=${info.noticeId}`
-  //         );
-  //         if (res.status === 200) {
-  //           setAssignmentName(res.data.result.title);
-  //           setAssignmentDesc(res.data.result.content);
-  //           setFiles(res.data.result.files);
-  //         } else {
-  //           console.log("테스트 실패");
-  //         }
-  //       } catch (error) {
-  //         console.error("fetchGroups에서 오류 발생", error);
-  //       }
-  //     } else {
-  //       try {
-  //         const response = await instance.get(`/api/group`);
-  //         if (response.status === 200 && Array.isArray(response.data.result)) {
-  //           const matched = response.data.result.find(
-  //             (group) => group.id.toString() === paramsGroupId
-  //           );
-  //           if (matched) {
-  //             setMatchedGroup(matched);
-  //             console.log("Matched 그룹 정보:", matched);
-  //           } else {
-  //             console.error("Matching group not found");
-  //           }
-  //         } else {
-  //           console.error("그룹 목록을 불러오는데 실패했습니다.");
-  //         }
-  //       } catch (error) {
-  //         console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
-  //       }
-  //     }
-  //   };
-  //   fetchGroups();
-  // }, [paramsGroupId]);
-
+  
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
@@ -282,7 +238,7 @@ function MakeAssignment() {
           <ShowAssignment />
         ) : (
           <S.AssigmentCreateForm>
-            <S.CreateTitle>공지/강의자료</S.CreateTitle>
+            <S.CreateTitle>공지/학습자료</S.CreateTitle>
             <S.Title>
               {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
               {["공지", "강의자료"].map((value, index) => (
@@ -304,7 +260,7 @@ function MakeAssignment() {
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
+                {selectedButton === "강의자료" ? "학습자료 제목" : "공지 제목"}
               </S.SmallTitle>
               <S.InputTitle
                 type="text"
@@ -317,7 +273,7 @@ function MakeAssignment() {
                     ? "과제 설명을 입력하세요."
                     : selectedButton === "공지"
                     ? "공지 제목을 입력하세요."
-                    : "강의자료 설명을 입력하세요."
+                    : "학습자료 설명을 입력하세요."
                 }
               />
             </S.HeadInput>
@@ -327,7 +283,7 @@ function MakeAssignment() {
                   ? "과제 설정"
                   : selectedButton === "공지"
                   ? "공지 설정"
-                  : "강의자료 설정"}
+                  : "학습자료 설정"}
               </S.SmallTitle>
               <S.InputDesc
                 type="text"
@@ -340,7 +296,7 @@ function MakeAssignment() {
                     ? "과제 설명을 입력하세요."
                     : selectedButton === "공지"
                     ? "공지 내용을 입력하세요."
-                    : "강의자료 설명을 입력하세요."
+                    : "학습자료 설명을 입력하세요."
                 }
               />
             </S.BodyInput>
@@ -382,7 +338,7 @@ function MakeAssignment() {
               ? "과제 설정"
               : selectedButton === "공지"
               ? "공지 설정"
-              : "강의자료 설정"}
+              : "학습자료 설정"}
           </S.CreateTitle>
           {selectedButton === "과제" ? (
             <AssignInfo />

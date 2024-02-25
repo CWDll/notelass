@@ -14,6 +14,7 @@ export default function NoticeInfo({
 }) {
   // const currentDate = moment().format("YYYY.MM.DD");
   const postDate = moment(creDate).format("YYYY.MM.DD");
+  
 
   const [group, setGroup] = useState(matchedGroup || {});
   console.log("추출한 정보!:", matchedGroup);
