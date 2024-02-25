@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useNavigate } from "react-router-dom";
 import store from "./store";
 import { routes } from "./routes";
 import RoleContext from "./RoleContext";
@@ -10,6 +10,7 @@ import ReactGA from "react-ga4";
 ReactGA.initialize("G-QSTTQEGWWQ");
 
 function App() {
+  const navigate = useNavigate();
   // useRoutes를 호출해 라우트 구성을 가져옴. 앞으로 모든 route 경로는 ./route.jsx에 추가하여 사용 !
   const routeElement = useRoutes(routes);
   const [role, setRole] = useState(localStorage.getItem("role") || "teacher");
@@ -26,5 +27,4 @@ function App() {
     </Provider>
   );
 }
-
 export default App;
