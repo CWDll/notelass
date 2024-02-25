@@ -54,6 +54,7 @@ function NoticeDetailContent(noticeId) {
         info: info,
         creDate: creDate,
         teacher: teacher,
+        intent: "corr",
       },
     });
   }
