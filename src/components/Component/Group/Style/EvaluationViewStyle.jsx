@@ -9,9 +9,8 @@ export const SmallContainer = styled.div`
   box-shadow: 0px 0px 24px 0px rgba(38, 40, 43, 0.15);
 
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: ${props => props.y}px;
+  left: ${props => props.x}px;
   z-index: 1000;
 
   display: flex;

@@ -86,7 +86,6 @@ function StudentSelfEvalContent({
       if (res.data.code === 200) {
         console.log("자기평가 답변 수정이 완료되었습니다.");
         alert("자기평가 답변 수정이 완료되었습니다.");
-        setIsEditing(false);
       } else {
         console.log("자기평가 답변 수정 실패");
       }

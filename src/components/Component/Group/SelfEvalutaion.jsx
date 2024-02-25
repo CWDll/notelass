@@ -18,13 +18,38 @@ const SelfEvaluation = ({id}) => {
 
   console.log("자기평가 반 id: ", id);
 
+     
+ //test 드래그 관련 상태
+ const [isDragging, setIsDragging] = useState(false);
+ const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+ const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+ const handleMouseDown = (e) => {
+   setIsDragging(true);
+   setOffset({
+     x: e.clientX - position.x,
+     y: e.clientY - position.y,
+   });
+ };
+
+ const handleMouseMove = (e) => {
+   if (isDragging) {
+     const newX = e.clientX - offset.x;
+     const newY = e.clientY - offset.y;
+     setPosition({ x: newX, y: newY });
+   }
+ };
+
+ const handleMouseUp = () => {
+   setIsDragging(false);
+ };
+
  
 
-  //질문 추가
-  const addQuestion = () => {
-    setQuestions([...questions, { id: null, question: "" }]);
-  };
-  
+// 질문 추가
+const addQuestion = () => {
+  setQuestions([...questions, { id: Date.now(), question: "", isNew: true }]);
+};
 
   //창 닫기
   const handleClose = () => {
@@ -34,12 +59,20 @@ const SelfEvaluation = ({id}) => {
  
   //저장하기
   //자기평가 질문 생성 POST API
-  const handleQuestionChange = (value, id) => {
-    const newQuestions = questions.map((item) =>
-      item.id === id ? { ...item, question: value } : item
-    );
-    setQuestions(newQuestions);
-  };
+  // const handleQuestionChange = (value, id) => {
+  //   const newQuestions = questions.map((item) =>
+  //     item.id === id ? { ...item, question: value } : item
+  //   );
+  //   setQuestions(newQuestions);
+  // };
+
+  // 질문 내용이 변경될 때마다 상태를 업데이트합니다.
+const handleQuestionChange = (value, id) => {
+  const newQuestions = questions.map((item) =>
+    item.id === id ? { ...item, question: value, isModified: true } : item
+  );
+  setQuestions(newQuestions);
+};
   const handleSave = async () => {
     try {
       
@@ -75,8 +108,7 @@ const SelfEvaluation = ({id}) => {
     }
   };
 
-
-  //질문 수정하기
+  // 수정하기
 const editQuestion = async () => {
   try {
     // 공백 질문 확인
@@ -86,45 +118,41 @@ const editQuestion = async () => {
       return;
     }
 
-    const newQuestions = questions.filter((question) => question.id === null);
-    const existingQuestions = questions.filter((question) => question.id !== null);
+    // 새로운 질문과 수정된 질문을 분리
+    const newQuestions = questions.filter((q) => q.isNew);
+    const modifiedQuestions = questions.filter((q) => !q.isNew && q.isModified);
 
-    const formattedNewQuestions = newQuestions.map((question) => ({ question: question.question }));
-    const formattedExistingQuestions = existingQuestions.map((question) => ({ id: question.id, question: question.question }));
-
+    // 새로운 질문 POST 요청
     if (newQuestions.length > 0) {
+      const formattedNewQuestions = newQuestions.map((question) => ({ question: question.question }));
       const postResponse = await instance.post(
         `/api/self-eval-question/${id}`,
         formattedNewQuestions
       );
       if (postResponse.data.code !== 201) {
-        alert("새로운 질문 생성에 실패했습니다.");
-        return;
+        throw new Error("새 질문 생성에 실패했습니다.");
       }
     }
 
-    if (existingQuestions.length > 0) {
-      const putResponse = await instance.put(
-        `/api/self-eval-question/${id}`,
-        formattedExistingQuestions
-      );
+    // 수정된 질문 PUT 요청
+    if (modifiedQuestions.length > 0) {
+      const putResponse = await instance.put(`/api/self-eval-question/${id}`, modifiedQuestions);
       if (putResponse.data.code !== 200) {
-        alert("기존의 질문 수정에 실패했습니다.");
-        return;
+        throw new Error("질문 수정에 실패했습니다.");
       }
     }
 
-    console.log(`수정한 질문: `, formattedExistingQuestions)
     alert("질문이 성공적으로 수정되었습니다.");
-    console.log(setIsEditing);
-    setIsEditing(true);
     setIsVisible(false);
   } catch (error) {
-    console.error("질문 수정에 실패했습니다.", error);
-    alert("질문 수정 중 문제가 발생했습니다.");
+    console.error(error);
+    alert(error.message);
   }
 };
 
+
+
+ 
 
   //질문 목록 GET API
   const fetchQuestions = async (id) => {
@@ -151,7 +179,17 @@ const editQuestion = async () => {
   if (!isVisible) return null;
 
   return (
-    <S.SmallContainer>
+    <S.SmallContainer
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={handleMouseDown}
+      onMouseMove={isDragging ? handleMouseMove : null}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp} // 드래그 중 컴포넌트를 벗어났을 때
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+      }}
+    >
       
       <S.ExitButton
         style={{ margin: "24px" }}
@@ -162,16 +200,16 @@ const editQuestion = async () => {
 
       <S.Label>질문</S.Label>
       <S.ContentContainer>
-        {questions.map((item, index) => (
-          <S.QuestionInputContainer key={index}>
-            <S.StyledInput
-              type="text"
-              placeholder={`질문 ${index + 1}을 입력해주세요.`}
-              value={item.question} 
-              onChange={(e) => handleQuestionChange(e.target.value, item.id)}
-            />
-          </S.QuestionInputContainer>
-        ))}
+      {questions.map((item, index) => (
+  <S.QuestionInputContainer key={item.id}>
+    <S.StyledInput
+      type="text"
+      placeholder={`질문 ${index + 1}을 입력해주세요.`}
+      value={item.question} 
+      onChange={(e) => handleQuestionChange(e.target.value, item.id)}
+    />
+  </S.QuestionInputContainer>
+))}
       </S.ContentContainer>
 
       <S.ButtonContainer>

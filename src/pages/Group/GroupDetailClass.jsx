@@ -270,6 +270,8 @@ function GroupDetailClass() {
     });
   };
 
+  
+
   const GroupDetailWrite = (
     paramsGruopId,
     paramsUserId,
@@ -484,7 +486,7 @@ function GroupDetailClass() {
         <MainContainer>
           <LeftSectionContainer>
             <NoticeContainer>
-              <Title>공지/과제</Title>
+              <Title>공지/학습자료</Title>
 
               {role === "STUDENT" ? (
                 <DetailText onClick={toAllPage}>전체보기</DetailText>
@@ -583,7 +585,16 @@ function GroupDetailClass() {
 
                 <GroupContainer>
                   <Title>학생별 성적 열람</Title>
-                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  <DetailText onClick={() =>
+                        toWritePage(
+                          id,
+                          student.id,
+                          info.school,
+                          info.grade,
+                          info.classNum,
+                          info.subject
+                        )
+                      }>전체보기</DetailText>
                   <SubjectContainer>
                     <NoticeContent onClick={StudentScoreDetail}>
                       <NoticeImg src={person} alt="person" />

@@ -15,6 +15,32 @@ const EvaluationView = ({paramsGroupId,paramsUserId}) => {
   console.log("paramsGroupId:", paramsGroupId);
     console.log("paramsUserId:", paramsUserId);
 
+    
+  //test 드래그 관련 상태
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setOffset({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const newX = e.clientX - offset.x;
+      const newY = e.clientY - offset.y;
+      setPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
     //질문 조회 GET API 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -42,7 +68,15 @@ const EvaluationView = ({paramsGroupId,paramsUserId}) => {
     if (!isVisible) return null;
 
     return (
-        <S.SmallContainer>
+        <S.SmallContainer
+                x={position.x}
+                y={position.y}
+                onClick={(e) => e.stopPropagation()}
+                onMouseDown={handleMouseDown}
+                onMouseMove={isDragging ? handleMouseMove : null}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp} // 드래그 중 컴포넌트를 벗어났을 때
+                >
             <S.ExitButton style={{margin: "24px"}} src={exit} alt="exit" onClick={handleClose} />
             <S.Label>자기평가서</S.Label>
             <S.Question>

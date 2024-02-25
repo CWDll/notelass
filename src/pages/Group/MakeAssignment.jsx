@@ -386,12 +386,7 @@ function MakeAssignment() {
           {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
-            <NoticeInfo
-              matchedGroup={matchedGroup}
-              info={info.info}
-              creDate={info.creDate}
-              teacher={info.teacher}
-            />
+            matchedGroup && <NoticeInfo matchedGroup={matchedGroup} />
           )}
         </S.AssignmentSettingForm>
       </S.Body>
