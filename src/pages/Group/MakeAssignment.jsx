@@ -16,9 +16,14 @@ function MakeAssignment() {
   const { paramsGroupId, id, groupId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log("location: ", location);
+  // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
-  console.log("필요한 info:", info);
+  console.log("MA의 info:", info);
+  const editinfo = location.state.editinfo;
+  const editcreDate = location.state.editcreDate;
+  const editteacher = location.state.editteacher;
+
+  console.log("MA의 editinfo:", editinfo, editcreDate, editteacher);
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -144,6 +149,7 @@ function MakeAssignment() {
       // 응답 처리
       console.log("공지 생성 완료:", response.data);
       alert("공지가 성공적으로 생성되었습니다.");
+      handleHeaderClick();
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
@@ -200,6 +206,7 @@ function MakeAssignment() {
       // 응답 처리
       console.log("강의자료 생성 완료:", response.data);
       alert("강의자료가 성공적으로 생성되었습니다.");
+      handleHeaderClick();
     } catch (error) {
       console.error("강의자료 생성 실패:", error);
       alert("강의자료 생성에 실패했습니다.");
@@ -271,8 +278,9 @@ function MakeAssignment() {
           alt="chevron_left"
         />
         <S.BoldTitle>
-          {matchedGroup &&
-            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
+          {/* {matchedGroup &&
+            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
+          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
         </S.BoldTitle>
       </S.Header>
 
@@ -281,7 +289,7 @@ function MakeAssignment() {
           <ShowAssignment />
         ) : (
           <S.AssigmentCreateForm>
-            <S.CreateTitle>공지/강의자료</S.CreateTitle>
+            <S.CreateTitle>공지/학습자료</S.CreateTitle>
             <S.Title>
               {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
               {["공지", "강의자료"].map((value, index) => (
@@ -303,7 +311,7 @@ function MakeAssignment() {
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                {selectedButton === "강의자료" ? "강의자료 제목" : "공지 제목"}
+                {selectedButton === "강의자료" ? "학습자료 제목" : "공지 제목"}
               </S.SmallTitle>
               <S.InputTitle
                 type="text"
@@ -316,7 +324,7 @@ function MakeAssignment() {
                     ? "과제 설명을 입력하세요."
                     : selectedButton === "공지"
                     ? "공지 제목을 입력하세요."
-                    : "강의자료 설명을 입력하세요."
+                    : "학습자료 설명을 입력하세요."
                 }
               />
             </S.HeadInput>
@@ -326,7 +334,7 @@ function MakeAssignment() {
                   ? "과제 설정"
                   : selectedButton === "공지"
                   ? "공지 설정"
-                  : "강의자료 설정"}
+                  : "학습자료 설정"}
               </S.SmallTitle>
               <S.InputDesc
                 type="text"
@@ -339,7 +347,7 @@ function MakeAssignment() {
                     ? "과제 설명을 입력하세요."
                     : selectedButton === "공지"
                     ? "공지 내용을 입력하세요."
-                    : "강의자료 설명을 입력하세요."
+                    : "학습자료 설명을 입력하세요."
                 }
               />
             </S.BodyInput>
@@ -381,17 +389,12 @@ function MakeAssignment() {
               ? "과제 설정"
               : selectedButton === "공지"
               ? "공지 설정"
-              : "강의자료 설정"}
+              : "학습자료 설정"}
           </S.CreateTitle>
           {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
-            <NoticeInfo
-              matchedGroup={matchedGroup}
-              info={info.info}
-              creDate={info.creDate}
-              teacher={info.teacher}
-            />
+            <NoticeInfo paramsGroupId={paramsGroupId} info={info} />
           )}
         </S.AssignmentSettingForm>
       </S.Body>

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Grid from "@mui/material/Grid";
 
+export const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+`;
 
 export const ContainerBox = styled.div`
   display: flex;
@@ -8,7 +12,8 @@ export const ContainerBox = styled.div`
   align-items: center;
   width: 1920px;
   height: 1080px;
-  
+  position:relative;
+  .
 `;
 
 export const GridContainer = styled(Grid)`

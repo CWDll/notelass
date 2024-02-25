@@ -302,14 +302,14 @@ const StudentNotice = ({ paramsGroupId, paramsUserId,id }) => {
 
             <GroupContainer>
               <Title>과제별 성적 열람</Title>
-              <DetailText
+              {/* <DetailText
                 style={{ "text-decoration": "underline" }}
                 onClick={toWritePage}
               >
                 전체보기
-              </DetailText>
+              </DetailText> */}
               <SubjectContainer>
-                <NoticeContent>
+                {/* <NoticeContent>
                   <NoticeImg src={file} alt="file" />
                   <NoticeTitle>과제4</NoticeTitle>
                 </NoticeContent>
@@ -324,7 +324,7 @@ const StudentNotice = ({ paramsGroupId, paramsUserId,id }) => {
                 <NoticeContent>
                   <NoticeImg src={file} alt="file" />
                   <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-                </NoticeContent>
+                </NoticeContent> */}
 
                 <Title
                   style={{
@@ -334,7 +334,7 @@ const StudentNotice = ({ paramsGroupId, paramsUserId,id }) => {
                     marginTop: "50px",
                     height: "100%",
                   }}
-                ></Title>
+                >준비 중입니다.</Title>
               </SubjectContainer>
             </GroupContainer>
 

@@ -7,6 +7,7 @@ margin-right: auto;
 
 export const Main = styled.div`
 margin-left: -370px
+
 `;
 
 export const Header = styled.header`
@@ -34,6 +35,16 @@ export const NoteContainer = styled.div`
   box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
   margin-left: 370px;
   margin-top: 48px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
 
 export const MakeNoteBody = styled.div`

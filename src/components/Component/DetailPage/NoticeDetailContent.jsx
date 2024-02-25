@@ -14,6 +14,7 @@ function NoticeDetailContent(noticeId) {
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
   const [groupId, setGroupId] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", noticeId);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ function NoticeDetailContent(noticeId) {
 
   const navigate = useNavigate();
   function toReWrite() {
+    console.log("마마", teacher);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,

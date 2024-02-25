@@ -89,7 +89,7 @@ export const SaveButton = styled.button`
   height: 40px;
   border-radius: 6px;
   border: none;
-  background-color:  #ccc;
+  background-color: ${(props) => (props.disabled ? "#CCC" : "#4849ff")};
   color: white;
   cursor: pointer;
   margin-left: 16px;
@@ -130,6 +130,6 @@ export const QuestionInputContainer = styled.div`
 
 export const ExitButton = styled.img`
   position: absolute;
-  right: 10px;
+  right: 15px;
   cursor: pointer;
 `;

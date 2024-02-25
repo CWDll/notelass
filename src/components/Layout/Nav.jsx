@@ -201,6 +201,8 @@ export default function Nav() {
     };
   }, []);
 
+
+  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -245,7 +247,7 @@ export default function Nav() {
     navigate("/Groupdetail");
   };
   const navigateToNote = () => {
-    navigate("/note");
+    navigate("/NoteDetailSubject");
   };
   // const navigateTosetting = () => {
   //   navigate("/setting");

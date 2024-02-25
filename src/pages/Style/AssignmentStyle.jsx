@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center; */
+  
 `;
 
 // Left Body 시작
@@ -90,6 +91,10 @@ export const AssigmentCreateForm = styled.div`
   height: 800px;
   background-color: white;
   margin-right: 30px;
+
+  
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
 `;
 
 export const AssignmentSettingForm = styled.div`
@@ -97,6 +102,7 @@ export const AssignmentSettingForm = styled.div`
   height: 800px;
   background-color: white;
   border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(38, 40, 43, 0.05);
 `;
 
 export const HeadInput = styled.div`
@@ -194,6 +200,7 @@ export const SettingBox = styled.div`
   display: flex;
   justify-items: center;
   flex-direction: column;
+  
 `;
 
 export const LibraryButton = styled.button`

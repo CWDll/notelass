@@ -144,11 +144,29 @@ color: #9EA4AA;
 
 `;
 
-const ShowAllText = styled(DetailText)`
-  /* top: 30px; */
-  margin-right: 115px;
-  margin-left: auto;
-  margin-bottom: 3px;
+const ShowAllText = styled.button`
+display:flex;
+position: absolute;
+align-items: center;
+height: 21px;
+margin-top: -24px;
+
+margin-left:489px;
+border-radius: 16px
+gap: 8px;
+z-index: 10;
+background: #F5F5FC;
+padding:  6px, 8px;
+
+
+font-family: Pretendard;
+font-size: 12px;
+font-weight: 600;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #9EA4AA;
+
 `;
 
 const SubjectContainer = styled.div`
@@ -485,10 +503,21 @@ function GroupDetailClass() {
         <MainContainer>
           <LeftSectionContainer>
             <NoticeContainer>
-              <Title>공지/과제</Title>
+              <Title>공지/학습자료</Title>
 
               {role === "STUDENT" ? (
-                <DetailText onClick={toAllPage}>전체보기</DetailText>
+                <DetailText
+                  onClick={() => {
+                    toAllPage(
+                      info.school,
+                      info.grade,
+                      info.classNum,
+                      info.subject
+                    );
+                  }}
+                >
+                  전체보기
+                </DetailText>
               ) : (
                 <>
                   <ShowAllText
@@ -550,9 +579,11 @@ function GroupDetailClass() {
               <>
                 <GroupContainer>
                   <Title>과제별 성적 열람</Title>
-                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  {/* <DetailText 
+                  onClick={toWritePage}
+                  >전체보기</DetailText> */}
                   <SubjectContainer>
-                    <NoticeContent>
+                    {/* <NoticeContent>
                       <NoticeImg src={file} alt="file" />
                       <NoticeTitle>과제4</NoticeTitle>
                     </NoticeContent>
@@ -567,7 +598,7 @@ function GroupDetailClass() {
                     <NoticeContent>
                       <NoticeImg src={file} alt="file" />
                       <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-                    </NoticeContent>
+                    </NoticeContent> */}
 
                     <Title
                       style={{
@@ -577,15 +608,26 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    ></Title>
+                    >
+                      준비 중입니다.
+                    </Title>
                   </SubjectContainer>
                 </GroupContainer>
 
                 <GroupContainer>
                   <Title>학생별 성적 열람</Title>
-                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  {/* <DetailText onClick={() =>
+                        toWritePage(
+                          id,
+                          student.id,
+                          info.school,
+                          info.grade,
+                          info.classNum,
+                          info.subject
+                        )
+                      }>전체보기</DetailText> */}
                   <SubjectContainer>
-                    <NoticeContent onClick={StudentScoreDetail}>
+                    {/* <NoticeContent onClick={StudentScoreDetail}>
                       <NoticeImg src={person} alt="person" />
                       <SudentNum>1</SudentNum>
                       <NoticeTitle>김민수</NoticeTitle>
@@ -599,7 +641,7 @@ function GroupDetailClass() {
                       <NoticeImg src={person} alt="person" />
                       <SudentNum>3</SudentNum>
                       <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
+                    </NoticeContent> */}
 
                     <Title
                       style={{
@@ -609,7 +651,9 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    ></Title>
+                    >
+                      준비 중입니다.
+                    </Title>
                   </SubjectContainer>
                 </GroupContainer>
               </>

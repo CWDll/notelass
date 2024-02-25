@@ -35,6 +35,7 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
     groupAcceptAll(groupId, () => {
       alert("모든 학생을 그룹에 수락하였습니다.");
     });
+    setShowEnrollModal(false);
   };
 
   return (
@@ -60,6 +61,7 @@ const ManageGroup = ({ showEnrollModal, setShowEnrollModal, groupId }) => {
           index={index + 1}
           groupId={groupId}
           userId={student.userId}
+          setShowEnrollModal={setShowEnrollModal}
         />
       ))}
     </S.ModalContainer>

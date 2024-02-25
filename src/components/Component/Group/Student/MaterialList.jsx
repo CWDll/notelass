@@ -182,45 +182,24 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
     };
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("ko-KR", options)
       .format(date)
       .replace(" ", "")
       .replace(". ", ".")
-      .replace(". ", ".");
+      .replace("  ", " ");
   };
 
-  // 노트 복제 함수
-  function handleClone(materialId) {
-    setMaterials((prev) => {
-      const materialToClone = prev.find(
-        (material) => material.id === materialId
-      );
-      if (!materialToClone) return prev;
-      const clonedMaterial = { ...materialToClone, id: Date.now() }; // 새로운 id를 생성
-      return [...prev, clonedMaterial];
-    });
-  }
-
-  // 노트 삭제 함수
-  function handleDelete(materialId) {
-    setMaterials((prev) =>
-      prev.filter((material) => material.id !== materialId)
-    );
-  }
 
   //뒤로가기
   function goBack() {
     navigate(-1);
   }
 
-  function handleTitleClick() {
+  function handleTitleClick(fileId) {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
-    navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
+    navigate(`/pdf-viewer/${fileId}`); // 이동할 경로를 설정합니다.
   }
 
   // 외부 클릭 감지 함수
@@ -270,27 +249,27 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
     fetchMaterials();
   }, [id]);
 
-  // 노트탭에 불러오기 함수 추가
-  async function handleLoadToNoteTab(materialId) {
-    try {
-      const response = await instance.post(
-        `/api/material?fileId=${materialId}`
-      );
-      if (response.data.code === 201) {
-        alert("노트 탭에 성공적으로 업로드했습니다.");
-        console.log("노트 탭에 업로드 성공 ", response.data.message);
-        setDropdownVisible((prev) => ({
-          ...prev,
-          [materialId]: false,
-        }));
-      } else {
-        alert("노트 탭에 업로드에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+// 노트탭에 불러오기 함수 추가
+async function handleLoadToNoteTab(fileId) {
+  try {
+    const response = await instance.post(
+      `/api/material?fileId=${fileId}`
+    );
+    if (response.data.code === 201) {
+      alert('노트 탭에 성공적으로 업로드했습니다.');
+      console.log('노트 탭에 업로드 성공 ', response.data.message);
+      setDropdownVisible((prev) => ({
+        ...prev,
+        [fileId]: false,
+      }));
+    } else {
+      alert('노트 탭에 업로드에 실패했습니다.');
     }
+  } catch (error) {
+    console.error(error);
+    alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
+}
 
   // 파일 다운로드 함수
   const downloadFile = async (fileId, originalFileName) => {
@@ -351,7 +330,7 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
           {materials.map((material) => (
             <SubjectBody key={material.id}>
               <PaperImg src={paper} alt="paper" />
-              <SubjectContainer onClick={handleTitleClick}>
+              <SubjectContainer onClick={() => handleTitleClick(fileId)}>
                 <BoldText>
                   {material.files
                     .map((file) => file.originalFileName)
@@ -380,12 +359,15 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
                     </NavDropdownOptionUp>
                   ))}
                   <hr />
+                  {material.files.map((file) => (
                   <NavDropdownOptionDown
+                  key={file.id}
                     className="dropdown-item"
-                    onClick={() => handleLoadToNoteTab(material.id)}
+                    onClick={() => handleLoadToNoteTab(file.id)}
                   >
                     노트탭에 불러오기
                   </NavDropdownOptionDown>
+                  ))}
                 </NavDropdownBox>
               )}
             </SubjectBody>

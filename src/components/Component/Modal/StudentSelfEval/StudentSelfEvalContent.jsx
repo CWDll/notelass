@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import instance from "../../../../assets/api/axios";
+import exit from "../../../../assets/exit.svg";
 
 function StudentSelfEvalContent({
   groupId,
@@ -14,7 +15,9 @@ function StudentSelfEvalContent({
   const [answers, setAnswers] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
-
+  const handleClose = () => {
+    setShowSmallContainer(!showSmallContainer);
+};
 
   const handleAnswerChange = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
@@ -57,7 +60,7 @@ function StudentSelfEvalContent({
       id: key,
       answer: answers[key],
     }));
-
+    console.log("post전 payload", payload);
     try {
       const res = await instance.post(
         `/api/self-eval-answer/${groupId}`,
@@ -65,7 +68,9 @@ function StudentSelfEvalContent({
       );
       if (res.status === 201) {
         console.log("답변 저장 성공");
-        alert("자기평가 답변 저장이 완료되었습니다.");
+        alert("자기평가 답변이 저장되었습니다.")
+        console.log("post후 payload", payload);
+        setShowSmallContainer(!showSmallContainer);
       } else {
         console.log("답변 저장 실패");
       }
@@ -74,39 +79,80 @@ function StudentSelfEvalContent({
     }
   };
 
-  //답변 수정
-   const handleEdit = async () => {
-    const payload = evalList.map((question) => ({
-      id: question.answerId,
-      answer: answers[question.questionId] || '', 
-    }));
-  
-    try {
-      const res = await instance.put(`/api/self-eval-answer/${groupId}`, payload);
-      if (res.data.code === 200) {
-        console.log("자기평가 답변 수정이 완료되었습니다.");
-        alert("자기평가 답변 수정이 완료되었습니다.");
-        setIsEditing(false);
-      } else {
-        console.log("자기평가 답변 수정 실패");
-      }
-    } catch (error) {
-      console.error("자기평가 답변 수정 에러 발생", error);
-    }
-  };
 
+
+  const handleEdit = async () => {
+    const existingAnswers = [];
+    const newAnswers = [];
+    
+    // 기존 답변과 새로운 답변을 구분하여 분류
+    evalList.forEach((question) => {
+      const answer = answers[question.questionId];
+      if (question.answerId !== null) {
+        existingAnswers.push({
+          id: question.answerId,
+          answer: answer
+        });
+      } else if (answer !== undefined && answer !== "") {
+        newAnswers.push({
+          id: question.questionId, 
+          answer: answer
+        });
+      }
+    });
+  
+    console.log("existingAnswers", existingAnswers);
+    console.log("newAnswers", newAnswers);
+
+  try {
+    // PUT 요청으로 기존 답변 수정
+    const putRes = await instance.put(`/api/self-eval-answer/${groupId}`, existingAnswers);
+    if (putRes.data.code === 200) {
+      //console.log("자기평가 답변 수정이 완료되었습니다.");
+      //alert("자기평가 답변 수정이 완료되었습니다.");
+      //setShowSmallContainer(!showSmallContainer);
+    } else {
+      console.log("기존 자기평가 답변 수정 실패");
+    }
+
+    // POST 요청으로 새로운 답변 작성
+    if (newAnswers.length > 0) {
+      const postRes = await instance.post(`/api/self-eval-answer/${groupId}`, newAnswers);
+      console.log("답변:",postRes.data);
+      if (postRes.status === 201) {
+        console.log("새로운 자기평가 답변 저장 성공");
+        //alert("새로운 자기평가 답변 저장 성공");
+        // 새로운 답변을 서버로부터 받은 ID와 함께 업데이트
+        const newAnswerIds = postRes.data.result;
+        newAnswers.forEach((answer, index) => {
+          answer.id = newAnswerIds[index];
+        });
+       
+      } else {
+        console.log("새로운 자기평가 답변 저장 실패");
+      }
+    }
+    alert("자기평가 답변 수정이 완료되었습니다.");
+    setShowSmallContainer(!showSmallContainer);
+
+  } catch (error) {
+    console.error("자기평가 답변 수정 에러 발생", error);
+  }
+};
   
 
 
 return (
   <S.SelfEvalModalContainer>
+    <S.ExitButton style={{margin: "24px"}} src={exit} alt="exit" onClick={handleClose} />
     <S.TopBar>
+    
       <S.BigTitle>자기평가서</S.BigTitle>
     </S.TopBar>
     <S.SelfEvalList>
       {evalList.map((question, index) => (
         <S.SelfEvalContent key={index}>
-          <S.SelfEvalQuestion>{question.question}</S.SelfEvalQuestion>
+          <S.SelfEvalQuestion>{index + 1}. {question.question}</S.SelfEvalQuestion>
           <S.SelfEvalInput
             placeholder="음슴체로 작성해주세요."
             value={answers[question.questionId] || ""}
