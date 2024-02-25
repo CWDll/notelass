@@ -130,6 +130,6 @@ export const QuestionInputContainer = styled.div`
 
 export const ExitButton = styled.img`
   position: absolute;
-  right: 10px;
+  right: 15px;
   cursor: pointer;
 `;

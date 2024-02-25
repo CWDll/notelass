@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import instance from "../../../../assets/api/axios";
+import exit from "../../../../assets/exit.svg";
 
 function StudentSelfEvalContent({
   groupId,
@@ -14,7 +15,9 @@ function StudentSelfEvalContent({
   const [answers, setAnswers] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
-
+  const handleClose = () => {
+    setShowSmallContainer(!showSmallContainer);
+};
 
   const handleAnswerChange = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }));
@@ -141,13 +144,15 @@ function StudentSelfEvalContent({
 
 return (
   <S.SelfEvalModalContainer>
+    <S.ExitButton style={{margin: "24px"}} src={exit} alt="exit" onClick={handleClose} />
     <S.TopBar>
+    
       <S.BigTitle>자기평가서</S.BigTitle>
     </S.TopBar>
     <S.SelfEvalList>
       {evalList.map((question, index) => (
         <S.SelfEvalContent key={index}>
-          <S.SelfEvalQuestion>{question.question}</S.SelfEvalQuestion>
+          <S.SelfEvalQuestion>{index + 1}. {question.question}</S.SelfEvalQuestion>
           <S.SelfEvalInput
             placeholder="음슴체로 작성해주세요."
             value={answers[question.questionId] || ""}

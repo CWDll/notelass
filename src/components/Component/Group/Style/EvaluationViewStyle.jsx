@@ -29,7 +29,7 @@ export const SmallContainer = styled.div`
 
 export const ExitButton = styled.img`
   position: absolute;
-  right: 10px;
+  right: 1px;
   cursor: pointer;
 `;
 

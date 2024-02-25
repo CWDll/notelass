@@ -19,6 +19,16 @@ export const SelfEvalModalContainer = styled.div`
   align-items: center;
 
   padding: 20px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
 
 export const TopBar = styled.div`
@@ -31,6 +41,12 @@ export const BigTitle = styled.span`
   font-size: 20px;
   font-weight: 700;
   color: #26282b;
+
+  font-family: Pretendard;
+
+font-style: normal;
+font-weight: 700;
+line-height: normal;
 `;
 
 export const SelfEvalList = styled.div`
@@ -40,8 +56,10 @@ export const SelfEvalList = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  overflow-y: auto;
+  
   padding-top: 20px;
+
+
 `;
 
 export const SelfEvalContent = styled.div`
@@ -49,35 +67,59 @@ export const SelfEvalContent = styled.div`
   height: 140px;
   display: flex;
   flex-direction: column;
+  
 `;
 
+//질문
 export const SelfEvalQuestion = styled(BigTitle)`
   font-size: 14px;
+  font-family: Pretendard;
+
+font-style: normal;
+font-weight: 700;
+line-height: normal;
 `;
 
+//답변
 export const SelfEvalInput = styled.input`
   width: 416px;
   height: 117px;
+  border: 1.5px solid #C9CDD2;
+    margin-top: 8px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid black;
+  margin-bottom:24px;
+  
+  font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+padding:16px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
-  margin-top: 10px;
+  margin-top: 20px;
 
   // 내부 폰트
   color: #ffffff;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 700;
+  font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
 `;
 
 export const Button = styled.button`
-  width: 192px;
-  height: 56px;
+  width: 150px;
+  
+  justify-content: center;
+  align-items: center;
   background-color: #4849ff;
 `;
 
@@ -88,4 +130,11 @@ export const GrayButton = styled(Button)`
   &:hover {
     border: none;
   }
+`;
+
+export const ExitButton = styled.img`
+  position: absolute;
+  right: 1px;
+  cursor: pointer;
+  margin-top: -20px;
 `;
