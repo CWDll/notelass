@@ -243,7 +243,7 @@ export default function Nav() {
     navigate("/Groupdetail");
   };
   const navigateToNote = () => {
-    navigate("/note");
+    navigate("/NoteDetailSubject");
   };
   // const navigateTosetting = () => {
   //   navigate("/setting");

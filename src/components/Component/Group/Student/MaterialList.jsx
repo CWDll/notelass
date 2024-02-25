@@ -267,27 +267,31 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
     fetchMaterials();
   }, [id]);
 
-  // 노트탭에 불러오기 함수 추가
-  async function handleLoadToNoteTab(materialId) {
-    try {
-      const response = await instance.post(
-        `/api/material?fileId=${materialId}`
-      );
-      if (response.data.code === 201) {
-        alert("노트 탭에 성공적으로 업로드했습니다.");
-        console.log("노트 탭에 업로드 성공 ", response.data.message);
-        setDropdownVisible((prev) => ({
-          ...prev,
-          [materialId]: false,
-        }));
-      } else {
-        alert("노트 탭에 업로드에 실패했습니다.");
+// 노트탭에 불러오기 함수 추가
+async function handleLoadToNoteTab(materialId) {
+  try {
+    const response = await instance.post(
+      '/api/material',
+      null,
+      {
+        params: { fileId: materialId }
       }
-    } catch (error) {
-      console.error(error);
-      alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    );
+    if (response.data.code === 201) {
+      alert('노트 탭에 성공적으로 업로드했습니다.');
+      console.log('노트 탭에 업로드 성공 ', response.data.message);
+      setDropdownVisible((prev) => ({
+        ...prev,
+        [materialId]: false,
+      }));
+    } else {
+      alert('노트 탭에 업로드에 실패했습니다.');
     }
+  } catch (error) {
+    console.error(error);
+    alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
   }
+}
 
   // 파일 다운로드 함수
   const downloadFile = async (fileId, originalFileName) => {
@@ -348,7 +352,7 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
           {materials.map((material) => (
             <SubjectBody key={material.id}>
               <PaperImg src={paper} alt="paper" />
-              <SubjectContainer onClick={handleTitleClick}>
+              <SubjectContainer onClick={() => handleTitleClick(material.id)}>
                 <BoldText>
                   {material.files
                     .map((file) => file.originalFileName)

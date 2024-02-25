@@ -25,6 +25,7 @@ function NoteDetailSubject() {
   const [files, setFiles] = useState([]);
   const [materials, setMaterials] = useState([]);
 
+
   const { id } = useParams();
   const location = useLocation();
   // console.log("location: ", location);
@@ -56,7 +57,6 @@ function NoteDetailSubject() {
       .replace(". ", ".")
       .replace(". ", ".");
   };
-
   // 노트 복제 함수
   function handleClone(materialId) {
     setMaterials((prev) => {
@@ -122,43 +122,26 @@ function NoteDetailSubject() {
     }));
   };
 
-  //강의자료(노트) 목록 GET API
-  useEffect(() => {
-    const fetchMaterials = async () => {
-      try {
-        const response = await instance.get(`/api/material/${id}`);
-        if (response.data.code === 200) {
-          setMaterials(response.data.result); // 상태 업데이트
-          console.log("강의자료 목록 조회 결과:", response.data.result);
-        } else {
-          console.error("강의자료 목록을 불러오는 데 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("강의자료 목록 조회 중 오류 발생:", error);
+
+
+// 강의자료(노트) 목록 GET API
+useEffect(() => {
+  const fetchNotes = async () => {
+    try {
+      const response = await instance.get(`/api/note`);
+      if (response.data.code === 200) {
+        setMaterials(response.data.result); // 상태 업데이트
+        console.log("강의자료 목록 조회 결과:", response.data.result);
+      } else {
+        console.error("강의자료 목록을 불러오는 데 실패했습니다.");
       }
-    };
+    } catch (error) {
+      console.error("강의자료 목록 조회 중 오류 발생:", error);
+    }
+  };
 
-    fetchMaterials();
-  }, [id]);
-
-    //강의자료(노트) 목록 GET API
-    useEffect(() => {
-      const fetchNotes = async () => {
-        try {
-          const response = await instance.get(`/api/note`);
-          if (response.data.code === 200) {
-            fetchNotes(response.data.result); // 상태 업데이트
-            console.log("강의자료 목록 조회 결과:", response.data.result);
-          } else {
-            console.error("강의자료 목록을 불러오는 데 실패했습니다.");
-          }
-        } catch (error) {
-          console.error("강의자료 목록 조회 중 오류 발생:", error);
-        }
-      };
-  
-      fetchNotes();
-    }, []);
+  fetchNotes();
+}, []);
 
   return (
     <S.Wrap>
@@ -181,11 +164,9 @@ function NoteDetailSubject() {
                 <S.PaperImg src={paper} alt="paper" />
                 <S.SubjectContainer>
                   <S.BoldText>
-                    {material.files
-                      .map((file) => file.originalFileName)
-                      .join(", ")}
+                    {material.title} 
                   </S.BoldText>
-                  <S.GrayText>{formatDate(material.createdDate)}</S.GrayText>
+                  {/* <S.GrayText>{formatDate(material.createdDate)}</S.GrayText> */}
                 </S.SubjectContainer>
 
                 <S.ChevronDownImg

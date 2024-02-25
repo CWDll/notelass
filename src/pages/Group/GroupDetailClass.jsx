@@ -508,7 +508,14 @@ function GroupDetailClass() {
               <Title>공지/학습자료</Title>
 
               {role === "STUDENT" ? (
-                <DetailText onClick={toAllPage}>전체보기</DetailText>
+                <DetailText onClick={() => {
+                  toAllPage(
+                    info.school,
+                    info.grade,
+                    info.classNum,
+                    info.subject
+                  );
+                }}>전체보기</DetailText>
               ) : (
                 <>
                   <ShowAllText
