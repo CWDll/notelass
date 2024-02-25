@@ -145,9 +145,10 @@ color: #9EA4AA;
 `;
 
 const ShowAllText = styled(DetailText)`
-  top: 35px;
-  margin-right: 105px;
+  /* top: 30px; */
+  margin-right: 115px;
   margin-left: auto;
+  margin-bottom: 3px;
 `;
 
 const SubjectContainer = styled.div`
@@ -491,7 +492,6 @@ function GroupDetailClass() {
               ) : (
                 <>
                   <ShowAllText
-                    style={{ "text-decoration": "underline" }}
                     onClick={() => {
                       toAllPage(
                         info.school,
