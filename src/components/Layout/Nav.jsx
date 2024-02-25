@@ -197,6 +197,8 @@ export default function Nav() {
     };
   }, []);
 
+
+  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면

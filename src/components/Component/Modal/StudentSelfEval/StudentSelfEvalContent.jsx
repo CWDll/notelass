@@ -66,6 +66,7 @@ function StudentSelfEvalContent({
       if (res.status === 201) {
         console.log("답변 저장 성공");
         alert("자기평가 답변 저장이 완료되었습니다.");
+        setShowSmallContainer(!showSmallContainer);
       } else {
         console.log("답변 저장 실패");
       }
@@ -86,6 +87,7 @@ function StudentSelfEvalContent({
       if (res.data.code === 200) {
         console.log("자기평가 답변 수정이 완료되었습니다.");
         alert("자기평가 답변 수정이 완료되었습니다.");
+        setShowSmallContainer
       } else {
         console.log("자기평가 답변 수정 실패");
       }
