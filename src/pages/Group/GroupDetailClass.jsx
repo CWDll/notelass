@@ -144,10 +144,29 @@ color: #9EA4AA;
 
 `;
 
-const ShowAllText = styled(DetailText)`
-  top: 35px;
-  margin-right: 105px;
-  margin-left: auto;
+const ShowAllText = styled.button`
+display:flex;
+position: absolute;
+align-items: center;
+height: 21px;
+margin-top: -24px;
+
+margin-left:489px;
+border-radius: 16px
+gap: 8px;
+z-index: 10;
+background: #F5F5FC;
+padding:  6px, 8px;
+
+
+font-family: Pretendard;
+font-size: 12px;
+font-weight: 600;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #9EA4AA;
+
 `;
 
 const SubjectContainer = styled.div`
@@ -493,7 +512,7 @@ function GroupDetailClass() {
               ) : (
                 <>
                   <ShowAllText
-                    style={{ "text-decoration": "underline" }}
+                    
                     onClick={() => {
                       toAllPage(
                         info.school,
@@ -552,9 +571,11 @@ function GroupDetailClass() {
               <>
                 <GroupContainer>
                   <Title>과제별 성적 열람</Title>
-                  <DetailText onClick={toWritePage}>전체보기</DetailText>
+                  {/* <DetailText 
+                  onClick={toWritePage}
+                  >전체보기</DetailText> */}
                   <SubjectContainer>
-                    <NoticeContent>
+                    {/* <NoticeContent>
                       <NoticeImg src={file} alt="file" />
                       <NoticeTitle>과제4</NoticeTitle>
                     </NoticeContent>
@@ -569,7 +590,7 @@ function GroupDetailClass() {
                     <NoticeContent>
                       <NoticeImg src={file} alt="file" />
                       <NoticeTitle onClick={TaskClick}>과제1</NoticeTitle>
-                    </NoticeContent>
+                    </NoticeContent> */}
 
                     <Title
                       style={{
@@ -579,13 +600,13 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    ></Title>
+                    >준비 중입니다.</Title>
                   </SubjectContainer>
                 </GroupContainer>
 
                 <GroupContainer>
                   <Title>학생별 성적 열람</Title>
-                  <DetailText onClick={() =>
+                  {/* <DetailText onClick={() =>
                         toWritePage(
                           id,
                           student.id,
@@ -594,9 +615,9 @@ function GroupDetailClass() {
                           info.classNum,
                           info.subject
                         )
-                      }>전체보기</DetailText>
+                      }>전체보기</DetailText> */}
                   <SubjectContainer>
-                    <NoticeContent onClick={StudentScoreDetail}>
+                    {/* <NoticeContent onClick={StudentScoreDetail}>
                       <NoticeImg src={person} alt="person" />
                       <SudentNum>1</SudentNum>
                       <NoticeTitle>김민수</NoticeTitle>
@@ -610,7 +631,7 @@ function GroupDetailClass() {
                       <NoticeImg src={person} alt="person" />
                       <SudentNum>3</SudentNum>
                       <NoticeTitle>김민수</NoticeTitle>
-                    </NoticeContent>
+                    </NoticeContent> */}
 
                     <Title
                       style={{
@@ -620,7 +641,7 @@ function GroupDetailClass() {
                         marginTop: "50px",
                         height: "100%",
                       }}
-                    ></Title>
+                    >준비 중입니다.</Title>
                   </SubjectContainer>
                 </GroupContainer>
               </>

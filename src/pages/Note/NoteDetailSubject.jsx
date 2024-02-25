@@ -141,11 +141,30 @@ function NoteDetailSubject() {
     fetchMaterials();
   }, [id]);
 
+    //강의자료(노트) 목록 GET API
+    useEffect(() => {
+      const fetchNotes = async () => {
+        try {
+          const response = await instance.get(`/api/note`);
+          if (response.data.code === 200) {
+            fetchNotes(response.data.result); // 상태 업데이트
+            console.log("강의자료 목록 조회 결과:", response.data.result);
+          } else {
+            console.error("강의자료 목록을 불러오는 데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("강의자료 목록 조회 중 오류 발생:", error);
+        }
+      };
+  
+      fetchNotes();
+    }, []);
+
   return (
     <S.Wrap>
       <S.Main>
-        <S.Header onClick={goBack}>
-          <S.Img src={chevron_left} alt="chevron_left" />
+        <S.Header >
+          <S.Img onClick={goBack} src={chevron_left} alt="chevron_left" />
           <S.BoldTitle>노트</S.BoldTitle>
         </S.Header>
         <S.NoteContainer>
