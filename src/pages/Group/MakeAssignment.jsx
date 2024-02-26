@@ -278,9 +278,9 @@ function MakeAssignment() {
           alt="chevron_left"
         />
         <S.BoldTitle>
-          {/* {matchedGroup &&
-            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
-          {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
+          {matchedGroup &&
+            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
+          {/* {info.school} {info.grade}학년 {info.classNum}반 {info.subject} */}
         </S.BoldTitle>
       </S.Header>
 

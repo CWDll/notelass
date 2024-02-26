@@ -63,3 +63,15 @@ export const sendPasswordResetEmail = async (email) => {
 };
 
 // 회원 탈퇴 로직 필요 !!
+export const withdrawal = async () => {
+  try {
+    const response = await instance.delete(`/api/auth`);
+    if (response.status === 200) {
+      alert("회원 탈퇴 되었습니다.");
+    } else {
+      alert("회원 탈퇴에 실패했습니다.");
+    }
+  } catch (error) {
+    alert("회원 탈퇴에서 에러 발생", error);
+  }
+};
