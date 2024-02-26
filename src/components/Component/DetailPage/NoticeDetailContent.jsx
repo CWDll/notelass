@@ -84,6 +84,7 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
+        <S.GrayButton onClick={toReWrite}>삭제</S.GrayButton>
         <S.Button onClick={toReWrite}>수정하기</S.Button>
       </S.AssigmentCreateForm>
 

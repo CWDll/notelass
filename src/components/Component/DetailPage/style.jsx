@@ -150,8 +150,14 @@ export const RowDiv = styled.div`
 
 export const Button = styled.button`
   position: relative;
-  left: 520px;
+  left: 434px;
   bottom: -300px;
   background-color: #4849ff;
   color: white;
+`;
+
+export const GrayButton = styled(Button)`
+  background-color: #e6e8ee;
+  color: #9ea4aa;
+  margin-right: 20px;
 `;
