@@ -27,6 +27,8 @@ export default function NoticeInfo({
 
   // info가 있으면 info를 사용하고, 없으면 matchedGroup을 사용
   const displayGroup = info || matchedGroup;
+  console.log("displayGroup;", displayGroup);
+  console.log("info;", info);
   console.log("teacher", teacher);
 
   console.log("infoteacher:", infoteacher);

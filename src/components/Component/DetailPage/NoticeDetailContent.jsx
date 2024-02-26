@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "./style";
 import * as A from "../../../pages/Style/AssignmentStyle";
 import instance from "../../../assets/api/axios";
+import { deleteNotice } from "../../../assets/api/apis/notice/ApiNotice";
+
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
 import NoticeInfo from "../Notice/NoticeInfo";
@@ -14,6 +16,7 @@ function NoticeDetailContent(noticeId) {
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
   const [groupId, setGroupId] = useState("");
+  // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", noticeId);
 
@@ -84,7 +87,15 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        <S.GrayButton onClick={toReWrite}>삭제</S.GrayButton>
+        <S.GrayButton
+          onClick={() => {
+            deleteNotice(groupId, noticeId.noticeId, () =>
+              navigate(`/GroupDetail`)
+            );
+          }}
+        >
+          삭제
+        </S.GrayButton>
         <S.Button onClick={toReWrite}>수정하기</S.Button>
       </S.AssigmentCreateForm>
 
