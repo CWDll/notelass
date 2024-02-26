@@ -410,6 +410,7 @@ function GroupDetailClass() {
       const response = await instance.get(`/api/notice/${id}`);
       if (response.data.code === 200) {
         setNotices(response.data.result);
+
         console.log("공지사항 목록 조회 성공", response.data.result);
       } else {
         console.error("공지사항 목록 조회 실패", response.data.message);
@@ -422,6 +423,10 @@ function GroupDetailClass() {
   useEffect(() => {
     fetchNotices();
   }, [id]);
+
+  const ShowNotices = (noticeId) => {
+    navigate(`/NoticeDetail/${id}/${noticeId}`);
+  };
 
   return (
     <Wrap>
@@ -554,12 +559,14 @@ function GroupDetailClass() {
                       key={notice.id}
                       onClick={() => handleOnClick(index)}
                     >
-                      <NoticeContent>
+                      <NoticeContent 
+                      key={notice.id}
+                      onClick={() => ShowNotices(notice.id)}>
                         <NoticeImg
                           src={notice.unread ? envelope : envelopeOpen} // 조건부 연산자 사용
                           alt="envelope"
                         />
-                        <NoticeTitle>{notice.title}</NoticeTitle>
+                        <NoticeTitle >{notice.title}</NoticeTitle>
                       </NoticeContent>
                     </StyledNoticeItem>
                   ))}

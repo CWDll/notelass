@@ -197,9 +197,9 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
     navigate(-1);
   }
 
-  function handleTitleClick(fileId) {
+  function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
-    navigate(`/pdf-viewer/${fileId}`); // 이동할 경로를 설정합니다.
+    navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
   }
 
   // 외부 클릭 감지 함수
@@ -330,7 +330,7 @@ async function handleLoadToNoteTab(fileId) {
           {materials.map((material) => (
             <SubjectBody key={material.id}>
               <PaperImg src={paper} alt="paper" />
-              <SubjectContainer onClick={() => handleTitleClick(fileId)}>
+              <SubjectContainer onClick={() => handleTitleClick(material.id)}>
                 <BoldText>
                   {material.files
                     .map((file) => file.originalFileName)
@@ -355,7 +355,7 @@ async function handleLoadToNoteTab(fileId) {
                         toggleDropdown(material.id);
                       }}
                     >
-                      PDF로 내보내기
+                      내보내기
                     </NavDropdownOptionUp>
                   ))}
                   <hr />
