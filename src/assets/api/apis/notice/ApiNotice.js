@@ -33,3 +33,19 @@ export const getGroupNotice = async (groupId, onSuccess) => {
     console.error("공지사항 가져오기 실패", error);
   }
 };
+
+// 공지 삭제
+export const deleteNotice = async (groupId, noticeId, onSuccess) => {
+  try {
+    const res = await instance.delete(`/api/notice/${groupId}/${noticeId}`);
+
+    if (res.status === 200) {
+      alert("공지 삭제가 완료되었습니다.");
+      onSuccess();
+    } else {
+      console.log("공지 삭제에 실패했습니다.");
+    }
+  } catch (error) {
+    console.error("공지 삭제에서 에러 발생", error);
+  }
+};

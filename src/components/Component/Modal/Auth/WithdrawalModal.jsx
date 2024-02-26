@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import * as S from "../GroupInformation/style";
 import { deleteGroup } from "../../../../assets/api/apis/group/ApiGroup";
+import { withdrawal } from "../../../../assets/api/apis/auth/ApiAuth";
 
 function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
   // 탈퇴 완료시 화면 이동을 위한 navigate
@@ -16,7 +17,7 @@ function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
   const [checkText, setCheckText] = useState("");
   const DeleteButtonClick = (checkText) => {
     if (checkText === "회원 탈퇴합니다") {
-      // deleteGroup(groupId);
+      withdrawal();
       navigate("/SignupComplete");
     } else {
       alert("문장이 일치하지 않습니다.");

@@ -27,14 +27,14 @@ export default function NoticeInfo({
 
   // info가 있으면 info를 사용하고, 없으면 matchedGroup을 사용
   const displayGroup = info || matchedGroup;
+  console.log("displayGroup;", displayGroup);
+  console.log("info;", info);
   console.log("teacher", teacher);
 
   console.log("infoteacher:", infoteacher);
-  
-
 
   const [grouplist, setGrouplist] = useState([]);
-  
+
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -55,18 +55,16 @@ export default function NoticeInfo({
       } catch (error) {
         console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
       }
-    }
-  
+    };
+
     fetchGroups();
   }, [paramsGroupId]);
-
-
 
   return (
     <>
       <S.SettingBox>
         <S.SmallTitle>작성자</S.SmallTitle>
-        {/* <S.SubText>{matchedGroup && `${matchedGroup.teacher}선생님`}</S.SubText> */}
+        <S.SubText>{matchedGroup && `${matchedGroup.teacher}선생님`}</S.SubText>
         <S.SubText>{grouplist.teacher} 선생님</S.SubText>
       </S.SettingBox>
       <S.SettingBox>
@@ -76,8 +74,9 @@ export default function NoticeInfo({
       <S.SettingBox>
         <S.SmallTitle>할당된 그룹</S.SmallTitle>
         <S.SubText>
-          {displayGroup &&
-            `${displayGroup.school} ${displayGroup.grade}학년 ${displayGroup.classNum}반 ${displayGroup.subject}`}
+          {displayGroup
+            ? `${displayGroup.school} ${displayGroup.grade}학년 ${displayGroup.classNum}반 ${displayGroup.subject} 과목`
+            : `${infos.info.grade}학년 ${infos.info.classNum}반 ${infos.info.subject} 과목`}
         </S.SubText>
       </S.SettingBox>
     </>
