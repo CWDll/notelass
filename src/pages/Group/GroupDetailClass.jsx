@@ -556,9 +556,7 @@ function GroupDetailClass() {
                     >
                       <NoticeContent>
                         <NoticeImg
-                          src={
-                            clickedIndices.has(index) ? envelopeOpen : envelope
-                          }
+                          src={notice.unread ? envelope : envelopeOpen} // 조건부 연산자 사용
                           alt="envelope"
                         />
                         <NoticeTitle>{notice.title}</NoticeTitle>
