@@ -1,3 +1,5 @@
+import WithdrawalModal from "./components/Component/Modal/Auth/WithdrawalModal";
+
 function RoleRendering() {
     const { role } = useContext(RoleContext);
   
@@ -13,6 +15,7 @@ function RoleRendering() {
         <>
           <GroupDetail />
           <GroupDetailClass />
+          <WithdrawalModal/>
         </>
       );
     } 
