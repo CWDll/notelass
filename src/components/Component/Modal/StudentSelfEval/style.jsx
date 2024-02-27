@@ -50,14 +50,24 @@ export const BigTitle = styled.span`
 `;
 
 export const SelfEvalList = styled.div`
-  /* width: 420px; */
-  /* height: 400px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
   padding-top: 20px;
+
+  overflow: auto;
+  &::-webkit-scrollbar {
+    -top: 100px;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #e6e8ee;
+    height: 100px;
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-track {
+  }
 `;
 
 export const SelfEvalContent = styled.div`
