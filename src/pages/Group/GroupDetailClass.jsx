@@ -557,16 +557,17 @@ function GroupDetailClass() {
                   {notices.slice(0, 5).map((notice, index) => (
                     <StyledNoticeItem
                       key={notice.id}
-                      onClick={() => handleOnClick(index)}
+                      onClick={() => goToDetail(notice.groupId, notice.id)}
                     >
-                      <NoticeContent 
-                      key={notice.id}
-                      onClick={() => ShowNotices(notice.id)}>
+                      <NoticeContent
+                        key={notice.id}
+                        onClick={() => ShowNotices(notice.id)}
+                      >
                         <NoticeImg
                           src={notice.unread ? envelope : envelopeOpen} // 조건부 연산자 사용
                           alt="envelope"
                         />
-                        <NoticeTitle >{notice.title}</NoticeTitle>
+                        <NoticeTitle>{notice.title}</NoticeTitle>
                       </NoticeContent>
                     </StyledNoticeItem>
                   ))}

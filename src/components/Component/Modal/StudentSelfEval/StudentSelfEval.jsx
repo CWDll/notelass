@@ -222,18 +222,16 @@ function StudentSelfEval({ groupId }) {
       >
         <BookImg src={book} alt="book" />
         <Text>자기 평가</Text>
-
-        
       </StudentBookContainer>
 
       {showSmallContainer && (
-          <StudentSelfEvalContent
-            // onClose={handleClose}
-            groupId={groupId}
-            setShowSmallContainer={setShowSmallContainer}
-            showSmallContainer={showSmallContainer}
-          />
-        )}
+        <StudentSelfEvalContent
+          // onClose={handleClose}
+          groupId={groupId}
+          setShowSmallContainer={setShowSmallContainer}
+          showSmallContainer={showSmallContainer}
+        />
+      )}
     </Wrap>
   );
 }

@@ -44,22 +44,30 @@ export const BigTitle = styled.span`
 
   font-family: Pretendard;
 
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 export const SelfEvalList = styled.div`
-  /* width: 420px; */
-  /* height: 400px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  
   padding-top: 20px;
 
-
+  overflow: auto;
+  &::-webkit-scrollbar {
+    -top: 100px;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #e6e8ee;
+    height: 100px;
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-track {
+  }
 `;
 
 export const SelfEvalContent = styled.div`
@@ -67,7 +75,7 @@ export const SelfEvalContent = styled.div`
   height: 140px;
   display: flex;
   flex-direction: column;
-  
+  margin-bottom: 30px;
 `;
 
 //질문
@@ -75,27 +83,28 @@ export const SelfEvalQuestion = styled(BigTitle)`
   font-size: 14px;
   font-family: Pretendard;
 
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 //답변
-export const SelfEvalInput = styled.input`
+export const SelfEvalInput = styled.textarea`
   width: 416px;
   height: 117px;
-  border: 1.5px solid #C9CDD2;
-    margin-top: 8px;
+  border: 1.5px solid #c9cdd2;
+  margin-top: 8px;
   flex-shrink: 0;
   border-radius: 8px;
-  margin-bottom:24px;
-  
+  margin-bottom: 24px;
+  resize: none;
+
   font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-padding:16px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 16px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -109,15 +118,15 @@ export const ButtonContainer = styled.div`
   font-size: 14px;
   font-weight: 700;
   font-family: Pretendard;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 export const Button = styled.button`
   width: 150px;
-  
+
   justify-content: center;
   align-items: center;
   background-color: #4849ff;
