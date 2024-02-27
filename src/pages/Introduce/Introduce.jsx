@@ -342,7 +342,7 @@ const NotelassImage = styled.div`
 
 const Button = styled.button`
   margin-top: 710px;
-  margin-left: 400px;
+  margin-left: 410px;
   display: flex;
   width: 376px;
   height: 72px;
@@ -366,6 +366,86 @@ const Text = styled.p`
   line-height: normal;
 `;
 
+const Title = styled.p`
+  top: 315px;
+  left: 32%;
+  transform: translateX(-50%);
+  position: absolute;
+  margin-top: 20px;
+  color:#4849FF;
+  font-family: Pretendard;
+font-size: 32px;
+font-weight: 700;
+line-height: 38px;
+letter-spacing: 0em;
+text-align: left;
+
+`;
+
+const Title2 = styled.p`
+  top: 370px;
+  left: 32%;
+  transform: translateX(-50%);
+  position: absolute;
+  margin-top: 20px;
+  color:#4849FF;
+  font-family: Pretendard;
+font-size: 96px;
+font-weight: 1000;
+line-height: 115px;
+letter-spacing: 0em;
+text-align: left;
+
+`;
+
+const Title3 = styled.p`
+  top: 544px;
+  left: 32%;
+  transform: translateX(-50%);
+  position: absolute;
+  margin-top: 20px;
+  color:#4849FF;
+
+
+font-family: Pretendard;
+font-size: 24px;
+font-weight: 500;
+line-height: 29px;
+letter-spacing: 0em;
+text-align: left;
+
+  `;
+
+  const Title4 = styled.p`
+  top: 584px;
+  left: 27%;
+  transform: translateX(-50%);
+  position: absolute;
+  margin-top: 20px;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
+  color:#4849FF;
+  `;
+
+  const Title5 = styled.p`
+  top: 584px;
+  left: 38.5%;
+  transform: translateX(-50%);
+  position: absolute;
+  margin-top: 20px;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
+  color:#4849FF;
+  `;
+
 function Introduce() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token")); // token에 문자열이 존재하면 true 반환
@@ -386,10 +466,17 @@ function Introduce() {
 
   return (
     <NotelassImage>
-      <A1 src={a1} alt="a1" />
+      {/* <A1 src={a1} alt="a1" />
       <A2 src={a2} alt="a2" />
-      <A3 src={a3} alt="a3" />
+      <A3 src={a3} alt="a3" /> */}
       {/* <A4 onClick={navigateLogin} src={a4} alt="a4" /> */}
+
+      <Title>스마트 교육을 완성할 마지막 열쇠</Title>
+      <Title2>노트라스</Title2>
+      <Title3>선생님의 과도한 생활기록부 업무 부담을 줄여주는,</Title3>
+      <br/>
+      <Title4>새로운 선생님 맞춤형</Title4>
+      <Title5>학생 관리 플랫폼</Title5>
       <Button
         isLoggedIn={isLoggedIn} // isLoggedIn prop 전달
         onClick={!isLoggedIn ? navigateLogin : undefined}
@@ -422,7 +509,7 @@ function Introduce() {
         <E5 src={e5} alt="e5" />
       </a>
       <E6 src={e6} alt="e6" />
-      <E7 src={e7} alt="e7" />
+      
 
       <F1 src={f1} alt="f1" />
       <F2 src={f2} alt="f2" />
