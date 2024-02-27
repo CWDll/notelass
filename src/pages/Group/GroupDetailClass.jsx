@@ -423,6 +423,11 @@ function GroupDetailClass() {
     fetchNotices();
   }, [id]);
 
+  // 현재 NoticeDetail에서 info에 관한 오류 발생해서 주석처리해 둠.(2024-04-26)
+  function goToDetail(groupId, noticeId) {
+    // navigate(`/NoticeDetail/${groupId}/${noticeId}`);
+  }
+
   return (
     <Wrap>
       <Main>
@@ -552,7 +557,7 @@ function GroupDetailClass() {
                   {notices.slice(0, 5).map((notice, index) => (
                     <StyledNoticeItem
                       key={notice.id}
-                      onClick={() => handleOnClick(index)}
+                      onClick={() => goToDetail(notice.groupId, notice.id)}
                     >
                       <NoticeContent>
                         <NoticeImg
