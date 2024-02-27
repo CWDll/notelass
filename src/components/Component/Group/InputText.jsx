@@ -198,6 +198,7 @@ const calculateByteCount = (text) => {
 
               <S.Textarea
                 value={inputText}
+                placeholder="단어를 드래그한 뒤 우클릭하시면 유의어가 출력됩니다."
                 spellCheck={false}
                 onChange={(e) => {
                   setInputText(e.target.value);
