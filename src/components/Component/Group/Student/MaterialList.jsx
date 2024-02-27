@@ -197,9 +197,9 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
     navigate(-1);
   }
 
-  function handleTitleClick(fileId) {
+  function handleTitleClick() {
     // Title 클릭 시 PDF 뷰어 페이지로 이동
-    navigate(`/pdf-viewer/${fileId}`); // 이동할 경로를 설정합니다.
+    navigate("/NoteDetailSubject/pdf-viewer"); // 이동할 경로를 설정합니다.
   }
 
   // 외부 클릭 감지 함수
@@ -291,6 +291,25 @@ async function handleLoadToNoteTab(fileId) {
     }
   };
 
+  // 파일 보기 함수
+const handleShowNote = async (fileId) => {
+  try {
+    const response = await instance.get(`/api/note/${fileId}`);
+    if (response.data.code === 200) {
+      const note = response.data.result;
+      // 파일 보기 처리 (예: PDF 파일의 경우)
+      // 여기에 파일 보기 처리를 추가해야 합니다. (예: PDF 뷰어로 열기)
+      console.log("노트 조회 결과:", note);
+    } else {
+      console.error("노트를 불러오는 데 실패했습니다.");
+      alert("노트를 불러오는 데 실패했습니다.");
+    }
+  } catch (error) {
+    console.error("노트를 불러오는 중 오류 발생:", error);
+    alert("노트를 불러오는 중 오류 발생했습니다.");
+  }
+};
+
   const navigate = useNavigate();
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
@@ -330,7 +349,7 @@ async function handleLoadToNoteTab(fileId) {
           {materials.map((material) => (
             <SubjectBody key={material.id}>
               <PaperImg src={paper} alt="paper" />
-              <SubjectContainer onClick={() => handleTitleClick(fileId)}>
+              <SubjectContainer onClick={() => handleTitleClick(material.id)}>
                 <BoldText>
                   {material.files
                     .map((file) => file.originalFileName)
@@ -355,7 +374,7 @@ async function handleLoadToNoteTab(fileId) {
                         toggleDropdown(material.id);
                       }}
                     >
-                      PDF로 내보내기
+                      내보내기
                     </NavDropdownOptionUp>
                   ))}
                   <hr />
@@ -366,6 +385,16 @@ async function handleLoadToNoteTab(fileId) {
                     onClick={() => handleLoadToNoteTab(file.id)}
                   >
                     노트탭에 불러오기
+                  </NavDropdownOptionDown>
+                  ))}
+                  <hr />
+                  {material.files.map((file) => (
+                  <NavDropdownOptionDown
+                  key={file.id}
+                    className="dropdown-item"
+                    // onClick={() => handleShowNote(file.id)}
+                  >
+                    자료 보기
                   </NavDropdownOptionDown>
                   ))}
                 </NavDropdownBox>

@@ -75,6 +75,8 @@ export const GrayButton = styled(Button)`
   &:hover {
     border: none;
   }
+
+  color:#fff;
 `;
 
 // DeleteConfirmModal style

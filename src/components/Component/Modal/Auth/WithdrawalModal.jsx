@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import * as S from "../GroupInformation/style";
@@ -15,6 +15,16 @@ function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
   };
 
   const [checkText, setCheckText] = useState("");
+  const [buttonActive, setButtonActive] = useState(false);
+
+  useEffect(() => {
+    if (checkText === "회원 탈퇴합니다") {
+      setButtonActive(true);
+    } else {
+      setButtonActive(false);
+    }
+  }, [checkText]);
+ 
   const DeleteButtonClick = (checkText) => {
     if (checkText === "회원 탈퇴합니다") {
       withdrawal();
@@ -40,7 +50,7 @@ function WithdrawalModal({ setShwoWithdrawalModal, shwoWithdrawalModal }) {
             onChange={(event) => setCheckText(event.target.value)}
           />
         </S.TextContainer>
-        <S.GrayButton onClick={() => DeleteButtonClick(checkText)}>
+        <S.GrayButton onClick={() => DeleteButtonClick(checkText)}  style={{backgroundColor: buttonActive ? 'blue' : 'gray'}}>
           삭제하기
         </S.GrayButton>
       </S.FlexContainer>

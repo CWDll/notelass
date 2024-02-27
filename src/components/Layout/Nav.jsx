@@ -171,10 +171,6 @@ const NavDropdownOptionDown = styled(NavDropdownOptionUp)`
   border-radius: 0 0 10px 10px;
 `;
 
-const AuthBox = styled.div`
-  padding-right: 40px;
-`;
-
 export default function Nav() {
   const [show, setShow] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
@@ -201,6 +197,8 @@ export default function Nav() {
     };
   }, []);
 
+
+  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -245,7 +243,7 @@ export default function Nav() {
     navigate("/Groupdetail");
   };
   const navigateToNote = () => {
-    navigate("/NoteDetailSubject");
+    navigate("/notedetailsubject");
   };
   // const navigateTosetting = () => {
   //   navigate("/setting");
@@ -255,6 +253,10 @@ export default function Nav() {
   };
   const navigateSignup = () => {
     navigate("/selectSchool");
+  };
+
+ const navigateTOFind = () => {
+    navigate("/FindPassword");
   };
 
   const handleLogout = async () => {
@@ -324,9 +326,9 @@ export default function Nav() {
             <NavDropdownBox ref={dropdownRef} className="dropdown-menu">
               <NavDropdownOptionUp
                 className="dropdown-item"
-                // onClick={navigateTosetting}
+                onClick={navigateTOFind}
               >
-                환경설정
+              비밀번호 재설정
               </NavDropdownOptionUp>
               <hr />
               <NavDropdownOptionDown
@@ -357,10 +359,10 @@ export default function Nav() {
     } else {
       // 로그인 상태가 아닐 때 '로그인'과 '회원가입' 버튼 표시
       return (
-        <AuthBox>
+        <>
           <SignInBtn onClick={navigateLogin}>로그인</SignInBtn>
           <SignUnBtn onClick={navigateSignup}>회원가입</SignUnBtn>
-        </AuthBox>
+        </>
       );
     }
   };

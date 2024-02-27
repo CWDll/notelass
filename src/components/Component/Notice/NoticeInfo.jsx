@@ -65,20 +65,20 @@ export default function NoticeInfo({
       <S.SettingBox>
         <S.SmallTitle>작성자</S.SmallTitle>
         <S.SubText>{matchedGroup && `${matchedGroup.teacher}선생님`}</S.SubText>
-        <S.SubText>{grouplist.teacher} 선생님</S.SubText>
+        <S.SubText>{grouplist.teacher}선생님</S.SubText>
       </S.SettingBox>
       <S.SettingBox>
         <S.SmallTitle>게시일</S.SmallTitle>
         <S.SubText>{postDate}</S.SubText>
       </S.SettingBox>
-      <S.SettingBox>
-        <S.SmallTitle>할당된 그룹</S.SmallTitle>
-        <S.SubText>
-          {displayGroup
+      {/* <S.SettingBox> */}
+        {/* <S.SmallTitle>할당된 그룹</S.SmallTitle>
+        <S.SubText> */}
+          {/* {displayGroup
             ? `${displayGroup.school} ${displayGroup.grade}학년 ${displayGroup.classNum}반 ${displayGroup.subject} 과목`
-            : `${infos.info.grade}학년 ${infos.info.classNum}반 ${infos.info.subject} 과목`}
-        </S.SubText>
-      </S.SettingBox>
+            : `${infos.info.grade}학년 ${infos.info.classNum}반 ${infos.info.subject} 과목`} */}
+        {/* </S.SubText> */}
+      {/* </S.SettingBox> */}
     </>
   );
 }

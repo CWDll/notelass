@@ -410,6 +410,7 @@ function GroupDetailClass() {
       const response = await instance.get(`/api/notice/${id}`);
       if (response.data.code === 200) {
         setNotices(response.data.result);
+
         console.log("공지사항 목록 조회 성공", response.data.result);
       } else {
         console.error("공지사항 목록 조회 실패", response.data.message);
@@ -423,10 +424,9 @@ function GroupDetailClass() {
     fetchNotices();
   }, [id]);
 
-  // 현재 NoticeDetail에서 info에 관한 오류 발생해서 주석처리해 둠.(2024-04-26)
-  function goToDetail(groupId, noticeId) {
-    // navigate(`/NoticeDetail/${groupId}/${noticeId}`);
-  }
+  const ShowNotices = (noticeId) => {
+    navigate(`/NoticeDetail/${id}/${noticeId}`);
+  };
 
   return (
     <Wrap>
@@ -559,7 +559,10 @@ function GroupDetailClass() {
                       key={notice.id}
                       onClick={() => goToDetail(notice.groupId, notice.id)}
                     >
-                      <NoticeContent>
+                      <NoticeContent
+                        key={notice.id}
+                        onClick={() => ShowNotices(notice.id)}
+                      >
                         <NoticeImg
                           src={notice.unread ? envelope : envelopeOpen} // 조건부 연산자 사용
                           alt="envelope"
