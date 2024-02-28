@@ -809,7 +809,7 @@ export function GroupDetailWrite() {
             <ScoreResult>{speechCount}회 (상위 {speechRank}%)</ScoreResult>
             
             
-            
+{/*             
             <PercentBody>
               <ScoreTitle>기준 퍼센테이지</ScoreTitle>
               <Percent
@@ -833,7 +833,7 @@ export function GroupDetailWrite() {
                   <p>해당 퍼센테이지에 대한 과제가 없습니다.</p>
                 )}
               </div>
-            </PercentBody>
+            </PercentBody> */}
           </ScoreList>
 
           <>
