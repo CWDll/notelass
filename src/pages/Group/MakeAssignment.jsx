@@ -238,6 +238,7 @@ function MakeAssignment() {
   );
 
   return (
+    <S.Wrap>
     <S.Wrapper>
       <S.Header>
         <S.Img
@@ -248,7 +249,7 @@ function MakeAssignment() {
         <S.BoldTitle>
           {/* {matchedGroup &&
             `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
-            {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
+            {/* {info.school} {info.grade}학년 {info.classNum}반 {info.subject} */}
         </S.BoldTitle>
       </S.Header>
 
@@ -371,6 +372,7 @@ function MakeAssignment() {
         </S.AssignmentSettingForm>
       </S.Body>
     </S.Wrapper>
+    </S.Wrap>
   );
 }
 

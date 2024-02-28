@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+export const Wrap = styled.div`
+margin-left: auto; /* 중앙 정렬을 위해 자동 마진 사용 */
+margin-right: auto;
+position: relative;
+z-index: 10;
+`;
+
 export const Wrapper = styled.div`
   width: 1920px;
   min-height: 1080px;
