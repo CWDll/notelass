@@ -90,7 +90,7 @@ function NoticeDetailContent(noticeId) {
         <S.GrayButton
           onClick={() => {
             deleteNotice(groupId, noticeId.noticeId, () =>
-              navigate(`/GroupDetail`)
+              navigate(-1)
             );
           }}
         >
