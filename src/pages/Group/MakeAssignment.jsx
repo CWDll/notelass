@@ -10,6 +10,8 @@ import AssignInfo from "../../components/Component/Notice/AssignInfo";
 import NoticeInfo from "../../components/Component/Notice/NoticeInfo";
 import ShowAssignment from "../../components/Component/Group/Student/ShowAssignment";
 
+import exit from "../../assets/exit.svg";
+
 import * as S from "../Style/AssignmentStyle";
 
 function MakeAssignment() {
@@ -19,11 +21,7 @@ function MakeAssignment() {
   // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
   console.log("MA의 info:", info);
-  const editinfo = location.state.editinfo;
-  const editcreDate = location.state.editcreDate;
-  const editteacher = location.state.editteacher;
 
-  console.log("MA의 editinfo:", editinfo, editcreDate, editteacher);
   const { role } = useContext(RoleContext);
 
   const [assignmentName, setAssignmentName] = useState("");
@@ -114,7 +112,7 @@ function MakeAssignment() {
 
       let response;
       // 수정 API
-      if (info.intent == "corr") {
+      if (info) {
         response = await instance.put(
           `/api/notice/${paramsGroupId}/${info.noticeId}`,
           formData,
@@ -213,58 +211,28 @@ function MakeAssignment() {
     }
   };
 
-  const [group, setGroup] = useState(null);
-  const [matchedGroup, setMatchedGroup] = useState(null);
+  const handleFileDelete = (index) => {
+    // 삭제할 파일을 제외한 새로운 파일 목록 생성
+    const newFiles = files.filter((file, i) => i !== index);
+    
+    // 새로운 파일 목록으로 업데이트
+    setFiles(newFiles);
+  };
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      if (info.intent == "corr") {
-        try {
-          const res = await instance.get(
-            `/api/notice/detail?noticeId=${info.noticeId}`
-          );
-          if (res.status === 200) {
-            setAssignmentName(res.data.result.title);
-            setAssignmentDesc(res.data.result.content);
-            setFiles(res.data.result.files);
-          } else {
-            console.log("테스트 실패");
-          }
-        } catch (error) {
-          console.error("fetchGroups에서 오류 발생", error);
-        }
-      } else {
-        try {
-          const response = await instance.get(`/api/group`);
-          if (response.status === 200 && Array.isArray(response.data.result)) {
-            const matched = response.data.result.find(
-              (group) => group.id.toString() === paramsGroupId
-            );
-            if (matched) {
-              setMatchedGroup(matched);
-              console.log("Matched 그룹 정보:", matched);
-            } else {
-              console.error("Matching group not found");
-            }
-          } else {
-            console.error("그룹 목록을 불러오는데 실패했습니다.");
-          }
-        } catch (error) {
-          console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
-        }
-      }
-    };
-    fetchGroups();
-  }, [paramsGroupId]);
-
+  
+  
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
+        <>
         <S.FileItem key={index}>
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.name}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+          
+        <S.Exit src={exit} alt="exit" onClick={() => handleFileDelete(index)} />
         </S.FileItem>
+        </>
       ))}
     </S.FileList>
   );
@@ -278,9 +246,9 @@ function MakeAssignment() {
           alt="chevron_left"
         />
         <S.BoldTitle>
-          {matchedGroup &&
-            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`}
-          {/* {info.school} {info.grade}학년 {info.classNum}반 {info.subject} */}
+          {/* {matchedGroup &&
+            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
+            {info.school} {info.grade}학년 {info.classNum}반 {info.subject}
         </S.BoldTitle>
       </S.Header>
 
@@ -374,7 +342,7 @@ function MakeAssignment() {
             <S.FileContainer>{renderFileList()}</S.FileContainer>
             <S.Foot>
               <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                {info.intent === "corr" ? "수정하기" : "생성하기"}
+                {info ? "수정하기" : "생성하기"}
               </S.SubmitBtn>
 
               <S.CancelBtn type="button" onClick={handleHeaderClick}>
@@ -394,7 +362,11 @@ function MakeAssignment() {
           {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
-            <NoticeInfo paramsGroupId={paramsGroupId} info={info} />
+            <NoticeInfo
+              paramsGroupId={paramsGroupId}
+              info={info}
+              infoteacher={info.teacher}
+            />
           )}
         </S.AssignmentSettingForm>
       </S.Body>

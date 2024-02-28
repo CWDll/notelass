@@ -375,3 +375,11 @@ export const FileContainer = styled.div`
     background: #ccc;
   }
 `;
+
+export const Exit = styled.img`
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  z-index: 1;
+  margin-left: 555px;
+`;
