@@ -1,0 +1,3 @@
+User-agent: *
+Allow:/
+Sitemap: https://notelass.site/sitemap.xml
