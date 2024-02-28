@@ -215,6 +215,7 @@ function StudentBookContent({
   propsUserId,
   contentId,
   setShowSmallContainer,
+  fetchStudentBook,
 }) {
   const [selectedStudent, setSelectedStudent] = useState(propsUserId);
   const [selectedStudentName, setSelectedStudentName] = useState("");
@@ -460,6 +461,8 @@ function StudentBookContent({
         alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 작성 성공!");
         setShowSmallContainer(false);
+        await fetchStudentBook();
+      
       } else if (response.status === 200) {
         alert(`${selectedStudentName}학생의 학생 수첩 작성이 완료되었습니다.`);
         console.log("학생 수첩 수정 성공!");
@@ -468,6 +471,7 @@ function StudentBookContent({
       } else {
         alert("학생 수첩 작성에 실패하였습니다.");
       }
+
     } catch (error) {
       console.error("학생 수첩 작성 오류:", error);
     }

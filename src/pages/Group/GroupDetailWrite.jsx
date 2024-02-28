@@ -1029,6 +1029,7 @@ export function GroupDetailWrite() {
               propsGroupId={selectedGroupId}
               propsUserId={selectedUserId}
               contentId={contentId}
+              fetchStudentBook={fetchStudentBook}
             />
           )}
         </RightContainer>
