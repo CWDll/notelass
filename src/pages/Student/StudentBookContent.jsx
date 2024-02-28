@@ -525,18 +525,7 @@ function StudentBookContent({
       />
       {contentId ? null : (
         <ButtonContainer>
-          <p>발표 횟수</p>
-          <CountContainer>
-            <Button onClick={speechDownCount}>
-              <Img src={caret_down} alt="caret_down" />
-            </Button>
-            <p style={{ marginLeft: "18px", marginRight: "18px" }}>
-              {speechCount}
-            </p>
-            <Button onClick={speechUpCount}>
-              <Img src={caret_up} alt="caret_up" />
-            </Button>
-          </CountContainer>
+          
 
           <p>태도 점수</p>
           <CountContainer>
@@ -547,6 +536,19 @@ function StudentBookContent({
               {attitudeCount}
             </p>
             <Button onClick={attitudeUpCount}>
+              <Img src={caret_up} alt="caret_up" />
+            </Button>
+          </CountContainer>
+
+          <p>발표 횟수</p>
+          <CountContainer>
+            <Button onClick={speechDownCount}>
+              <Img src={caret_down} alt="caret_down" />
+            </Button>
+            <p style={{ marginLeft: "18px", marginRight: "18px" }}>
+              {speechCount}
+            </p>
+            <Button onClick={speechUpCount}>
               <Img src={caret_up} alt="caret_up" />
             </Button>
           </CountContainer>
