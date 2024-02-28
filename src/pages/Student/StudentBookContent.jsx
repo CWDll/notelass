@@ -326,7 +326,7 @@ function StudentBookContent({
           // 서버에서 받은 데이터를 기반으로 새로운 배열 생성
           const newGroups = resp.data.result.map((g) => ({
             id: g.id,
-            group: `${g.grade}학년 ${g.classNum}반`, // 예시: '1학년 3반'
+            group: `${g.grade}학년 ${g.classNum}반 ${g.subject}`, // 예시: '1학년 3반'
           }));
           setGroups(newGroups);
         }
@@ -496,7 +496,7 @@ function StudentBookContent({
                 group // 'groups' 상태를 사용
               ) => (
                 <option key={group.id} value={group.id}>
-                  {group.group}
+                  {group.group} 
                 </option>
               )
             )}
