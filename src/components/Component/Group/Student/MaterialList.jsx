@@ -300,6 +300,9 @@ const handleShowNote = async (fileId) => {
       // 파일 보기 처리 (예: PDF 파일의 경우)
       // 여기에 파일 보기 처리를 추가해야 합니다. (예: PDF 뷰어로 열기)
       console.log("노트 조회 결과:", note);
+
+      // PDF 뷰어로 열기
+      window.open(`/pdf-viewer/${fileId}`, "_blank");
     } else {
       console.error("노트를 불러오는 데 실패했습니다.");
       alert("노트를 불러오는 데 실패했습니다.");
@@ -309,7 +312,6 @@ const handleShowNote = async (fileId) => {
     alert("노트를 불러오는 중 오류 발생했습니다.");
   }
 };
-
   const navigate = useNavigate();
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
@@ -392,7 +394,7 @@ const handleShowNote = async (fileId) => {
                   <NavDropdownOptionDown
                   key={file.id}
                     className="dropdown-item"
-                    // onClick={() => handleShowNote(file.id)}
+                    onClick={() => handleShowNote(file.id)}
                   >
                     자료 보기
                   </NavDropdownOptionDown>

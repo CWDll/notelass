@@ -196,12 +196,12 @@ export function GroupDetailWrite() {
 
        
       } else {
-        console.error("생활기록부 파일을 가져오는 데 실패했습니다:", response);
-        alert("생활기록부 파일을 가져오지 못했습니다.");
+        console.error("저장하기를 눌러야 출력이 가능합니다.", response);
+        alert("저장하기를 눌러야 출력이 가능합니다.");
       }
     } catch (error) {
-      console.error("엑셀 파일을 가져오는 중 오류가 발생했습니다.", error);
-      alert("엑셀 파일을 가져오는 중 오류가 발생했습니다.");
+      console.error("저장하기를 눌러야 출력이 가능합니다.", error);
+      alert("저장하기를 눌러야 출력이 가능합니다.");
     }
   };
 
