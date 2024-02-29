@@ -109,7 +109,7 @@ const NavDropdownBox = styled.div`
 
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
@@ -172,10 +172,12 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [materials, setMaterials] = useState([]); // 강의자료 목록을 저장할 상태
   const [dropdownVisible, setDropdownVisible] = useState({});
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRef = React.useRef(null);
 
   console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId, id);
 
+  
   // 날짜 포맷 함수
   const formatDate = (dateString) => {
     const options = {
@@ -224,11 +226,9 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
 
   // 드롭다운 토글 함수
   const toggleDropdown = (materialId) => {
-    setDropdownVisible((prev) => ({
-      ...prev,
-      [materialId]: !prev[materialId],
-    }));
+    setActiveDropdown((prev) => (prev === materialId ? null : materialId));
   };
+
 
   //강의자료(노트) 목록 GET API
   useEffect(() => {
@@ -285,33 +285,15 @@ async function handleLoadToNoteTab(fileId) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link); // 다운로드 후 링크 요소 제거
+      console.log("파일 다운로드 성공:", response);
     } catch (error) {
       console.error("파일 다운로드 중 오류 발생:", error);
       alert("파일을 다운로드하는 중 문제가 발생했습니다.");
     }
   };
 
-  // 파일 보기 함수
-const handleShowNote = async (fileId) => {
-  try {
-    const response = await instance.get(`/api/note/${fileId}`);
-    if (response.data.code === 200) {
-      const note = response.data.result;
-      // 파일 보기 처리 (예: PDF 파일의 경우)
-      // 여기에 파일 보기 처리를 추가해야 합니다. (예: PDF 뷰어로 열기)
-      console.log("노트 조회 결과:", note);
 
-      // PDF 뷰어로 열기
-      window.open(`/pdf-viewer/${fileId}`, "_blank");
-    } else {
-      console.error("노트를 불러오는 데 실패했습니다.");
-      alert("노트를 불러오는 데 실패했습니다.");
-    }
-  } catch (error) {
-    console.error("노트를 불러오는 중 오류 발생:", error);
-    alert("노트를 불러오는 중 오류 발생했습니다.");
-  }
-};
+
   const navigate = useNavigate();
   const toWritePage = () => {
     navigate(`/GroupDetailClass/${id}/MakeAssignment`);
@@ -343,8 +325,50 @@ const handleShowNote = async (fileId) => {
     navigate("/GroupScoreDetail");
   };
 
+  
+  
+  const [viewImage, setViewImage] = useState(null);
+  const handleShowNote = async (fileId) => {
+    try {
+      const response = await instance.get(`/api/file/${fileId}`, {
+        responseType: 'blob' 
+      });
+  
+      if (response.status !== 200) {
+        throw new Error("파일을 불러오는 중 문제가 발생했습니다.");
+      }
+  
+      const fileUrl = URL.createObjectURL(response.data);
+      setViewImage(fileUrl); // 상태 변경
+    } catch (error) {
+      console.error("파일을 열어보는 중 오류 발생:", error);
+      alert("파일을 열어보는 중 문제가 발생했습니다.");
+    }
+  };
+  
+
   return (
     <div>
+    {viewImage && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 레이어의 색상 설정
+        zIndex: 1000, // 다른 요소 위에 배경 레이어가 나타나도록 설정
+        cursor: 'pointer', // 마우스 커서를 포인터로 설정
+      }} onClick={() => setViewImage(null)}>
+       
+          <img src={viewImage} alt="View" style={{maxWidth: '80%', maxHeight: '80%'}} />
+          < button onClick={() => setViewImage(null)}>닫기</button>
+        </div>
+    
+    )}
       <ManagementContainer>
         <Title>학습 자료</Title>
         <MainContainer>
@@ -365,7 +389,7 @@ const handleShowNote = async (fileId) => {
                 alt="buttonstyle"
                 onClick={() => toggleDropdown(material.id)}
               />
-              {dropdownVisible[material.id] && (
+              {activeDropdown === material.id && ( 
                 <NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
                   {material.files.map((file) => (
                     <NavDropdownOptionUp

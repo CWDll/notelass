@@ -10,6 +10,5 @@
 
 body {
   background-color: #f5f5fc;
-  width: 100%;
   overflow-x: hidden; /* 가로 스크롤바 숨김 */
 }
