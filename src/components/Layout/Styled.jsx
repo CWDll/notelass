@@ -7,7 +7,6 @@ export const FooterContainer = styled.div`
   flex-direction: column;
   padding: 40px 0;
   position: relative;
-  z-index: 100;
   padding: 20px 0 10px 0px;
   @media (max-width: 769px) {
     padding: 20px 20px;
