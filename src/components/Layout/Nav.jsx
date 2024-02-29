@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import personimg from "../../assets/personimg.svg";
@@ -179,6 +179,9 @@ export default function Nav() {
   const { paramsGroupId } = useParams();
   console.log(paramsGroupId);
 
+  // Nav선택을 위한 작업. -> 현재 위치를 가져옴
+  const location = useLocation();
+
   const updateLoginState = (loggedIn) => {
     setIsLoggedIn(loggedIn);
   };
@@ -197,8 +200,6 @@ export default function Nav() {
     };
   }, []);
 
-
-  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       //50 이상 내려가면
@@ -230,6 +231,24 @@ export default function Nav() {
     };
   }, []);
 
+  // 네브 옵션 선택을 위한 useEffect
+  useEffect(() => {
+    // 경로에 따라 selectedItemIndex 업데이트
+    switch (location.pathname) {
+      case "/introduce":
+        setSelectedItemIndex(0);
+        break;
+      case "/Groupdetail":
+        setSelectedItemIndex(2);
+        break;
+      case "/notedetailsubject":
+        setSelectedItemIndex(3);
+        break;
+      default:
+        break;
+    }
+  }, [location.pathname]); // location.pathname이 변경될 때마다 이 useEffect가 실행
+
   //페이지 이동시키는 navigate
   const navigate = useNavigate();
 
@@ -255,7 +274,7 @@ export default function Nav() {
     navigate("/selectSchool");
   };
 
- const navigateTOFind = () => {
+  const navigateTOFind = () => {
     navigate("/FindPassword");
   };
 
@@ -328,7 +347,7 @@ export default function Nav() {
                 className="dropdown-item"
                 onClick={navigateTOFind}
               >
-              비밀번호 재설정
+                비밀번호 재설정
               </NavDropdownOptionUp>
               <hr />
               <NavDropdownOptionDown
