@@ -151,7 +151,8 @@ function MakeAssignment() {
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
-      navigate(-1);
+      // navigate(-1);
+
       // 2024-02-23
       // 현재 수정이 완료되었음에도 Error code: 500 을 반환하며 error가 나오는 현상이 발견됨.
     }
@@ -214,24 +215,26 @@ function MakeAssignment() {
   const handleFileDelete = (index) => {
     // 삭제할 파일을 제외한 새로운 파일 목록 생성
     const newFiles = files.filter((file, i) => i !== index);
-    
+
     // 새로운 파일 목록으로 업데이트
     setFiles(newFiles);
   };
 
-  
-  
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
         <>
-        <S.FileItem key={index}>
-          <S.FileIcon src={FileEarmarkZip} alt="file icon" />
-          <S.FileName>{file.name}</S.FileName>
-          <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-          
-        <S.Exit src={exit} alt="exit" onClick={() => handleFileDelete(index)} />
-        </S.FileItem>
+          <S.FileItem key={index}>
+            <S.FileIcon src={FileEarmarkZip} alt="file icon" />
+            <S.FileName>{file.name}</S.FileName>
+            <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+
+            <S.Exit
+              src={exit}
+              alt="exit"
+              onClick={() => handleFileDelete(index)}
+            />
+          </S.FileItem>
         </>
       ))}
     </S.FileList>
@@ -239,139 +242,141 @@ function MakeAssignment() {
 
   return (
     <S.Wrap>
-    <S.Wrapper>
-      <S.Header>
-        <S.Img
-          onClick={handleHeaderClick}
-          src={chevron_left}
-          alt="chevron_left"
-        />
-        <S.BoldTitle>
-          {/* {matchedGroup &&
+      <S.Wrapper>
+        <S.Header>
+          <S.Img
+            onClick={handleHeaderClick}
+            src={chevron_left}
+            alt="chevron_left"
+          />
+          <S.BoldTitle>
+            {/* {matchedGroup &&
             `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
             {/* {info.school} {info.grade}학년 {info.classNum}반 {info.subject} */}
-        </S.BoldTitle>
-      </S.Header>
+          </S.BoldTitle>
+        </S.Header>
 
-      <S.Body>
-        {role === "STUDENT" ? (
-          <ShowAssignment />
-        ) : (
-          <S.AssigmentCreateForm>
-            <S.CreateTitle>공지/학습자료</S.CreateTitle>
-            <S.Title>
-              {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
-              {["공지", "강의자료"].map((value, index) => (
-                <S.Btn
-                  key={value}
-                  className={index === 0 ? "firstButton" : ""}
-                  onClick={() => handleButtonClick(value)}
-                  selected={selectedButton === value}
-                >
-                  {value}
-                </S.Btn>
-              ))}
-            </S.Title>
+        <S.Body>
+          {role === "STUDENT" ? (
+            <ShowAssignment />
+          ) : (
+            <S.AssigmentCreateForm>
+              <S.CreateTitle>공지/학습자료</S.CreateTitle>
+              <S.Title>
+                {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
+                {["공지", "강의자료"].map((value, index) => (
+                  <S.Btn
+                    key={value}
+                    className={index === 0 ? "firstButton" : ""}
+                    onClick={() => handleButtonClick(value)}
+                    selected={selectedButton === value}
+                  >
+                    {value}
+                  </S.Btn>
+                ))}
+              </S.Title>
 
-            <S.HeadInput>
-              <S.SmallTitle>
-                {/* {selectedButton === "과제"
+              <S.HeadInput>
+                <S.SmallTitle>
+                  {/* {selectedButton === "과제"
                 ? "과제 "
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                {selectedButton === "강의자료" ? "학습자료 제목" : "공지 제목"}
-              </S.SmallTitle>
-              <S.InputTitle
-                type="text"
-                name="username"
-                value={assignmentName}
-                onChange={onChangeName}
-                selectedButton={selectedButton}
-                placeholder={
-                  selectedButton === "과제"
-                    ? "과제 설명을 입력하세요."
+                  {selectedButton === "강의자료"
+                    ? "학습자료 제목"
+                    : "공지 제목"}
+                </S.SmallTitle>
+                <S.InputTitle
+                  type="text"
+                  name="username"
+                  value={assignmentName}
+                  onChange={onChangeName}
+                  selectedButton={selectedButton}
+                  placeholder={
+                    selectedButton === "과제"
+                      ? "과제 설명을 입력하세요."
+                      : selectedButton === "공지"
+                      ? "공지 제목을 입력하세요."
+                      : "학습자료 설명을 입력하세요."
+                  }
+                />
+              </S.HeadInput>
+              <S.BodyInput>
+                <S.SmallTitle>
+                  {selectedButton === "과제"
+                    ? "과제 설정"
                     : selectedButton === "공지"
-                    ? "공지 제목을 입력하세요."
-                    : "학습자료 설명을 입력하세요."
-                }
-              />
-            </S.HeadInput>
-            <S.BodyInput>
-              <S.SmallTitle>
-                {selectedButton === "과제"
-                  ? "과제 설정"
-                  : selectedButton === "공지"
-                  ? "공지 설정"
-                  : "학습자료 설정"}
-              </S.SmallTitle>
-              <S.InputDesc
-                type="text"
-                name="username"
-                value={assignmentDesc}
-                onChange={onChangeDesc}
-                selectedButton={selectedButton}
-                placeholder={
-                  selectedButton === "과제"
-                    ? "과제 설명을 입력하세요."
-                    : selectedButton === "공지"
-                    ? "공지 내용을 입력하세요."
-                    : "학습자료 설명을 입력하세요."
-                }
-              />
-            </S.BodyInput>
-            <S.LegInput>
-              <S.SmallTitle style={{ marginLeft: "-30px" }}>
-                파일 첨부
-              </S.SmallTitle>
-              <input
-                type="file"
-                id="fileUpload"
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-                ref={imageInput}
-                multiple
-              />
-              <S.LibraryButton
-                onClick={() => imageInput.current.click()}
-                style={{ marginLeft: "15px" }}
-              >
-                라이브러리에서 파일 탐색
-              </S.LibraryButton>
-            </S.LegInput>
+                    ? "공지 설정"
+                    : "학습자료 설정"}
+                </S.SmallTitle>
+                <S.InputDesc
+                  type="text"
+                  name="username"
+                  value={assignmentDesc}
+                  onChange={onChangeDesc}
+                  selectedButton={selectedButton}
+                  placeholder={
+                    selectedButton === "과제"
+                      ? "과제 설명을 입력하세요."
+                      : selectedButton === "공지"
+                      ? "공지 내용을 입력하세요."
+                      : "학습자료 설명을 입력하세요."
+                  }
+                />
+              </S.BodyInput>
+              <S.LegInput>
+                <S.SmallTitle style={{ marginLeft: "-30px" }}>
+                  파일 첨부
+                </S.SmallTitle>
+                <input
+                  type="file"
+                  id="fileUpload"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  ref={imageInput}
+                  multiple
+                />
+                <S.LibraryButton
+                  onClick={() => imageInput.current.click()}
+                  style={{ marginLeft: "15px" }}
+                >
+                  라이브러리에서 파일 탐색
+                </S.LibraryButton>
+              </S.LegInput>
 
-            <S.FileContainer>{renderFileList()}</S.FileContainer>
-            <S.Foot>
-              <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                {info ? "수정하기" : "생성하기"}
-              </S.SubmitBtn>
+              <S.FileContainer>{renderFileList()}</S.FileContainer>
+              <S.Foot>
+                <S.SubmitBtn type="submit" onClick={handleSubmit}>
+                  {info ? "수정하기" : "생성하기"}
+                </S.SubmitBtn>
 
-              <S.CancelBtn type="button" onClick={handleHeaderClick}>
-                취소
-              </S.CancelBtn>
-            </S.Foot>
-          </S.AssigmentCreateForm>
-        )}
-        <S.AssignmentSettingForm>
-          <S.CreateTitle>
-            {selectedButton === "과제"
-              ? "과제 설정"
-              : selectedButton === "공지"
-              ? "공지 설정"
-              : "학습자료 설정"}
-          </S.CreateTitle>
-          {selectedButton === "과제" ? (
-            <AssignInfo />
-          ) : (
-            <NoticeInfo
-              paramsGroupId={paramsGroupId}
-              info={info}
-              infoteacher={info.teacher}
-            />
+                <S.CancelBtn type="button" onClick={handleHeaderClick}>
+                  취소
+                </S.CancelBtn>
+              </S.Foot>
+            </S.AssigmentCreateForm>
           )}
-        </S.AssignmentSettingForm>
-      </S.Body>
-    </S.Wrapper>
+          <S.AssignmentSettingForm>
+            <S.CreateTitle>
+              {selectedButton === "과제"
+                ? "과제 설정"
+                : selectedButton === "공지"
+                ? "공지 설정"
+                : "학습자료 설정"}
+            </S.CreateTitle>
+            {selectedButton === "과제" ? (
+              <AssignInfo />
+            ) : (
+              <NoticeInfo
+                paramsGroupId={paramsGroupId}
+                info={info}
+                infoteacher={info.teacher}
+              />
+            )}
+          </S.AssignmentSettingForm>
+        </S.Body>
+      </S.Wrapper>
     </S.Wrap>
   );
 }
