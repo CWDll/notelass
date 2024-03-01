@@ -11,7 +11,7 @@ import Logo from "../Component/Etc/Logo";
 import WithdrawalModal from "../Component/Modal/Auth/WithdrawalModal";
 
 const NavContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 84px;
   background-color: white;
   display: flex;

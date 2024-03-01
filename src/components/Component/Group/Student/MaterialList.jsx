@@ -326,9 +326,9 @@ async function handleLoadToNoteTab(fileId) {
   };
 
   
-  
-  const [viewImage, setViewImage] = useState(null);
-  const handleShowNote = async (fileId, fileName) => {
+  const [viewFile, setViewFile] = useState(null);
+
+  const handleShowFile = async (fileId) => {
     try {
       const response = await instance.get(`/api/file/${fileId}`, {
         responseType: 'blob' 
@@ -338,27 +338,22 @@ async function handleLoadToNoteTab(fileId) {
         throw new Error("파일을 불러오는 중 문제가 발생했습니다.");
       }
   
-      const fileUrl = URL.createObjectURL(response.data);
+      const contentType = response.headers['content-type'];
   
-      const fileExtension = getFileExtension(fileName);
-      if (['png', 'jpg', 'jpeg', 'gif', 'bmp'].includes(fileExtension)) {
-        setViewImage(fileUrl); // 이미지 파일은 현재 페이지에서 보여주기
-      } else if (fileExtension === 'pdf') {
+      if (contentType === 'application/pdf') {
         const file = new Blob([response.data], { type: 'application/pdf' });
-        const pdfFileUrl = URL.createObjectURL(file);
-        window.open(pdfFileUrl, '_blank'); // PDF 파일은 새 창에서 보여주기
+        const fileUrl = URL.createObjectURL(file);
+        window.open(fileUrl, '_blank');
       } else {
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(fileUrl); // 그 외의 파일은 다운로드 받기
+        const fileUrl = URL.createObjectURL(response.data);
+        setViewFile(fileUrl);
       }
     } catch (error) {
       console.error("파일을 열어보는 중 오류 발생:", error);
       alert("파일을 열어보는 중 문제가 발생했습니다.");
     }
   };
+  
 
   return (
     <div>
@@ -388,7 +383,7 @@ async function handleLoadToNoteTab(fileId) {
           {materials.map((material) => (
             <SubjectBody key={material.id}>
               <PaperImg src={paper} alt="paper" />
-              <SubjectContainer >
+              <SubjectContainer>
                 <BoldText>
                   {material.files
                     .map((file) => file.originalFileName)
