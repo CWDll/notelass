@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "./style";
 import * as A from "../../../pages/Style/AssignmentStyle";
@@ -8,6 +8,8 @@ import { deleteNotice } from "../../../assets/api/apis/notice/ApiNotice";
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
 import NoticeInfo from "../Notice/NoticeInfo";
+
+import RoleContext from "../../../RoleContext";
 
 function NoticeDetailContent(noticeId) {
   const [title, setTitle] = useState("");
@@ -19,6 +21,8 @@ function NoticeDetailContent(noticeId) {
   // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", noticeId);
+
+  const { role } = useContext(RoleContext);
 
   useEffect(() => {
     const getStudentList = async () => {
@@ -87,14 +91,20 @@ function NoticeDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        <S.GrayButton
-          onClick={() => {
-            deleteNotice(groupId, noticeId.noticeId, () => navigate(-1));
-          }}
-        >
-          삭제
-        </S.GrayButton>
-        <S.Button onClick={toReWrite}>수정하기</S.Button>
+        {role === "TEACHER" ? (
+          <>
+            <S.GrayButton
+              onClick={() => {
+                deleteNotice(groupId, noticeId.noticeId, () => navigate(-1));
+              }}
+            >
+              삭제
+            </S.GrayButton>
+            <S.Button onClick={toReWrite}>수정하기</S.Button>
+          </>
+        ) : (
+          <></>
+        )}
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
