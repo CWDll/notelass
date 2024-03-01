@@ -18,7 +18,7 @@ function NoteDetailSubject() {
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [files, setFiles] = useState([]);
   const [materials, setMaterials] = useState([]);
-
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const { id } = useParams();
   const location = useLocation();
@@ -110,10 +110,7 @@ function NoteDetailSubject() {
 
   // 드롭다운 토글 함수
   const toggleDropdown = (materialId) => {
-    setDropdownVisible((prev) => ({
-      ...prev,
-      [materialId]: !prev[materialId],
-    }));
+    setActiveDropdown((prev) => (prev === materialId ? null : materialId));
   };
 
 
@@ -174,7 +171,7 @@ useEffect(() => {
                 </S.SubjectContainer>
 
                 
-                {dropdownVisible[material.id] && (
+                {activeDropdown === material.id && (
                   <S.NavDropdownBox className="dropdown-menu">
                     <S.NavDropdownOptionUp className="dropdown-item">
                       다운로드
