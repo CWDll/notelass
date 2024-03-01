@@ -10,12 +10,6 @@ import FilledStar from "../../assets/FilledStar.svg";
 import instance from "src/assets/api/axios";
 import * as S from "./Style/NoteDetailSubjectStyle";
 
-//노트 목록
-const starItems = [
-  { key: "item1", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-  { key: "item2", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-  { key: "item3", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-];
 
 function NoteDetailSubject() {
   const navigate = useNavigate();
@@ -24,7 +18,7 @@ function NoteDetailSubject() {
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [files, setFiles] = useState([]);
   const [materials, setMaterials] = useState([]);
-
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const { id } = useParams();
   const location = useLocation();
@@ -116,10 +110,7 @@ function NoteDetailSubject() {
 
   // 드롭다운 토글 함수
   const toggleDropdown = (materialId) => {
-    setDropdownVisible((prev) => ({
-      ...prev,
-      [materialId]: !prev[materialId],
-    }));
+    setActiveDropdown((prev) => (prev === materialId ? null : materialId));
   };
 
 
@@ -166,15 +157,21 @@ useEffect(() => {
                   <S.BoldText>
                     {material.title} 
                   </S.BoldText>
-                  {/* <S.GrayText>{formatDate(material.createdDate)}</S.GrayText> */}
-                </S.SubjectContainer>
-
-                <S.ChevronDownImg
+                  <S.ChevronDownImg
                   src={chevron_down}
                   alt="chevron_down"
                   onClick={() => toggleDropdown(material.id)}
                 />
-                {dropdownVisible[material.id] && (
+                <S.StarImg
+                  onClick={() => handleStarClick(material.id)}
+                  src={starredItems[material.id] ? FilledStar : star}
+                  alt="star"
+                />
+                  {/* <S.GrayText>{formatDate(material.createdDate)}</S.GrayText> */}
+                </S.SubjectContainer>
+
+                
+                {activeDropdown === material.id && (
                   <S.NavDropdownBox className="dropdown-menu">
                     <S.NavDropdownOptionUp className="dropdown-item">
                       다운로드
@@ -196,11 +193,7 @@ useEffect(() => {
                   </S.NavDropdownBox>
                 )}
 
-                <S.StarImg
-                  onClick={() => handleStarClick(material.id)}
-                  src={starredItems[material.id] ? FilledStar : star}
-                  alt="star"
-                />
+                
               </S.SubjectBody>
             ))}
           </S.SubjectBodyWrapper>

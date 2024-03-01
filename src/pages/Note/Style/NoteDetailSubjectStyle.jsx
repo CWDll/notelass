@@ -89,18 +89,16 @@ export const PaperImg = styled.img`
 export const ChevronDownImg = styled.img`
   width: 16px;
   height: 16px;
-  margin-left: 1105px;
+  margin-left: 970px;
   align-self: center;
-  position: absolute;
 `;
 
 export const StarImg = styled.img`
   width: 16px;
   height: 16px;
-  align-self: center;
-  margin-left: 1140px;
+  margin-left: 1050px;
+  margin-top: -16px;
   
-  position: absolute;
 `;
 
 export const BoldText = styled.p`
@@ -143,7 +141,7 @@ export const NavDropdownBox = styled.div`
 
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
