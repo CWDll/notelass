@@ -10,12 +10,6 @@ import FilledStar from "../../assets/FilledStar.svg";
 import instance from "src/assets/api/axios";
 import * as S from "./Style/NoteDetailSubjectStyle";
 
-//노트 목록
-const starItems = [
-  { key: "item1", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-  { key: "item2", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-  { key: "item3", title: "문학퀴즈", date: "2023.04.27 오후 9:00" },
-];
 
 function NoteDetailSubject() {
   const navigate = useNavigate();
@@ -166,14 +160,20 @@ useEffect(() => {
                   <S.BoldText>
                     {material.title} 
                   </S.BoldText>
-                  {/* <S.GrayText>{formatDate(material.createdDate)}</S.GrayText> */}
-                </S.SubjectContainer>
-
-                <S.ChevronDownImg
+                  <S.ChevronDownImg
                   src={chevron_down}
                   alt="chevron_down"
                   onClick={() => toggleDropdown(material.id)}
                 />
+                <S.StarImg
+                  onClick={() => handleStarClick(material.id)}
+                  src={starredItems[material.id] ? FilledStar : star}
+                  alt="star"
+                />
+                  {/* <S.GrayText>{formatDate(material.createdDate)}</S.GrayText> */}
+                </S.SubjectContainer>
+
+                
                 {dropdownVisible[material.id] && (
                   <S.NavDropdownBox className="dropdown-menu">
                     <S.NavDropdownOptionUp className="dropdown-item">
@@ -196,11 +196,7 @@ useEffect(() => {
                   </S.NavDropdownBox>
                 )}
 
-                <S.StarImg
-                  onClick={() => handleStarClick(material.id)}
-                  src={starredItems[material.id] ? FilledStar : star}
-                  alt="star"
-                />
+                
               </S.SubjectBody>
             ))}
           </S.SubjectBodyWrapper>
