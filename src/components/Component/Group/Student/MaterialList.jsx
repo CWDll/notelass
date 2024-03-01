@@ -6,7 +6,7 @@ import plus_lg from "src/assets/plus_lg.svg";
 import paper from "src/assets/paper.svg";
 import chevron_down from "src/assets/chevron_down.svg";
 import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
-import ViewImage from "../../Etc/ViewImage";
+import ViewImage from "src/components/Component/Etc/ViewImage";
 
 // api
 import instance from "src/assets/api/axios";
