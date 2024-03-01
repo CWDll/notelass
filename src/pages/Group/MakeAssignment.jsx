@@ -247,7 +247,8 @@ function MakeAssignment() {
           <S.BoldTitle>
             {/* {matchedGroup &&
             `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
-            {/* {info.school} {info.grade}학년 {info.classNum}반 {info.subject} */}
+            {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
+            {info.info.subject}
           </S.BoldTitle>
         </S.Header>
 
