@@ -6,6 +6,7 @@ import plus_lg from "src/assets/plus_lg.svg";
 import paper from "src/assets/paper.svg";
 import chevron_down from "src/assets/chevron_down.svg";
 import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
+import ViewImage from "../../Etc/ViewImage";
 
 // api
 import instance from "src/assets/api/axios";
@@ -286,6 +287,7 @@ async function handleLoadToNoteTab(fileId) {
       link.click();
       document.body.removeChild(link); // 다운로드 후 링크 요소 제거
       console.log("파일 다운로드 성공:", response);
+      setDropdownVisible(false);
     } catch (error) {
       console.error("파일 다운로드 중 오류 발생:", error);
       alert("파일을 다운로드하는 중 문제가 발생했습니다.");
@@ -328,7 +330,7 @@ async function handleLoadToNoteTab(fileId) {
   
   
   const [viewImage, setViewImage] = useState(null);
-  const handleShowNote = async (fileId,originalFileName) => {
+  const handleShowNote = async (fileId) => {
     try {
       const response = await instance.get(`/api/file/${fileId}`, {
         responseType: 'blob' 
@@ -350,43 +352,27 @@ async function handleLoadToNoteTab(fileId) {
           const file = new Blob([response.data], { type: 'application/pdf' });
           const fileUrl = URL.createObjectURL(file);
           window.open(fileUrl, '_blank');
+         
         } else if (header.startsWith('ffd8')) {
           const fileUrl = URL.createObjectURL(response.data);
           setViewImage(fileUrl);
+          
         } else {
-          alert('지원하지 않는 파일 형식: 다운로드를 이용해 자료를 확인해주세요');
+          alert('지원하지 않는 파일 형식: 다운로드를 이용해 자료를 확인해주세요.');
         }
+        
       };
       fileReader.readAsArrayBuffer(response.data);
     } catch (error) {
       console.error("파일을 열어보는 중 오류 발생:", error);
       alert("파일을 열어보는 중 문제가 발생했습니다.");
-    }
+    } 
   };
-  
+ 
 
   return (
     <div>
-    {viewImage && (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 레이어의 색상 설정
-        zIndex: 1000, // 다른 요소 위에 배경 레이어가 나타나도록 설정
-        cursor: 'pointer', // 마우스 커서를 포인터로 설정
-      }} onClick={() => setViewImage(null)}>
-       
-          <img src={viewImage} alt="View" style={{maxWidth: '80%', maxHeight: '80%'}} />
-          < button onClick={() => setViewImage(null)}>닫기</button>
-        </div>
-    
-    )}
+    {viewImage && (<ViewImage imageUrl={viewImage} setViewImage={setViewImage} />)}
       <ManagementContainer>
         <Title>학습 자료</Title>
         <MainContainer>
