@@ -326,9 +326,9 @@ async function handleLoadToNoteTab(fileId) {
   };
 
   
-  const [viewFile, setViewFile] = useState(null);
-
-  const handleShowFile = async (fileId) => {
+  
+  const [viewImage, setViewImage] = useState(null);
+  const handleShowNote = async (fileId,originalFileName) => {
     try {
       const response = await instance.get(`/api/file/${fileId}`, {
         responseType: 'blob' 
@@ -338,16 +338,26 @@ async function handleLoadToNoteTab(fileId) {
         throw new Error("파일을 불러오는 중 문제가 발생했습니다.");
       }
   
-      const contentType = response.headers['content-type'];
+      const fileReader = new FileReader();
+      fileReader.onloadend = function(e) {
+        const arr = (new Uint8Array(e.target.result)).subarray(0, 4);
+        let header = '';
+        for(let i = 0; i < arr.length; i++) {
+           header += arr[i].toString(16);
+        }
   
-      if (contentType === 'application/pdf') {
-        const file = new Blob([response.data], { type: 'application/pdf' });
-        const fileUrl = URL.createObjectURL(file);
-        window.open(fileUrl, '_blank');
-      } else {
-        const fileUrl = URL.createObjectURL(response.data);
-        setViewFile(fileUrl);
-      }
+        if (header.startsWith('25504446')) {
+          const file = new Blob([response.data], { type: 'application/pdf' });
+          const fileUrl = URL.createObjectURL(file);
+          window.open(fileUrl, '_blank');
+        } else if (header.startsWith('ffd8')) {
+          const fileUrl = URL.createObjectURL(response.data);
+          setViewImage(fileUrl);
+        } else {
+          alert('지원하지 않는 파일 형식: 다운로드를 이용해 자료를 확인해주세요');
+        }
+      };
+      fileReader.readAsArrayBuffer(response.data);
     } catch (error) {
       console.error("파일을 열어보는 중 오류 발생:", error);
       alert("파일을 열어보는 중 문제가 발생했습니다.");
@@ -408,7 +418,7 @@ async function handleLoadToNoteTab(fileId) {
                         toggleDropdown(material.id);
                       }}
                     >
-                      내보내기
+                      다운로드
                     </NavDropdownOptionUp>
                   ))}
                   <hr />
