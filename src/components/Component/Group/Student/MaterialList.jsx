@@ -358,7 +358,7 @@ async function handleLoadToNoteTab(fileId) {
           setViewImage(fileUrl);
           
         } else {
-          alert('지원하지 않는 파일 형식: 다운로드를 이용해 자료를 확인해주세요.');
+          alert('지원하지 않는 파일: 다운로드를 이용해 자료를 확인해주세요.');
         }
         
       };
