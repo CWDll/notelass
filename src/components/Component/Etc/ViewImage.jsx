@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ViewImage = () => {
+const ViewImage = ({setViewImage,viewImage}) => {
 
     return (
             <div style={{
