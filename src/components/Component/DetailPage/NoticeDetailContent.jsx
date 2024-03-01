@@ -68,10 +68,32 @@ function NoticeDetailContent(noticeId) {
     });
   }
 
+  
+  // 파일 다운로드 함수
+  const downloadFile = async (fileId, originalFileName) => {
+    try {
+      const response = await instance.get(`/api/file/${fileId}`, {
+        responseType: "blob", // 서버로부터 받은 데이터를 Blob으로 처리
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", originalFileName); // 다운로드 파일명 설정
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // 다운로드 후 링크 요소 제거
+      console.log("파일 다운로드 성공:", response);
+    } catch (error) {
+      console.error("파일 다운로드 중 오류 발생:", error);
+      alert("파일을 다운로드하는 중 문제가 발생했습니다.");
+    }
+  };
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
-        <S.FileItem key={index}>
+        <S.FileItem key={index} onClick={() => downloadFile(file.id, file.originalFileName)}>
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>

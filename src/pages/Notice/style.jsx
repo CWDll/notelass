@@ -10,15 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #ccc;
-  }
+
 `;
 
 export const Breadcrumb = styled.div`
