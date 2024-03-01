@@ -112,7 +112,7 @@ function MakeAssignment() {
 
       let response;
       // 수정 API
-      if (info) {
+      if (info.intent == "corr") {
         response = await instance.put(
           `/api/notice/${paramsGroupId}/${info.noticeId}`,
           formData,
@@ -134,6 +134,10 @@ function MakeAssignment() {
           }
         );
       }
+      console.log("asd");
+      console.log("response상태", response.status);
+      console.log("response상태", response);
+
       if (response.status == 201) {
         alert("공지 생성 완료 ! ");
         // 추후 네비게이트 수정 필요
@@ -142,16 +146,66 @@ function MakeAssignment() {
         alert("공지 수정이 완료되었습니다.");
         // 추후 네비게이트 수정 필요
         navigate(-1);
+      } else if (response.status == 204) {
+        alert("!!!");
       }
     } catch (error) {
+      if (info.intent == "corr") {
+        alert("공지가 성공적으로 수정되었습니다.");
+        navigate(-1);
+        return;
+      }
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
+      console.log(response.status);
       // navigate(-1);
 
       // 2024-02-23
       // 현재 수정이 완료되었음에도 Error code: 500 을 반환하며 error가 나오는 현상이 발견됨.
     }
   };
+
+  // 수정 버튼으로 들어왔을 시 데이터 불러오기
+  useEffect(() => {
+    const fetchGroups = async () => {
+      if (info.intent == "corr") {
+        try {
+          const res = await instance.get(
+            `/api/notice/detail?noticeId=${info.noticeId}`
+          );
+          if (res.status === 200) {
+            setAssignmentName(res.data.result.title);
+            setAssignmentDesc(res.data.result.content);
+            setFiles(res.data.result.files);
+          } else {
+            console.log("테스트 실패");
+          }
+        } catch (error) {
+          console.error("fetchGroups에서 오류 발생", error);
+        }
+      } else {
+        try {
+          const response = await instance.get(`/api/group`);
+          if (response.status === 200 && Array.isArray(response.data.result)) {
+            const matched = response.data.result.find(
+              (group) => group.id.toString() === paramsGroupId
+            );
+            if (matched) {
+              setMatchedGroup(matched);
+              console.log("Matched 그룹 정보:", matched);
+            } else {
+              console.error("Matching group not found");
+            }
+          } else {
+            console.error("그룹 목록을 불러오는데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("그룹 목록 요청 중 오류가 발생했습니다:", error);
+        }
+      }
+    };
+    fetchGroups();
+  }, [paramsGroupId]);
 
   //강의자료 생성 함수
   const createMaterial = async () => {
@@ -245,8 +299,6 @@ function MakeAssignment() {
             alt="chevron_left"
           />
           <S.BoldTitle>
-            {/* {matchedGroup &&
-            `${matchedGroup.school} ${matchedGroup.grade}학년 ${matchedGroup.classNum}반 ${matchedGroup.subject}`} */}
             {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
             {info.info.subject}
           </S.BoldTitle>
@@ -344,7 +396,7 @@ function MakeAssignment() {
               <S.FileContainer>{renderFileList()}</S.FileContainer>
               <S.Foot>
                 <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                  {info ? "수정하기" : "생성하기"}
+                  {info.intent === "corr" ? "수정하기" : "생성하기"}
                 </S.SubmitBtn>
 
                 <S.CancelBtn type="button" onClick={handleHeaderClick}>
