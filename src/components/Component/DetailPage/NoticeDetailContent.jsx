@@ -89,9 +89,7 @@ function NoticeDetailContent(noticeId) {
         <S.FileContainer>{renderFileList()}</S.FileContainer>
         <S.GrayButton
           onClick={() => {
-            deleteNotice(groupId, noticeId.noticeId, () =>
-              navigate(-1)
-            );
+            deleteNotice(groupId, noticeId.noticeId, () => navigate(-1));
           }}
         >
           삭제

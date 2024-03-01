@@ -143,11 +143,6 @@ function MakeAssignment() {
         // 추후 네비게이트 수정 필요
         navigate(-1);
       }
-
-      // 응답 처리
-      console.log("공지 생성 완료:", response.data);
-      alert("공지가 성공적으로 생성되었습니다.");
-      handleHeaderClick();
     } catch (error) {
       console.error("공지 생성 실패:", error);
       alert("공지 생성에 실패했습니다.");
