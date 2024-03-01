@@ -53,7 +53,7 @@ export const SmallText = styled(Content)`
 // NoticeDetailContent style
 export const AssigmentCreateForm = styled.div`
   width: 684px;
-  height: 800px;
+  max-height: 800px;
   background-color: white;
   dislay: flex;
   flex-direction: column;
