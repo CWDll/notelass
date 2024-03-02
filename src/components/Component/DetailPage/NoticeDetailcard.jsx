@@ -42,7 +42,10 @@ function NoticeDetailcard({
   return (
     <S.ItemWrapper onClick={MoveToDetail}>
       <S.ContentContainer>
-        <S.Title>{title}</S.Title>
+        <S.Title>
+          {noticeId ? "[공지] " : "[학습자료] "}
+          {title}
+        </S.Title>
         <S.Content>{content}</S.Content>
       </S.ContentContainer>
       <S.ItemInfo>
