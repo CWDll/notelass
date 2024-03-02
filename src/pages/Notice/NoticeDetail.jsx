@@ -12,6 +12,7 @@ function NoticeDetail() {
   // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
   console.log("ND의 info:", info);
+  console.log("ㅁㄴㅇ");
 
   //뒤로가기
   function BackButton() {
@@ -24,7 +25,10 @@ function NoticeDetail() {
         <S.Img alt="chevron_left" />
         <S.BoldText>공지/학습자료</S.BoldText>
       </S.Breadcrumb>
-      <NoticeDetailContent noticeId={noticeId} info={info} />
+      <NoticeDetailContent
+        noticeId={info.noticeId}
+        lectureMaterialId={info.lectureMaterialId}
+      />
     </S.Container>
   );
 }
