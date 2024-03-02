@@ -42,7 +42,7 @@ function NoticeDetailList() {
     <S.Container>
       <S.Breadcrumb>
         <S.Img alt="chevron_left" onClick={BackButton} />
-        <S.BoldText onClick={BackButton}>공지/강의자료</S.BoldText>
+        <S.BoldText onClick={BackButton}>공지/학습자료</S.BoldText>
       </S.Breadcrumb>
       <S.TopBar>
         <S.BoldText>
