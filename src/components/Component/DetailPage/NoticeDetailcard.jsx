@@ -10,12 +10,12 @@ function NoticeDetailcard({
   groupId,
   // id,
   noticeId,
-  lectureMaterialId,
+  materialId,
   info,
 }) {
-  console.log("check Ids");
-  console.log(noticeId);
-  console.log(lectureMaterialId);
+  //console.log("check Ids");
+  // console.log(noticeId);
+  console.log("materialid",materialId);
 
   // console.log("반정보 과목정보 info:", info);
   const navigate = useNavigate();
@@ -24,9 +24,9 @@ function NoticeDetailcard({
       navigate(`/NoticeDetail/${groupId}/${noticeId}`, {
         state: { info: info, noticeId: noticeId },
       });
-    } else if (lectureMaterialId) {
-      navigate(`/NoticeDetail/${groupId}/${lectureMaterialId}`, {
-        state: { info: info, lectureMaterialId: lectureMaterialId },
+    } else if (materialId) {
+      navigate(`/NotesDetail/${groupId}/${materialId}`, {
+        state: { info: info, materialId: materialId },
       });
     } else alert("Please select");
   };

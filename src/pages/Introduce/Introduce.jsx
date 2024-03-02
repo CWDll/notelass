@@ -508,7 +508,7 @@ function Introduce() {
       <a href="https://notelass.site/showcase/">
         <E5 src={e5} alt="e5" />
       </a>
-      <E6 src={e6} alt="e6" />
+      {/* <E6 src={e6} alt="e6" /> */}
       
 
       <F1 src={f1} alt="f1" />

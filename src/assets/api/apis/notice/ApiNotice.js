@@ -1,3 +1,4 @@
+import { Dashboard } from "@mui/icons-material";
 import instance from "../../axios";
 
 // 모든 그룹 공지 가져오기
