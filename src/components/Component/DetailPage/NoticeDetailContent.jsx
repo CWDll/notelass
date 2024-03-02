@@ -24,6 +24,11 @@ function NoticeDetailContent(noticeId) {
 
   const { role } = useContext(RoleContext);
 
+  const location = useLocation();
+  // 학교, 학년, 반, 과목 들어있는 데이터
+  const info = location.state;
+  console.log("ND의 info in NDC:", info);
+
   useEffect(() => {
     const getStudentList = async () => {
       try {
@@ -49,18 +54,13 @@ function NoticeDetailContent(noticeId) {
     getStudentList();
   }, [noticeId]);
 
-  const location = useLocation();
-  // 학교, 학년, 반, 과목 들어있는 데이터
-  const info = location.state;
-  console.log("ND의 info in NDC:", info);
-
   const navigate = useNavigate();
   function toReWrite() {
     console.log("마마", teacher);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,
-        info: info,
+        info: info.info,
         creDate: creDate,
         teacher: teacher,
         intent: "corr",
@@ -83,7 +83,9 @@ function NoticeDetailContent(noticeId) {
   return (
     <S.RowDiv>
       <S.AssigmentCreateForm>
-        <S.Title>[공지] {title}</S.Title>
+        <S.Title>
+          {info.noticeId ? "[공지]" : "[학습자료]"} {title}
+        </S.Title>
         <S.Line />
         <S.ContentBox>
           <S.Content>{content}</S.Content>
@@ -124,7 +126,7 @@ function NoticeDetailContent(noticeId) {
         <NoticeInfo
           noticeId={noticeId}
           teacher={teacher}
-          info={info}
+          info={info.info}
           creDate={creDate}
         />
       </A.AssignmentSettingForm>

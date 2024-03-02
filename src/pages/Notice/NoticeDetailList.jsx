@@ -84,15 +84,17 @@ function NoticeDetailList() {
             info={info}
           />
         ))} */}
-        {dashboards.map((notice) => (
+        {dashboards.map((notice, index) => (
           <NoticeDetailcard
-            key={notice.id}
+            key={index}
             title={notice.title}
             content={notice.content}
             teacher={notice.teacherName}
             createdDate={notice.createdDate}
             groupId={groupId}
-            id={notice.id}
+            // id={notice.id}
+            noticeId={notice.noticeId}
+            lectureMaterialId={notice.lectureMaterialId}
             info={info}
           />
         ))}
