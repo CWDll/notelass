@@ -11,7 +11,7 @@ import NoticeInfo from "../Notice/NoticeInfo";
 
 import RoleContext from "../../../RoleContext";
 
-function NoteDetailContent(noticeId) {
+function NoteDetailContent(materialId ) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
@@ -20,15 +20,16 @@ function NoteDetailContent(noticeId) {
   const [groupId, setGroupId] = useState("");
   // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
-  console.log("sd", noticeId);
+  console.log("sd", materialId);
+
 
   const { role } = useContext(RoleContext);
 
   useEffect(() => {
-    const getStudentList = async () => {
+    const getmaterial = async () => {
       try {
         const res = await instance.get(
-          `/api/notice/detail?noticeId=${noticeId.noticeId}`
+          `/api/material/detail?materialId=${materialId.materialId}`
         );
 
         if (res.status === 200) {
@@ -46,20 +47,20 @@ function NoteDetailContent(noticeId) {
         console.error("테스트 에러", error);
       }
     };
-    getStudentList();
-  }, [noticeId]);
+    getmaterial();
+  }, [materialId]);
 
   const location = useLocation();
   // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
-  console.log("ND의 info in NDC:", info);
+  console.log("ND의 info in materialId:", info);
 
   const navigate = useNavigate();
   function toReWrite() {
     console.log("마마", teacher);
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
-        noticeId: noticeId.noticeId,
+        materialId: materialId.materialId,
         info: info,
         creDate: creDate,
         teacher: teacher,
@@ -105,7 +106,7 @@ function NoteDetailContent(noticeId) {
   return (
     <S.RowDiv>
       <S.AssigmentCreateForm>
-        <S.Title>[공지] {title}</S.Title>
+        <S.Title>[학습자료] {title}</S.Title>
         <S.Line />
         <S.ContentBox>
           <S.Content>{content}</S.Content>
@@ -113,20 +114,19 @@ function NoteDetailContent(noticeId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-        {role === "TEACHER" ? (
+      
           <>
             <S.GrayButton
-              onClick={() => {
-                deleteNotice(groupId, noticeId.noticeId, () => navigate(-1));
-              }}
+              // onClick={() => {
+              //   deleteNotice(groupId, materialId.materialId, () => navigate(-1));
+              // }}
+              style={{marginleft: "200px"}}
             >
               삭제
             </S.GrayButton>
-            <S.Button onClick={toReWrite}>수정하기</S.Button>
+            {/* <S.Button onClick={toReWrite}>수정하기</S.Button> */}
           </>
-        ) : (
-          <></>
-        )}
+       
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
@@ -136,21 +136,22 @@ function NoteDetailContent(noticeId) {
               : selectedButton === "공지"
               ? "공지 설정"
               : "강의자료 설정"} */}
-          공지 설정
+          학습자료 설정
         </A.CreateTitle>
         {/* {selectedButton === "과제" ? (
             <AssignInfo />
           ) : (
             <NoticeInfo matchedGroup={matchedGroup} />
           )} */}
-        <NoticeInfo
-          noticeId={noticeId}
+        {/* <NoticeInfo
+          materialId={materialId}
           teacher={teacher}
           info={info}
           creDate={creDate}
-        />
+        /> */}
       </A.AssignmentSettingForm>
     </S.RowDiv>
+    
   );
 }
 

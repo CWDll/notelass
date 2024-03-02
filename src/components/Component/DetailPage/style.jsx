@@ -122,7 +122,7 @@ export const FileIcon = styled.img`
 
 export const FileContainer = styled.div`
   display: flex;
-  height: 200px;
+  height: 110px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
