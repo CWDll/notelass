@@ -29,6 +29,7 @@ function MakeAssignment() {
   const [selectedButton, setSelectedButton] = useState("공지");
   // 파일 상태 추가
   const [files, setFiles] = useState([]);
+  const [intent, setIntent] = useState("notice");
 
   // Header를 클릭할 때 실행할 핸들러
   const handleHeaderClick = () => {
@@ -99,6 +100,7 @@ function MakeAssignment() {
       const noticeDto = JSON.stringify({
         title: assignmentName,
         content: assignmentDesc,
+        removeFileIds: [],
       });
       const blob = new Blob([noticeDto], {
         type: "application/json",
@@ -183,7 +185,24 @@ function MakeAssignment() {
         } catch (error) {
           console.error("fetchGroups에서 오류 발생", error);
         }
-      } else {
+      } else if (info.intent == "material") { // 학습자료 수정인 경우
+        try {
+          const res = await instance.get(
+            `/api/material/detail?materialId=${info.materialId}`
+          );
+          if (res.status === 200) {
+            setSelectedButton("학습자료"); // 학습자료로 설정
+            setAssignmentName(res.data.result.title);
+            setAssignmentDesc(res.data.result.content);
+            setFiles(res.data.result.files);
+           
+          } else {
+            console.log("데이터를 불러오는데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("fetchGroups에서 오류 발생", error);
+        }
+      }else {
         try {
           const response = await instance.get(`/api/group`);
           if (response.status === 200 && Array.isArray(response.data.result)) {
@@ -229,6 +248,7 @@ function MakeAssignment() {
       const materialDto = JSON.stringify({
         title: assignmentName,
         content: assignmentDesc,
+        removeFileIds: [],
       });
 
       // JSON을 파일로 변환하여 FormData에 추가
@@ -239,9 +259,21 @@ function MakeAssignment() {
       files.forEach((file) => {
         formData.append(`file`, file);
       });
-
+      let response;
+      // 수정 API
+      if (info.intent == "material") {
+        response = await instance.put(
+          `/api/material/${paramsGroupId}/${info.materialId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }else {
       // API 요청
-      const response = await instance.post(
+      response = await instance.post(
         `/api/material/${paramsGroupId}`,
         formData,
         {
@@ -250,14 +282,33 @@ function MakeAssignment() {
           },
         }
       );
-
+      }
       // 응답 처리
-      console.log("학습자료 생성 완료:", response.data);
-      alert("학습자료가 성공적으로 생성되었습니다.");
-      handleHeaderClick();
+      console.log("asd");
+      console.log("response상태", response.status);
+      console.log("response상태", response);
+
+      if (response.status == 201) {
+        alert("학습자료가 성공적으로 생성되었습니다. ");
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
+      } else if (response.status == 200) {
+        alert("학습자료 수정이 완료되었습니다.");
+        console.log("수정된 학습자료:", response.data);
+        // 추후 네비게이트 수정 필요
+        navigate(-1);
+      } else if (response.status == 204) {
+        alert("!!!");
+      }
     } catch (error) {
+      if (info.intent == "material") {
+        alert("학습자료가 성공적으로 수정되었습니다.");
+        navigate(-1);
+        return;
+      }
       console.error("학습자료 생성 실패:", error);
       alert("학습자료 생성에 실패했습니다.");
+      console.log(response.status);
     }
   };
 
@@ -277,7 +328,6 @@ function MakeAssignment() {
             <S.FileIcon src={FileEarmarkZip} alt="file icon" />
             <S.FileName>{file.name}</S.FileName>
             <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-
             <S.Exit
               src={exit}
               alt="exit"
@@ -288,6 +338,64 @@ function MakeAssignment() {
       ))}
     </S.FileList>
   );
+
+
+
+const handleEdit = async () => {
+  
+  const formData = new FormData();
+
+  // 제목과 내용이 공백인지 확인
+  if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+    alert("제목과 내용을 입력해주세요.");
+    return;
+  }
+  
+  // JSON 데이터 준비
+  const materialDto = {
+    title: assignmentName,
+    content: assignmentDesc,
+    removeFileIds: [] // 파일 삭제 ID 목록을 빈 배열로 초기화
+  };
+
+  const blob = new Blob([JSON.stringify(materialDto)], {
+    type: "application/json",
+  });
+  formData.append("materialDto", blob);
+
+  // 파일 데이터 추가
+  files.forEach((file, index) => {
+    formData.append(`file`, file);
+  });
+
+  try {
+    const response = await instance.put(
+      `/api/material/${paramsGroupId}/${info.materialId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      alert("강의자료 수정이 완료되었습니다.");
+      navigate(-1);
+    } else {
+      console.log("response 상태", response.status);
+      console.log("response", response);
+    }
+  } catch (error) {
+    console.error("강의자료 수정 실패:", error);
+    alert("강의자료 수정에 실패했습니다.");
+  }
+};
+
+
+
+
+
 
   return (
     <S.Wrap>
@@ -395,9 +503,11 @@ function MakeAssignment() {
 
               <S.FileContainer>{renderFileList()}</S.FileContainer>
               <S.Foot>
-                <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                  {info.intent === "corr" ? "수정하기" : "생성하기"}
-                </S.SubmitBtn>
+              {(info.intent === "corr" || info.intent === "material") ? (
+                <S.SubmitBtn type="submit" onClick={handleEdit}>수정하기</S.SubmitBtn>
+              ) : (
+                <S.SubmitBtn type="submit" onClick={handleSubmit}>생성하기</S.SubmitBtn>
+              )}
 
                 <S.CancelBtn type="button" onClick={handleHeaderClick}>
                   취소

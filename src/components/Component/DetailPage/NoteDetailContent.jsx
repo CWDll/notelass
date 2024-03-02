@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation,useParams } from "react-router-dom";
 import * as S from "./style";
 import * as A from "../../../pages/Style/AssignmentStyle";
 import instance from "../../../assets/api/axios";
-import { deleteNotice } from "../../../assets/api/apis/notice/ApiNotice";
+import { deleteMaterial } from "../../../assets/api/apis/note/ApiMaterial";
 
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
@@ -17,10 +17,13 @@ function NoteDetailContent(materialId ) {
   const [files, setFiles] = useState([]);
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
-  const [groupId, setGroupId] = useState("");
+  const [group, setGroup] = useState("");
   // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", materialId);
+
+  const { groupId} = useParams();
+  console.log("groupid", groupId);
 
 
   const { role } = useContext(RoleContext);
@@ -34,7 +37,7 @@ function NoteDetailContent(materialId ) {
 
         if (res.status === 200) {
           console.log("머지", res.data.result);
-          setGroupId(res.data.result.groupId);
+          setGroup(res.data.result.groupId);
           setTitle(res.data.result.title);
           setContent(res.data.result.content);
           setFiles(res.data.result.files);
@@ -64,7 +67,7 @@ function NoteDetailContent(materialId ) {
         info: info,
         creDate: creDate,
         teacher: teacher,
-        intent: "corr",
+        intent: "material",
       },
     });
   }
@@ -114,18 +117,20 @@ function NoteDetailContent(materialId ) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-      
+        {role === "TEACHER" ? (
           <>
             <S.GrayButton
-              // onClick={() => {
-              //   deleteNotice(groupId, materialId.materialId, () => navigate(-1));
-              // }}
-              style={{marginleft: "200px"}}
+              onClick={() => {
+                deleteMaterial(groupId, materialId.materialId, () => navigate(-1));
+              }}
             >
               삭제
             </S.GrayButton>
-            {/* <S.Button onClick={toReWrite}>수정하기</S.Button> */}
+            <S.Button onClick={toReWrite}>수정하기</S.Button>
           </>
+        ) : (
+          <></>
+        )}
        
       </S.AssigmentCreateForm>
 
