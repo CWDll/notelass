@@ -299,8 +299,8 @@ function MakeAssignment() {
             alt="chevron_left"
           />
           <S.BoldTitle>
-            {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
-            {info.info.subject}
+            {/* {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
+            {info.info.subject} */}
           </S.BoldTitle>
         </S.Header>
 
