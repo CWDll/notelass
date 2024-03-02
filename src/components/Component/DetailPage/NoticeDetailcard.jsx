@@ -8,13 +8,27 @@ function NoticeDetailcard({
   teacher,
   createdDate,
   groupId,
-  id,
+  // id,
+  noticeId,
+  lectureMaterialId,
   info,
 }) {
-  console.log("info입니다 !!:", info);
+  console.log("check Ids");
+  console.log(noticeId);
+  console.log(lectureMaterialId);
+
+  // console.log("반정보 과목정보 info:", info);
   const navigate = useNavigate();
   const MoveToDetail = () => {
-    navigate(`/NoticeDetail/${groupId}/${id}`, { state: info });
+    if (noticeId) {
+      navigate(`/NoticeDetail/${groupId}/${noticeId}`, {
+        state: { info: info, noticeId: noticeId },
+      });
+    } else if (lectureMaterialId) {
+      navigate(`/NoticeDetail/${groupId}/${lectureMaterialId}`, {
+        state: { info: info, lectureMaterialId: lectureMaterialId },
+      });
+    } else alert("Please select");
   };
 
   // 날짜 형식을 원하는 형태로 변환하는 함수 (예: '2024-02-04T12:00:00' -> '2024.02.04')
@@ -28,7 +42,10 @@ function NoticeDetailcard({
   return (
     <S.ItemWrapper onClick={MoveToDetail}>
       <S.ContentContainer>
-        <S.Title>{title}</S.Title>
+        <S.Title>
+          {noticeId ? "[공지] " : "[학습자료] "}
+          {title}
+        </S.Title>
         <S.Content>{content}</S.Content>
       </S.ContentContainer>
       <S.ItemInfo>

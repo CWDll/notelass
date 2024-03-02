@@ -49,3 +49,22 @@ export const deleteNotice = async (groupId, noticeId, onSuccess) => {
     console.error("공지 삭제에서 에러 발생", error);
   }
 };
+
+// 모든 그룹 공지 가져오기
+export const getDashboard = async (onSuccess) => {
+  try {
+    const res = await instance.get(`/api/dashboard`);
+
+    if (res.status === 200 && res.data) {
+      console.log("dashboard함수");
+      console.log(res.data.result);
+      onSuccess(res.data.result);
+    } else if (res.status === 400) {
+      alert("dashboard 가져오는 데 실패했습니다.");
+    } else {
+      console.log("dashboard 가져오는 데 문제가 발생했습니다.");
+    }
+  } catch (error) {
+    console.error("dashboard 가져오기 실패", error);
+  }
+};
