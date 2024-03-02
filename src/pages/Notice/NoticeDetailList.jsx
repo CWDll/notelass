@@ -4,6 +4,7 @@ import * as S from "./style";
 import {
   getAllNotice,
   getGroupNotice,
+  getDashboard,
 } from "../../assets/api/apis/notice/ApiNotice";
 import NoticeDetailcard from "../../components/Component/DetailPage/NoticeDetailcard";
 
@@ -11,6 +12,7 @@ function NoticeDetailList() {
   const navigate = useNavigate();
   const { groupId } = useParams(); // groupId 매개변수 받기
   const [notices, setNotices] = useState([]);
+  const [dashboards, setDashboards] = useState([]);
   const [searchCategory, setSearchCategory] = useState("제목");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,6 +27,8 @@ function NoticeDetailList() {
     } else {
       getAllNotice(setNotices);
     }
+
+    getDashboard(setDashboards);
   }, []);
 
   //뒤로가기
@@ -46,7 +50,7 @@ function NoticeDetailList() {
       </S.Breadcrumb>
       <S.TopBar>
         <S.BoldText>
-          총 <S.ColoredBoldText>{notices.length}</S.ColoredBoldText>개
+          총 <S.ColoredBoldText>{dashboards.length}</S.ColoredBoldText>개
         </S.BoldText>
         <S.SearchInput>
           <S.DropdownContainer>
@@ -68,12 +72,24 @@ function NoticeDetailList() {
         </S.SearchInput>
       </S.TopBar>
       <S.ItemsContainer>
-        {notices.map((notice) => (
+        {/* {notices.map((notice) => (
           <NoticeDetailcard
             key={notice.id}
             title={notice.title}
             content={notice.content}
             teacher={notice.teacher}
+            createdDate={notice.createdDate}
+            groupId={groupId}
+            id={notice.id}
+            info={info}
+          />
+        ))} */}
+        {dashboards.map((notice) => (
+          <NoticeDetailcard
+            key={notice.id}
+            title={notice.title}
+            content={notice.content}
+            teacher={notice.teacherName}
             createdDate={notice.createdDate}
             groupId={groupId}
             id={notice.id}

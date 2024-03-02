@@ -11,7 +11,7 @@ function NoticeDetailcard({
   id,
   info,
 }) {
-  console.log("info입니다 !!:", info);
+  console.log("반정보 과목정보 info:", info);
   const navigate = useNavigate();
   const MoveToDetail = () => {
     navigate(`/NoticeDetail/${groupId}/${id}`, { state: info });
