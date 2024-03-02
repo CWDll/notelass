@@ -248,7 +248,7 @@ function MakeAssignment() {
       const materialDto = JSON.stringify({
         title: assignmentName,
         content: assignmentDesc,
-        removeFileIds: [],
+         removeFileIds: [],
       });
 
       // JSON을 파일로 변환하여 FormData에 추가
@@ -294,7 +294,6 @@ function MakeAssignment() {
         navigate(-1);
       } else if (response.status == 200) {
         alert("학습자료 수정이 완료되었습니다.");
-        console.log("수정된 학습자료:", response.data);
         // 추후 네비게이트 수정 필요
         navigate(-1);
       } else if (response.status == 204) {
@@ -338,64 +337,6 @@ function MakeAssignment() {
       ))}
     </S.FileList>
   );
-
-
-
-const handleEdit = async () => {
-  
-  const formData = new FormData();
-
-  // 제목과 내용이 공백인지 확인
-  if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
-    alert("제목과 내용을 입력해주세요.");
-    return;
-  }
-  
-  // JSON 데이터 준비
-  const materialDto = {
-    title: assignmentName,
-    content: assignmentDesc,
-    removeFileIds: [] // 파일 삭제 ID 목록을 빈 배열로 초기화
-  };
-
-  const blob = new Blob([JSON.stringify(materialDto)], {
-    type: "application/json",
-  });
-  formData.append("materialDto", blob);
-
-  // 파일 데이터 추가
-  files.forEach((file, index) => {
-    formData.append(`file`, file);
-  });
-
-  try {
-    const response = await instance.put(
-      `/api/material/${paramsGroupId}/${info.materialId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    if (response.status === 200) {
-      alert("강의자료 수정이 완료되었습니다.");
-      navigate(-1);
-    } else {
-      console.log("response 상태", response.status);
-      console.log("response", response);
-    }
-  } catch (error) {
-    console.error("강의자료 수정 실패:", error);
-    alert("강의자료 수정에 실패했습니다.");
-  }
-};
-
-
-
-
-
 
   return (
     <S.Wrap>
@@ -503,11 +444,9 @@ const handleEdit = async () => {
 
               <S.FileContainer>{renderFileList()}</S.FileContainer>
               <S.Foot>
-              {(info.intent === "corr" || info.intent === "material") ? (
-                <S.SubmitBtn type="submit" onClick={handleEdit}>수정하기</S.SubmitBtn>
-              ) : (
-                <S.SubmitBtn type="submit" onClick={handleSubmit}>생성하기</S.SubmitBtn>
-              )}
+              <S.SubmitBtn type="submit" onClick={handleSubmit}>
+                {(info.intent === "corr" || info.intent === "material") ? "수정하기" : "생성하기"}
+              </S.SubmitBtn>
 
                 <S.CancelBtn type="button" onClick={handleHeaderClick}>
                   취소
