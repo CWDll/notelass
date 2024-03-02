@@ -368,6 +368,10 @@ async function handleLoadToNoteTab(fileId) {
       alert("파일을 열어보는 중 문제가 발생했습니다.");
     } 
   };
+
+  const ShowNote = (materialId) => {
+    navigate(`/NotesDetail/${id}/${materialId}`);
+  };
  
 
   return (
@@ -377,7 +381,7 @@ async function handleLoadToNoteTab(fileId) {
         <Title>학습 자료</Title>
         <MainContainer>
           {materials.map((material) => (
-            <SubjectBody key={material.id}>
+            <SubjectBody key={material.id} onClick={() => ShowNote(material.id)}>
               <PaperImg src={paper} alt="paper" />
               <SubjectContainer>
                 <BoldText>

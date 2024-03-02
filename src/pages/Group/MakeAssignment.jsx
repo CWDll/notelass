@@ -80,7 +80,7 @@ function MakeAssignment() {
 
     if (selectedButton === "공지") {
       await createNotice();
-    } else if (selectedButton === "강의자료") {
+    } else if (selectedButton === "학습자료") {
       await createMaterial();
     }
   };
@@ -252,12 +252,12 @@ function MakeAssignment() {
       );
 
       // 응답 처리
-      console.log("강의자료 생성 완료:", response.data);
-      alert("강의자료가 성공적으로 생성되었습니다.");
+      console.log("학습자료 생성 완료:", response.data);
+      alert("학습자료가 성공적으로 생성되었습니다.");
       handleHeaderClick();
     } catch (error) {
-      console.error("강의자료 생성 실패:", error);
-      alert("강의자료 생성에 실패했습니다.");
+      console.error("학습자료 생성 실패:", error);
+      alert("학습자료 생성에 실패했습니다.");
     }
   };
 
@@ -299,8 +299,8 @@ function MakeAssignment() {
             alt="chevron_left"
           />
           <S.BoldTitle>
-            {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
-            {info.info.subject}
+            {/* {info.info.school} {info.info.grade}학년 {info.info.classNum}반{" "}
+            {info.info.subject} */}
           </S.BoldTitle>
         </S.Header>
 
@@ -312,7 +312,7 @@ function MakeAssignment() {
               <S.CreateTitle>공지/학습자료</S.CreateTitle>
               <S.Title>
                 {/* {["과제", "공지", "강의자료"].map((value, index) => ( */}
-                {["공지", "강의자료"].map((value, index) => (
+                {["공지", "학습자료"].map((value, index) => (
                   <S.Btn
                     key={value}
                     className={index === 0 ? "firstButton" : ""}
@@ -331,7 +331,7 @@ function MakeAssignment() {
                 : selectedButton === "공지"
                 ? "공지 제목"
                 : "강의자료 제목"} */}
-                  {selectedButton === "강의자료"
+                  {selectedButton === "학습자료"
                     ? "학습자료 제목"
                     : "공지 제목"}
                 </S.SmallTitle>
