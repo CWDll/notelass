@@ -404,12 +404,16 @@ function GroupDetailClass() {
 
   // 공지사항 목록 조회 GET 함수
   const [notices, setNotices] = useState([]);
+  const [nId, setNId] = useState("");
 
   const fetchNotices = async () => {
     try {
       const response = await instance.get(`/api/notice/${id}`);
       if (response.data.code === 200) {
         setNotices(response.data.result);
+        response.data.result.forEach(notice => {
+          console.log("아이디:", notice.id);
+        });
 
         console.log("공지사항 목록 조회 성공", response.data.result);
       } else {
@@ -424,7 +428,8 @@ function GroupDetailClass() {
     fetchNotices();
   }, [id]);
 
-  const ShowNotices = (noticeId) => {
+
+  const ShowNotices = (id ,noticeId) => {
     navigate(`/NoticeDetail/${id}/${noticeId}`);
   };
 
@@ -561,7 +566,7 @@ function GroupDetailClass() {
                     >
                       <NoticeContent
                         key={notice.id}
-                        onClick={() => ShowNotices(notice.id)}
+                        onClick={() => ShowNotices(id,notice.id)}
                       >
                         <NoticeImg
                           src={notice.unread ? envelope : envelopeOpen} // 조건부 연산자 사용

@@ -148,12 +148,12 @@ function NoteDetailContent(materialId ) {
           ) : (
             <NoticeInfo matchedGroup={matchedGroup} />
           )} */}
-        {/* <NoticeInfo
+         <NoticeInfo
           materialId={materialId}
           teacher={teacher}
           info={info}
           creDate={creDate}
-        /> */}
+        /> 
       </A.AssignmentSettingForm>
     </S.RowDiv>
     
