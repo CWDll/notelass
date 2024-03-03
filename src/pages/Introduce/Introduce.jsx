@@ -27,8 +27,7 @@ import e2 from "src/assets/img/Introduce/e2.png";
 import e3 from "src/assets/img/Introduce/e3.png";
 import e4 from "src/assets/img/Introduce/e4.png";
 import e5 from "src/assets/img/Introduce/e5.png";
-import e6 from "src/assets/img/Introduce/e6.png";
-import e7 from "src/assets/img/Introduce/e7.png";
+
 
 import f1 from "src/assets/img/Introduce/f1.png";
 import f2 from "src/assets/img/Introduce/f2.png";
@@ -235,23 +234,23 @@ const E5 = styled.img`
   position: absolute;
 `;
 
-const E6 = styled.img`
-  width: 947px;
-  height: 143px;
-  top: 4352px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-`;
+// const E6 = styled.img`
+//   width: 947px;
+//   height: 143px;
+//   top: 4352px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   position: absolute;
+// `;
 
-const E7 = styled.img`
-  width: 1483px;
-  height: 32px;
-  top: 4535px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-`;
+// const E7 = styled.img`
+//   width: 1483px;
+//   height: 32px;
+//   top: 4535px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   position: absolute;
+// `;
 
 const F1 = styled.img`
   width: 1202px;
