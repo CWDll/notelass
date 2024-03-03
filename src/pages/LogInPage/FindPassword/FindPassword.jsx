@@ -152,7 +152,7 @@ export default function EmailVerificationAndPassword() {
     // 인증번호 일치 확인
     try {
       const verifiCode = await instance.get(
-        `/api/auth/email/verification?email=${email}&authCode=${certifiNumber}`
+        `/api/auth/password/reset?email=${email}&authCode=${certifiNumber}`
       );
 
       // alert(verifiCode.data.result.result);

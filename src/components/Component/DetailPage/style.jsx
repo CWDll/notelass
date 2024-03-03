@@ -161,3 +161,12 @@ export const GrayButton = styled(Button)`
   color: #9ea4aa;
   margin-right: 20px;
 `;
+
+export const Img = styled.p`
+width: 16px;
+height: 16px;
+margin-left: 440px;
+align-self: center;
+position: absolute;
+z-index: 1;
+`;

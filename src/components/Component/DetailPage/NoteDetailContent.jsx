@@ -8,6 +8,7 @@ import { deleteMaterial } from "../../../assets/api/apis/note/ApiMaterial";
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
 import NoticeInfo from "../Notice/NoticeInfo";
+import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
@@ -97,14 +98,27 @@ function NoteDetailContent(materialId ) {
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
+        <>
         <S.FileItem key={index} onClick={() => downloadFile(file.id, file.originalFileName)}>
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+          <S.Img 
+                src={buttonstyle}
+                alt="buttonstyle"
+                //onClick={() => toggleDropdown(file.id)}
+              />
         </S.FileItem>
+        </>
       ))}
     </S.FileList>
   );
+
+   // 드롭다운 토글 함수
+   const toggleDropdown = (materialId) => {
+    setActiveDropdown((prev) => (prev === materialId ? null : materialId));
+  };
+
 
   return (
     <S.RowDiv>
