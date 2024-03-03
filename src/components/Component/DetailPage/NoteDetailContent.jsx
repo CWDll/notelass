@@ -20,7 +20,7 @@ function NoteDetailContent(materialId ) {
   const [creDate, setCreDate] = useState("");
   const [group, setGroup] = useState("");
   // const [noticeId, setNoticeId] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   console.log("sd", materialId);
 
   const { groupId} = useParams();
@@ -99,14 +99,16 @@ function NoteDetailContent(materialId ) {
     <S.FileList>
       {files.map((file, index) => (
         <>
-        <S.FileItem key={index} onClick={() => downloadFile(file.id, file.originalFileName)}>
+        <S.FileItem key={index} 
+        // onClick={() => downloadFile(file.id, file.originalFileName)}
+        >
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
           <S.Img 
                 src={buttonstyle}
                 alt="buttonstyle"
-                //onClick={() => toggleDropdown(file.id)}
+                onClick={() => toggleDropdown(file.id)}
               />
         </S.FileItem>
         </>
@@ -121,6 +123,7 @@ function NoteDetailContent(materialId ) {
 
 
   return (
+    
     <S.RowDiv>
       <S.AssigmentCreateForm>
         <S.Title>[학습자료] {title}</S.Title>

@@ -538,7 +538,13 @@ function MakeAssignment() {
                 </S.LibraryButton>
               </S.LegInput>
 
-              <S.FileContainer>{renderFileList()}</S.FileContainer>
+              <S.FileContainer>
+                {files.length > 0 ? null : 
+                <span style={{ color: "#9ea4aa", fontFamily: "Pretendard",fontWeight:"700" }}>
+                  PDF와 이미지만 미리보기가 가능하고 나머지 파일은 다운로드만 가능합니다.
+                </span>}
+                {renderFileList()}
+              </S.FileContainer>
               <S.Foot>
                {(info.intent === "corr" || info.intent === "material") ? (
                 <S.SubmitBtn type="submit" onClick={handleEdit}>수정하기</S.SubmitBtn>
