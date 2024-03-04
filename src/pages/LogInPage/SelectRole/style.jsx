@@ -70,3 +70,13 @@ export const NextButton = styled(Button)`
 export const StyledTextField = styled(TextField)`
   width: 380px;
 `;
+
+export const Input = styled.input`
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 6px;
+  background-color: transparent;
+  border: 1px solid #9ea4aa;
+  border-radius: 4px;
+  text-align: center;
+`;

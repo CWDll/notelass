@@ -151,7 +151,7 @@ export default function SelectRole() {
           </FormControl>
           <S.TitleText>반</S.TitleText>
 
-          <FormControl sx={{ width: 120, marginLeft: 1.5, marginRight: 1 }}>
+          {/* <FormControl sx={{ width: 120, marginLeft: 1.5, marginRight: 1 }}>
             <InputLabel id="demo-simple-select-label">번호 선택</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -173,7 +173,13 @@ export default function SelectRole() {
               <MenuItem value={7}>7</MenuItem>
               <MenuItem value={8}>8</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
+          <S.Input
+            placeholder="번호 입력"
+            name="number"
+            value={schoolNumber}
+            onChange={handleNumberChange}
+          />
           <S.TitleText>번호</S.TitleText>
         </S.FlexRow>
       </S.StudentInnerContainer>
