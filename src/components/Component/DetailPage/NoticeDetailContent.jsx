@@ -12,7 +12,7 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
-function NoteDetailContent(noticeId) {
+function NoticeDetailContent(noticeId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
@@ -61,6 +61,7 @@ function NoteDetailContent(noticeId) {
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,
+        lectureMaterialId: noticeId.lectureMaterialId,
         info: info,
         creDate: creDate,
         teacher: teacher,
@@ -69,7 +70,6 @@ function NoteDetailContent(noticeId) {
     });
   }
 
-  
   // 파일 다운로드 함수
   const downloadFile = async (fileId, originalFileName) => {
     try {
@@ -94,17 +94,18 @@ function NoteDetailContent(noticeId) {
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
-        <S.FileItem key={index} 
-        onClick={() => downloadFile(file.id, file.originalFileName)}
+        <S.FileItem
+          key={index}
+          onClick={() => downloadFile(file.id, file.originalFileName)}
         >
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-          <S.Img 
-                src={buttonstyle}
-                alt="buttonstyle"
-                onClick={() => toggleDropdown(file.id)}
-              />
+          <S.Img
+            src={buttonstyle}
+            alt="buttonstyle"
+            onClick={() => toggleDropdown(file.id)}
+          />
         </S.FileItem>
       ))}
     </S.FileList>
@@ -162,4 +163,4 @@ function NoteDetailContent(noticeId) {
   );
 }
 
-export default NoteDetailContent;
+export default NoticeDetailContent;

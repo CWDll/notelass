@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useLocation,useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import * as S from "./style";
 import * as A from "../../../pages/Style/AssignmentStyle";
 import instance from "../../../assets/api/axios";
@@ -12,7 +12,7 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
-function NoteDetailContent(materialId ) {
+function NoteDetailContent(materialId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
@@ -24,9 +24,8 @@ function NoteDetailContent(materialId ) {
   const dropdownRef = React.useRef(null);
   console.log("sd", materialId);
 
-  const { groupId} = useParams();
+  const { groupId } = useParams();
   console.log("groupid", groupId);
-
 
   const { role } = useContext(RoleContext);
 
@@ -74,7 +73,6 @@ function NoteDetailContent(materialId ) {
     });
   }
 
-  
   // 파일 다운로드 함수
   const downloadFile = async (fileId, originalFileName) => {
     try {
@@ -96,8 +94,8 @@ function NoteDetailContent(materialId ) {
     }
   };
 
-   // 드롭다운 토글 함수
-   const toggleDropdown = (fileId) => {
+  // 드롭다운 토글 함수
+  const toggleDropdown = (fileId) => {
     setActiveDropdown((prev) => (prev === fileId ? null : fileId));
   };
 
@@ -124,54 +122,53 @@ function NoteDetailContent(materialId ) {
     <S.FileList>
       {files.map((file, index) => (
         <>
-        <S.FileItem key={index} 
-        // onClick={() => downloadFile(file.id, file.originalFileName)}
-        >
-          <S.FileIcon src={FileEarmarkZip} alt="file icon" />
-          <S.FileName>{file.originalFileName}</S.FileName>
-          <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-          <S.Img 
-                src={buttonstyle}
-                alt="buttonstyle"
-                onClick={() => toggleDropdown(file.id)}
-              />
+          <S.FileItem
+            key={index}
+            // onClick={() => downloadFile(file.id, file.originalFileName)}
+          >
+            <S.FileIcon src={FileEarmarkZip} alt="file icon" />
+            <S.FileName>{file.originalFileName}</S.FileName>
+            <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+            <S.Img
+              src={buttonstyle}
+              alt="buttonstyle"
+              onClick={() => toggleDropdown(file.id)}
+            />
 
-          {activeDropdown === file.id && (
-          <S.NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
-            <S.NavDropdownOptionUp
-              className="dropdown-item"
-              // onClick={() => {
-              //   downloadFile(file.id, file.originalFileName);
-              //   toggleDropdown(file.id);
-              // }}
-            >
-              다운로드
-            </S.NavDropdownOptionUp>
-            <hr />
-            <S.NavDropdownOptionDown
-              className="dropdown-item"
-              // onClick={() => handleLoadToNoteTab(file.id)}
-            >
-              노트탭에 불러오기
-            </S.NavDropdownOptionDown>
-            <hr />
-            <S.NavDropdownOptionDown
-              className="dropdown-item"
-              // onClick={() => handleShowNote(file.id)}
-            >
-              자료 보기
-            </S.NavDropdownOptionDown>
-          </S.NavDropdownBox>
-        )}
-        </S.FileItem>
+            {activeDropdown === file.id && (
+              <S.NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
+                <S.NavDropdownOptionUp
+                  className="dropdown-item"
+                  // onClick={() => {
+                  //   downloadFile(file.id, file.originalFileName);
+                  //   toggleDropdown(file.id);
+                  // }}
+                >
+                  다운로드
+                </S.NavDropdownOptionUp>
+                <hr />
+                <S.NavDropdownOptionDown
+                  className="dropdown-item"
+                  // onClick={() => handleLoadToNoteTab(file.id)}
+                >
+                  노트탭에 불러오기
+                </S.NavDropdownOptionDown>
+                <hr />
+                <S.NavDropdownOptionDown
+                  className="dropdown-item"
+                  // onClick={() => handleShowNote(file.id)}
+                >
+                  자료 보기
+                </S.NavDropdownOptionDown>
+              </S.NavDropdownBox>
+            )}
+          </S.FileItem>
         </>
       ))}
     </S.FileList>
   );
 
-
   return (
-    
     <S.RowDiv>
       <S.AssigmentCreateForm>
         <S.Title>[학습자료] {title}</S.Title>
@@ -186,7 +183,9 @@ function NoteDetailContent(materialId ) {
           <>
             <S.GrayButton
               onClick={() => {
-                deleteMaterial(groupId, materialId.materialId, () => navigate(-1));
+                deleteMaterial(groupId, materialId.materialId, () =>
+                  navigate(-1)
+                );
               }}
             >
               삭제
@@ -196,7 +195,6 @@ function NoteDetailContent(materialId ) {
         ) : (
           <></>
         )}
-       
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
@@ -213,17 +211,14 @@ function NoteDetailContent(materialId ) {
           ) : (
             <NoticeInfo matchedGroup={matchedGroup} />
           )} */}
-         <NoticeInfo
+        <NoticeInfo
           materialId={materialId}
           teacher={teacher}
           info={info}
           creDate={creDate}
-        /> 
+        />
       </A.AssignmentSettingForm>
     </S.RowDiv>
-    
-
-    
   );
 }
 

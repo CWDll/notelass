@@ -120,7 +120,7 @@ export default function Login() {
                       color={"gray"}
                       style={{ marginRight: "30px" }}
                     >
-                      비밀번호 찾기
+                      비밀번호 재설정
                     </Link>
                   </Grid>
                 </S.GridContainer>

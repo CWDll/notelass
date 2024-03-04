@@ -1,14 +1,14 @@
 import instance from "../../axios";
 
 // 인증번호 확인
-export const checkCode = async (email, certifiNumber, onSuccess, onError) => {
+export const checkCode = async (email, certifiNumber) => {
   try {
     const res = await instance.get(
       `/api/auth/password/reset?email=${email}&code=${certifiNumber}`
     );
 
     if (res.status === 200) {
-      onSuccess(); // 인증 성공시 실행될 콜백
+      console.log("올바른 비밀번호 재설정 코드입니다.");
     } else if (res.status === 400) {
       alert("올바르지 않은 비밀번호 재설정 코드입니다.");
     } else {
@@ -16,7 +16,6 @@ export const checkCode = async (email, certifiNumber, onSuccess, onError) => {
     }
   } catch (error) {
     console.error("인증 코드 확인 오류", error);
-    onError(error); // 오류 처리 콜백
   }
 };
 
@@ -25,8 +24,7 @@ export const resetPassword = async (
   email,
   certifiNumber,
   newPassword,
-  onSuccess,
-  onError
+  onSuccess
 ) => {
   try {
     const res = await instance.put(`/api/auth/password/reset`, {
@@ -36,13 +34,14 @@ export const resetPassword = async (
     });
 
     if (res.status === 200) {
-      onSuccess(); // 비밀번호 재설정 성공시 실행될 콜백
+      console.log("reset password 성공");
+      alert("비밀번호가 재설정 되었습니다.");
+      onSuccess();
     } else {
       alert("비밀번호 재설정에 실패하였습니다.");
     }
   } catch (error) {
     console.error("비밀번호 재설정 오류", error);
-    onError(error); // 오류 처리 콜백
   }
 };
 
