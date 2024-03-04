@@ -127,32 +127,34 @@ export function GroupDetailWrite() {
   const [showEvaluationView, setShowEvaluationView] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [fetchStudentBook, setFetchStudentBook] = useState(false);
+  
 
   // // 학생 수첩 관련 함수
-  // // StudentBook 모달을 열기 위한 함수
-  // const openStudentBook = (groupId, userId) => {
-  //   setSelectedGroupId(groupId);
-  //   setSelectedUserId(userId);
-  //   setShowStudentBook(true);
-  // };
+  // StudentBook 모달을 열기 위한 함수
+  const openStudentBook = (groupId, userId) => {
+    setSelectedGroupId(groupId);
+    setSelectedUserId(userId);
+    setShowStudentBook(true);
+  };
 
-  // // StudentBook 모달을 닫기 위한 함수
-  // const closeStudentBook = () => {
-  //   setShowStudentBook(false);
-  // };
+  // StudentBook 모달을 닫기 위한 함수
+  const closeStudentBook = () => {
+    setShowStudentBook(false);
+  };
 
-  // const findGroupAndUserIdByEntryId = (entryId) => {
-  //   console.log(entryId);
-  //   console.log(
-  //     "findGroupAndUserIdByEntryId에서의 studentBookEntries: ",
-  //     studentBookEntries
-  //   );
-  //   const entry = studentBookEntries.find((entry) => entry.id === entryId);
-  //   if (entry) {
-  //     return { groupId: entry.groupId, userId: entry.userId };
-  //   }
-  //   return { groupId: null, userId: null };
-  // };
+  const findGroupAndUserIdByEntryId = (entryId) => {
+    console.log(entryId);
+    console.log(
+      "findGroupAndUserIdByEntryId에서의 studentBookEntries: ",
+      studentBookEntries
+    );
+    const entry = studentBookEntries.find((entry) => entry.id === entryId);
+    if (entry) {
+      return { groupId: entry.groupId, userId: entry.userId };
+    }
+    return { groupId: null, userId: null };
+  };
 
   // 학생 수첩 수정 버튼 클릭 핸들러
   const handleStudentBookEdit = (entryId) => {
@@ -1030,6 +1032,7 @@ export function GroupDetailWrite() {
               propsUserId={selectedUserId}
               contentId={contentId}
               fetchStudentBook={fetchStudentBook}
+              setShowSmallContainer={setShowSmallContainer}
             />
           )}
         </RightContainer>

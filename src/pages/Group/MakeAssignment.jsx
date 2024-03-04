@@ -29,6 +29,7 @@ function MakeAssignment() {
   const [selectedButton, setSelectedButton] = useState("공지");
   // 파일 상태 추가
   const [files, setFiles] = useState([]);
+  const [intent, setIntent] = useState("notice");
 
   // Header를 클릭할 때 실행할 핸들러
   const handleHeaderClick = () => {
@@ -99,6 +100,7 @@ function MakeAssignment() {
       const noticeDto = JSON.stringify({
         title: assignmentName,
         content: assignmentDesc,
+        removeFileIds: [],
       });
       const blob = new Blob([noticeDto], {
         type: "application/json",
@@ -183,7 +185,24 @@ function MakeAssignment() {
         } catch (error) {
           console.error("fetchGroups에서 오류 발생", error);
         }
-      } else {
+      } else if (info.intent == "material") { // 학습자료 수정인 경우
+        try {
+          const res = await instance.get(
+            `/api/material/detail?materialId=${info.materialId}`
+          );
+          if (res.status === 200) {
+            setSelectedButton("학습자료"); // 학습자료로 설정
+            setAssignmentName(res.data.result.title);
+            setAssignmentDesc(res.data.result.content);
+            setFiles(res.data.result.files);
+           
+          } else {
+            console.log("데이터를 불러오는데 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("fetchGroups에서 오류 발생", error);
+        }
+      }else {
         try {
           const response = await instance.get(`/api/group`);
           if (response.status === 200 && Array.isArray(response.data.result)) {
@@ -207,42 +226,117 @@ function MakeAssignment() {
     fetchGroups();
   }, [paramsGroupId]);
 
-  //강의자료 생성 함수
-  const createMaterial = async () => {
-    const formData = new FormData();
-    try {
-      // 제목, 내용, 파일이 공백인지 확인
-      if (
-        assignmentName.trim() === "" ||
-        assignmentDesc.trim() === "" ||
-        files.length === 0
-      ) {
-        let alertMessage = "제목과 내용을 입력해주세요.";
-        if (files.length === 0) {
-          alertMessage = "최소 한 개의 파일을 첨부해주세요.";
+    //강의자료 생성 함수
+    const createMaterial = async () => {
+      const formData = new FormData();
+      try {
+        // 제목, 내용, 파일이 공백인지 확인
+        if (
+          assignmentName.trim() === "" ||
+          assignmentDesc.trim() === "" ||
+          files.length === 0
+        ) {
+          let alertMessage = "제목과 내용을 입력해주세요.";
+          if (files.length === 0) {
+            alertMessage = "최소 한 개의 파일을 첨부해주세요.";
+          }
+          alert(alertMessage);
+          return;
         }
-        alert(alertMessage);
-        return;
+  
+        // JSON 데이터 준비
+        const materialDto = JSON.stringify({
+          title: assignmentName,
+          content: assignmentDesc,
+        });
+  
+        // JSON을 파일로 변환하여 FormData에 추가
+        const dtoFile = new Blob([materialDto], { type: "application/json" });
+        formData.append("materialDto", dtoFile);
+  
+        // 파일 데이터 추가
+        files.forEach((file) => {
+          formData.append(`file`, file);
+        });
+  
+        // API 요청
+        const response = await instance.post(
+          `/api/material/${paramsGroupId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+  
+        // 응답 처리
+        console.log("학습자료 생성 완료:", response.data);
+        alert("학습자료가 성공적으로 생성되었습니다.");
+        handleHeaderClick();
+      } catch (error) {
+        console.error("학습자료 생성 실패:", error);
+        alert("학습자료 생성에 실패했습니다.");
       }
+    };
+  
 
-      // JSON 데이터 준비
-      const materialDto = JSON.stringify({
-        title: assignmentName,
-        content: assignmentDesc,
-      });
+  const handleFileDelete = (index) => {
+    const newFiles = [...files];
+    const removedFileId = newFiles[index].id;
+    newFiles.splice(index, 1); 
+    setFiles(newFiles);
+    setRemovedFileIds(prevIds => [...prevIds, removedFileId]); 
+  };
+  
+  const [removedFileIds, setRemovedFileIds] = useState([]); 
+  
 
-      // JSON을 파일로 변환하여 FormData에 추가
-      const dtoFile = new Blob([materialDto], { type: "application/json" });
-      formData.append("materialDto", dtoFile);
+    // 과제, 공지, 강의자료 생성 POST API
+    const handleEdit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData();
+  
+      if (selectedButton === "공지") {
+        await EditNotice();
+      } else if (selectedButton === "학습자료") {
+        await EditMaterial();
+      }
+    };
+  
+  // 수정 
+  const EditMaterial = async () => {
 
-      // 파일 데이터 추가
-      files.forEach((file) => {
-        formData.append(`file`, file);
-      });
-
-      // API 요청
-      const response = await instance.post(
-        `/api/material/${paramsGroupId}`,
+      
+    const formData = new FormData();
+  
+    // 제목과 내용이 공백인지 확인
+    if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
+    
+    // JSON 데이터 준비
+    const materialDto = {
+      title: assignmentName,
+      content: assignmentDesc,
+      removeFileIds: removedFileIds 
+    };
+  
+    const blob = new Blob([JSON.stringify(materialDto)], {
+      type: "application/json",
+    });
+    formData.append("materialDto", blob);
+  
+    // 파일 데이터 추가
+    files.forEach((file, index) => {
+      formData.append(`file`, file);
+    });
+  
+    try {
+      const response = await instance.put(
+        `/api/material/${paramsGroupId}/${info.materialId}`,
         formData,
         {
           headers: {
@@ -250,24 +344,76 @@ function MakeAssignment() {
           },
         }
       );
-
-      // 응답 처리
-      console.log("학습자료 생성 완료:", response.data);
-      alert("학습자료가 성공적으로 생성되었습니다.");
-      handleHeaderClick();
+  
+      if (response.status === 200) {
+        alert("학습자료 수정이 완료되었습니다.");
+        console.log("수정 완료")
+        navigate(-1);
+      } else {
+        console.log("response 상태", response.status);
+        console.log("response", response);
+      }
     } catch (error) {
-      console.error("학습자료 생성 실패:", error);
-      alert("학습자료 생성에 실패했습니다.");
+      console.error("학습자료 수정 실패:", error);
+      alert("학습자료 수정에 실패했습니다.");
     }
   };
 
-  const handleFileDelete = (index) => {
-    // 삭제할 파일을 제외한 새로운 파일 목록 생성
-    const newFiles = files.filter((file, i) => i !== index);
 
-    // 새로운 파일 목록으로 업데이트
-    setFiles(newFiles);
+  const EditNotice = async () => {
+
+      
+    const formData = new FormData();
+  
+    // 제목과 내용이 공백인지 확인
+    if (assignmentName.trim() === "" || assignmentDesc.trim() === "") {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
+    
+    // JSON 데이터 준비
+    const noticeDto = {
+      title: assignmentName,
+      content: assignmentDesc,
+      removeFileIds: removedFileIds 
+    };
+  
+    const blob = new Blob([JSON.stringify(noticeDto)], {
+      type: "application/json",
+    });
+    formData.append("noticeDto", blob);
+  
+    // 파일 데이터 추가
+    files.forEach((file, index) => {
+      formData.append(`file`, file);
+    });
+  
+    try {
+      const response = await instance.put(
+        `/api/notice/${paramsGroupId}/${info.noticeId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        alert("공지 수정이 완료되었습니다.");
+        console.log("공지 수정 완료")
+        navigate(-1);
+      } else {
+        console.log("response 상태", response.status);
+        console.log("response", response);
+      }
+    } catch (error) {
+      console.error("공지 수정 실패:", error);
+      alert("공지 수정에 실패했습니다.");
+    }
   };
+
+
 
   const renderFileList = () => (
     <S.FileList>
@@ -277,7 +423,6 @@ function MakeAssignment() {
             <S.FileIcon src={FileEarmarkZip} alt="file icon" />
             <S.FileName>{file.name}</S.FileName>
             <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-
             <S.Exit
               src={exit}
               alt="exit"
@@ -393,11 +538,19 @@ function MakeAssignment() {
                 </S.LibraryButton>
               </S.LegInput>
 
-              <S.FileContainer>{renderFileList()}</S.FileContainer>
+              <S.FileContainer>
+                {files.length > 0 ? null : 
+                <span style={{ color: "#9ea4aa", fontFamily: "Pretendard",fontWeight:"700" }}>
+                  PDF와 이미지만 미리보기가 가능하고 나머지 파일은 다운로드만 가능합니다.
+                </span>}
+                {renderFileList()}
+              </S.FileContainer>
               <S.Foot>
-                <S.SubmitBtn type="submit" onClick={handleSubmit}>
-                  {info.intent === "corr" ? "수정하기" : "생성하기"}
-                </S.SubmitBtn>
+               {(info.intent === "corr" || info.intent === "material") ? (
+                <S.SubmitBtn type="submit" onClick={handleEdit}>수정하기</S.SubmitBtn>
+              ) : (
+                <S.SubmitBtn type="submit" onClick={handleSubmit}>생성하기</S.SubmitBtn>
+              )}
 
                 <S.CancelBtn type="button" onClick={handleHeaderClick}>
                   취소

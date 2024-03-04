@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import * as S from "./style";
 import * as A from "../../../pages/Style/AssignmentStyle";
 import instance from "../../../assets/api/axios";
-import { deleteNotice } from "../../../assets/api/apis/notice/ApiNotice";
+import { deleteMaterial } from "../../../assets/api/apis/note/ApiMaterial";
 
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
 import NoticeInfo from "../Notice/NoticeInfo";
+import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
@@ -17,10 +18,14 @@ function NoteDetailContent(materialId) {
   const [files, setFiles] = useState([]);
   const [teacher, setTeacher] = useState("");
   const [creDate, setCreDate] = useState("");
-  const [groupId, setGroupId] = useState("");
+  const [group, setGroup] = useState("");
   // const [noticeId, setNoticeId] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const dropdownRef = React.useRef(null);
   console.log("sd", materialId);
+
+  const { groupId } = useParams();
+  console.log("groupid", groupId);
 
   const { role } = useContext(RoleContext);
 
@@ -33,7 +38,7 @@ function NoteDetailContent(materialId) {
 
         if (res.status === 200) {
           console.log("머지", res.data.result);
-          setGroupId(res.data.result.groupId);
+          setGroup(res.data.result.groupId);
           setTitle(res.data.result.title);
           setContent(res.data.result.content);
           setFiles(res.data.result.files);
@@ -63,7 +68,7 @@ function NoteDetailContent(materialId) {
         info: info,
         creDate: creDate,
         teacher: teacher,
-        intent: "corr",
+        intent: "material",
       },
     });
   }
@@ -89,17 +94,76 @@ function NoteDetailContent(materialId) {
     }
   };
 
+  // 드롭다운 토글 함수
+  const toggleDropdown = (fileId) => {
+    setActiveDropdown((prev) => (prev === fileId ? null : fileId));
+  };
+
+  const handleClickOutside = (event, itemKey) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible((prev) => ({
+        ...prev,
+        [itemKey]: false,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    // 외부 클릭 이벤트 리스너 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // 클린업 함수에서 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
-        <S.FileItem
-          key={index}
-          onClick={() => downloadFile(file.id, file.originalFileName)}
-        >
-          <S.FileIcon src={FileEarmarkZip} alt="file icon" />
-          <S.FileName>{file.originalFileName}</S.FileName>
-          <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
-        </S.FileItem>
+        <>
+          <S.FileItem
+            key={index}
+            // onClick={() => downloadFile(file.id, file.originalFileName)}
+          >
+            <S.FileIcon src={FileEarmarkZip} alt="file icon" />
+            <S.FileName>{file.originalFileName}</S.FileName>
+            <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+            <S.Img
+              src={buttonstyle}
+              alt="buttonstyle"
+              onClick={() => toggleDropdown(file.id)}
+            />
+
+            {activeDropdown === file.id && (
+              <S.NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
+                <S.NavDropdownOptionUp
+                  className="dropdown-item"
+                  // onClick={() => {
+                  //   downloadFile(file.id, file.originalFileName);
+                  //   toggleDropdown(file.id);
+                  // }}
+                >
+                  다운로드
+                </S.NavDropdownOptionUp>
+                <hr />
+                <S.NavDropdownOptionDown
+                  className="dropdown-item"
+                  // onClick={() => handleLoadToNoteTab(file.id)}
+                >
+                  노트탭에 불러오기
+                </S.NavDropdownOptionDown>
+                <hr />
+                <S.NavDropdownOptionDown
+                  className="dropdown-item"
+                  // onClick={() => handleShowNote(file.id)}
+                >
+                  자료 보기
+                </S.NavDropdownOptionDown>
+              </S.NavDropdownBox>
+            )}
+          </S.FileItem>
+        </>
       ))}
     </S.FileList>
   );
@@ -115,18 +179,22 @@ function NoteDetailContent(materialId) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-
-        <>
-          <S.GrayButton
-            // onClick={() => {
-            //   deleteNotice(groupId, materialId.materialId, () => navigate(-1));
-            // }}
-            style={{ marginleft: "200px" }}
-          >
-            삭제
-          </S.GrayButton>
-          {/* <S.Button onClick={toReWrite}>수정하기</S.Button> */}
-        </>
+        {role === "TEACHER" ? (
+          <>
+            <S.GrayButton
+              onClick={() => {
+                deleteMaterial(groupId, materialId.materialId, () =>
+                  navigate(-1)
+                );
+              }}
+            >
+              삭제
+            </S.GrayButton>
+            <S.Button onClick={toReWrite}>수정하기</S.Button>
+          </>
+        ) : (
+          <></>
+        )}
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
@@ -143,12 +211,12 @@ function NoteDetailContent(materialId) {
           ) : (
             <NoticeInfo matchedGroup={matchedGroup} />
           )} */}
-        {/* <NoticeInfo
+        <NoticeInfo
           materialId={materialId}
           teacher={teacher}
           info={info}
           creDate={creDate}
-        /> */}
+        />
       </A.AssignmentSettingForm>
     </S.RowDiv>
   );

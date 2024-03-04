@@ -8,10 +8,11 @@ import { deleteNotice } from "../../../assets/api/apis/notice/ApiNotice";
 import FileEarmarkZip from "../../../assets/FileEarmarkZip.svg";
 import AssignInfo from "../Notice/AssignInfo";
 import NoticeInfo from "../Notice/NoticeInfo";
+import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
-function NoticeDetailContent(noticeId, lectureMaterialId) {
+function NoteDetailContent(noticeId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
@@ -20,66 +21,39 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
   const [groupId, setGroupId] = useState("");
   // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
-  console.log("sd", noticeId, lectureMaterialId);
+  console.log("sd", noticeId);
 
   const { role } = useContext(RoleContext);
+
+  useEffect(() => {
+    const getStudentList = async () => {
+      try {
+        const res = await instance.get(
+          `/api/notice/detail?noticeId=${noticeId.noticeId}`
+        );
+
+        if (res.status === 200) {
+          console.log("머지", res.data.result);
+          setGroupId(res.data.result.groupId);
+          setTitle(res.data.result.title);
+          setContent(res.data.result.content);
+          setFiles(res.data.result.files);
+          setTeacher(res.data.result.teacher);
+          setCreDate(res.data.result.createdDate);
+        } else {
+          console.log("테스트 실패");
+        }
+      } catch (error) {
+        console.error("테스트 에러", error);
+      }
+    };
+    getStudentList();
+  }, [noticeId]);
 
   const location = useLocation();
   // 학교, 학년, 반, 과목 들어있는 데이터
   const info = location.state;
   console.log("ND의 info in NDC:", info);
-
-  const getMaterialtList = async () => {
-    try {
-      const res = await instance.get(
-        `/api/material/detail?materialId=${noticeId.lectureMaterialId}`
-      );
-
-      if (res.status === 200) {
-        console.log("머지", res.data.result);
-        setGroupId(res.data.result.groupId);
-        setTitle(res.data.result.title);
-        setContent(res.data.result.content);
-        setFiles(res.data.result.files);
-        setTeacher(res.data.result.teacher);
-        setCreDate(res.data.result.createdDate);
-      } else {
-        console.log("테스트 실패");
-      }
-    } catch (error) {
-      console.error("테스트 에러", error);
-    }
-  };
-
-  const getStudentList = async () => {
-    try {
-      const res = await instance.get(
-        `/api/notice/detail?noticeId=${noticeId.noticeId}`
-      );
-
-      if (res.status === 200) {
-        console.log("머지", res.data.result);
-        setGroupId(res.data.result.groupId);
-        setTitle(res.data.result.title);
-        setContent(res.data.result.content);
-        setFiles(res.data.result.files);
-        setTeacher(res.data.result.teacher);
-        setCreDate(res.data.result.createdDate);
-      } else {
-        console.log("테스트 실패");
-      }
-    } catch (error) {
-      console.error("테스트 에러", error);
-    }
-  };
-
-  useEffect(() => {
-    if (noticeId.noticeId != null) {
-      getStudentList();
-    } else if (lectureMaterialId != null) {
-      getMaterialtList();
-    }
-  }, [noticeId, lectureMaterialId]);
 
   const navigate = useNavigate();
   function toReWrite() {
@@ -88,7 +62,7 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
       state: {
         noticeId: noticeId.noticeId,
         lectureMaterialId: noticeId.lectureMaterialId,
-        info: info.info,
+        info: info,
         creDate: creDate,
         teacher: teacher,
         intent: "corr",
@@ -127,6 +101,11 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
+          <S.Img
+            src={buttonstyle}
+            alt="buttonstyle"
+            onClick={() => toggleDropdown(file.id)}
+          />
         </S.FileItem>
       ))}
     </S.FileList>
@@ -135,9 +114,7 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
   return (
     <S.RowDiv>
       <S.AssigmentCreateForm>
-        <S.Title>
-          {info.noticeId ? "[공지]" : "[학습자료]"} {title}
-        </S.Title>
+        <S.Title>[공지] {title}</S.Title>
         <S.Line />
         <S.ContentBox>
           <S.Content>{content}</S.Content>
@@ -178,7 +155,7 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
         <NoticeInfo
           noticeId={noticeId}
           teacher={teacher}
-          info={info.info}
+          info={info}
           creDate={creDate}
         />
       </A.AssignmentSettingForm>

@@ -31,6 +31,13 @@ function NoticeDetailList() {
     getDashboard(setDashboards);
   }, []);
 
+  useEffect(() => {
+    // dashboards 배열이 변경될 때마다 각 항목의 lectureMaterialId 값을 출력
+    dashboards.forEach(notice => {
+      console.log("메테리얼:",notice.lectureMaterialId);
+    });
+  }, [dashboards]);
+
   //뒤로가기
   function BackButton() {
     navigate(-1);
@@ -41,6 +48,8 @@ function NoticeDetailList() {
     setSearchCategory(newCategory);
     setIsOpen(!isOpen);
   }
+
+ 
 
   return (
     <S.Container>
@@ -94,7 +103,7 @@ function NoticeDetailList() {
             groupId={groupId}
             // id={notice.id}
             noticeId={notice.noticeId}
-            lectureMaterialId={notice.lectureMaterialId}
+            materialId={notice.lectureMaterialId}
             info={info}
           />
         ))}
