@@ -95,7 +95,7 @@ function NoteDetailContent(noticeId) {
     <S.FileList>
       {files.map((file, index) => (
         <S.FileItem key={index} 
-        // onClick={() => downloadFile(file.id, file.originalFileName)}
+        onClick={() => downloadFile(file.id, file.originalFileName)}
         >
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>

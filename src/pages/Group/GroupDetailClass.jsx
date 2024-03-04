@@ -74,6 +74,18 @@ const NoticeContainer = styled.div`
   position: relative;
   align-items: center;
   z-index: 10;
+  
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: lightgray;
+  }
+
+  
 `;
 
 const GroupContainer = styled.div`

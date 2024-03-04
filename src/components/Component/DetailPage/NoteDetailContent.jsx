@@ -21,6 +21,7 @@ function NoteDetailContent(materialId ) {
   const [group, setGroup] = useState("");
   // const [noticeId, setNoticeId] = useState("");
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const dropdownRef = React.useRef(null);
   console.log("sd", materialId);
 
   const { groupId} = useParams();
@@ -95,6 +96,30 @@ function NoteDetailContent(materialId ) {
     }
   };
 
+   // 드롭다운 토글 함수
+   const toggleDropdown = (fileId) => {
+    setActiveDropdown((prev) => (prev === fileId ? null : fileId));
+  };
+
+  const handleClickOutside = (event, itemKey) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible((prev) => ({
+        ...prev,
+        [itemKey]: false,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    // 외부 클릭 이벤트 리스너 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // 클린업 함수에서 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
@@ -110,16 +135,39 @@ function NoteDetailContent(materialId ) {
                 alt="buttonstyle"
                 onClick={() => toggleDropdown(file.id)}
               />
+
+          {activeDropdown === file.id && (
+          <S.NavDropdownBox className="dropdown-menu" ref={dropdownRef}>
+            <S.NavDropdownOptionUp
+              className="dropdown-item"
+              // onClick={() => {
+              //   downloadFile(file.id, file.originalFileName);
+              //   toggleDropdown(file.id);
+              // }}
+            >
+              다운로드
+            </S.NavDropdownOptionUp>
+            <hr />
+            <S.NavDropdownOptionDown
+              className="dropdown-item"
+              // onClick={() => handleLoadToNoteTab(file.id)}
+            >
+              노트탭에 불러오기
+            </S.NavDropdownOptionDown>
+            <hr />
+            <S.NavDropdownOptionDown
+              className="dropdown-item"
+              // onClick={() => handleShowNote(file.id)}
+            >
+              자료 보기
+            </S.NavDropdownOptionDown>
+          </S.NavDropdownBox>
+        )}
         </S.FileItem>
         </>
       ))}
     </S.FileList>
   );
-
-   // 드롭다운 토글 함수
-   const toggleDropdown = (materialId) => {
-    setActiveDropdown((prev) => (prev === materialId ? null : materialId));
-  };
 
 
   return (
@@ -173,6 +221,8 @@ function NoteDetailContent(materialId ) {
         /> 
       </A.AssignmentSettingForm>
     </S.RowDiv>
+    
+
     
   );
 }

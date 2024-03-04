@@ -178,22 +178,25 @@ const MaterialList = ({ paramsGroupId, paramsUserId, id }) => {
 
   console.log("학습자료 반 정보: ", paramsGroupId, paramsUserId, id);
 
-  
-  // 날짜 포맷 함수
   const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("ko-KR", options)
-      .format(date)
-      .replace(" ", "")
-      .replace(". ", ".")
-      .replace("  ", " ");
+    
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    
+    const hours = date.getHours();
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const seconds = ("0" + date.getSeconds()).slice(-2);
+    
+    const ampm = hours >= 12 ? '오후' : '오전';
+    
+    // 12시간제로 변환
+    let hour12 = hours % 12;
+    hour12 = hour12 ? hour12 : 12; // 0시를 12시로 변환
+  
+    return `${year}.${month}.${day} ${ampm} ${hour12}시 ${minutes}분 ${seconds}초`;
   };
-
 
   //뒤로가기
   function goBack() {

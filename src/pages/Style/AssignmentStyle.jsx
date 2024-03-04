@@ -141,12 +141,16 @@ export const LegInput = styled(HeadInput)`
 
 export const InputTitle = styled.input`
   width: ${(props) =>
-    props.selectedButton === "강의자료" ? "493px" : "525px"};
+    props.selectedButton === "학습자료" ? "493px" : "525px"};
   height: 40px;
   border-radius: 8px;
   border: 1px solid #c9cdd2;
   padding: 10px;
   margin-left: 24px;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
 `;
 
 export const InputDesc = styled.textarea`
@@ -158,6 +162,11 @@ export const InputDesc = styled.textarea`
   border: 1px solid #c9cdd2;
   margin-top: 10px;
   padding: 10px;
+  
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
 
   overflow-y: auto;
   overflow-x: hidden;
