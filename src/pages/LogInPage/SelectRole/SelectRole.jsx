@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { debounce, throttle } from "lodash";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,10 +61,12 @@ export default function SelectRole() {
     setschoolClass(event.target.value);
     reduxInput(event.target);
   };
+
+  const reduxInputDebounced = throttle(reduxInput, 1500); // 500ms 대기
   //번호 바꾸기
   const handleNumberChange = (event) => {
     setschoolNumber(event.target.value);
-    reduxInput(event.target);
+    reduxInputDebounced(event.target);
   };
   // 학교 이름 바꾸기
   const handleSchoolNameChange = (event) => {
