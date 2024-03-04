@@ -12,7 +12,7 @@ import buttonstyle from "src/assets/icon/Group/buttonstyle.svg";
 
 import RoleContext from "../../../RoleContext";
 
-function NoteDetailContent(noticeId) {
+function NoticeDetailContent(noticeId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
