@@ -87,6 +87,7 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
     navigate(`/GroupDetailClass/${groupId}/MakeAssignment`, {
       state: {
         noticeId: noticeId.noticeId,
+        lectureMaterialId: noticeId.lectureMaterialId,
         info: info.info,
         creDate: creDate,
         teacher: teacher,
@@ -185,4 +186,4 @@ function NoticeDetailContent(noticeId, lectureMaterialId) {
   );
 }
 
-export default NoteDetailContent;
+export default NoticeDetailContent;

@@ -5,6 +5,7 @@ import * as S from "../EmailVerificationAndPassword/style";
 import instance from "../../../assets/api/axios";
 import { setUserInput } from "../../../action/userInputActions";
 import {
+  checkCode,
   resetPassword,
   sendPasswordResetEmail,
 } from "../../../assets/api/apis/auth/ApiAuth";
@@ -98,91 +99,31 @@ export default function EmailVerificationAndPassword() {
     setIsPasswordMatch(pwd === confirmPwd && pwd !== "");
   };
 
-  /*********   통신 관련 로직   *********/
-  // 이메일 중복 확인을 위해 getExistEmail
-  const [emails, setEmails] = useState([]);
-
-  const getExistEmails = async () => {
-    try {
-      const existEmails = await instance.get(
-        `/api/auth/validation?email=${email}`
-      );
-
-      if (existEmails.status === 200) {
-        //중복확인 완료
-        alert("이메일 중복 확인이 완료되었습니다.");
-        setEmails(existEmails.data);
-        sendVerifiCode();
-      } else if (existEmails.status === 400) {
-        alert("중복된 이메일입니다.");
-        return;
-      } else {
-        alert("이메일 중복 확인에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("이메일 중복 확인 오류:", error);
-      // Further logic upon error...
-      alert("중복된 이메일입니다.");
-    }
-  };
-
-  const sendVerifiCode = async () => {
-    try {
-      const verifiCode = await instance.post(
-        `/api/auth/email/request?email=${email}`
-      );
-
-      if (verifiCode.status === 200) {
-        alert("인증번호가 발송되었습니다.");
-        setAuthCode(verifiCode.data.result);
-      } else {
-        alert("인증번호 발송에 실패하였습니다.");
-      }
-    } catch (error) {
-      console.error("인증번호 발송 오류", error);
-      alert("인증번호 발송에 실패하였습니다.");
-    }
-  };
-
-  // 최종 회원가입 절차
+  // 최종 비밀번호 변경
   const handleSubmit = async (e) => {
     e.preventDefault();
-    resetPassword(email, certifiNumber, password);
+    // checkCode(email, certifiNumber);
 
     // 인증번호 일치 확인
     try {
       const verifiCode = await instance.get(
-        `/api/auth/email/verification?email=${email}&authCode=${certifiNumber}`
+        `/api/auth/password/reset?email=${email}&code=${certifiNumber}`
       );
 
-      // alert(verifiCode.data.result.result);
-      if (verifiCode.data.result === true) {
-        alert("인증번호 확인이 완료되었습니다.");
-      } else if (verifiCode.data.result === false) {
-        alert("인증번호가 일치하지 않습니다.");
-        return;
+      if (verifiCode.status === 200) {
+        console.log("올바른 비밀번호 재설정 코드입니다.");
+        resetPassword(email, certifiNumber, password, () => {
+          navigate(`/login`);
+        });
+      } else if (verifiCode.status === 400) {
+        alert("올바르지 않은 비밀번호 재설정 코드입니다.");
+      } else if (verifiCode.data.status === 200) {
+        console.log("확인 완료");
       } else {
-        alert("인증번호 확인에 실패하였습니다.");
+        alert("인증에 실패하였습니다.");
       }
     } catch (error) {
-      console.error("인증번호 발송 오류", error);
-      alert("인증번호 발송에 실패하였습니다.");
-      return;
-    }
-
-    try {
-      console.log("userInput의 상태: " + userInput);
-      const response = await instance.post(`/api/auth/signup`, userInput);
-
-      if (response.status === 201) {
-        //회원가입 성공
-        console.log("회원가입이 완료되었습니다.");
-        navigate("/SignupComplete");
-      } else {
-        alert("회원가입에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("회원가입 오류:", error);
+      console.error("인증 코드 확인 오류", error);
     }
   };
 

@@ -11,7 +11,7 @@ import NoticeInfo from "../Notice/NoticeInfo";
 
 import RoleContext from "../../../RoleContext";
 
-function NoteDetailContent(materialId ) {
+function NoteDetailContent(materialId) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
@@ -21,7 +21,6 @@ function NoteDetailContent(materialId ) {
   // const [noticeId, setNoticeId] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   console.log("sd", materialId);
-
 
   const { role } = useContext(RoleContext);
 
@@ -69,7 +68,6 @@ function NoteDetailContent(materialId ) {
     });
   }
 
-  
   // 파일 다운로드 함수
   const downloadFile = async (fileId, originalFileName) => {
     try {
@@ -94,7 +92,10 @@ function NoteDetailContent(materialId ) {
   const renderFileList = () => (
     <S.FileList>
       {files.map((file, index) => (
-        <S.FileItem key={index} onClick={() => downloadFile(file.id, file.originalFileName)}>
+        <S.FileItem
+          key={index}
+          onClick={() => downloadFile(file.id, file.originalFileName)}
+        >
           <S.FileIcon src={FileEarmarkZip} alt="file icon" />
           <S.FileName>{file.originalFileName}</S.FileName>
           <S.FileSize>({(file.size / 1024).toFixed(2)} KB)</S.FileSize>
@@ -114,19 +115,18 @@ function NoteDetailContent(materialId ) {
         <S.Line />
         <S.Content>첨부파일</S.Content>
         <S.FileContainer>{renderFileList()}</S.FileContainer>
-      
-          <>
-            <S.GrayButton
-              // onClick={() => {
-              //   deleteNotice(groupId, materialId.materialId, () => navigate(-1));
-              // }}
-              style={{marginleft: "200px"}}
-            >
-              삭제
-            </S.GrayButton>
-            {/* <S.Button onClick={toReWrite}>수정하기</S.Button> */}
-          </>
-       
+
+        <>
+          <S.GrayButton
+            // onClick={() => {
+            //   deleteNotice(groupId, materialId.materialId, () => navigate(-1));
+            // }}
+            style={{ marginleft: "200px" }}
+          >
+            삭제
+          </S.GrayButton>
+          {/* <S.Button onClick={toReWrite}>수정하기</S.Button> */}
+        </>
       </S.AssigmentCreateForm>
 
       <A.AssignmentSettingForm>
@@ -151,7 +151,6 @@ function NoteDetailContent(materialId ) {
         /> */}
       </A.AssignmentSettingForm>
     </S.RowDiv>
-    
   );
 }
 
